@@ -1,22 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
-import { React, useState } from "react";
-import "../css/office__head_office.css";
+import React from "react";
+import "../css/study__weekly_plan.css";
 
 import styled from "@emotion/styled";
 import "../css/layout.css";
 // import "./main.css";
 // import { Link } from "react-router-dom";
 import Arraylist from "./Arraylist";
-import Detail from "./Detail";
+import Calendar from "./Calendar";
 // import { Container } from "react-bootstrap";
-const Office__head_office = (props) => {
-  const [detail_num, setDetailNum] = useState("");
+const Study_weekly_plan = (props) => {
   let widthh = props.width;
   return (
     <Container>
       <div
-        className="office_head_office"
+        className="study_weekly_plan"
         css={css`
           margin-left: ${widthh}px;
         `}
@@ -27,10 +26,7 @@ const Office__head_office = (props) => {
             margin: 30px 0;
           `}
         >
-          <h1
-            className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0"
-            css={css``}
-          >
+          <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0">
             학원본사 관리
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -50,9 +46,8 @@ const Office__head_office = (props) => {
             display: flex;
           `}
         >
-          <Arraylist setDetailNum={setDetailNum} flag="office__head_office" />
-
-          <Detail detail_num={detail_num} />
+          <Arraylist />
+          <Calendar />
         </div>
       </div>
     </Container>
@@ -63,7 +58,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 50px;
+
   padding-top: 20px;
 `;
 
-export default Office__head_office;
+export default Study_weekly_plan;

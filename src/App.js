@@ -6,6 +6,15 @@ import Calendar from "./Components/Calendar";
 import Sidebar from "./Components/sidebar";
 import SidebarMenu from "./Components/sidebarmenu";
 import SidebarMenuItem from "./Components/sidebarmenuitem";
+import Main from "./Components/Main";
+import Login from "./Components/Login";
+import Registration from "./Components/Registration";
+import Office__head_office from "./Components/Office__head_office";
+import Office__branch_office from "./Components/Office__branch_office";
+import Office__branch_info from "./Components/Office__branch_info";
+import Student__manage_info from "./Components/Student__manage_info";
+import Study_weekly_plan from "./Components/Study_weekly_plan";
+import Study_weekly_report from "./Components/Study_weekly_report";
 import { React, useState, useEffect } from "react";
 function App() {
   const [value, setValue] = useState(350);
@@ -38,7 +47,44 @@ function App() {
         </Sidebar>
         <Header width={value} loginflag={login_flag} />
         <Routes>
-          <Route exact path="/calendar" element={<Calendar />} />
+        <Route exact path="/" element={<Login />} />
+          <Route exact path="/registration" element={<Registration />} />
+          <Route exact path="/main" element={<Main width={value} />} />
+          <Route
+            exact
+            path="/login"
+            element={<Login width={0} setLoginFlag={setLoginFlag} />}
+          />
+          <Route
+            exact
+            path="/Office__head_office"
+            element={<Office__head_office width={value} />}
+          />
+          <Route
+            exact
+            path="/Office__branch_office"
+            element={<Office__branch_office width={value} />}
+          />
+          <Route
+            exact
+            path="/Office__branch_info"
+            element={<Office__branch_info width={value} />}
+          />
+          <Route
+            exact
+            path="/Student__manage_info"
+            element={<Student__manage_info width={value} />}
+          />
+          <Route
+            exact
+            path="/Study_weekly_plan"
+            element={<Study_weekly_plan width={value} />}
+          />
+          <Route
+            exact
+            path="/Study_weekly_report"
+            element={<Study_weekly_report width={value} />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
