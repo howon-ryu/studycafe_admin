@@ -1,0 +1,29 @@
+.contanier_adjust{
+    margin-left:350px;
+    display: flex;
+    flex-direction: column;
+    border: solid 2px;
+    padding-top:50px;
+}
+.arraylist{
+    margin-top:10px;
+    
+    
+   
+    width:35%;
+   
+}
+
+.detail{
+    float:right;
+    width:65%;
+    margin-left:100px;
+    margin-right:100px;
+    margin-top:10px;
+
+}
+
+.page_header{   
+    float:left;
+    /* border:solid; */
+}

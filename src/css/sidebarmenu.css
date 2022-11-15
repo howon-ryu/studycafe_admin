@@ -1,0 +1,14 @@
+.menu-item .menu-link .menu-title {
+    
+        display: flex;
+        font-size:20px;
+        align-items: center;
+        flex-grow: 1;
+        font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic";
+       
+    
+}
+
+.menu{
+    
+}
