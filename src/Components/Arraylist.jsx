@@ -8,6 +8,9 @@ const Arraylist = (props) => {
     if (props.flag == "office__head_office") {
       searchBrands();
     } else if (props.flag == "office__branch_office") {
+      searchBranchowner();
+    } else if(props.flag == "office__branch_info"){
+      
       searchBranchs();
     }
 
@@ -29,9 +32,23 @@ const Arraylist = (props) => {
         console.log("실패");
       });
   }
+  function searchBranchowner() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "branches"+"/owners";
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setdata(response.data);
+        console.log(response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   function searchBranchs() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branch";
+    let url_set = url + "branches";
     axios
       .get(url_set)
       .then(function (response) {
@@ -286,11 +303,16 @@ const Arraylist = (props) => {
                     <tr className="fw-bold text-muted">
                       <th className="ps-4 min-w-25px">NO.</th>
                       <th className="min-w-25px n_empty"></th>
-                      {props.flag === "office__head_office" ? (
+                      {
+                      props.flag === "office__head_office" ? (
                         <th className="min-w-150px">지점명/대표자</th>
-                      ) : props.flag === "office__branch_office" ? (
+                      ) : props.flag === "office__branch_info" ? (
                         <th className="min-w-150px">원장명/본사</th>
-                      ) : null}
+                      ) : props.flag === "office__branch_office" ? (
+                        <th className="min-w-150px">지점</th>
+                      ) : null
+                      
+                      }
 
                       <th className="min-w-25px n_empty"></th>
                       <th className="min-w-50px text-end me-4">상태</th>
@@ -330,7 +352,16 @@ const Arraylist = (props) => {
                                   >
                                     {data.brand.name}
                                   </a>
-                                ) : null}
+                                ) : props.flag === "office__branch_info" ? (
+                                  <a
+                                    href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
+                                    className="text-gray-800 text-hover-primary fs-6 fw-bold"
+                                  >
+                                    {data.brand.name}
+                                  </a>
+                                ) : null
+                                
+                                }
                                 {/* <a
                                   href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
                                   className="text-gray-800 text-hover-primary fs-6 fw-bold"

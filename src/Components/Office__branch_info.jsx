@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from '@emotion/react'
-import React from "react";
+import {React,useState} from "react";
 import "../css/office__branch_info.css";
 
 import styled from "@emotion/styled";
@@ -12,7 +12,9 @@ import Branch_info from "./Branch_info";
 import "../css/layout.css";
 // import { Container } from "react-bootstrap";
 const Office__branch_info = (props) => {
+  const [detail_num, setDetailNum] = useState("");
   let widthh = props.width;
+  
   return (
     <Container>
       <div className = "office_branch_info" css={css`
@@ -47,8 +49,8 @@ const Office__branch_info = (props) => {
           display: flex;
         `}
       >
-        <Arraylist />
-        <Branch_info />
+        <Arraylist setDetailNum={setDetailNum} flag="office__branch_info"/>
+        <Branch_info detail_num={detail_num} />
       </div>
       </div>
     </Container>
