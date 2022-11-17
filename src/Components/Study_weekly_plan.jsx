@@ -8,7 +8,7 @@ import "../css/layout.css";
 // import "./main.css";
 // import { Link } from "react-router-dom";
 import Arraylist from "./Arraylist";
-import Calendar from "./Calendar";
+import Calendar_plan from "./Calendar_plan";
 // import { Container } from "react-bootstrap";
 const Study_weekly_plan = (props) => {
   let widthh = props.width;
@@ -47,7 +47,7 @@ const Study_weekly_plan = (props) => {
           `}
         >
           <Arraylist />
-          <Calendar />
+          <Calendar_plan />
         </div>
       </div>
     </Container>
