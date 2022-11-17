@@ -307,9 +307,9 @@ const Arraylist = (props) => {
                       props.flag === "office__head_office" ? (
                         <th className="min-w-150px">지점명/대표자</th>
                       ) : props.flag === "office__branch_info" ? (
-                        <th className="min-w-150px">원장명/본사</th>
-                      ) : props.flag === "office__branch_office" ? (
                         <th className="min-w-150px">지점</th>
+                      ) : props.flag === "office__branch_office" ? (
+                        <th className="min-w-150px">원장명/본사</th>
                       ) : null
                       
                       }
@@ -331,7 +331,11 @@ const Arraylist = (props) => {
                           <td>{data.id}</td>
                         ) : props.flag === "office__branch_office" ? (
                           <td>{data.id}</td>
-                        ) : null}
+                        ) : props.flag === "office__branch_info" ? (
+                          <td>{data.id}</td>
+                        ) : null
+                        
+                        }
 
                         <td className="n_empty"></td>
                         <td className="text-muted fw-semibold">
@@ -357,7 +361,7 @@ const Arraylist = (props) => {
                                     href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
                                     className="text-gray-800 text-hover-primary fs-6 fw-bold"
                                   >
-                                    {data.brand.name}
+                                    {data.name}
                                   </a>
                                 ) : null
                                 

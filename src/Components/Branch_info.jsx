@@ -1,4 +1,237 @@
-const Branch_info = () => {
+/** @jsxImportSource @emotion/react */
+
+import { css } from "@emotion/react";
+import { React, useState, useEffect, useRef } from "react";
+import axios from "axios";
+import { click } from "@testing-library/user-event/dist/click";
+import { waitForElementToBeRemoved } from "@testing-library/react";
+import { compareByFieldSpec } from "@fullcalendar/core";
+
+
+
+
+const Branch_info = (props) => {
+  const reset = useRef();
+  const [data, setdata] = useState({
+    
+      "id": "",
+      "name": "",
+      "businessRegistrationNumber": "",
+      "homePageUrl": null,
+      "isManagement": false,
+      "location": null,
+      "brand": {
+        "id": "",
+        "name": "",
+        "status": "",
+        "businessRegistrationNumber": ""
+      },
+      "owner": {
+        "id": "",
+        "username": "",
+        "realName": "",
+        "phone": "",
+        "email": "",
+        "birthDate": "",
+        "gender": "",
+        "nickname": "",
+        "profileImgUrl": "",
+        "location": null,
+        "status": "",
+        "lastLoginAt": "",
+        "darkMode": false
+      },
+      "manager": {
+        "id": "",
+        "username": "",
+        "realName": "",
+        "phone": "",
+        "email": "",
+        "birthDate": "",
+        "gender": "",
+        "nickname": "",
+        "profileImgUrl": "",
+        "location": null,
+        "status": "",
+        "lastLoginAt": "",
+        "darkMode": false
+      },
+      "division": "",
+      "closedTime": null,
+      "status": ""
+    
+  });
+  // let [detail_num, setdetailnum] = useState([1]);
+  let detail_num;
+  // useEffect(() => {
+  //   // setdetailnum(props.detail_num);
+  //   detail_num = props.detail_num;
+  //   if (detail_num == null || detail_num == "") {
+  //     console.log("@@@@");
+  //     detail_num = 1;
+  //   }
+  //   console.log(detail_num);
+  //   spec_brand_Api();
+  // }, []);
+
+  useEffect(() => {
+    console.log("props", props);
+    // setdetailnum(props.detail_num);
+    detail_num = props.detail_num;
+    if (props.detail_num == "" || props.detail_num == undefined) {
+      console.log("공백");
+    } else if (props.detail_num == "0") {
+      console.log("0");
+      setdata({
+        id: "",
+        name: "",
+        status: "",
+        head: {
+          email: "",
+          phone: "",
+          location: "",
+          nickname: "",
+        },
+      });
+      reset.current.click();
+    } else {
+      detail_num = props.detail_num;
+      spec_brand_Api();
+      console.log(detail_num);
+    }
+  }, [props]);
+
+  function spec_brand_Api() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "branches" + "/" + detail_num;
+    console.log("url:", url_set);
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setdata(response.data);
+        // console.log("data:", data);
+        // console.log("head:", data.head);
+        console.log(response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  const handles = (e) => {
+    alert("kkl");
+    e.preventDefalut();
+  };
+
+  const handleSubmit = (e) => {
+    if (props.detail_num == "0") {
+      alert(e.target[9].value);
+      // event.preventDefalut();
+
+      console.log(e);
+
+      const data_t = {
+        name: e.target[2].value,
+        homePageUrl: "wintergreen.study",
+        isManagement: false,
+        businessRegistrationNumber: "123-123-123",
+        status: "ACTIVE",
+        head: {
+          username: e.target[5].value,
+          password: e.target[3].value,
+          password2: e.target[4].value,
+          realName: e.target[5].value,
+          phone: e.target[6].value,
+          email: e.target[7].value,
+        },
+      };
+
+      const headers = { "header-name": "value" };
+      const config = { headers };
+      console.log("data_t", data_t);
+
+      let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
+      let posturl_set = posturl + "branches";
+      console.log("puturl:", posturl_set);
+      // setTimeout(console.log("puturl:", posturl_set), 30000);
+
+      axios
+        .post(posturl_set, data_t, config)
+        .then((response) => {
+          console.log(response.status);
+          console.log(response.data);
+        })
+        // .catch((e) => console.log('something went wrong :(', e));
+        .catch((error) => {
+          console.log("re:", error.message);
+          console.log("re:", error.body);
+          console.log("re:", error.config);
+          console.log("re:", error.requests);
+          console.log("re:", error.response.data);
+        });
+    } else {
+     
+      // event.preventDefalut();
+
+      console.log(e);
+
+      const data_t = {
+        brandId: 0,
+        name: data.name,
+        homePageUrl: data.homePageUrl,
+        isManagement: false,
+        businessRegistrationNumber: data.businessRegistrationNumber,
+        status: data.status,
+        // location: {
+        //   zonecode: data.location.zonecode,
+        //   address: data.location.address,
+        //   roadAddress: data.location.roadAddress,
+        //   jibunAddress: data.location.jibunAddress,
+        //   sido: data.location.sido,
+        //   sigungu: data.location.sigungu,
+        //   bname: data.location.bname,
+        //   bname1: data.location.bname1,
+        //   additionalInfo: data.location.additionalInfo
+        // },
+        location: {
+          zonecode: "12345",
+          address: "경기도 고양시 덕양구 항공대학로 76",
+          roadAddress: "경기도 고양시 덕양구 항공대학로 76",
+          jibunAddress: "경기도 고양시 덕양구 현천동 188-8",
+          sido: "경기도",
+          sigungu: "고양시",
+          bname: "현천동",
+          bname1: "화전읍",
+          additionalInfo: "중소기업벤쳐센터 311호"
+        },
+        ownerUsername: e.target[10].value
+      };
+
+      const headers = { "header-name": "value" };
+      const config = { headers };
+      console.log("data_t", data_t);
+
+      let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
+      let posturl_set = posturl + "branches" + "/" + props.detail_num;
+      console.log("puturl:", posturl_set);
+      // setTimeout(console.log("puturl:", posturl_set), 30000);
+
+      axios
+        .put(posturl_set, data_t, config)
+        .then((response) => {
+          console.log(response.status);
+          console.log(response.data);
+        })
+        // .catch((e) => console.log('something went wrong :(', e));
+        .catch((error) => {
+          console.log("re:", error.message);
+          console.log("re:", error.body);
+          console.log("re:", error.config);
+          console.log("re:", error.requests);
+          console.log("re:", error.response.data);
+        });
+    }
+  };
   return (
     <div className="branch_info">
       <div className="col-xl-12  mb-5 mb-xl-10 card__right_wrap">
@@ -9,7 +242,7 @@ const Branch_info = () => {
               data-kt-table-widget-3="tabs_nav"
             >
               <div
-                className="fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn"
+                className="fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn on"
                 data-kt-table-widget-3="tab"
                 data-kt-table-widget-3-value="Show All"
               >
@@ -17,7 +250,7 @@ const Branch_info = () => {
               </div>
 
               <div
-                className="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn on"
+                className="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn "
                 data-kt-table-widget-3="tab"
                 data-kt-table-widget-3-value="Pending"
               >
@@ -42,7 +275,264 @@ const Branch_info = () => {
           </div>
 
           <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
-            <div className="right__tab02_table tab02 mb-20">
+          <form
+        onSubmit={function (event) {
+          event.preventDefault();
+          handleSubmit(event);
+        }}
+      >
+        <div className="card card-flush h-xl-100 card__right">
+    
+
+          <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
+            <div className="row mb-5">
+              <div className="col-md-6 fv-row input_50">
+                <label className="required fs-5 fw-semibold mb-2">
+                  학원본사 ID
+                </label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultvalue="wintergreen"
+                  name="first_name"
+                />
+                <span className="me-3">.here.study</span>
+                <button
+                  type="reset"
+                  data-kt-ecommerce-settings-type="cancel"
+                  className="btn btn-primary"
+                >
+                  중복확인
+                </button>
+              </div>
+
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">
+                  학원본사 이름
+                </label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={data.name}
+                  name=""
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div className="row mb-5">
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">
+                  비밀번호
+                </label>
+
+                <input
+                  type="password"
+                  id="password"
+                  className="form-control"
+                  defaultValue=""
+                  disabled
+                />
+              </div>
+
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">
+                  비밀번호 확인
+                </label>
+
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder=""
+                  name=""
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div className="row mb-5">
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">대표자</label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={data.owner.realName || ""}
+                  disabled
+                  name=""
+                />
+              </div>
+
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">
+                  대표 연락처
+                </label>
+
+                <input
+                  type="tel"
+                  className="form-control "
+                  defaultValue={data.owner.phone || ""}
+                  name=""
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div className="row mb-5">
+              <div className="col-md-6 fv-row">
+                <label className="fs-5 fw-semibold mb-2">대표 이메일</label>
+
+                <input
+                  type="text"
+                  className="form-control "
+                  defaultValue={data.owner.email || ""}
+                  name="first_name"
+                  disabled
+                />
+              </div>
+
+              <div className="col-md-6 fv-row">
+                <label className="fs-5 fw-semibold mb-2">사업자등록증</label>
+
+                <input type="text" className="form-control " name="last_name" disabled/>
+              </div>
+            </div>
+
+            <div className="row mb-5">
+              <div className="col-md-12 fv-row">
+                <label className="fs-5 fw-semibold mb-2">주소</label>
+
+                <input
+                  type="text"
+                  className="form-control "
+                  defaultValue={data.location || ""}
+                  name="first_name"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div className="row mb-5">
+              <div className="col-md-6 fv-row">
+                <label className="fs-5 fw-semibold mb-2">운영자 이름</label>
+
+                <input
+                  type="text"
+                  className="form-control "
+                  defaultValue={data.manager.realName || ""}
+                  name="nickname"
+                />
+              </div>
+
+              <div className="col-md-6 fv-row">
+                <label className="fs-5 fw-semibold mb-2">운영자연락처</label>
+
+                <input type="text" className="form-control " name="phone"    defaultValue={data.manager.phone || ""}/>
+              </div>
+            </div>
+
+            <div className="row mb-5">
+              <div className="col-md-4 fv-row">
+                <label className="fs-5 fw-semibold mb-2">최종 수정자 ID</label>
+
+                <input
+                  type="text"
+                  className="form-control form-control-solid"
+                  defaultValue="wintergreen"
+                  name=""
+                  readOnly
+                />
+              </div>
+
+              <div className="col-md-4 fv-row">
+                <label className="fs-5 fw-semibold mb-2">최종 수정 일시</label>
+
+                <input
+                  type="date"
+                  className="form-control form-control-solid"
+                  defaultValue="2019-09-22"
+                  name=""
+                  readOnly
+                />
+              </div>
+
+              <div className="col-md-4 fv-row">
+                <label className="fs-5 fw-semibold mb-2">사용</label>
+
+                <div className="d-flex check__use_wrap">
+                  <div className="form-check form-check-custom form-check-solid me-5 check__use">
+                    <input
+                      className="form-check-input check__use_input"
+                      type="radio"
+                      defaultValue=""
+                      name="choice_use"
+                      id="product_tax_yes"
+                      checked={true}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="product_tax_yes"
+                    >
+                      사용
+                    </label>
+                  </div>
+                  <div className="form-check form-check-custom form-check-solid me-5 check__hold">
+                    <input
+                      className="form-check-input check__hold_input"
+                      type="radio"
+                      defaultValue=""
+                      name="choice_use"
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="product_tax_no"
+                    >
+                      대기
+                    </label>
+                  </div>
+                  <div className="form-check form-check-custom form-check-solid check__delet">
+                    <input
+                      className="form-check-input check__delet_input"
+                      type="radio"
+                      defaultValue=""
+                      name="choice_use"
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="product_tax_no"
+                    >
+                      삭제
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="reset" hidden>
+            <span ref={reset}></span>
+          </button>
+          <div className="card-footer d-flex justify-content-end py-6">
+            <button
+              type="reset"
+              className="btn btn-light btn-active-light-primary me-2"
+            >
+              취소
+            </button>
+            {props.detail_num != "0" ? (
+              <button type="submit" className="btn btn-primary" id="submit_btn">
+                변경사항 저장
+              </button>
+            ) : (
+              <button type="submit" className="btn btn-primary" id="submit_btn">
+                추가
+              </button>
+            )}
+          </div>
+        </div>
+      </form>
+            {/* <div className="right__tab02_table tab02 mb-20">
               <select
                 name="status"
                 data-control="select2"
@@ -319,9 +809,9 @@ const Branch_info = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className="card-footer d-flex justify-content-end py-6">
+          {/* <div className="card-footer d-flex justify-content-end py-6">
             <button
               type="reset"
               className="btn btn-light btn-active-light-primary me-2"
@@ -331,9 +821,10 @@ const Branch_info = () => {
             <button type="submit" className="btn btn-primary">
               변경사항 저장
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
+    </div>
     </div>
   );
 };
