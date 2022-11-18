@@ -176,7 +176,7 @@ const Branch_info = (props) => {
       console.log(e);
 
       const data_t = {
-        brandId: 0,
+        brandId: 1,
         name: data.name,
         homePageUrl: data.homePageUrl,
         isManagement: false,

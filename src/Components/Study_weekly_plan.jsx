@@ -47,7 +47,7 @@ const Study_weekly_plan = (props) => {
           `}
         >
           <Arraylist />
-          <Calendar_plan />
+          {/* <Calendar_plan /> */}
         </div>
       </div>
     </Container>

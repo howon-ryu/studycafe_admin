@@ -48,7 +48,7 @@ const Branch_detail = (props) => {
   }, [props]);
   function spec_branch_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branch" + "/" + detail_num;
+    let url_set = url + "branches" + "/owners/" + detail_num;
     console.log("url:", url_set);
     axios
       .get(url_set)
@@ -91,7 +91,7 @@ const Branch_detail = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "branch";
+      let posturl_set = posturl + "branches"+ "/owners";
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
@@ -144,7 +144,7 @@ const Branch_detail = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "branch";
+      let posturl_set = posturl + "branches"+"/owners";
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
