@@ -6,17 +6,16 @@ import axios from "axios";
 import { click } from "@testing-library/user-event/dist/click";
 import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
-
+import "../css/branch_info.css";
 const Branch_info = (props) => {
   const reset = useRef();
   const [flag_one, setflagone] = useState("1");
   const one_click = (props) => setflagone(props);
   const [flag_two, setflagtwo] = useState("2");
   const two_click = (props) => setflagtwo(props);
-  const [flag_three, setflagthree] = useState("1");
+  const [flag_three, setflagthree] = useState("2");
   const three_click = (props) => setflagthree(props);
-  const [flag_four, setflagfour] = useState("2");
-  const four_click = (props) => setflagfour(props);
+
   const [brand_list, setbrands] = useState("");
   const [data, setdata] = useState({
     id: "",
@@ -325,7 +324,7 @@ const Branch_info = (props) => {
                   one_click("1");
                   two_click("2");
                   three_click("2");
-                  four_click("2");
+               
                 }}
               >
                 상세정보
@@ -343,7 +342,7 @@ const Branch_info = (props) => {
                   one_click("2");
                   two_click("1");
                   three_click("2");
-                  four_click("2");
+                 
                 }}
               >
                 관리그룹
@@ -361,7 +360,7 @@ const Branch_info = (props) => {
                   one_click("2");
                   two_click("2");
                   three_click("1");
-                  four_click("2");
+                
                 }}
               >
                 학습실
@@ -600,7 +599,16 @@ const Branch_info = (props) => {
                   </div>
                 </div>
               </form>
-              {/* <div className="right__tab02_table tab02 mb-20">
+             
+            </div>
+          ) : null}
+
+
+
+        {flag_two == "1" ? (
+
+          <div className = "ad" >
+            <div className="right__tab02_table tab02 mb-20">
               <select
                 name="status"
                 data-control="select2"
@@ -614,7 +622,6 @@ const Branch_info = (props) => {
                 <option value="2">대기중인 관리그룹</option>
                 <option value="3">삭제된 관리그룹</option>
               </select>
-
               <table
                 className="table align-middle table-row-dashed fs-6 gy-5"
                 id="kt_project_users_table"
@@ -628,8 +635,8 @@ const Branch_info = (props) => {
                     <th className="min-w-50px pe-5 text-end">사용여부</th>
                   </tr>
                 </thead>
-
                 <tbody className="fw-semibold text-gray-600">
+                  
                   <tr>
                     <td>
                       <div className="form-check form-check-sm form-check-custom form-check-solid">
@@ -647,7 +654,6 @@ const Branch_info = (props) => {
                       </span>
                     </td>
                   </tr>
-
                   <tr>
                     <td>
                       <div className="form-check form-check-sm form-check-custom form-check-solid">
@@ -665,7 +671,6 @@ const Branch_info = (props) => {
                       </span>
                     </td>
                   </tr>
-
                   <tr>
                     <td>
                       <div className="form-check form-check-sm form-check-custom form-check-solid">
@@ -683,7 +688,6 @@ const Branch_info = (props) => {
                       </span>
                     </td>
                   </tr>
-
                   <tr>
                     <td>
                       <div className="form-check form-check-sm form-check-custom form-check-solid">
@@ -701,7 +705,6 @@ const Branch_info = (props) => {
                       </span>
                     </td>
                   </tr>
-
                   <tr>
                     <td>
                       <div className="form-check form-check-sm form-check-custom form-check-solid">
@@ -719,7 +722,6 @@ const Branch_info = (props) => {
                       </span>
                     </td>
                   </tr>
-
                   <tr>
                     <td>
                       <div className="form-check form-check-sm form-check-custom form-check-solid">
@@ -737,7 +739,6 @@ const Branch_info = (props) => {
                       </span>
                     </td>
                   </tr>
-
                   <tr>
                     <td>
                       <div className="form-check form-check-sm form-check-custom form-check-solid">
@@ -755,7 +756,6 @@ const Branch_info = (props) => {
                       </span>
                     </td>
                   </tr>
-
                   <tr>
                     <td>
                       <div className="form-check form-check-sm form-check-custom form-check-solid">
@@ -773,7 +773,6 @@ const Branch_info = (props) => {
                       </span>
                     </td>
                   </tr>
-
                   <tr>
                     <td>
                       <div className="form-check form-check-sm form-check-custom form-check-solid">
@@ -794,11 +793,9 @@ const Branch_info = (props) => {
                 </tbody>
               </table>
             </div>
-
             <div className="row mb-5 row__line">
               <div className="col-md-6 fv-row">
                 <label className="fs-5 fw-semibold mb-2">관리그룹 이름</label>
-
                 <input
                   type="text"
                   className="form-control"
@@ -806,14 +803,11 @@ const Branch_info = (props) => {
                   name=""
                 />
               </div>
-
               <div className="col-md-6 fv-row"></div>
             </div>
-
             <div className="row mb-5">
               <div className="col-md-4 fv-row">
                 <label className="fs-5 fw-semibold mb-2">최종 수정자 ID</label>
-
                 <input
                   type="text"
                   className="form-control form-control-solid"
@@ -822,10 +816,8 @@ const Branch_info = (props) => {
                   readonly
                 />
               </div>
-
               <div className="col-md-4 fv-row">
                 <label className="fs-5 fw-semibold mb-2">최종 수정 일시</label>
-
                 <input
                   type="date"
                   className="form-control form-control-solid"
@@ -834,10 +826,8 @@ const Branch_info = (props) => {
                   readonly
                 />
               </div>
-
               <div className="col-md-4 fv-row">
                 <label className="fs-5 fw-semibold mb-2">사용</label>
-
                 <div className="d-flex check__use_wrap">
                   <div className="form-check form-check-custom form-check-solid me-5 check__use">
                     <input
@@ -877,21 +867,280 @@ const Branch_info = (props) => {
                 </div>
               </div>
             </div>
-          </div> */}
+           
 
-              {/* <div className="card-footer d-flex justify-content-end py-6">
-            <button
-              type="reset"
-              className="btn btn-light btn-active-light-primary me-2"
-            >
-              취소
-            </button>
-            <button type="submit" className="btn btn-primary">
-              변경사항 저장
-            </button>
-          </div> */}
+          </div>
+        ):null}
+        
+        {flag_three == "1" ? (
+          
+          <div className = "ad" >
+            <div className="right__tab02_table tab02 mb-20">
+              <select
+                name="status"
+                data-control="select2"
+                data-hide-search="true"
+                data-placeholder="Filter"
+                className="form-select form-select-solid form-select-sm fw-bold w-100px"
+              >
+                <option value="1" selected="selected">
+                  사용중인 학습실
+                </option>
+                <option value="2">대기중인 학습실</option>
+                <option value="3">삭제된 학습실</option>
+              </select>
+              <table
+                className="table align-middle table-row-dashed fs-6 gy-5"
+                id="kt_project_users_table"
+              >
+                <thead className="text-gray-400">
+                  <tr className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                    <th className="min-w-25px">NO.</th>
+                    <th className="min-w-150px">학습실 이름 이름</th>
+                    <th className="min-w-100px">좌석수</th>
+                    <th className="min-w-25x n_empty"></th>
+                    <th className="min-w-50px pe-5 text-end">사용여부</th>
+                  </tr>
+                </thead>
+                <tbody className="fw-semibold text-gray-600">
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          1
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재수</td>
+                    <td data-order="Invalid date">2022-08-05</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-success me-2">
+                        사용
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          2
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-08</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-warning me-2">
+                        대기
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          3
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-24</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-danger me-2">
+                        삭제
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          4
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재수</td>
+                    <td data-order="Invalid date">2022-08-05</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-success me-2">
+                        사용
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          5
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-08</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-warning me-2">
+                        대기
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          6
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-24</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-danger me-2">
+                        삭제
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          7
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재수</td>
+                    <td data-order="Invalid date">2022-08-05</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-success me-2">
+                        사용
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          8
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-08</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-warning me-2">
+                        대기
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          9
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-24</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-danger me-2">
+                        삭제
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          ) : null}
+            <div className="row mb-5 row__line">
+              <div className="col-md-6 fv-row">
+                <label className="fs-5 fw-semibold mb-2">관리그룹 이름</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value="재수"
+                  name=""
+                />
+              </div>
+              <div className="col-md-6 fv-row"></div>
+            </div>
+            <div className="row mb-5">
+              <div className="col-md-4 fv-row">
+                <label className="fs-5 fw-semibold mb-2">최종 수정자 ID</label>
+                <input
+                  type="text"
+                  className="form-control form-control-solid"
+                  value="wintergreen"
+                  name=""
+                  readonly
+                />
+              </div>
+              <div className="col-md-4 fv-row">
+                <label className="fs-5 fw-semibold mb-2">최종 수정 일시</label>
+                <input
+                  type="date"
+                  className="form-control form-control-solid"
+                  value="2019-09-22"
+                  name=""
+                  readonly
+                />
+              </div>
+              <div className="col-md-4 fv-row">
+                <label className="fs-5 fw-semibold mb-2">사용</label>
+                <div className="d-flex check__use_wrap">
+                  <div className="form-check form-check-custom form-check-solid me-5 check__use">
+                    <input
+                      className="form-check-input check__use_input"
+                      type="radio"
+                      value=""
+                      name="choice_use"
+                      id="product_tax_yes"
+                      checked="checked"
+                    />
+                    <label className="form-check-label" for="product_tax_yes">
+                      사용
+                    </label>
+                  </div>
+                  <div className="form-check form-check-custom form-check-solid me-5 check__hold">
+                    <input
+                      className="form-check-input check__hold_input"
+                      type="radio"
+                      value=""
+                      name="choice_use"
+                    />
+                    <label className="form-check-label" for="product_tax_no">
+                      대기
+                    </label>
+                  </div>
+                  <div className="form-check form-check-custom form-check-solid check__delet">
+                    <input
+                      className="form-check-input check__delet_input"
+                      type="radio"
+                      value=""
+                      name="choice_use"
+                    />
+                    <label className="form-check-label" for="product_tax_no">
+                      삭제
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+
+          </div>
+        ):null}
+
+
+
+
         </div>
       </div>
     </div>
