@@ -11,7 +11,8 @@ import Arraylist from "./Arraylist";
 import Detail from "./Detail";
 // import { Container } from "react-bootstrap";
 const Office__head_office = (props) => {
-  const [detail_num, setDetailNum] = useState("");
+  const [detail_num, setDetailNum] = useState("1");
+  const [head_num, setheadNum] = useState("");
   let widthh = props.width;
   return (
     <Container>
@@ -50,9 +51,13 @@ const Office__head_office = (props) => {
             display: flex;
           `}
         >
-          <Arraylist setDetailNum={setDetailNum} flag="office__head_office" />
+          <Arraylist
+            setDetailNum={setDetailNum}
+            setheadNum={setheadNum}
+            flag="office__head_office"
+          />
 
-          <Detail detail_num={detail_num} />
+          <Detail detail_num={detail_num} head_num={head_num} />
         </div>
       </div>
     </Container>

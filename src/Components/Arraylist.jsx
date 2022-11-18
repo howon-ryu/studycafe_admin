@@ -2,22 +2,26 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { css } from "@emotion/react";
-const Arraylist = (props) => {
+import { buildEntryKey } from "@fullcalendar/core";
+import "../css/arraylist.css";
+
+const AcademyList = (props) => {
   useEffect(() => {
     console.log("props_arr", props);
     if (props.flag == "office__head_office") {
       searchBrands();
     } else if (props.flag == "office__branch_office") {
-      searchBranchowner();
-    } else if(props.flag == "office__branch_info"){
-      
-      searchBranchs();
+      searchowner();
+    } else if (props.flag == "student__manage_info") {
+      searchStudent();
+    } else if (props.flag == "office__branch_info") {
+      searchBranches();
     }
-
     console.log("1");
   }, []);
 
   let [data, setdata] = useState([]);
+
   function searchBrands() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "brands";
@@ -32,9 +36,10 @@ const Arraylist = (props) => {
         console.log("실패");
       });
   }
-  function searchBranchowner() {
+  function searchStudent() {
+    // 나중에 branch 맞춰줘야함
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches"+"/owners";
+    let url_set = url + "branches/" + "1" + "/students";
     axios
       .get(url_set)
       .then(function (response) {
@@ -46,7 +51,21 @@ const Arraylist = (props) => {
         console.log("실패");
       });
   }
-  function searchBranchs() {
+  function searchowner() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + "owners";
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setdata(response.data);
+        console.log(response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchBranches() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "branches";
     axios
@@ -64,11 +83,14 @@ const Arraylist = (props) => {
     console.log("click");
     // 정수 0은 undefined 혹은 공백 처리 되어 문자 "0" 사용
     props.setDetailNum("0");
+    // props.setheadnum("0");
   }
 
   function listclick(e) {
     console.log("cliL:", e);
     props.setDetailNum(e);
+
+    // props.setheadnum(e);
   }
 
   return (
@@ -144,9 +166,9 @@ const Arraylist = (props) => {
                     >
                       <g
                         stroke="none"
-                        stroke-width="1"
+                        strokeWidth="1"
                         fill="none"
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                       >
                         <rect
                           x="5"
@@ -303,16 +325,15 @@ const Arraylist = (props) => {
                     <tr className="fw-bold text-muted">
                       <th className="ps-4 min-w-25px">NO.</th>
                       <th className="min-w-25px n_empty"></th>
-                      {
-                      props.flag === "office__head_office" ? (
+                      {props.flag === "office__head_office" ? (
                         <th className="min-w-150px">지점명/대표자</th>
-                      ) : props.flag === "office__branch_info" ? (
-                        <th className="min-w-150px">지점</th>
                       ) : props.flag === "office__branch_office" ? (
                         <th className="min-w-150px">원장명/본사</th>
-                      ) : null
-                      
-                      }
+                      ) : props.flag === "student__manage_info" ? (
+                        <th className="min-w-150px">학생명/학교명</th>
+                      ) : props.flag === "office__branch_info" ? (
+                        <th className="min-w-150px">지점명/브랜드</th>
+                      ) : null}
 
                       <th className="min-w-25px n_empty"></th>
                       <th className="min-w-50px text-end me-4">상태</th>
@@ -331,11 +352,11 @@ const Arraylist = (props) => {
                           <td>{data.id}</td>
                         ) : props.flag === "office__branch_office" ? (
                           <td>{data.id}</td>
+                        ) : props.flag === "student__manage_info" ? (
+                          <td>{data.id}</td>
                         ) : props.flag === "office__branch_info" ? (
                           <td>{data.id}</td>
-                        ) : null
-                        
-                        }
+                        ) : null}
 
                         <td className="n_empty"></td>
                         <td className="text-muted fw-semibold">
@@ -343,29 +364,22 @@ const Arraylist = (props) => {
                             <div className="d-flex align-items-center flex-row-fluid flex-wrap">
                               <div className="flex-grow-1 me-2">
                                 {props.flag === "office__head_office" ? (
-                                  <a
-                                    href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
-                                    className="text-gray-800 text-hover-primary fs-6 fw-bold"
-                                  >
+                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
                                     {data.name}
                                   </a>
                                 ) : props.flag === "office__branch_office" ? (
-                                  <a
-                                    href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
-                                    className="text-gray-800 text-hover-primary fs-6 fw-bold"
-                                  >
+                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
                                     {data.brand.name}
                                   </a>
+                                ) : props.flag === "student__manage_info" ? (
+                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                    {data.realName}
+                                  </a>
                                 ) : props.flag === "office__branch_info" ? (
-                                  <a
-                                    href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
-                                    className="text-gray-800 text-hover-primary fs-6 fw-bold"
-                                  >
+                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
                                     {data.name}
                                   </a>
-                                ) : null
-                                
-                                }
+                                ) : null}
                                 {/* <a
                                   href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
                                   className="text-gray-800 text-hover-primary fs-6 fw-bold"
@@ -373,9 +387,23 @@ const Arraylist = (props) => {
                                   
                                   {data.brand.name}
                                 </a> */}
-                                <span className="text-muted fw-semibold d-block fs-7">
-                                  {data.nickname}
-                                </span>
+                                {props.flag === "office__head_office" ? (
+                                  <span className="text-muted fw-semibold d-block fs-7">
+                                    {data.nickname}
+                                  </span>
+                                ) : props.flag === "office__branch_office" ? (
+                                  <span className="text-muted fw-semibold d-block fs-7">
+                                    {data.nickname}
+                                  </span>
+                                ) : props.flag === "student__manage_info" ? (
+                                  <span className="text-muted fw-semibold d-block fs-7">
+                                    {data.school}
+                                  </span>
+                                ) : props.flag === "office__branch_info" ? (
+                                  <span className="text-muted fw-semibold d-block fs-7">
+                                    {data.brand.name}
+                                  </span>
+                                ) : null}
                               </div>
                             </div>
                           </div>
@@ -592,4 +620,4 @@ const Arraylist = (props) => {
   );
 };
 
-export default Arraylist;
+export default AcademyList;

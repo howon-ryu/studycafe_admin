@@ -7,59 +7,63 @@ import { click } from "@testing-library/user-event/dist/click";
 import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
 
-
-
-
 const Branch_info = (props) => {
   const reset = useRef();
+  const [flag_one, setflagone] = useState("1");
+  const one_click = (props) => setflagone(props);
+  const [flag_two, setflagtwo] = useState("2");
+  const two_click = (props) => setflagtwo(props);
+  const [flag_three, setflagthree] = useState("1");
+  const three_click = (props) => setflagthree(props);
+  const [flag_four, setflagfour] = useState("2");
+  const four_click = (props) => setflagfour(props);
+  const [brand_list, setbrands] = useState("");
   const [data, setdata] = useState({
-    
-      "id": "",
-      "name": "",
-      "businessRegistrationNumber": "",
-      "homePageUrl": null,
-      "isManagement": false,
-      "location": null,
-      "brand": {
-        "id": "",
-        "name": "",
-        "status": "",
-        "businessRegistrationNumber": ""
-      },
-      "owner": {
-        "id": "",
-        "username": "",
-        "realName": "",
-        "phone": "",
-        "email": "",
-        "birthDate": "",
-        "gender": "",
-        "nickname": "",
-        "profileImgUrl": "",
-        "location": null,
-        "status": "",
-        "lastLoginAt": "",
-        "darkMode": false
-      },
-      "manager": {
-        "id": "",
-        "username": "",
-        "realName": "",
-        "phone": "",
-        "email": "",
-        "birthDate": "",
-        "gender": "",
-        "nickname": "",
-        "profileImgUrl": "",
-        "location": null,
-        "status": "",
-        "lastLoginAt": "",
-        "darkMode": false
-      },
-      "division": "",
-      "closedTime": null,
-      "status": ""
-    
+    id: "",
+    name: "",
+    businessRegistrationNumber: "",
+    homePageUrl: null,
+    isManagement: false,
+    location: null,
+    brand: {
+      id: "",
+      name: "",
+      status: "",
+      businessRegistrationNumber: "",
+    },
+    owner: {
+      id: "",
+      username: "",
+      realName: "",
+      phone: "",
+      email: "",
+      birthDate: "",
+      gender: "",
+      nickname: "",
+      profileImgUrl: "",
+      location: null,
+      status: "",
+      lastLoginAt: "",
+      darkMode: false,
+    },
+    manager: {
+      id: "",
+      username: "",
+      realName: "",
+      phone: "",
+      email: "",
+      birthDate: "",
+      gender: "",
+      nickname: "",
+      profileImgUrl: "",
+      location: null,
+      status: "",
+      lastLoginAt: "",
+      darkMode: false,
+    },
+    division: "",
+    closedTime: null,
+    status: "",
   });
   // let [detail_num, setdetailnum] = useState([1]);
   let detail_num;
@@ -85,13 +89,49 @@ const Branch_info = (props) => {
       setdata({
         id: "",
         name: "",
-        status: "",
-        head: {
-          email: "",
-          phone: "",
-          location: "",
-          nickname: "",
+        businessRegistrationNumber: "",
+        homePageUrl: null,
+        isManagement: false,
+        location: null,
+        brand: {
+          id: "",
+          name: "",
+          status: "",
+          businessRegistrationNumber: "",
         },
+        owner: {
+          id: "",
+          username: "",
+          realName: "",
+          phone: "",
+          email: "",
+          birthDate: "",
+          gender: "",
+          nickname: "",
+          profileImgUrl: "",
+          location: null,
+          status: "",
+          lastLoginAt: "",
+          darkMode: false,
+        },
+        manager: {
+          id: "",
+          username: "",
+          realName: "",
+          phone: "",
+          email: "",
+          birthDate: "",
+          gender: "",
+          nickname: "",
+          profileImgUrl: "",
+          location: null,
+          status: "",
+          lastLoginAt: "",
+          darkMode: false,
+        },
+        division: "",
+        closedTime: null,
+        status: "",
       });
       reset.current.click();
     } else {
@@ -101,6 +141,23 @@ const Branch_info = (props) => {
     }
   }, [props]);
 
+  useEffect(() => {
+    searchBrands();
+  }, []);
+  function searchBrands() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "brands";
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setbrands(response.data);
+        console.log(response.data);
+        console.log("성공", brand_list);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   function spec_brand_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "branches" + "/" + detail_num;
@@ -131,19 +188,35 @@ const Branch_info = (props) => {
       console.log(e);
 
       const data_t = {
-        name: e.target[2].value,
-        homePageUrl: "wintergreen.study",
+        brandId: data.brand.id,
+        name: data.name,
+        homePageUrl: data.homePageUrl,
         isManagement: false,
-        businessRegistrationNumber: "123-123-123",
-        status: "ACTIVE",
-        head: {
-          username: e.target[5].value,
-          password: e.target[3].value,
-          password2: e.target[4].value,
-          realName: e.target[5].value,
-          phone: e.target[6].value,
-          email: e.target[7].value,
+        businessRegistrationNumber: data.businessRegistrationNumber,
+        status: data.status,
+        // location: {
+        //   zonecode: data.location.zonecode,
+        //   address: data.location.address,
+        //   roadAddress: data.location.roadAddress,
+        //   jibunAddress: data.location.jibunAddress,
+        //   sido: data.location.sido,
+        //   sigungu: data.location.sigungu,
+        //   bname: data.location.bname,
+        //   bname1: data.location.bname1,
+        //   additionalInfo: data.location.additionalInfo
+        // },
+        location: {
+          zonecode: "12345",
+          address: "경기도 고양시 덕양구 항공대학로 76",
+          roadAddress: "경기도 고양시 덕양구 항공대학로 76",
+          jibunAddress: "경기도 고양시 덕양구 현천동 188-8",
+          sido: "경기도",
+          sigungu: "고양시",
+          bname: "현천동",
+          bname1: "화전읍",
+          additionalInfo: "중소기업벤쳐센터 311호",
         },
+        ownerUsername: e.target[10].value,
       };
 
       const headers = { "header-name": "value" };
@@ -170,13 +243,12 @@ const Branch_info = (props) => {
           console.log("re:", error.response.data);
         });
     } else {
-     
       // event.preventDefalut();
 
       console.log(e);
 
       const data_t = {
-        brandId: 1,
+        brandId: data.brand.id,
         name: data.name,
         homePageUrl: data.homePageUrl,
         isManagement: false,
@@ -202,9 +274,9 @@ const Branch_info = (props) => {
           sigungu: "고양시",
           bname: "현천동",
           bname1: "화전읍",
-          additionalInfo: "중소기업벤쳐센터 311호"
+          additionalInfo: "중소기업벤쳐센터 311호",
         },
-        ownerUsername: e.target[10].value
+        ownerUsername: e.target[10].value,
       };
 
       const headers = { "header-name": "value" };
@@ -212,7 +284,7 @@ const Branch_info = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "branches" + "/" + props.detail_num;
+      let posturl_set = posturl + "branches" + "/" + data.id;
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
@@ -242,297 +314,293 @@ const Branch_info = (props) => {
               data-kt-table-widget-3="tabs_nav"
             >
               <div
-                className="fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn on"
+                className={
+                  flag_one == "1"
+                    ? "fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn on"
+                    : "fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn "
+                }
                 data-kt-table-widget-3="tab"
                 data-kt-table-widget-3-value="Show All"
+                onClick={() => {
+                  one_click("1");
+                  two_click("2");
+                  three_click("2");
+                  four_click("2");
+                }}
               >
                 상세정보
               </div>
 
               <div
-                className="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn "
+                className={
+                  flag_two == "1"
+                    ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn on"
+                    : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn "
+                }
                 data-kt-table-widget-3="tab"
                 data-kt-table-widget-3-value="Pending"
+                onClick={() => {
+                  one_click("2");
+                  two_click("1");
+                  three_click("2");
+                  four_click("2");
+                }}
               >
                 관리그룹
               </div>
 
               <div
-                className="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn"
+                className={
+                  flag_three == "1"
+                    ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn on"
+                    : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn"
+                }
                 data-kt-table-widget-3="tab"
                 data-kt-table-widget-3-value="Pending"
+                onClick={() => {
+                  one_click("2");
+                  two_click("2");
+                  three_click("1");
+                  four_click("2");
+                }}
               >
                 학습실
               </div>
-              <div
-                className="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn"
+              {/* <div
+                className={
+                  flag_four == "1"
+                    ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn on"
+                    : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn"
+                }
                 data-kt-table-widget-3="tab"
                 data-kt-table-widget-3-value="Pending"
+                onClick={() => {
+                  one_click("2");
+                  two_click("2");
+                  three_click("2");
+                  four_click("1");
+                }}
               >
                 알림톡 설정
-              </div>
+              </div> */}
             </div>
           </div>
+          {flag_one == "1" ? (
+            <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
+              <form
+                onSubmit={function (event) {
+                  event.preventDefault();
+                  handleSubmit(event);
+                }}
+              >
+                <div className="card card-flush h-xl-100 card__right">
+                  <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
+                    <div className="row mb-5">
+                      <div className="col-md-6 fv-row input_50">
+                        <label className="required fs-5 fw-semibold mb-2">
+                          학원본사 ID
+                        </label>
 
-          <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
-          <form
-        onSubmit={function (event) {
-          event.preventDefault();
-          handleSubmit(event);
-        }}
-      >
-        <div className="card card-flush h-xl-100 card__right">
-    
+                        <input
+                          type="text"
+                          className="form-control"
+                          defaultValue=""
+                          name="first_name"
+                        />
+                        <span className="me-3">.here.study</span>
+                      </div>
+                      <div className="col-md-6 fv-row input_50">
+                        <label className="required fs-5 fw-semibold mb-2">
+                          학원본사 선택
+                        </label>
 
-          <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
-            <div className="row mb-5">
-              <div className="col-md-6 fv-row input_50">
-                <label className="required fs-5 fw-semibold mb-2">
-                  학원본사 ID
-                </label>
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                        >
+                          {brand_list &&
+                            brand_list.map((data) => {
+                              <option>brand_list.name</option>;
+                            })}
+                          {/* {brand_list &&
+                          brand_list.products.map((brand_list) => (
+                            <option value="Web Developer">brand_list.id</option>
+                          ))} */}
+                        </select>
+                      </div>
+                    </div>
 
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultvalue="wintergreen"
-                  name="first_name"
-                />
-                <span className="me-3">.here.study</span>
-                <button
-                  type="reset"
-                  data-kt-ecommerce-settings-type="cancel"
-                  className="btn btn-primary"
-                >
-                  중복확인
-                </button>
-              </div>
+                    <div className="row mb-5">
+                      <div className="col-md-6 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">
+                          운영자 이름
+                        </label>
 
-              <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">
-                  학원본사 이름
-                </label>
+                        <input
+                          type="text"
+                          className="form-control "
+                          defaultValue={data.owner.username || ""}
+                          name="nickname"
+                          disabled
+                        />
+                      </div>
+                    </div>
 
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={data.name}
-                  name=""
-                  disabled
-                />
-              </div>
-            </div>
+                    <div className="row mb-5">
+                      <div className="col-md-6 fv-row">
+                        <label className="required fs-5 fw-semibold mb-2">
+                          지점 이름
+                        </label>
 
-            <div className="row mb-5">
-              <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">
-                  비밀번호
-                </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          defaultValue={data.name}
+                          name=""
+                        />
+                      </div>
 
-                <input
-                  type="password"
-                  id="password"
-                  className="form-control"
-                  defaultValue=""
-                  disabled
-                />
-              </div>
+                      <div className="col-md-6 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">
+                          사업자등록증
+                        </label>
 
-              <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">
-                  비밀번호 확인
-                </label>
+                        <input
+                          type="text"
+                          className="form-control "
+                          defaultValue={data.businessRegistrationNumber}
+                          name="last_name"
+                        />
+                      </div>
+                    </div>
 
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder=""
-                  name=""
-                  disabled
-                />
-              </div>
-            </div>
+                    <div className="row mb-5">
+                      <div className="col-md-12 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">주소</label>
 
-            <div className="row mb-5">
-              <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">대표자</label>
+                        <input
+                          type="text"
+                          className="form-control "
+                          defaultValue={data.location || ""}
+                          name="first_name"
+                        />
+                      </div>
+                    </div>
 
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={data.owner.realName || ""}
-                  disabled
-                  name=""
-                />
-              </div>
+                    <div className="row mb-5">
+                      <div className="col-md-4 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">
+                          최종 수정자 ID
+                        </label>
 
-              <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">
-                  대표 연락처
-                </label>
+                        <input
+                          type="text"
+                          className="form-control form-control-solid"
+                          defaultValue="wintergreen"
+                          name=""
+                          readOnly
+                        />
+                      </div>
 
-                <input
-                  type="tel"
-                  className="form-control "
-                  defaultValue={data.owner.phone || ""}
-                  name=""
-                  disabled
-                />
-              </div>
-            </div>
+                      <div className="col-md-4 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">
+                          최종 수정 일시
+                        </label>
 
-            <div className="row mb-5">
-              <div className="col-md-6 fv-row">
-                <label className="fs-5 fw-semibold mb-2">대표 이메일</label>
+                        <input
+                          type="date"
+                          className="form-control form-control-solid"
+                          defaultValue="2019-09-22"
+                          name=""
+                          readOnly
+                        />
+                      </div>
 
-                <input
-                  type="text"
-                  className="form-control "
-                  defaultValue={data.owner.email || ""}
-                  name="first_name"
-                  disabled
-                />
-              </div>
+                      <div className="col-md-4 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">사용</label>
 
-              <div className="col-md-6 fv-row">
-                <label className="fs-5 fw-semibold mb-2">사업자등록증</label>
-
-                <input type="text" className="form-control " name="last_name" disabled/>
-              </div>
-            </div>
-
-            <div className="row mb-5">
-              <div className="col-md-12 fv-row">
-                <label className="fs-5 fw-semibold mb-2">주소</label>
-
-                <input
-                  type="text"
-                  className="form-control "
-                  defaultValue={data.location || ""}
-                  name="first_name"
-                  disabled
-                />
-              </div>
-            </div>
-
-            <div className="row mb-5">
-              <div className="col-md-6 fv-row">
-                <label className="fs-5 fw-semibold mb-2">운영자 이름</label>
-
-                <input
-                  type="text"
-                  className="form-control "
-                  defaultValue={data.manager.realName || ""}
-                  name="nickname"
-                />
-              </div>
-
-              <div className="col-md-6 fv-row">
-                <label className="fs-5 fw-semibold mb-2">운영자연락처</label>
-
-                <input type="text" className="form-control " name="phone"    defaultValue={data.manager.phone || ""}/>
-              </div>
-            </div>
-
-            <div className="row mb-5">
-              <div className="col-md-4 fv-row">
-                <label className="fs-5 fw-semibold mb-2">최종 수정자 ID</label>
-
-                <input
-                  type="text"
-                  className="form-control form-control-solid"
-                  defaultValue="wintergreen"
-                  name=""
-                  readOnly
-                />
-              </div>
-
-              <div className="col-md-4 fv-row">
-                <label className="fs-5 fw-semibold mb-2">최종 수정 일시</label>
-
-                <input
-                  type="date"
-                  className="form-control form-control-solid"
-                  defaultValue="2019-09-22"
-                  name=""
-                  readOnly
-                />
-              </div>
-
-              <div className="col-md-4 fv-row">
-                <label className="fs-5 fw-semibold mb-2">사용</label>
-
-                <div className="d-flex check__use_wrap">
-                  <div className="form-check form-check-custom form-check-solid me-5 check__use">
-                    <input
-                      className="form-check-input check__use_input"
-                      type="radio"
-                      defaultValue=""
-                      name="choice_use"
-                      id="product_tax_yes"
-                      checked={true}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="product_tax_yes"
-                    >
-                      사용
-                    </label>
+                        <div className="d-flex check__use_wrap">
+                          <div className="form-check form-check-custom form-check-solid me-5 check__use">
+                            <input
+                              className="form-check-input check__use_input"
+                              type="radio"
+                              defaultValue=""
+                              name="choice_use"
+                              id="product_tax_yes"
+                              checked={true}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="product_tax_yes"
+                            >
+                              사용
+                            </label>
+                          </div>
+                          <div className="form-check form-check-custom form-check-solid me-5 check__hold">
+                            <input
+                              className="form-check-input check__hold_input"
+                              type="radio"
+                              defaultValue=""
+                              name="choice_use"
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="product_tax_no"
+                            >
+                              대기
+                            </label>
+                          </div>
+                          <div className="form-check form-check-custom form-check-solid check__delet">
+                            <input
+                              className="form-check-input check__delet_input"
+                              type="radio"
+                              defaultValue=""
+                              name="choice_use"
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="product_tax_no"
+                            >
+                              삭제
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="form-check form-check-custom form-check-solid me-5 check__hold">
-                    <input
-                      className="form-check-input check__hold_input"
-                      type="radio"
-                      defaultValue=""
-                      name="choice_use"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="product_tax_no"
+                  <button type="reset" hidden>
+                    <span ref={reset}></span>
+                  </button>
+                  <div className="card-footer d-flex justify-content-end py-6">
+                    <button
+                      type="reset"
+                      className="btn btn-light btn-active-light-primary me-2"
                     >
-                      대기
-                    </label>
-                  </div>
-                  <div className="form-check form-check-custom form-check-solid check__delet">
-                    <input
-                      className="form-check-input check__delet_input"
-                      type="radio"
-                      defaultValue=""
-                      name="choice_use"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="product_tax_no"
-                    >
-                      삭제
-                    </label>
+                      취소
+                    </button>
+                    {props.detail_num != "0" ? (
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        id="submit_btn"
+                      >
+                        변경사항 저장
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        id="submit_btn"
+                      >
+                        추가
+                      </button>
+                    )}
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <button type="reset" hidden>
-            <span ref={reset}></span>
-          </button>
-          <div className="card-footer d-flex justify-content-end py-6">
-            <button
-              type="reset"
-              className="btn btn-light btn-active-light-primary me-2"
-            >
-              취소
-            </button>
-            {props.detail_num != "0" ? (
-              <button type="submit" className="btn btn-primary" id="submit_btn">
-                변경사항 저장
-              </button>
-            ) : (
-              <button type="submit" className="btn btn-primary" id="submit_btn">
-                추가
-              </button>
-            )}
-          </div>
-        </div>
-      </form>
-            {/* <div className="right__tab02_table tab02 mb-20">
+              </form>
+              {/* <div className="right__tab02_table tab02 mb-20">
               <select
                 name="status"
                 data-control="select2"
@@ -811,7 +879,7 @@ const Branch_info = (props) => {
             </div>
           </div> */}
 
-          {/* <div className="card-footer d-flex justify-content-end py-6">
+              {/* <div className="card-footer d-flex justify-content-end py-6">
             <button
               type="reset"
               className="btn btn-light btn-active-light-primary me-2"
@@ -822,9 +890,10 @@ const Branch_info = (props) => {
               변경사항 저장
             </button>
           </div> */}
+            </div>
+          ) : null}
         </div>
       </div>
-    </div>
     </div>
   );
 };

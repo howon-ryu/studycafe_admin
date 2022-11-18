@@ -48,7 +48,7 @@ const Branch_detail = (props) => {
   }, [props]);
   function spec_branch_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches" + "/owners/" + detail_num;
+    let url_set = url + "users" + "/owners/" + detail_num;
     console.log("url:", url_set);
     axios
       .get(url_set)
@@ -91,7 +91,7 @@ const Branch_detail = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "branches"+ "/owners";
+      let posturl_set = posturl + "users" + "/owners";
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
@@ -129,12 +129,12 @@ const Branch_detail = (props) => {
       // console.log(e.target[0].value);
       // console.log(e.target[0].value);
       const data_t = {
-        brandId: data.brand.head.id,
+        brandId: data.brand.id,
         id: data.id,
         username: e.target[1].value,
         password: e.target[4].value,
         password2: e.target[5].value,
-        realName: data.brand.head.realname,
+        realName: data.realName,
         phone: e.target[2].value,
         email: e.target[3].value,
       };
@@ -144,7 +144,7 @@ const Branch_detail = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "branches"+"/owners";
+      let posturl_set = posturl + "users" + "/owners";
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
@@ -186,14 +186,6 @@ const Branch_detail = (props) => {
                 >
                   원장
                 </div>
-
-                <div
-                  className="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn"
-                  data-kt-table-widget-3="tab"
-                  data-kt-table-widget-3-value="Pending"
-                >
-                  지점
-                </div>
               </div>
             </div>
 
@@ -227,7 +219,7 @@ const Branch_detail = (props) => {
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue={data.nickname}
+                    defaultValue={data.realName}
                     name=""
                   />
                 </div>

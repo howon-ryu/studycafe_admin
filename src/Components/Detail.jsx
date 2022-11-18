@@ -83,7 +83,7 @@ const Detail = (props) => {
 
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
-      alert(e.target[2].value);
+      // alert(e.target[2].value);
       // event.preventDefalut();
 
       console.log(e);
@@ -129,18 +129,19 @@ const Detail = (props) => {
         });
     } else {
       // alert(event.target[1].value);
-      alert(e.target[2].value);
+      // alert(e.target[2].value);
       // event.preventDefalut();
 
       console.log(e);
 
       const data_t = {
         name: e.target[2].value,
-        homePageUrl: "wintergreen.study",
+        homePageUrl: e.target[1].value + "here.study",
         isManagement: false,
         businessRegistrationNumber: "123-123-123",
         status: "ACTIVE",
         head: {
+          id: data.head.id,
           password: e.target[3].value,
           password2: e.target[4].value,
           realName: e.target[5].value,
@@ -185,7 +186,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          //event.preventDefault();
+          event.preventDefault();
           handleSubmit(event);
         }}
       >
@@ -215,7 +216,7 @@ const Detail = (props) => {
                 <input
                   type="text"
                   className="form-control"
-                  defaultvalue="wintergreen"
+                  defaultValue={data.head.username}
                   name="first_name"
                 />
                 <span className="me-3">.here.study</span>

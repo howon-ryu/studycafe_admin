@@ -15,6 +15,7 @@ import Office__branch_info from "./Components/Office__branch_info";
 import Student__manage_info from "./Components/Student__manage_info";
 import Study_weekly_plan from "./Components/Study_weekly_plan";
 import Study_weekly_report from "./Components/Study_weekly_report";
+import Study_day_plan from "./Components/Study_day_plan";
 import { React, useState, useEffect } from "react";
 function App() {
   const [value, setValue] = useState(350);
@@ -33,7 +34,7 @@ function App() {
           </SidebarMenu>
           <SidebarMenu title="학습 관리" icon_num="3">
             <SidebarMenuItem title="주간학습 계획" to="/Study_weekly_plan" />
-            <SidebarMenuItem title="일일학습 계획" to="/main" />
+            <SidebarMenuItem title="일일학습 현황" to="/Study_day_plan" />
             <SidebarMenuItem
               title="주간학습 레포트"
               to="/Study_weekly_report"
@@ -47,7 +48,7 @@ function App() {
         </Sidebar>
         <Header width={value} loginflag={login_flag} />
         <Routes>
-        <Route exact path="/" element={<Login />} />
+          <Route exact path="/" element={<Login />} />
           <Route exact path="/registration" element={<Registration />} />
           <Route exact path="/main" element={<Main width={value} />} />
           <Route
@@ -84,6 +85,11 @@ function App() {
             exact
             path="/Study_weekly_report"
             element={<Study_weekly_report width={value} />}
+          />
+          <Route
+            exact
+            path="/Study_day_plan"
+            element={<Study_day_plan width={value} />}
           />
         </Routes>
       </BrowserRouter>

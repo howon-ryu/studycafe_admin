@@ -1,21 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
 import React from "react";
-import "../css/study__weekly_plan.css";
 
 import styled from "@emotion/styled";
 import "../css/layout.css";
+import Day_report from "./Weekly_report";
 // import "./main.css";
 // import { Link } from "react-router-dom";
-import Arraylist from "./Arraylist";
-import Calendar_plan from "./Calendar_plan";
+
 // import { Container } from "react-bootstrap";
-const Study_weekly_plan = (props) => {
+const Study_day_plan = (props) => {
   let widthh = props.width;
   return (
     <Container>
       <div
-        className="study_weekly_plan"
+        className="study_day_plan"
         css={css`
           margin-left: ${widthh}px;
         `}
@@ -26,29 +25,32 @@ const Study_weekly_plan = (props) => {
             margin: 30px 0;
           `}
         >
-          <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0">
-            학원본사 관리
+          <h1
+            className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0"
+            css={css``}
+          >
+            일일 학습 계획
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li className="breadcrumb-item text-muted">
               <a href="#" className="text-muted text-hover-primary">
-                지점 관리
+                학습관리
               </a>
             </li>
             <li className="breadcrumb-item">
               <span className="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <li className="breadcrumb-item text-muted">학원본사 관리</li>
+            <li className="breadcrumb-item text-muted">일일 학습 계획</li>
           </ul>
         </div>
         <div
+          className="re"
           css={css`
-            display: flex;
+            flex: 1;
+            margin-right: 100px;
           `}
         >
-          <Arraylist />
-
-          {/* <Calendar_plan /> */}
+          <Day_report />
         </div>
       </div>
     </Container>
@@ -63,4 +65,4 @@ const Container = styled.div`
   padding-top: 20px;
 `;
 
-export default Study_weekly_plan;
+export default Study_day_plan;

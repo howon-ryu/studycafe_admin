@@ -101,11 +101,10 @@ const Header = (props) => {
                     data-control="select2"
                     data-placeholder="본사"
                     data-hide-search="true"
+                    defaultValue="1"
                   >
                     <option value=""></option>
-                    <option value="1" selected="selected">
-                      본사
-                    </option>
+                    <option value="1">본사</option>
                     <option value="2">동백 지점</option>
                     <option value="3">세번째 지점</option>
                   </select>
