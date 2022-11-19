@@ -345,6 +345,7 @@ const AcademyList = (props) => {
                         className={"list_" + data.id}
                         onClick={(e) => {
                           listclick(data.id);
+                          console.log("ads:",data);
                         }}
                       >
                         {/* <td>{data.id}</td> */}
