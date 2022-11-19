@@ -4,7 +4,7 @@ import React from "react";
 
 import styled from "@emotion/styled";
 import "../css/layout.css";
-import Day_report from "./Weekly_report";
+import Day_report from "./Day_report";
 // import "./main.css";
 // import { Link } from "react-router-dom";
 
