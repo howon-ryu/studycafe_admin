@@ -19,9 +19,9 @@ const Header = (props) => {
   const [login_check, setlogin] = useState(true);
   useEffect(() => {
     console.log(window.location.pathname);
-    if (window.location.pathname == "/") {
-      setlogin(false);
-    }
+    // if (window.location.pathname == "/") {
+    //   setlogin(false);
+    // }
     if (window.location.pathname == "/login") {
       setlogin(false);
     }
