@@ -48,7 +48,7 @@ function App() {
         </Sidebar>
         <Header width={value} loginflag={login_flag} />
         <Routes>
-          <Route exact path="/" element={<Login />} />
+          <Route exact path="/" element={<Office__head_office width={value}/>}/> 
           <Route exact path="/registration" element={<Registration />} />
           <Route exact path="/main" element={<Main width={value} />} />
           <Route
