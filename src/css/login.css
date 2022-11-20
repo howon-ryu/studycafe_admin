@@ -1,0 +1,103 @@
+.flex-center{
+    justify-content:center;
+    align-items:center;
+    
+}
+.flex-lg-row-fluid{
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.flex-column{
+    flex-direction: column !important;
+}
+
+.d-flex{
+    display: flex !important;
+  
+}
+.order-lg-1 {
+    order: 1 !important;
+}
+
+.w-lg-50 {
+    width: 50% !important;
+}
+
+.p-10 {
+    padding: 2.5rem !important;
+}
+
+.order-2 {
+    order: 2 !important;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+.root{
+    height:100vh;
+    z-index:100;
+
+    
+}
+.left_side{
+    width:50%;
+    float:left;
+}
+.right_side{
+    width:50%;
+    float:right;
+    background-image: url("https://interiorbay.co.kr:54306/design/upload_file/BD38940/fb655d3ac7a89f5b0dd759534ba7ae5b_78110_1.jpg");
+}
+.w-lg-500px {
+    width: 500px !important;
+}
+.mb-8 {
+    margin-bottom: 2rem !important;
+}
+.text-dark {
+    color: var(--kt-text-dark) !important;
+    --bs-text-opacity:1;
+}
+.fw-bolder {
+    font-weight: 700 !important;
+}
+.fs-6 {
+    font-size: 1.075rem !important;
+}
+.form-label {
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #3F4254;
+}
+.label {
+    display: inline-block;
+}
+.form-control {
+    color: var(--kt-input-color);
+    background-color: var(--kt-input-bg);
+    border: 1px solid var(--kt-input-border-color);
+    box-shadow: none !important;
+}
+.bg-transparent {
+    --bs-bg-opacity: 1;
+    background-color: transparent !important;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.775rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #5E6278;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 1px solid #E4E6EF;
+    appearance: none;
+    border-radius: 0.475rem;
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

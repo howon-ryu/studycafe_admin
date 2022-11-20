@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #999;
+        stroke: #4ffafe;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 3px;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="모양_5" data-name="모양 5" class="cls-1" d="M13.2,16.4H46.8"/>
+  <path id="모양_5_복사" data-name="모양 5 복사" class="cls-1" d="M13.2,28.4H46.8"/>
+  <path id="모양_5_복사_2" data-name="모양 5 복사 2" class="cls-1" d="M13.2,41.2H46.8"/>
+</svg>

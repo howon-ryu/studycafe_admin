@@ -1,0 +1,276 @@
+@charset "utf-8";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap");
+
+/*=======================================================
+css dafault
+=========================================================*/
+html,
+body {
+  width: 100%;
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic";
+  font-weight: 400;
+}
+.form-check-input:checked[type="checkbox"] {
+  background-size: 60% 60%;
+}
+.app-header,
+.card {
+  box-shadow: none;
+}
+.card__right_wrap {
+  height: fit-content;
+}
+input[type="date"]::before {
+  content: attr(data-placeholder);
+  width: 100%;
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+  display: none;
+}
+.fc-button-group button,
+.btn__slim {
+  padding-top: 0.55rem !important;
+  padding-bottom: 0.55rem !important;
+}
+.input__slim {
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+  padding-left: 0.75rem;
+  font-size: 0.925rem;
+  border-radius: 0.425rem;
+}
+.t__center thead th {
+  text-align: center !important;
+  padding-right: 0.75rem !important;
+}
+.t__center thead th:nth-child(2) {
+  text-align: left !important;
+}
+.t__center td {
+  text-align: center;
+}
+.t__center td:nth-child(2) {
+  text-align: left;
+}
+/*=======================================================
+    #header-wrap 
+=========================================================*/
+/* .justify-content-between {
+  justify-content: end !important;
+} */
+.header__navi_logo {
+  display: none;
+}
+.navbar__item_user span {
+  display: none !important;
+  margin-left: 0.8rem;
+}
+.header__navi_logo .ver_txt {
+  display: inline-block;
+  margin-left: 0.8rem;
+  color: #9d9da6;
+  vertical-align: bottom;
+}
+.menu-rounded span.menu-link {
+  padding: 0.85rem 1rem;
+  border-bottom: #37374d solid 1px;
+  border-radius: 0;
+}
+.menu-sub.menu-sub-accordion {
+  padding: 1rem 0 0.45rem;
+}
+.input__wrap_col03 .input__wrap_in {
+  width: 30%;
+}
+@media (min-width: 768px) {
+  .navbar__item_user span {
+    display: flex !important;
+  }
+  .header__navi_logo {
+    display: flex;
+    align-items: center;
+  }
+}
+/* ======================================================
+   #container 
+=========================================================*/
+/* 왼쪽 card 목록요소 */
+.card__left .card-body.py-3 {
+  padding-bottom: 2.25rem !important;
+}
+.card__left th.text-end {
+  padding-right: 2.2rem !important;
+}
+.card__left th:first-child {
+  text-align: center;
+}
+.card__left .dataTables_scrollBody {
+  max-height: 680px !important;
+}
+.admin_left_table tbody tr td:first-child {
+  text-align: center;
+}
+.card__left tbody tr td:first-child {
+  font-weight: 400;
+  color: var(--kt-text-gray-600);
+}
+.right__tab_con tbody tr .text-end {
+  padding-right: 1.25rem;
+}
+.card__left tbody tr .text-end span {
+  margin-right: 1.25rem;
+}
+.stdy_w_rpt_content .stdy_w_rpt_table tbody tr.on td svg,
+.stdy_w_rpt_table tbody tr.on td a,
+.stdy_w_rpt_table tbody tr.on td,
+.stdy_w_rpt_content .stdy_w_rpt_table tbody tr:hover td svg,
+.stdy_w_rpt_table tbody tr:hover td a,
+.stdy_w_rpt_table tbody tr:hover td,
+.card__left tbody tr:hover td .text-muted,
+.card__left tbody tr.on td .text-muted,
+.card__left tbody tr:hover td a,
+.card__left tbody tr.on td a,
+.card__left tbody tr:hover td,
+.card__left tbody tr.on td {
+  color: #fff !important;
+}
+.card__left tbody tr:hover,
+.card__left tbody tr.on {
+  cursor: pointer;
+  background-color: var(--kt-primary);
+  border: none;
+}
+.stdy_w_rpt_table tbody tr.on,
+.stdy_w_rpt_table tbody tr:hover {
+  background-color: var(--kt-primary);
+  border: none;
+}
+.n_empty {
+  display: none;
+}
+.card_l_h {
+  align-items: center !important;
+}
+.selected__txt_wrap,
+.card_l_h_sch {
+  padding: 0 2.25rem;
+}
+.stdy_w_plan_content .card_l_h_sch {
+  width: 100%;
+  padding: 0;
+}
+.selected__txt_wrap span {
+  display: inline-block;
+  height: 43px;
+  line-height: 40px;
+}
+.card_l_h_sch input {
+  width: 100% !important;
+}
+/* 오른쪽 card */
+.right__tab_con .check_box_input,
+.card_right_body .check__use_wrap .form-check-custom {
+  height: 43.56px;
+  padding-left: 5px;
+}
+.row__line {
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+  border-bottom-color: var(--kt-border-color);
+  padding-bottom: 40px;
+  margin-bottom: 30px !important;
+}
+.check__delet {
+  display: none;
+}
+.check__delet.use {
+  display: flex;
+}
+.right__tab_btn {
+  color: var(--kt-text-muted) !important;
+}
+.right__tab_btn.on {
+  color: var(--kt-text-dark) !important;
+  border-bottom: 3px solid #009ef7 !important;
+}
+.right__tab_con {
+  display: none;
+}
+.right__tab_con.on {
+  display: block;
+}
+.input_50 label {
+  width: 100%;
+}
+.input_50 input {
+  display: inline-block;
+  width: 50%;
+}
+.app-content .card__right .card-footer {
+  border-top: 1px solid var(--kt-card-border-color) !important;
+}
+.branch_info_content .card_l_h .card-toolbar button {
+  display: none;
+}
+.right__tab02_table .select2-selection {
+  min-width: 160px;
+}
+.select2-dropdown {
+  max-width: 200px;
+}
+.right__tab02_con .dataTables_scrollBody {
+  max-height: 190px !important;
+}
+/* study_weekly_report 페이지 */
+.stdy_w_rpt_sch_w {
+  max-width: 400px;
+}
+.stdy_w_rpt_content tbody td svg {
+  color: var(--kt-primary);
+  margin-left: 3px;
+}
+.stdy_w__top_input,
+.stdy_w_rpt_date {
+  align-items: center;
+}
+.stdy_w_rpt_date .date_div {
+  display: inline-block;
+}
+.stdy_w_rpt_date .nav-item:nth-child(1) {
+  margin-right: 20px;
+}
+.stdy_w__top_input .form-check-input:checked[type="checkbox"] {
+  background-size: inherit;
+}
+.stdy_w_rpt_top .card-toolbar,
+.stdy_w_rpt_radio {
+  display: flex;
+  align-items: center;
+}
+.stdy_w_rpt_content table.dataTable thead > tr > th.sorting_none::after {
+  display: none !important;
+}
+.stdy_w_rpt_sch_w .svg-icon.svg-icon-3 svg {
+  height: 1.75rem !important;
+  width: 1.75rem !important;
+}
+.stdy_w_rpt_table.table td:first-child,
+.stdy_w_rpt_table.table th:first-child,
+.stdy_w_rpt_table.table tr:first-child {
+  padding-left: 0.75rem !important;
+}
+.stdy_w_rpt_modal .dataTables_scrollHeadInner {
+  width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .stdy_w_rpt_top2,
+  .stdy_w_rpt_content .card-header {
+    display: none !important;
+  }
+}
+/* ======================================================
+    #footer-wrap 
+=========================================================*/
