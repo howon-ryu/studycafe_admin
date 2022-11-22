@@ -22,7 +22,7 @@ function App() {
   const [login_flag, setLoginFlag] = useState(true);
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename="/studylab">
         <Sidebar width={350} setValue={setValue} loginflag={login_flag}>
           <SidebarMenu title="지점 관리" icon_num="1">
             <SidebarMenuItem title="학원본사 관리" to="/Office__head_office" />

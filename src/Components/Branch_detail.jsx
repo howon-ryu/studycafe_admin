@@ -64,13 +64,12 @@ const Branch_detail = (props) => {
       });
   }
   const handles = (e) => {
-    alert("kkl");
     e.preventDefalut();
   };
 
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
-      alert(e.target[2].value);
+      // alert(e.target[2].value);
       // event.preventDefalut();
 
       console.log(e);
@@ -108,10 +107,11 @@ const Branch_detail = (props) => {
           console.log("re:", error.config);
           console.log("re:", error.requests);
           console.log("re:", error.response.data);
+          alert("유효성 검사 확인 필요", error.message);
         });
     } else {
       // alert(event.target[1].value);
-      alert(e.target[2].value);
+      // alert(e.target[2].value);
       // event.preventDefalut();
 
       console.log(e);
@@ -129,12 +129,9 @@ const Branch_detail = (props) => {
       // console.log(e.target[0].value);
       // console.log(e.target[0].value);
       const data_t = {
-        brandId: data.brand.id,
-        id: data.id,
-        username: e.target[1].value,
         password: e.target[4].value,
         password2: e.target[5].value,
-        realName: data.realName,
+        realName: e.target[1].value,
         phone: e.target[2].value,
         email: e.target[3].value,
       };
@@ -144,7 +141,7 @@ const Branch_detail = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "users" + "/owners";
+      let posturl_set = posturl + "users" + "/owners/" + data.id;
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 

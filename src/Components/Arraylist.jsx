@@ -59,7 +59,7 @@ const AcademyList = (props) => {
       .then(function (response) {
         setdata(response.data);
         console.log(response.data);
-        console.log("성공");
+        console.log("성공 owner");
       })
       .catch(function (error) {
         console.log("실패");
@@ -328,7 +328,7 @@ const AcademyList = (props) => {
                       {props.flag === "office__head_office" ? (
                         <th className="min-w-150px">지점명/대표자</th>
                       ) : props.flag === "office__branch_office" ? (
-                        <th className="min-w-150px">원장명/본사</th>
+                        <th className="min-w-150px">원장명</th>
                       ) : props.flag === "student__manage_info" ? (
                         <th className="min-w-150px">학생명/학교명</th>
                       ) : props.flag === "office__branch_info" ? (
@@ -345,7 +345,7 @@ const AcademyList = (props) => {
                         className={"list_" + data.id}
                         onClick={(e) => {
                           listclick(data.id);
-                          console.log("ads:",data);
+                          console.log("ads:", data);
                         }}
                       >
                         {/* <td>{data.id}</td> */}
@@ -370,7 +370,7 @@ const AcademyList = (props) => {
                                   </a>
                                 ) : props.flag === "office__branch_office" ? (
                                   <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
-                                    {data.brand.name}
+                                    {data.nickname}
                                   </a>
                                 ) : props.flag === "student__manage_info" ? (
                                   <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
@@ -394,7 +394,7 @@ const AcademyList = (props) => {
                                   </span>
                                 ) : props.flag === "office__branch_office" ? (
                                   <span className="text-muted fw-semibold d-block fs-7">
-                                    {data.nickname}
+                                    {data.name}
                                   </span>
                                 ) : props.flag === "student__manage_info" ? (
                                   <span className="text-muted fw-semibold d-block fs-7">

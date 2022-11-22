@@ -8,6 +8,8 @@ import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
 const Detail = (props) => {
   const reset = useRef();
+  let idflag = "2";
+  const [double, setdouble] = useState("");
   const [data, setdata] = useState({
     id: "",
     name: "",
@@ -67,6 +69,7 @@ const Detail = (props) => {
       .get(url_set)
       .then(function (response) {
         setdata(response.data);
+        setdouble(response.data.head.username);
         console.log("data:", data);
         console.log("head:", data.head);
         console.log(response.data);
@@ -74,8 +77,36 @@ const Detail = (props) => {
       })
       .catch(function (error) {
         console.log("실패");
+        alert("실패");
       });
   }
+  function onchange_fuc(e) {
+    console.log("asdfasdf:", e);
+    setdouble(e.target.value);
+    console.log("double", double);
+  }
+  function doublecheck(e) {
+    console.log("e:", e);
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "auth" + "/check/" + double;
+    console.log("url:", url_set);
+    axios
+      .get(url_set)
+      .then(function (response) {
+        alert("아이디 사용가능");
+        idflag = "1";
+        console.log("data:", data);
+        console.log("head:", data.head);
+        console.log(response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+        idflag = "2";
+        alert("아이디사용 불가능");
+      });
+  }
+
   const handles = (e) => {
     alert("kkl");
     e.preventDefalut();
@@ -87,7 +118,7 @@ const Detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      alert(e.target[1].value);
       const data_t = {
         name: e.target[2].value,
         homePageUrl: "wintergreen.study",
@@ -95,7 +126,7 @@ const Detail = (props) => {
         businessRegistrationNumber: "123-123-123",
         status: "ACTIVE",
         head: {
-          username: e.target[5].value,
+          username: double,
           password: e.target[3].value,
           password2: e.target[4].value,
           realName: e.target[5].value,
@@ -112,21 +143,25 @@ const Detail = (props) => {
       let posturl_set = posturl + "brands";
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
-
-      axios
-        .post(posturl_set, data_t, config)
-        .then((response) => {
-          console.log(response.status);
-          console.log(response.data);
-        })
-        // .catch((e) => console.log('something went wrong :(', e));
-        .catch((error) => {
-          console.log("re:", error.message);
-          console.log("re:", error.body);
-          console.log("re:", error.config);
-          console.log("re:", error.requests);
-          console.log("re:", error.response.data);
-        });
+      if (idflag == "1") {
+        axios
+          .post(posturl_set, data_t, config)
+          .then((response) => {
+            console.log(response.status);
+            console.log(response.data);
+          })
+          // .catch((e) => console.log('something went wrong :(', e));
+          .catch((error) => {
+            alert("유효성 을 다시 확인하세요");
+            console.log("re:", error.message);
+            console.log("re:", error.body);
+            console.log("re:", error.config);
+            console.log("re:", error.requests);
+            console.log("re:", error.response.data);
+          });
+      } else {
+        alert("본사 id를 확인하세요");
+      }
     } else {
       // alert(event.target[1].value);
       // alert(e.target[2].value);
@@ -168,6 +203,7 @@ const Detail = (props) => {
         })
         // .catch((e) => console.log('something went wrong :(', e));
         .catch((error) => {
+          alert("유효성 을 다시 확인하세요");
           console.log("re:", error.message);
           console.log("re:", error.body);
           console.log("re:", error.config);
@@ -218,12 +254,14 @@ const Detail = (props) => {
                   className="form-control"
                   defaultValue={data.head.username}
                   name="first_name"
+                  onChange={onchange_fuc}
                 />
                 <span className="me-3">.here.study</span>
                 <button
-                  type="reset"
                   data-kt-ecommerce-settings-type="cancel"
                   className="btn btn-primary"
+                  onClick={doublecheck}
+                  type="button"
                 >
                   중복확인
                 </button>

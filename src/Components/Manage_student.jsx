@@ -123,16 +123,14 @@ const Manage_student = (props) => {
       console.log(e);
 
       const data_t = {
-        id: data.id,
+        password: e.target[5].value,
+        password2: e.target[6].value,
+        realName: e.target[2].value,
 
-        password: e.target[7].value,
-        password2: e.target[8].value,
-        realName: e.target[3].value,
-        nickname: e.target[3].value,
-        phone: e.target[4].value,
-        email: e.target[5].value,
-        school: e.target[10].value,
-        grade: e.target[11].value,
+        phone: e.target[3].value,
+        email: e.target[4].value,
+        school: e.target[7].value,
+        grade: e.target[8].value,
       };
 
       const headers = { "header-name": "value" };
@@ -140,7 +138,7 @@ const Manage_student = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "branch";
+      let posturl_set = posturl + "users/students/" + data.id;
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
