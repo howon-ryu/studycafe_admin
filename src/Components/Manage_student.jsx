@@ -205,7 +205,7 @@ const Manage_student = (props) => {
               <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
                 <form
                   onSubmit={function (event) {
-                    event.preventDefault();
+                    //event.preventDefault();
                     handleSubmit(event);
                   }}
                 >

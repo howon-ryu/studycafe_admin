@@ -108,7 +108,7 @@ const Detail = (props) => {
   }
 
   const handles = (e) => {
-    alert("kkl");
+    // alert("kkl");
     e.preventDefalut();
   };
 
@@ -118,7 +118,7 @@ const Detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-      alert(e.target[1].value);
+      // alert(e.target[1].value);
       const data_t = {
         name: e.target[2].value,
         homePageUrl: "wintergreen.study",
@@ -152,7 +152,7 @@ const Detail = (props) => {
           })
           // .catch((e) => console.log('something went wrong :(', e));
           .catch((error) => {
-            alert("유효성 을 다시 확인하세요");
+            alert(JSON.stringify(error.response.data.data));
             console.log("re:", error.message);
             console.log("re:", error.body);
             console.log("re:", error.config);

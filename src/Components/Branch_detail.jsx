@@ -61,6 +61,7 @@ const Branch_detail = (props) => {
       })
       .catch(function (error) {
         console.log("실패");
+        alert("유효성 검사 확인 필요", error.message);
       });
   }
   const handles = (e) => {
@@ -157,6 +158,7 @@ const Branch_detail = (props) => {
           console.log("re:", error.body);
           console.log("re:", error.config);
           console.log("re:", error.requests);
+          alert("유효성 검사 확인 필요", error.message);
           console.log("re:", error.response.data);
         });
     }
@@ -166,7 +168,7 @@ const Branch_detail = (props) => {
       <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
         <form
           onSubmit={function (event) {
-            event.preventDefault();
+            //event.preventDefault();
             handleSubmit(event);
           }}
         >

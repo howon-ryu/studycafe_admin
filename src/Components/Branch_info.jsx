@@ -386,7 +386,6 @@ const Branch_info = (props) => {
     const headers = { "header-name": "value" };
     const config = { headers };
     console.log("data_t", data_t);
-
     let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
     let posturl_set = posturl + "branches/" + "rooms/" + specroom.id;
     console.log("puturl:", posturl_set);
@@ -556,7 +555,6 @@ const Branch_info = (props) => {
               >
                 상세정보
               </div>
-
               <div
                 className={
                   flag_two == "1"
@@ -573,7 +571,6 @@ const Branch_info = (props) => {
               >
                 관리그룹
               </div>
-
               <div
                 className={
                   flag_three == "1"
