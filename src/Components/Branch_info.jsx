@@ -758,7 +758,7 @@ const Branch_info = (props) => {
                         <input
                           type="text"
                           className="form-control "
-                          defaultValue={data.address || ""}
+                          defaultValue={data.location.address || ""}
                           name="first_name"
                         />
                       </div>
