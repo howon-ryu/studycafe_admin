@@ -8,7 +8,7 @@ import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
 const Branch_detail = (props) => {
   const reset = useRef();
-  
+
   const [data, setdata] = useState({
     id: "",
     name: "",
@@ -219,7 +219,7 @@ const Branch_detail = (props) => {
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue={data.realName}
+                    defaultValue={data.nickname}
                     name=""
                   />
                 </div>
