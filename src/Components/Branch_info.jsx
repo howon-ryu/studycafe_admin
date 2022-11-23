@@ -122,7 +122,9 @@ const Branch_info = (props) => {
     businessRegistrationNumber: "",
     homePageUrl: null,
     isManagement: false,
-    location: null,
+    location: {
+      address:""
+    },
     brand: {
       id: "",
       name: "",
@@ -756,7 +758,7 @@ const Branch_info = (props) => {
                         <input
                           type="text"
                           className="form-control "
-                          defaultValue={data.location.address || ""}
+                          defaultValue={data.address || ""}
                           name="first_name"
                         />
                       </div>
