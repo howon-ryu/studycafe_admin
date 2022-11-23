@@ -1,4 +1,187 @@
+import {React, useEffect, useState} from 'react';
+import axios from 'axios';
 const Weekly_report = ()=>{
+  useEffect(() => {searchreport()},[])
+  const [branchid, setbranch] = useState([
+   
+  ]);
+  const handlesubmit_week = (e) => {
+    const data_t = {
+      branchId : 1,
+      startDate : "2022-01-01",
+      endDate : "2022-12-31",
+    };
+    const headers = { "header-name": "value" };
+    const config = { headers };
+    console.log("data_t", data_t);
+    let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
+    let posturl_set = posturl + "/branches";
+    console.log("puturl:", posturl_set);
+    // setTimeout(console.log("puturl:", posturl_set), 30000);
+
+    axios
+      .get(posturl_set, data_t, config)
+      .then((response) => {
+        setbranch(response.data);
+        console.log(response.status);
+        console.log(response.data);
+      })
+      // .catch((e) => console.log('something went wrong :(', e));
+      .catch((error) => {
+        console.log("re:", error.message);
+        console.log("re:", error.body);
+        console.log("re:", error.config);
+        console.log("re:", error.requests);
+        console.log("re:", error.response.data);
+      });
+  }
+  function searchreport(){
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "branches/1" + "/weekly-report" ;
+    console.log("url:", url_set);
+    const data_t = {
+      branchId : 1,
+      startDate : "2022-01-01",
+      endDate : "2022-12-31"
+    };
+    axios
+      .get(url_set,{
+        params:{
+          branchId : 1,
+          startDate : "2022-01-01",
+          endDate : "2022-12-31"
+        }
+      })
+      .then(function (response) {
+        setweekreport(response.data)
+        // console.log("data:", data);
+        // console.log("head:", data.head);
+        console.log("weekreport",response.data);
+        
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  const [weekreport,setweekreport] = useState([
+    {
+      user: {
+        id: 1,
+        username: "test123",
+        realName: "김비틀웍스",
+        phone: "010-1234-1234",
+        email: "jack.bitlworks@gmail.com",
+        birthDate: "1999-05-01",
+        gender: "M",
+        nickname: "김비틀웍스",
+        profileImgUrl: "https://image.naver.com",
+        room: {
+          id: 1,
+          name: "A 학습실 1",
+          availableSeat: 50,
+          occupiedSeat: 5,
+          status: "ACTIVE"
+        },
+        seatNumber: 0,
+        location: "경기도 ",
+        isDarkMode: false,
+        status: "ACTIVE",
+        lastLoginAt: "2022-11-23T06:00:55.738Z",
+        groupList: [
+          {
+            name: "재수",
+            status: "ACTIVE"
+          }
+        ]
+      },
+      id: 0,
+      todoCount: 0,
+      doneCount: 0,
+      completedRate: "string",
+      conditionRate: 0,
+      concentrateRate: 0,
+      accomplishmentRate: 0,
+      isSent: true,
+      totalTime: {
+        hour: 0,
+        minute: 0,
+        second: 0,
+        nano: 0
+      }
+    }
+  ]);
+  const weekList = weekreport.map((v) => (
+
+  <tr>
+    <td>
+    <div
+      className="form-check form-check-sm form-check-custom form-check-solid"
+    >
+      <input
+        className="form-check-input widget-9-check"
+        type="checkbox"
+        value="1"
+      />
+    </div>
+  </td>
+
+  <td className="text-gray-800 fw-bold">{v.user.room.name}</td>
+  <td className="text-gray-800 fw-bold">{v.user.groupList[0].name}</td>
+  <td>{v.user.room.availableSeat}</td>
+  <td className="text-gray-800 fw-bold">{v.user.realName}</td>
+  <td>{v.todoCount}</td>
+  <td>{v.doneCount}</td>
+  <td>{v.completedRate}</td>
+  <td>{v.conditionRate}/5</td>
+  <td>{v.concentrateRate}/5</td>
+  <td>{v.accomplishmentRate}/5</td>
+  <td>
+    <a
+      href="#"
+      data-bs-toggle="modal"
+      data-bs-target="#kt_modal_invite_friends"
+    >
+      보기
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          opacity="0.3"
+          d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
+          fill="currentColor"
+        ></path>
+        <rect
+          x="21.9497"
+          y="3.46448"
+          width="13"
+          height="2"
+          rx="1"
+          transform="rotate(135 21.9497 3.46448)"
+          fill="currentColor"
+        ></rect>
+        <path
+          d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </a>
+  </td>
+
+  <td className="text-end pe-5" data-order="27">
+    <span className="badge badge-light-danger"
+      >미전송</span
+    >
+  </td>
+    </tr>
+
+    
+  
+));
     return(
         <div className = "weekly_report">
             <div
@@ -19,7 +202,7 @@ const Weekly_report = ()=>{
                           <label
                             className="col-form-label date_label me-4"
                             for="example-date"
-                            >시작일</label
+                            >시작일{weekreport.id}</label
                           >
                           <div className="date_div me-6">
                             <input
@@ -286,890 +469,11 @@ const Weekly_report = ()=>{
                             <tbody
                               className="fw-semibold text-gray-600 stdy_w_rpt_tbody"
                             >
+                              {weekList}
                              
-                              <tr>
                               
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                            
-                                <td className="text-gray-800 fw-bold">1001호</td>
-                                <td className="text-gray-800 fw-bold">재수</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">홍길동</td>
-                                <td>32</td>
-                                <td>30</td>
-                                <td>95%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                               
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-success"
-                                    >전송</span
-                                  >
-                                </td>
-                             
-                              </tr>
                               
-                              <tr>
-                            
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
                               
-                                <td className="text-gray-800 fw-bold">1001호</td>
-                                <td className="text-gray-800 fw-bold">재학</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">김진</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                            
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-danger"
-                                    >미전송</span
-                                  >
-                                </td>
-                               
-                              </tr>
-                        
-                              <tr>
-                               
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                            
-                                <td className="text-gray-800 fw-bold">1001호</td>
-                                <td className="text-gray-800 fw-bold">재학</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">이인웅</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                              
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-danger"
-                                    >미전송</span
-                                  >
-                                </td>
-                          
-                              </tr>
-                          
-                              <tr>
-                           
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                            
-                                <td className="text-gray-800 fw-bold">1001호</td>
-                                <td className="text-gray-800 fw-bold">재수</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">송가을</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                             
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-danger"
-                                    >미전송</span
-                                  >
-                                </td>
-                        
-                              </tr>
-                          
-                              <tr>
-                          
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                           
-                                <td className="text-gray-800 fw-bold">1003호</td>
-                                <td className="text-gray-800 fw-bold">재수</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">박민영</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                         
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-success"
-                                    >전송</span
-                                  >
-                                </td>
-                            
-                              </tr>
-                         
-                              <tr>
-                            
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                       
-                                <td className="text-gray-800 fw-bold">1003호</td>
-                                <td className="text-gray-800 fw-bold">재수</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">홍영택</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                            
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-success"
-                                    >전송</span
-                                  >
-                                </td>
-                  
-                              </tr>
-                             
-                              <tr>
-                      
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                           
-                                <td className="text-gray-800 fw-bold">1003호</td>
-                                <td className="text-gray-800 fw-bold">재수</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">지민기</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                              
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-success"
-                                    >전송</span
-                                  >
-                                </td>
-                                
-                              </tr>
-                              
-                              <tr>
-                          
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                          
-                                <td className="text-gray-800 fw-bold">1001호</td>
-                                <td className="text-gray-800 fw-bold">재학</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">이인웅</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                          
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-danger"
-                                    >미전송</span
-                                  >
-                                </td>
-                           
-                              </tr>
-                           
-                              <tr>
-                       
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                          
-                                <td className="text-gray-800 fw-bold">1001호</td>
-                                <td className="text-gray-800 fw-bold">재수</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">송가을</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                             
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-danger"
-                                    >미전송</span
-                                  >
-                                </td>
-                       
-                              </tr>
-                         
-                              <tr>
-                               
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                          
-                                <td className="text-gray-800 fw-bold">1003호</td>
-                                <td className="text-gray-800 fw-bold">재수</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">박민영</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                              
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-success"
-                                    >전송</span
-                                  >
-                                </td>
-                           
-                              </tr>
-                         
-                              <tr>
-                  
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                                
-                                <td className="text-gray-800 fw-bold">1001호</td>
-                                <td className="text-gray-800 fw-bold">재학</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">이인웅</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                                
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-danger"
-                                    >미전송</span
-                                  >
-                                </td>
-                   
-                              </tr>
-                           
-                              <tr>
-                 
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                   
-                                <td className="text-gray-800 fw-bold">1001호</td>
-                                <td className="text-gray-800 fw-bold">재수</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">송가을</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                            
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-danger"
-                                    >미전송</span
-                                  >
-                                </td>
-                              
-                              </tr>
-                            
-                              <tr>
-                              
-                                <td>
-                                  <div
-                                    className="form-check form-check-sm form-check-custom form-check-solid"
-                                  >
-                                    <input
-                                      className="form-check-input widget-9-check"
-                                      type="checkbox"
-                                      value="1"
-                                    />
-                                  </div>
-                                </td>
-                              
-                                <td className="text-gray-800 fw-bold">1003호</td>
-                                <td className="text-gray-800 fw-bold">재수</td>
-                                <td>12</td>
-                                <td className="text-gray-800 fw-bold">박민영</td>
-                                <td>40</td>
-                                <td>60</td>
-                                <td>80%</td>
-                                <td>4/5</td>
-                                <td>3/5</td>
-                                <td>4/5</td>
-                                <td>
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_invite_friends"
-                                  >
-                                    보기
-                                    <svg
-                                      width="16"
-                                      height="16"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <rect
-                                        x="21.9497"
-                                        y="3.46448"
-                                        width="13"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(135 21.9497 3.46448)"
-                                        fill="currentColor"
-                                      ></rect>
-                                      <path
-                                        d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                        fill="currentColor"
-                                      ></path>
-                                    </svg>
-                                  </a>
-                                </td>
-                           
-                                <td className="text-end pe-5" data-order="27">
-                                  <span className="badge badge-light-success"
-                                    >전송</span
-                                  >
-                                </td>
-                     
-                              </tr>
                           
                             </tbody>
                       

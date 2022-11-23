@@ -27,18 +27,18 @@ const Study_weekly_plan = (props) => {
           `}
         >
           <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0">
-            학원본사 관리
+            학습 관리
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li className="breadcrumb-item text-muted">
               <a href="#" className="text-muted text-hover-primary">
-                지점 관리
+                학습 관리
               </a>
             </li>
             <li className="breadcrumb-item">
               <span className="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <li className="breadcrumb-item text-muted">학원본사 관리</li>
+            <li className="breadcrumb-item text-muted">주간학습 관리</li>
           </ul>
         </div>
         <div
@@ -48,7 +48,7 @@ const Study_weekly_plan = (props) => {
         >
           <Arraylist />
 
-          <Calendar_plan />
+          {/* <Calendar_plan /> */}
         </div>
       </div>
     </Container>

@@ -36,7 +36,13 @@ const Manage_student = (props) => {
       reset.current.click();
     } else {
       student_num = props.detail_num;
-      spec_student_Api();
+      if (flag_one=="1"){
+        spec_student_Api();
+      }else if(flag_two=="1"){
+        console.log("22222");
+        spec_parent_Api();
+      }
+      
       console.log(student_num);
     }
   }, [props]);
@@ -57,6 +63,46 @@ const Manage_student = (props) => {
     grade: "",
     darkMode: false,
   });
+  const [parent, setparent] = useState([{
+    id: 1,
+    realName: "김엄마",
+    relation: "엄마",
+    phone: "010-1234-5432",
+    isPrimary: true,
+    createdAt: "2022-11-22T22:39:41.131Z",
+    status: "ACTIVE"
+  }]);
+  const parentsList = parent.map((v) => (
+  
+
+                    <tr>
+                      <td>
+                        <div className="form-check form-check-sm form-check-custom form-check-solid">
+                          <span className="text-gray-600 text-hover-primary ms-4">
+                            1
+                          </span>
+                        </div>
+                      </td>
+                      <td data-order="Invalid date">{v.realName}</td>
+                      <td data-order="Invalid date">{v.relation}</td>
+                      <td data-order="Invalid date">{v.phone}</td>
+                      <td data-order="Invalid date t__center">
+                        <input
+                          className="form-check-input widget-13-check"
+                          type="checkbox"
+                          value="1"
+                          checked
+                          disabled
+                        />
+                      </td>
+                      <td data-order="Invalid date">{v.createdAt}</td>
+                      <td className="text-muted fw-semibold text-end">
+                        <span className="badge badge-light-success">{v.status}</span>
+                      </td>
+
+                    </tr>
+                  
+  ));
   function spec_student_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users" + "/students/" + student_num;
@@ -65,6 +111,23 @@ const Manage_student = (props) => {
       .get(url_set)
       .then(function (response) {
         setdata(response.data);
+        console.log("data:", data);
+        console.log("head:", data.head);
+        console.log(response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function spec_parent_Api() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users" + "/students/" + student_num+"/parents";
+    console.log("url:", url_set);
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setparent(response.data);
         console.log("data:", data);
         console.log("head:", data.head);
         console.log(response.data);
@@ -123,16 +186,14 @@ const Manage_student = (props) => {
       console.log(e);
 
       const data_t = {
-        id: data.id,
+        password: e.target[5].value,
+        password2: e.target[6].value,
+        realName: e.target[2].value,
 
-        password: e.target[7].value,
-        password2: e.target[8].value,
-        realName: e.target[3].value,
-        nickname: e.target[3].value,
-        phone: e.target[4].value,
-        email: e.target[5].value,
-        school: e.target[10].value,
-        grade: e.target[11].value,
+        phone: e.target[3].value,
+        email: e.target[4].value,
+        school: e.target[7].value,
+        grade: e.target[8].value,
       };
 
       const headers = { "header-name": "value" };
@@ -140,7 +201,7 @@ const Manage_student = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "branch";
+      let posturl_set = posturl + "users/students/" + data.id;
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
@@ -207,7 +268,7 @@ const Manage_student = (props) => {
               <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
                 <form
                   onSubmit={function (event) {
-                    event.preventDefault();
+                    //event.preventDefault();
                     handleSubmit(event);
                   }}
                 >
@@ -452,57 +513,7 @@ const Manage_student = (props) => {
                   </thead>
 
                   <tbody className="fw-semibold text-gray-600">
-                    <tr>
-                      <td>
-                        <div className="form-check form-check-sm form-check-custom form-check-solid">
-                          <span className="text-gray-600 text-hover-primary ms-4">
-                            1
-                          </span>
-                        </div>
-                      </td>
-                      <td data-order="Invalid date">김엄마</td>
-                      <td data-order="Invalid date">엄마</td>
-                      <td data-order="Invalid date">010-1234-4567</td>
-                      <td data-order="Invalid date t__center">
-                        <input
-                          className="form-check-input widget-13-check"
-                          type="checkbox"
-                          value="1"
-                          checked
-                          disabled
-                        />
-                      </td>
-                      <td data-order="Invalid date">2022-08-14</td>
-                      <td className="text-muted fw-semibold text-end">
-                        <span className="badge badge-light-success">사용</span>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <div className="form-check form-check-sm form-check-custom form-check-solid">
-                          <span className="text-gray-600 text-hover-primary ms-4">
-                            2
-                          </span>
-                        </div>
-                      </td>
-                      <td data-order="Invalid date">홍아빠</td>
-                      <td data-order="Invalid date">아빠</td>
-                      <td data-order="Invalid date">010-1234-4567</td>
-                      <td data-order="Invalid date t__center">
-                        <input
-                          className="form-check-input widget-13-check"
-                          type="checkbox"
-                          value="1"
-                          checked
-                          disabled
-                        />
-                      </td>
-                      <td data-order="Invalid date">2022-08-14</td>
-                      <td className="text-muted fw-semibold text-end">
-                        <span className="badge badge-light-warning">대기</span>
-                      </td>
-                    </tr>
+                  {parentsList}
                   </tbody>
                 </table>
               </div>
