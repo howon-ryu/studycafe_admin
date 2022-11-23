@@ -528,7 +528,7 @@ const Branch_info = (props) => {
           bname1: "화전읍",
           additionalInfo: "중소기업벤쳐센터 311호",
         },
-        ownerUsername: data.owner.username,
+        ownerUsername: e.target[1].value,
       };
 
       const headers = { "header-name": "value" };
@@ -657,6 +657,7 @@ const Branch_info = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue={data.brand.name}
+                          disabled
                         >
                           {brands.map((item, idx) => (
                           <option key={idx} value={item.value} >
@@ -670,6 +671,7 @@ const Branch_info = (props) => {
                         data-placeholder="Select a position..."
                         className="form-select form-select-solid"
                         defaultValue={data.brand.name}
+                        disabled
                       
                        >
                           {brands.map((item, idx) => (
@@ -699,7 +701,7 @@ const Branch_info = (props) => {
                         >
                           {owners.map((item, idx) => (
                           <option key={idx} value={item.value} >
-                            {item.nickname}
+                            {item.username}
                           </option>
                         ))}
                         </select> :
@@ -713,7 +715,7 @@ const Branch_info = (props) => {
                        >
                          {owners.map((item, idx) => (
                           <option key={idx} value={item.value} >
-                            {item.nickname}
+                            {item.username}
                           </option>
                         ))}
                      
