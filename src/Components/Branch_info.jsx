@@ -16,8 +16,13 @@ const Branch_info = (props) => {
   const [flag_three, setflagthree] = useState("2");
   const three_click = (props) => setflagthree(props);
 
-  const [brand_list, setbrands] = useState([]);
+  const [brands, setbrands] = useState([]);
+  const [owners, setowners] = useState([]);
+  // const brandsList = brands.map((v) => (
+  //   <option>{v.name}</option>
 
+
+  // ))
   useEffect(() => {
     searchGroups();
   }, [flag_two]);
@@ -234,6 +239,7 @@ const Branch_info = (props) => {
 
   useEffect(() => {
     searchBrands();
+    searchOwners();
   }, []);
   function searchBrands() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
@@ -243,7 +249,21 @@ const Branch_info = (props) => {
       .then(function (response) {
         setbrands(response.data);
         console.log(response.data);
-        console.log("성공", brand_list);
+        
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchOwners() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/owners";
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setowners(response.data);
+        console.log(response.data);
+        
       })
       .catch(function (error) {
         console.log("실패");
@@ -257,7 +277,7 @@ const Branch_info = (props) => {
       .then(function (response) {
         setrooms(response.data);
         console.log(response.data);
-        console.log("성공", brand_list);
+        
       })
       .catch(function (error) {
         console.log("실패");
@@ -408,10 +428,10 @@ const Branch_info = (props) => {
   };
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
-      alert(e.target[9].value);
+      alert(e.target[2].value);
       // event.preventDefalut();
-
-      console.log(e);
+      
+      console.log("e",e);
 
       const data_t = {
         brandId: data.brand.id,
@@ -442,7 +462,7 @@ const Branch_info = (props) => {
           bname1: "화전읍",
           additionalInfo: "중소기업벤쳐센터 311호",
         },
-        ownerUsername: e.target[10].value,
+        ownerUsername: e.target[2].value,
       };
 
       const headers = { "header-name": "value" };
@@ -471,11 +491,11 @@ const Branch_info = (props) => {
     } else {
       // event.preventDefalut();
 
-      console.log(e);
+      console.log("e",e);
 
       const data_t = {
         brandId: data.brand.id,
-        name: e.target[3].value,
+        name: e.target[2].value,
         homePageUrl: data.homePageUrl,
         isManagement: false,
         businessRegistrationNumber: data.businessRegistrationNumber,
@@ -616,56 +636,76 @@ const Branch_info = (props) => {
               >
                 <div className="card card-flush h-xl-100 card__right">
                   <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
-                    <div className="row mb-5">
-                      <div className="col-md-6 fv-row input_50">
-                        <label className="required fs-5 fw-semibold mb-2">
-                          학원본사 ID
-                        </label>
+                    
 
-                        <input
-                          type="text"
-                          className="form-control"
-                          defaultValue=""
-                          name="first_name"
-                        />
-                        <span className="me-3">.here.study</span>
-                      </div>
+                    <div className="row mb-5">
+                      
                       <div className="col-md-6 fv-row input_50">
                         <label className="required fs-5 fw-semibold mb-2">
                           학원본사 선택
                         </label>
-
+                        {props.detail_num==0?
                         <select
                           name="position"
                           data-control="select2"
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
+                          defaultValue={data.brand.name}
                         >
-                          {brand_list &&
-                            brand_list.map((data) => {
-                              <option>brand_list.name</option>;
-                            })}
-                          {/* {brand_list &&
-                          brand_list.products.map((brand_list) => (
-                            <option value="Web Developer">brand_list.id</option>
-                          ))} */}
+                          {brands.map((item, idx) => (
+                          <option key={idx} value={item.value} >
+                            {item.name}
+                          </option>
+                        ))}
+                        </select> :
+                        <select
+                        name="position"
+                        data-control="select2"
+                        data-placeholder="Select a position..."
+                        className="form-select form-select-solid"
+                        defaultValue={data.brand.name}
+                        disabled
+                       >
+                        <option>{data.brand.name}</option>
+                     
                         </select>
+                        
+                        }
+                       
                       </div>
-                    </div>
-
-                    <div className="row mb-5">
                       <div className="col-md-6 fv-row">
                         <label className="fs-5 fw-semibold mb-2">
                           운영자 이름
                         </label>
 
-                        <input
-                          type="text"
-                          className="form-control "
+                       
+                        {props.detail_num==0?
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
                           defaultValue={data.owner.username || ""}
-                          name="nickname"
-                          disabled
-                        />
+                        >
+                          {owners.map((item, idx) => (
+                          <option key={idx} value={item.value} >
+                            {item.nickname}
+                          </option>
+                        ))}
+                        </select> :
+                        <select
+                        name="position"
+                        data-control="select2"
+                        data-placeholder="Select a position..."
+                        className="form-select form-select-solid"
+                        defaultValue={data.owner.username || ""}
+                        readOnly
+                       >
+                        <option>{data.owner.nickname}</option>
+                     
+                        </select>
+                        
+                        }
                       </div>
                     </div>
 
