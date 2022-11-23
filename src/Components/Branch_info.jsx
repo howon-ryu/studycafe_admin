@@ -644,7 +644,7 @@ const Branch_info = (props) => {
                       
                       <div className="col-md-6 fv-row input_50">
                         <label className="required fs-5 fw-semibold mb-2">
-                          학원본사 선택
+                          학원본사선택
                         </label>
                         {props.detail_num==0?
                         <select
