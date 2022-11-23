@@ -18,6 +18,7 @@ import Study_weekly_report from "./Components/Study_weekly_report";
 import Study_day_plan from "./Components/Study_day_plan";
 import { React, useState, useEffect } from "react";
 function App() {
+  
   const [value, setValue] = useState(350);
   const [login_flag, setLoginFlag] = useState(true);
   return (

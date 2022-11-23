@@ -6,6 +6,7 @@ import { buildEntryKey } from "@fullcalendar/core";
 import "../css/arraylist.css";
 
 const AcademyList = (props) => {
+  
   useEffect(() => {
     console.log("props_arr", props);
     if (props.flag == "office__head_office") {

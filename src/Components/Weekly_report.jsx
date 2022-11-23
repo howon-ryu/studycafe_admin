@@ -6,6 +6,7 @@ const Weekly_report = ()=>{
    
   ]);
   const handlesubmit_week = (e) => {
+    
     const data_t = {
       branchId : 1,
       startDate : "2022-01-01",

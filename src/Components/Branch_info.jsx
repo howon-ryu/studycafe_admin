@@ -8,6 +8,7 @@ import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
 import "../css/branch_info.css";
 const Branch_info = (props) => {
+  
   const reset = useRef();
   const [flag_one, setflagone] = useState("1");
   const one_click = (props) => setflagone(props);

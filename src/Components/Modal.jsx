@@ -2,6 +2,7 @@ import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 
 function Modal({ onClickToggleModal, children }) {
+  
   const handleSubmit = (selectInfo) => {
     console.log("click!!!");
     let calenderApi = selectInfo;

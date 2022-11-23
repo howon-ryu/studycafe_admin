@@ -12,6 +12,7 @@ import Branch_info from "./Branch_info";
 import "../css/layout.css";
 // import { Container } from "react-bootstrap";
 const Office__branch_info = (props) => {
+  
   const [detail_num, setDetailNum] = useState("1");
   let widthh = props.width;
 

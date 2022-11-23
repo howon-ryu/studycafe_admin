@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 function SidebarMenuItem({ title, to }) {
+  
   // 토글을 닫아두기 위해 초기값을 false로 설정해두었다.
   const [isCheck, setCheck] = useState(false);
 

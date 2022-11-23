@@ -11,6 +11,7 @@ import Arraylist from "./Arraylist";
 import Manage_student from "./Manage_student";
 // import { Container } from "react-bootstrap";
 const Student__manage_info = (props) => {
+  
   const [detail_num, setDetailNum] = useState("");
   let widthh = props.width;
   return (

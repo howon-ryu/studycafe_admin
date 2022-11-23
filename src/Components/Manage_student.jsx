@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import { React, useState, useRef, useEffect } from "react";
 import axios from "axios";
 const Manage_student = (props) => {
+  
   const reset = useRef();
   const [flag_one, setflagone] = useState("1");
   const one_click = (props) => setflagone(props);

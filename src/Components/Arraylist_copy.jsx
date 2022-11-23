@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { css } from "@emotion/react";
 const AcademyList = () => {
+  
   useEffect(() => {
     searchApi();
     console.log("1");

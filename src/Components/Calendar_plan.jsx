@@ -20,6 +20,7 @@ import styled from "styled-components";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import { Calendar, CalendarApi } from "@fullcalendar/core";
 import interactionPlugin, {
+  
   DateClickArg,
   EventDragStartArg,
   EventDragStopArg,

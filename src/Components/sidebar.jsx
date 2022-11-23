@@ -11,6 +11,7 @@ const Sidebar = (props) => {
     //   setlogin(false);
     // }
     if (window.location.pathname == "/login") {
+      
       setlogin(false);
     }
     if (window.location.pathname == "/registration") {

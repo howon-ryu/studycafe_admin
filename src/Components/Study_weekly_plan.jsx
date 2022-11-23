@@ -12,6 +12,7 @@ import Calendar_plan from "./Calendar_plan";
 // import { Container } from "react-bootstrap";
 const Study_weekly_plan = (props) => {
   let widthh = props.width;
+  
   return (
     <Container>
       <div

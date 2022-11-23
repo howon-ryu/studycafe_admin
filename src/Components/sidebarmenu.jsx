@@ -7,6 +7,7 @@ import "../퍼블리싱_참고용/v0.1_1012/assets/plugins/global/plugins.bundle
 import "../css/sidebarmenu.css";
 import "../css/style.bundle.css";
 function SidebarMenu({ title, children, icon_num }) {
+  
   // 토글을 닫아두기 위해 초기값을 false로 설정해두었다.
   const [isCheck, setCheck] = useState(false);
   let icon_one = false;

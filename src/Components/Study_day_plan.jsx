@@ -10,6 +10,7 @@ import Day_report from "./Day_report";
 
 // import { Container } from "react-bootstrap";
 const Study_day_plan = (props) => {
+  
   let widthh = props.width;
   return (
     <Container>

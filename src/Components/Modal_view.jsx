@@ -2,6 +2,7 @@ import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 
 function Modal_view({ onClickToggleModal_view, children }) {
+  
   return (
     <ModalContainer>
       <div>piu</div>

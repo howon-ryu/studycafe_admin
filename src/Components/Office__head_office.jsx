@@ -11,6 +11,7 @@ import Arraylist from "./Arraylist";
 import Detail from "./Detail";
 // import { Container } from "react-bootstrap";
 const Office__head_office = (props) => {
+  
   const [detail_num, setDetailNum] = useState("1");
   const [head_num, setheadNum] = useState("");
   let widthh = props.width;

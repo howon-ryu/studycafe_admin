@@ -15,6 +15,7 @@ import d_small from "../assets/media/logos/default-small.svg";
 import user_empty from "../assets/media/avatars/user_empty.png";
 
 const Header = (props) => {
+  
   console.log(props);
   const [login_check, setlogin] = useState(true);
   useEffect(() => {

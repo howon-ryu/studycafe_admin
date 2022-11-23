@@ -198,6 +198,7 @@ const Detail = (props) => {
       axios
         .put(posturl_set, data_t, config)
         .then((response) => {
+          
           console.log(response.status);
           console.log(response.data);
         })

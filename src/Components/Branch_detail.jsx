@@ -8,6 +8,7 @@ import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
 const Branch_detail = (props) => {
   const reset = useRef();
+  
   const [data, setdata] = useState({
     id: "",
     name: "",

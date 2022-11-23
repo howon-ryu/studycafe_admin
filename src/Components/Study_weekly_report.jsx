@@ -11,6 +11,7 @@ import Weekly_report from "./Weekly_report";
 
 // import { Container } from "react-bootstrap";
 const Study_weekly_report = (props) => {
+  
   let widthh = props.width;
   return (
     <Container>
