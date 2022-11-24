@@ -17,6 +17,8 @@ const AcademyList = (props) => {
       searchStudent();
     } else if (props.flag == "office__branch_info") {
       searchBranches();
+    } else if(props.flag=="Study_weekly_plan"){
+      searchStudent();
     }
     console.log("1");
   }, []);
@@ -334,6 +336,8 @@ const AcademyList = (props) => {
                         <th className="min-w-150px">학생명/학교명</th>
                       ) : props.flag === "office__branch_info" ? (
                         <th className="min-w-150px">지점명/브랜드</th>
+                      ) : props.flag === "Study_weekly_plan" ? (
+                        <th className="min-w-150px">학생명/학교명</th>
                       ) : null}
 
                       <th className="min-w-25px n_empty"></th>
@@ -358,6 +362,8 @@ const AcademyList = (props) => {
                           <td>{data.id}</td>
                         ) : props.flag === "office__branch_info" ? (
                           <td>{data.id}</td>
+                        ) : props.flag === "Study_weekly_plan" ? (
+                          <td>{data.id}</td>
                         ) : null}
 
                         <td className="n_empty"></td>
@@ -380,6 +386,10 @@ const AcademyList = (props) => {
                                 ) : props.flag === "office__branch_info" ? (
                                   <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
                                     {data.name}
+                                  </a>
+                                ) : props.flag === "Study_weekly_plan" ? (
+                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                    {data.realName}
                                   </a>
                                 ) : null}
                                 {/* <a
@@ -404,6 +414,10 @@ const AcademyList = (props) => {
                                 ) : props.flag === "office__branch_info" ? (
                                   <span className="text-muted fw-semibold d-block fs-7">
                                     {data.brand.name}
+                                  </span>
+                                ) : props.flag === "Study_weekly_plan" ? (
+                                  <span className="text-muted fw-semibold d-block fs-7">
+                                    {data.school}
                                   </span>
                                 ) : null}
                               </div>

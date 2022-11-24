@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
-import React from "react";
+import {React,useState} from "react";
 import "../css/study__weekly_plan.css";
 
 import styled from "@emotion/styled";
@@ -12,7 +12,7 @@ import Calendar_plan from "./Calendar_plan";
 // import { Container } from "react-bootstrap";
 const Study_weekly_plan = (props) => {
   let widthh = props.width;
-  
+  const [detail_num, setDetailNum] = useState("");
   return (
     <Container>
       <div
@@ -28,7 +28,7 @@ const Study_weekly_plan = (props) => {
           `}
         >
           <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0">
-            학습 관리
+            주간학습 계획
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li className="breadcrumb-item text-muted">
@@ -47,7 +47,7 @@ const Study_weekly_plan = (props) => {
             display: flex;
           `}
         >
-          <Arraylist />
+          <Arraylist setDetailNum={setDetailNum} flag="Study_weekly_plan"/>
 
           <Calendar_plan />
         </div>

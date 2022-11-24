@@ -697,7 +697,7 @@ const Branch_info = (props) => {
                           data-control="select2"
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
-                          defaultValue={data.owner.nickname || ""}
+                          defaultValue={data.owner.username || ""}
                         >
                           {owners.map((item, idx) => (
                           <option key={idx} value={item.value} >
@@ -710,7 +710,7 @@ const Branch_info = (props) => {
                         data-control="select2"
                         data-placeholder="Select a position..."
                         className="form-select form-select-solid"
-                        defaultValue={data.owner.nickname || ""}
+                        defaultValue={data.owner.username || ""}
                         
                        >
                          {owners.map((item, idx) => (
