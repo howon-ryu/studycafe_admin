@@ -33,7 +33,7 @@ import momentPlugin from "@fullcalendar/moment";
 
 let id = 0;
 
-const Calendar_plan = () => {
+const Calendar_plan = (props) => {
   const [isOpenModal, setOpenModal] = React.useState(false);
   const [isOpenModal_view, setOpenModal_view] = React.useState(false);
   let [nname, setnname] = useState("");
@@ -213,10 +213,13 @@ const Calendar_plan = () => {
       location: "271, Spring Street",
     },
   ]);
-
+  let detail_num;
   React.useEffect(() => {
     console.log("eventler", events);
   }, [events]);
+  console.log("props", props);
+    // setdetailnum(props.detail_num);
+    detail_num = props.detail_num;
   const handleEvents = (events) => {
     setEvents(events);
   };

@@ -49,7 +49,7 @@ const Study_weekly_plan = (props) => {
         >
           <Arraylist setDetailNum={setDetailNum} flag="Study_weekly_plan"/>
 
-          <Calendar_plan />
+          <Calendar_plan detail_num={detail_num}/>
         </div>
       </div>
     </Container>
