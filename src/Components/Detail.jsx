@@ -124,7 +124,7 @@ const Detail = (props) => {
         homePageUrl: "wintergreen.study",
         isManagement: false,
         businessRegistrationNumber: "123-123-123",
-        status: "ACTIVE",
+        status: "사용",
         head: {
           username: double,
           password: e.target[3].value,
@@ -171,10 +171,10 @@ const Detail = (props) => {
 
       const data_t = {
         name: e.target[2].value,
-        homePageUrl: e.target[1].value + "here.study",
+        homePageUrl: e.target[10].value + "here.study",
         isManagement: false,
-        businessRegistrationNumber: "123-123-123",
-        status: "ACTIVE",
+        businessRegistrationNumber: e.target[8].value,
+        status: e.target[12].value,
         head: {
           id: data.head.id,
           password: e.target[3].value,
@@ -222,7 +222,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          //event.preventDefault();
+          event.preventDefault();
           handleSubmit(event);
         }}
       >
@@ -257,14 +257,18 @@ const Detail = (props) => {
                   onChange={onchange_fuc}
                 />
                 <span className="me-3">.here.study</span>
-                <button
-                  data-kt-ecommerce-settings-type="cancel"
-                  className="btn btn-primary"
-                  onClick={doublecheck}
-                  type="button"
-                >
-                  중복확인
-                </button>
+                {props.detail_num == "0" ? (
+                 <button
+                 data-kt-ecommerce-settings-type="cancel"
+                 className="btn btn-primary"
+                 onClick={doublecheck}
+                 type="button"
+               
+               >
+                 중복확인
+               </button>
+                ) : null}
+                
               </div>
 
               <div className="col-md-6 fv-row">
@@ -430,7 +434,7 @@ const Detail = (props) => {
                     <input
                       className="form-check-input check__use_input"
                       type="radio"
-                      defaultValue=""
+                      value="사용"
                       name="choice_use"
                       id="product_tax_yes"
                       checked={true}
@@ -446,7 +450,7 @@ const Detail = (props) => {
                     <input
                       className="form-check-input check__hold_input"
                       type="radio"
-                      defaultValue=""
+                      value="대기"
                       name="choice_use"
                     />
                     <label

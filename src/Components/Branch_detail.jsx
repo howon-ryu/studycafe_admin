@@ -77,14 +77,15 @@ const Branch_detail = (props) => {
       console.log(e);
 
       const data_t = {
-        brandId: 1,
+      
 
-        username: e.target[1].value,
+        username: e.target[0].value,
         password: e.target[4].value,
         password2: e.target[5].value,
         realName: e.target[1].value,
         phone: e.target[2].value,
         email: e.target[3].value,
+        gender : "남자"
       };
 
       const headers = { "header-name": "value" };
@@ -192,9 +193,9 @@ const Branch_detail = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
               <div className="row mb-5">
                 <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">본사</label>
+                  <label className="required fs-5 fw-semibold mb-2">username</label>
 
-                  <select
+                  {/* <select
                     name="position"
                     data-control="select2"
                     data-placeholder="Select a position..."
@@ -206,7 +207,13 @@ const Branch_detail = (props) => {
                     <option value="Finance Manager">가을신록</option>
                     <option value="Project Manager">어나더레벨</option>
                     <option value="System Administrator">최고최고최고</option>
-                  </select>
+                  </select> */}
+                   <input
+                    type="text"
+                    className="form-control"
+                    defaultValue=""
+                    name=""
+                  />
                 </div>
 
                 <div className="col-md-6 fv-row">
@@ -315,7 +322,7 @@ const Branch_detail = (props) => {
                       <input
                         className="form-check-input check__use_input"
                         type="radio"
-                        defaultValue=""
+                        value="사용"
                         name="choice_use"
                         id="product_tax_yes"
                         defaultChecked="checked"
@@ -328,7 +335,7 @@ const Branch_detail = (props) => {
                       <input
                         className="form-check-input check__hold_input"
                         type="radio"
-                        defaultValue=""
+                        value="대기"
                         name="choice_use"
                       />
                       <label className="form-check-label" for="product_tax_no">

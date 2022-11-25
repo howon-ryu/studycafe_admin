@@ -7,7 +7,7 @@ import "../css/style.bundle.css";
 import "../css/layout.css";
 import "../css/header.css";
 
-import logo from "../assets/media/images/logo.png";
+import logo from "../assets/media/logos/logo_black.png";
 import icon_menu_btn from "../assets/media/images/icon_menu_btn.svg";
 import icon_user from "../assets/media/images/icon_user.png";
 import icon_exit from "../assets/media/images/icon_exit.png";

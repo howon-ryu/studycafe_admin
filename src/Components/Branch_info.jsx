@@ -434,12 +434,12 @@ const Branch_info = (props) => {
       console.log("e", e);
 
       const data_t = {
-        brandId: data.brand.id,
-        name: data.name,
+        brandId: e.target[0].value,
+        name: e.target[2].value,
         homePageUrl: data.homePageUrl,
         isManagement: false,
         businessRegistrationNumber: e.target[3].value,
-        status: data.status,
+        status: e.target[5].value,
         // location: {
         //   zonecode: data.location.zonecode,
         //   address: data.location.address,
@@ -462,7 +462,7 @@ const Branch_info = (props) => {
           bname1: "화전읍",
           additionalInfo: "중소기업벤쳐센터 311호",
         },
-        ownerUsername: e.target[2].value,
+        ownerUsername: e.target[1].value,
       };
 
       const headers = { "header-name": "value" };
@@ -648,10 +648,10 @@ const Branch_info = (props) => {
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
                             defaultValue={data.brand.name}
-                            disabled
+                            
                           >
                             {brands.map((item, idx) => (
-                              <option key={idx} value={item.value}>
+                              <option key={idx} value={item.id}>
                                 {item.name}
                               </option>
                             ))}
@@ -663,10 +663,10 @@ const Branch_info = (props) => {
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
                             defaultValue={data.brand.name}
-                            disabled
+                            
                           >
                             {brands.map((item, idx) => (
-                              <option key={idx} value={item.value}>
+                              <option key={idx} value={item.id}>
                                 {item.name}
                               </option>
                             ))}
@@ -745,7 +745,8 @@ const Branch_info = (props) => {
                         <input
                           type="text"
                           className="form-control "
-                          defaultValue={data.location.address || ""}
+                          //defaultValue={data.location.address || ""}
+                          defaultValue=""
                           name="first_name"
                         />
                       </div>
@@ -788,7 +789,7 @@ const Branch_info = (props) => {
                             <input
                               className="form-check-input check__use_input"
                               type="radio"
-                              defaultValue=""
+                              value="사용"
                               name="choice_use"
                               id="product_tax_yes"
                               checked={true}
@@ -804,7 +805,7 @@ const Branch_info = (props) => {
                             <input
                               className="form-check-input check__hold_input"
                               type="radio"
-                              defaultValue=""
+                              value="대기"
                               name="choice_use"
                             />
                             <label
