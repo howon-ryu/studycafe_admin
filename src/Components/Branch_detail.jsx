@@ -169,7 +169,7 @@ const Branch_detail = (props) => {
       <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
         <form
           onSubmit={function (event) {
-            //event.preventDefault();
+            event.preventDefault();
             handleSubmit(event);
           }}
         >
@@ -219,7 +219,7 @@ const Branch_detail = (props) => {
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue={data.nickname}
+                    defaultValue={data.realName}
                     name=""
                   />
                 </div>

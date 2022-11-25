@@ -1,3 +1,19 @@
 .list_1{
     color : blue;
 }
+
+.arr_menu_sub{
+    
+}
+
+
+
+
+.menu-sub_arr {
+   
+        z-index: 107;
+        position: fixed;
+        inset: 50px 1000px auto auto;
+        margin: 0px;
+        transform: translate(-59px, 214px);
+    }

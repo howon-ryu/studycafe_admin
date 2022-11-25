@@ -2,80 +2,241 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { css } from "@emotion/react";
-import { buildEntryKey } from "@fullcalendar/core";
+import { buildEntryKey, compareByFieldSpec } from "@fullcalendar/core";
 import "../css/arraylist.css";
 
 const AcademyList = (props) => {
-  
+  const [isCheck, setCheck] = useState("2");
+  let [data, setdata] = useState([]);
+  const [brands, setbrands] = useState([]);
+  const [owners, setowners] = useState([]);
+  const [branches, setbranches] = useState([]);
+  const [students, setstudents] = useState([]);
+  const [rooms, setrooms] = useState([]);
+  const [groups, setgroups] = useState([]);
   useEffect(() => {
+    searchBrands();
+    searchowner();
+    searchStudent();
+    searchBranches();
+    searchRooms();
+    searchGroups();
+
     console.log("props_arr", props);
-    if (props.flag == "office__head_office") {
-      searchBrands();
-    } else if (props.flag == "office__branch_office") {
-      searchowner();
-    } else if (props.flag == "student__manage_info") {
-      searchStudent();
-    } else if (props.flag == "office__branch_info") {
-      searchBranches();
-    } else if(props.flag=="Study_weekly_plan"){
-      searchStudent();
-    }
+
     console.log("1");
   }, []);
+  useEffect(() => {
+    if (props.flag == "office__head_office") {
+      setdata(brands);
+    }
+  }, [brands]);
+  useEffect(() => {
+    if (props.flag == "office__branch_office") {
+      setdata(owners);
+    }
+  }, [owners]);
+  useEffect(() => {
+    if (props.flag == "student__manage_info") {
+      setdata(students);
+    }
+  }, [students]);
+  useEffect(() => {
+    if (props.flag == "office__branch_info") {
+      setdata(branches);
+    }
+  }, [branches]);
+  useEffect(() => {
+    if (props.flag == "Study_weekly_plan") {
+      setdata(students);
+    }
+  }, [students]);
+  // useEffect(() => {
+  //   searchBrands();
+  //   searchowner();
+  //   searchStudent();
+  //   searchBranches();
+  // }, [data]);
 
-  let [data, setdata] = useState([]);
+  function searchBrands(props) {
+    let var_status = "";
 
-  function searchBrands() {
+    if (props == undefined) {
+      var_status = "";
+    } else {
+      var_status = props.target[5].value;
+    }
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "brands";
     axios
-      .get(url_set)
+      .get(url_set, {
+        params: {
+          status: var_status,
+        },
+      })
       .then(function (response) {
-        setdata(response.data);
-        console.log(response.data);
+        //setdata(response.data);
+        setbrands(response.data);
+        console.log("pa:", var_status);
+        console.log("bra:", response.data);
         console.log("성공");
       })
       .catch(function (error) {
         console.log("실패");
       });
   }
-  function searchStudent() {
-    // 나중에 branch 맞춰줘야함
+  function searchRooms(props) {
+    let var_status = "";
+
+    if (props == undefined) {
+      var_status = "";
+    } else {
+      var_status = props.target[5].value;
+    }
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches/" + "1" + "/students";
+    let url_set = url + "branches/rooms";
     axios
-      .get(url_set)
+      .get(url_set, {
+        params: {
+          status: var_status,
+        },
+      })
       .then(function (response) {
-        setdata(response.data);
-        console.log(response.data);
+        //setdata(response.data);
+        setrooms(response.data);
+        console.log("pa:", var_status);
+        console.log("bra:", response.data);
         console.log("성공");
       })
       .catch(function (error) {
         console.log("실패");
       });
   }
-  function searchowner() {
+  function searchGroups(props) {
+    let var_status = "";
+
+    if (props == undefined) {
+      var_status = "";
+    } else {
+      var_status = props.target[5].value;
+    }
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/groups";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+        setgroups(response.data);
+        console.log("griyooooooooooooooooooooooooooooooooooooo:", var_status);
+        console.log("bra:", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchStudent(props) {
+    // 나중에 branch 맞춰줘야함
+
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/students";
+    let var_status = "";
+    let var_brandid = "";
+    let var_branchid = "";
+    let var_roomid = "";
+    let var_groupid = "";
+
+    if (props != undefined) {
+      console.log("asdfasdfasdf:", props);
+
+      var_brandid = props.target[0].value;
+      var_branchid = props.target[2].value;
+      var_roomid = props.target[3].value;
+      var_groupid = props.target[4].value;
+      var_status = props.target[5].value;
+    }
+    axios
+      .get(url_set, {
+        params: {
+          brandId: var_brandid,
+          branchId: var_branchid,
+          roomId: var_roomid,
+          groupId: var_groupid,
+          status: var_status,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setstudents(response.data);
+
+        console.log("studens:", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchowner(props) {
+    let var_status = "";
+    let var_brandid = "";
+    if (props != undefined) {
+      console.log("props!!!!!!!!!!:", props);
+      console.log("propsowner!!!!!!!!!!:", props.target[0].value);
+      var_status = props.target[5].value;
+      var_brandid = props.target[0].value;
+    }
+
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users/" + "owners";
     axios
-      .get(url_set)
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+        },
+      })
       .then(function (response) {
-        setdata(response.data);
-        console.log(response.data);
-        console.log("성공 owner");
+        //setdata(response.data);
+
+        setowners(response.data);
+        console.log("owners:", response.data);
       })
       .catch(function (error) {
         console.log("실패");
       });
   }
-  function searchBranches() {
+  function searchBranches(props) {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "branches";
+    let var_status = "";
+    let var_brandid = "";
+    let var_ownerid = "";
+    if (props != undefined) {
+      console.log("props!!!!!!!!!!:", props);
+      console.log("propsbranch!!!!!!!!!!:", props.target[5].value);
+      var_status = props.target[5].value;
+      var_brandid = props.target[0].value;
+      var_ownerid = props.target[1].value;
+    }
     axios
-      .get(url_set)
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+          ownerId: var_ownerid,
+        },
+      })
       .then(function (response) {
-        setdata(response.data);
-        console.log(response.data);
+        //setdata(response.data);
+
+        setbranches(response.data);
+
+        console.log("branches", response.data);
         console.log("성공");
       })
       .catch(function (error) {
@@ -159,6 +320,16 @@ const AcademyList = (props) => {
                   className="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
                   data-kt-menu-trigger="click"
                   data-kt-menu-placement="bottom-end"
+                  onClick={() => {
+                    if (isCheck == "2") {
+                      setCheck("1");
+                      console.log("is:", isCheck);
+                    } else {
+                      console.log("2");
+                      setCheck("2");
+                      console.log(isCheck);
+                    }
+                  }}
                 >
                   <span className="svg-icon svg-icon-2">
                     <svg
@@ -212,52 +383,286 @@ const AcademyList = (props) => {
                     </svg>
                   </span>
                 </button>
-                <div
-                  className="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                  data-kt-menu="true"
-                  id="kt_menu_631f0553006ad"
-                >
-                  <div className="px-7 py-5">
-                    <div className="fs-5 text-dark fw-bold">필터 옵션</div>
-                  </div>
-                  <div className="separator border-gray-200"></div>
-                  <div className="px-7 py-5">
-                    <div className="mb-10">
-                      <div>
-                        <select
-                          className="form-select form-select-solid"
-                          data-kt-select2="true"
-                          data-placeholder="학원본사 상태 선택"
-                          data-dropdown-parent="#kt_menu_631f0553006ad"
-                          data-allow-clear="true"
-                        >
-                          <option></option>
-                          <option value="1">사용중인 학원본사</option>
-                          <option value="2">대기중인 학원본사</option>
-                          <option value="3">삭제된 학원본사</option>
-                        </select>
+
+                {isCheck == "1" ? (
+                  <form
+                    onSubmit={function (event) {
+                      event.preventDefault();
+                      console.log("tat:", event.target[0].value);
+                      searchBrands(event);
+                      searchowner(event);
+                      searchBranches(event);
+                      searchStudent(event);
+                      setCheck("2");
+                    }}
+                  >
+                    <div
+                      className="menu menu-sub menu-sub-dropdown  menu-sub_arr  w-250px w-md-300px show"
+                      data-kt-menu="true"
+                      id="kt_menu_631f0553006ad"
+                    >
+                      <div className="px-7 py-5">
+                        <div className="fs-5 text-dark fw-bold">필터 옵션</div>
+                      </div>
+                      <div className="separator border-gray-200"></div>
+                      <div className="px-7 py-5">
+                        {props.flag == "office__head_office" ? (
+                          <div className="mb-10" hidden>
+                            <label>브랜드</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                <option value="" selected="selected">
+                                  모두
+                                </option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="mb-10">
+                            <label>브랜드</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                <option value="" selected="selected">
+                                  모두
+                                </option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        )}
+
+                        {props.flag == "office__branch_info" ? (
+                          <div className="mb-10">
+                            <label>원장</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                <option value="" selected="selected">
+                                  모두
+                                </option>
+                                {owners.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="mb-10" hidden>
+                            <label>원장</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                <option value="" selected="selected">
+                                  모두
+                                </option>
+                                {owners.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        )}
+                        {props.flag == "student__manage_info" ? (
+                          <div>
+                            <div className="mb-10">
+                              <label>지점</label>
+                              <div>
+                                <select
+                                  className="form-select form-select-solid"
+                                  data-kt-select2="true"
+                                  data-dropdown-parent="#kt_menu_631f0553006ad"
+                                  data-allow-clear="true"
+                                >
+                                  <option value="" selected="selected">
+                                    모두
+                                  </option>
+                                  {branches.map((item, idx) => (
+                                    <option key={idx} value={item.id}>
+                                      {item.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div className="mb-10">
+                              <label>학습실</label>
+                              <div>
+                                <select
+                                  className="form-select form-select-solid"
+                                  data-kt-select2="true"
+                                  data-dropdown-parent="#kt_menu_631f0553006ad"
+                                  data-allow-clear="true"
+                                >
+                                  <option value="" selected="selected">
+                                    모두
+                                  </option>
+                                  {rooms.map((item, idx) => (
+                                    <option key={idx} value={item.id}>
+                                      {item.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div className="mb-10">
+                              <label>관리그룹</label>
+                              <div>
+                                <select
+                                  className="form-select form-select-solid"
+                                  data-kt-select2="true"
+                                  data-dropdown-parent="#kt_menu_631f0553006ad"
+                                  data-allow-clear="true"
+                                >
+                                  <option value="" selected="selected">
+                                    모두
+                                  </option>
+                                  {groups.map((item, idx) => (
+                                    <option key={idx} value={item.id}>
+                                      {item.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div hidden>
+                            <div className="mb-10">
+                              <label>지점</label>
+                              <div>
+                                <select
+                                  className="form-select form-select-solid"
+                                  data-kt-select2="true"
+                                  data-dropdown-parent="#kt_menu_631f0553006ad"
+                                  data-allow-clear="true"
+                                >
+                                  <option value="" selected="selected">
+                                    모두
+                                  </option>
+                                  {branches.map((item, idx) => (
+                                    <option key={idx} value={item.id}>
+                                      {item.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div className="mb-10">
+                              <label>학습실</label>
+                              <div>
+                                <select
+                                  className="form-select form-select-solid"
+                                  data-kt-select2="true"
+                                  data-dropdown-parent="#kt_menu_631f0553006ad"
+                                  data-allow-clear="true"
+                                >
+                                  <option value="" selected="selected">
+                                    모두
+                                  </option>
+                                  {rooms.map((item, idx) => (
+                                    <option key={idx} value={item.id}>
+                                      {item.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div className="mb-10">
+                              <label>관리그룹</label>
+                              <div>
+                                <select
+                                  className="form-select form-select-solid"
+                                  data-kt-select2="true"
+                                  data-dropdown-parent="#kt_menu_631f0553006ad"
+                                  data-allow-clear="true"
+                                >
+                                  <option value="" selected="selected">
+                                    모두
+                                  </option>
+                                  {groups.map((item, idx) => (
+                                    <option key={idx} value={item.id}>
+                                      {item.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="mb-10">
+                          <label>상태</label>
+                          <div>
+                            <select
+                              className="form-select form-select-solid"
+                              data-kt-select2="true"
+                              data-dropdown-parent="#kt_menu_631f0553006ad"
+                              data-allow-clear="true"
+                            >
+                              <option value="" selected="selected">
+                                모두
+                              </option>
+                              <option value="사용">사용중인 학원본사</option>
+                              <option value="대기">대기중인 학원본사</option>
+                              <option value="삭제">삭제된 학원본사</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="d-flex justify-content-end">
+                          <button
+                            type="reset"
+                            className="btn btn-sm btn-light btn-active-light-primary me-2"
+                            data-kt-menu-dismiss="true"
+                          >
+                            리셋
+                          </button>
+                          <button
+                            type="submit"
+                            className="btn btn-sm btn-primary"
+                            data-kt-menu-dismiss="true"
+                            // onClick={() => setCheck("2")}
+                          >
+                            적용
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div className="d-flex justify-content-end">
-                      <button
-                        type="reset"
-                        className="btn btn-sm btn-light btn-active-light-primary me-2"
-                        data-kt-menu-dismiss="true"
-                      >
-                        리셋
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-sm btn-primary"
-                        data-kt-menu-dismiss="true"
-                      >
-                        적용
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                  </form>
+                ) : null}
               </div>
             </div>
+
             <div className="selected__txt_wrap">
               <span className="d-flex align-items-center fs-7 fw-bold text-gray-600 mb-2 selected__txt">
                 <span className="svg-icon svg-icon-6 svg-icon-gray-600 me-2">
@@ -377,7 +782,7 @@ const AcademyList = (props) => {
                                   </a>
                                 ) : props.flag === "office__branch_office" ? (
                                   <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
-                                    {data.nickname}
+                                    {data.realName}
                                   </a>
                                 ) : props.flag === "student__manage_info" ? (
                                   <a className="text-gray-800 text-hover-primary fs-6 fw-bold">

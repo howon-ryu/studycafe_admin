@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-
 import { css } from "@emotion/react";
 import { React, useState, useEffect, useRef } from "react";
 import axios from "axios";
@@ -9,7 +8,6 @@ import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
 import "../css/branch_info.css";
 const Branch_info = (props) => {
-  
   const reset = useRef();
   const [flag_one, setflagone] = useState("1");
   const one_click = (props) => setflagone(props);
@@ -22,7 +20,6 @@ const Branch_info = (props) => {
   const [owners, setowners] = useState([]);
   // const brandsList = brands.map((v) => (
   //   <option>{v.name}</option>
-
 
   // ))
   useEffect(() => {
@@ -123,7 +120,7 @@ const Branch_info = (props) => {
     homePageUrl: null,
     isManagement: false,
     location: {
-      address:""
+      address: "",
     },
     brand: {
       id: "",
@@ -193,7 +190,7 @@ const Branch_info = (props) => {
         homePageUrl: null,
         isManagement: false,
         location: {
-          address: ""
+          address: "",
         },
         brand: {
           id: "",
@@ -255,7 +252,6 @@ const Branch_info = (props) => {
       .then(function (response) {
         setbrands(response.data);
         console.log(response.data);
-        
       })
       .catch(function (error) {
         console.log("실패");
@@ -269,7 +265,6 @@ const Branch_info = (props) => {
       .then(function (response) {
         setowners(response.data);
         console.log(response.data);
-        
       })
       .catch(function (error) {
         console.log("실패");
@@ -283,7 +278,6 @@ const Branch_info = (props) => {
       .then(function (response) {
         setrooms(response.data);
         console.log(response.data);
-        
       })
       .catch(function (error) {
         console.log("실패");
@@ -436,8 +430,8 @@ const Branch_info = (props) => {
     if (props.detail_num == "0") {
       alert(e.target[2].value);
       // event.preventDefalut();
-      
-      console.log("e",e);
+
+      console.log("e", e);
 
       const data_t = {
         brandId: data.brand.id,
@@ -497,7 +491,7 @@ const Branch_info = (props) => {
     } else {
       // event.preventDefalut();
 
-      console.log("e",e);
+      console.log("e", e);
 
       const data_t = {
         brandId: data.brand.id,
@@ -642,86 +636,77 @@ const Branch_info = (props) => {
               >
                 <div className="card card-flush h-xl-100 card__right">
                   <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
-                    
-
                     <div className="row mb-5">
-                      
                       <div className="col-md-6 fv-row input_50">
                         <label className="required fs-5 fw-semibold mb-2">
                           학원본사선택
                         </label>
-                        {props.detail_num==0?
-                        <select
-                          name="position"
-                          data-control="select2"
-                          data-placeholder="Select a position..."
-                          className="form-select form-select-solid"
-                          defaultValue={data.brand.name}
-                          disabled
-                        >
-                          {brands.map((item, idx) => (
-                          <option key={idx} value={item.value} >
-                            {item.name}
-                          </option>
-                        ))}
-                        </select> :
-                        <select
-                        name="position"
-                        data-control="select2"
-                        data-placeholder="Select a position..."
-                        className="form-select form-select-solid"
-                        defaultValue={data.brand.name}
-                        disabled
-                      
-                       >
-                          {brands.map((item, idx) => (
-                          <option key={idx} value={item.value} >
-                            {item.name}
-                          </option>
-                        ))}
-                     
-                        </select>
-                        
-                        }
-                       
+                        {props.detail_num == 0 ? (
+                          <select
+                            name="position"
+                            data-control="select2"
+                            data-placeholder="Select a position..."
+                            className="form-select form-select-solid"
+                            defaultValue={data.brand.name}
+                            disabled
+                          >
+                            {brands.map((item, idx) => (
+                              <option key={idx} value={item.value}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <select
+                            name="position"
+                            data-control="select2"
+                            data-placeholder="Select a position..."
+                            className="form-select form-select-solid"
+                            defaultValue={data.brand.name}
+                            disabled
+                          >
+                            {brands.map((item, idx) => (
+                              <option key={idx} value={item.value}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                        )}
                       </div>
                       <div className="col-md-6 fv-row">
                         <label className="fs-5 fw-semibold mb-2">
                           운영자 이름
                         </label>
 
-                       
-                        {props.detail_num==0?
-                        <select
-                          name="position"
-                          data-control="select2"
-                          data-placeholder="Select a position..."
-                          className="form-select form-select-solid"
-                          defaultValue={data.owner.username || ""}
-                        >
-                          {owners.map((item, idx) => (
-                          <option key={idx} value={item.value} >
-                            {item.username}
-                          </option>
-                        ))}
-                        </select> :
-                        <select
-                        name="position"
-                        data-control="select2"
-                        data-placeholder="Select a position..."
-                        className="form-select form-select-solid"
-                        defaultValue={data.owner.username || ""}
-                        
-                       >
-                         {owners.map((item, idx) => (
-                          <option key={idx} value={item.value} >
-                            {item.username}
-                          </option>
-                        ))}
-                     
-                        </select>
-                        
-                        }
+                        {props.detail_num == 0 ? (
+                          <select
+                            name="position"
+                            data-control="select2"
+                            data-placeholder="Select a position..."
+                            className="form-select form-select-solid"
+                            defaultValue={data.owner.username || ""}
+                          >
+                            {owners.map((item, idx) => (
+                              <option key={idx} value={item.value}>
+                                {item.username}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <select
+                            name="position"
+                            data-control="select2"
+                            data-placeholder="Select a position..."
+                            className="form-select form-select-solid"
+                            defaultValue={data.owner.username || ""}
+                          >
+                            {owners.map((item, idx) => (
+                              <option key={idx} value={item.value}>
+                                {item.username}
+                              </option>
+                            ))}
+                          </select>
+                        )}
                       </div>
                     </div>
 
