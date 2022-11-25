@@ -18,38 +18,50 @@ import Study_weekly_report from "./Components/Study_weekly_report";
 import Study_day_plan from "./Components/Study_day_plan";
 import { React, useState, useEffect } from "react";
 function App() {
-  
-  const [value, setValue] = useState(350);
+  const [value, setValue] = useState(265);
   const [login_flag, setLoginFlag] = useState(true);
   return (
     <div className="App">
       <BrowserRouter basename="/studylab">
-        <Sidebar width={350} setValue={setValue} loginflag={login_flag}>
-          <SidebarMenu title="지점 관리" icon_num="1">
-            <SidebarMenuItem title="학원본사 관리" to="/Office__head_office" />
-            <SidebarMenuItem title="원장 관리" to="/Office__branch_office" />
-            <SidebarMenuItem title="지점정보 관리" to="/Office__branch_info" />
-          </SidebarMenu>
-          <SidebarMenu title="학생 관리" icon_num="2">
-            <SidebarMenuItem title="학원정보 관리" to="/Student__manage_info" />
-          </SidebarMenu>
-          <SidebarMenu title="학습 관리" icon_num="3">
-            <SidebarMenuItem title="주간학습 계획" to="/Study_weekly_plan" />
-            <SidebarMenuItem title="일일학습 현황" to="/Study_day_plan" />
+        <Sidebar width={265} setValue={setValue} loginflag={login_flag}>
+          <SidebarMenu title="학원관리" icon_num="1">
             <SidebarMenuItem
-              title="주간학습 레포트"
-              to="/Study_weekly_report"
+              title="본사관리"
+              to="/Office__head_office"
+              idx="1"
+            />
+            <SidebarMenuItem
+              title="원장관리"
+              to="/Office__branch_office"
+              idx="2"
+            />
+            <SidebarMenuItem
+              title="지점관리"
+              to="/Office__branch_info"
+              idx="3"
             />
           </SidebarMenu>
-          <SidebarMenu title="운영 관리" icon_num="4">
+          <SidebarMenu title="학생관리" icon_num="2">
+            <SidebarMenuItem title="학생정보" to="/Student__manage_info" />
+          </SidebarMenu>
+          <SidebarMenu title="학습관리" icon_num="3">
+            <SidebarMenuItem title="학습계획" to="/Study_weekly_plan" />
+            <SidebarMenuItem title="학습현황" to="/Study_day_plan" />
+            <SidebarMenuItem title="주간레포트" to="/Study_weekly_report" />
+          </SidebarMenu>
+          {/* <SidebarMenu title="운영 관리" icon_num="4" hidden>
             <SidebarMenuItem title="메뉴 관리" to="/main" />
             <SidebarMenuItem title="권한 관리" to="/main" />
             <SidebarMenuItem title="코드 관리" to="/main" />
-          </SidebarMenu>
+          </SidebarMenu> */}
         </Sidebar>
         <Header width={value} loginflag={login_flag} />
         <Routes>
-          <Route exact path="/" element={<Office__head_office width={value}/>}/> 
+          <Route
+            exact
+            path="/"
+            element={<Office__head_office width={value} />}
+          />
           <Route exact path="/registration" element={<Registration />} />
           <Route exact path="/main" element={<Main width={value} />} />
           <Route

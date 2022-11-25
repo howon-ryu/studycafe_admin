@@ -1,14 +1,53 @@
 .menu-item .menu-link .menu-title {
     
         display: flex;
-        font-size:20px;
+        font-size:13px;
         align-items: center;
         flex-grow: 1;
         font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic";
+        color : #9d9da6;
+        
+        
        
-    
 }
 
-.menu{
+.btnactive{
+        color:white;
+}
+
+.menu-item .menu-link .menu-title:hover {
     
+        display: flex;
+        font-size:13px;
+        align-items: center;
+        flex-grow: 1;
+        font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic";
+        color : white;
+       
+}
+.blank{
+        
+        margin-left:100px;
+        background-color: transparent;
+        border:none;
+        color : white;
+}
+
+.menu-item .menu-link .menu-title_active {
+    
+        display: flex;
+        font-size:13px;
+        align-items: center;
+        flex-grow: 1;
+        font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic";
+        color : white;
+       
+}
+
+
+.menu_border{
+
+        
+        
+        border-bottom: #9d9da6 solid 0.1px;
 }

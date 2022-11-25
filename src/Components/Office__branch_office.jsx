@@ -13,7 +13,6 @@ import Branch_detail from "./Branch_detail";
 import "../css/layout.css";
 // import { Container } from "react-bootstrap";
 const Office__branch_office = (props) => {
-  
   const [detail_num, setDetailNum] = useState("");
   let widthh = props.width;
   return (
@@ -26,14 +25,22 @@ const Office__branch_office = (props) => {
       >
         <div
           className="page-title d-flex flex-column justify-content-center flex-wrap me-3 "
-          css={css`
-            margin: 30px 0;
-          `}
+          // css={css`
+          //   margin: 30px 0;
+          // `}
         >
           <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column my-0 name_left">
-            원장 관리
+            원장관리
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+            <li className="breadcrumb-item text-muted">
+              <a href="#" className="text-muted text-hover-primary">
+                학원관리
+              </a>
+            </li>
+            <li className="breadcrumb-item">
+              <span className="bullet bg-gray-400 w-5px h-2px"></span>
+            </li>
             <li className="breadcrumb-item text-muted">원장 관리</li>
           </ul>
         </div>
@@ -53,7 +60,7 @@ const Office__branch_office = (props) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
+  margin-left: 30px;
 
   padding-top: 20px;
 `;

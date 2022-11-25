@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
-import {React,useState} from "react";
+import { React, useState } from "react";
 import "../css/study__weekly_plan.css";
 
 import styled from "@emotion/styled";
@@ -23,9 +23,9 @@ const Study_weekly_plan = (props) => {
       >
         <div
           className="page-title d-flex flex-column justify-content-center flex-wrap me-3 "
-          css={css`
-            margin: 30px 0;
-          `}
+          // css={css`
+          //   margin: 30px 0;
+          // `}
         >
           <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0">
             주간학습 계획
@@ -47,9 +47,9 @@ const Study_weekly_plan = (props) => {
             display: flex;
           `}
         >
-          <Arraylist setDetailNum={setDetailNum} flag="Study_weekly_plan"/>
+          <Arraylist setDetailNum={setDetailNum} flag="Study_weekly_plan" />
 
-          <Calendar_plan detail_num={detail_num}/>
+          <Calendar_plan detail_num={detail_num} />
         </div>
       </div>
     </Container>
@@ -59,7 +59,7 @@ const Study_weekly_plan = (props) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
+  margin-left: 30px;
 
   padding-top: 20px;
 `;

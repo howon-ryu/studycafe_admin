@@ -2,7 +2,6 @@ import { css } from "@emotion/react";
 import { React, useState, useRef, useEffect } from "react";
 import axios from "axios";
 const Manage_student = (props) => {
-  
   const reset = useRef();
   const [flag_one, setflagone] = useState("1");
   const one_click = (props) => setflagone(props);
@@ -37,13 +36,13 @@ const Manage_student = (props) => {
       reset.current.click();
     } else {
       student_num = props.detail_num;
-      if (flag_one=="1"){
+      if (flag_one == "1") {
         spec_student_Api();
-      }else if(flag_two=="1"){
+      } else if (flag_two == "1") {
         console.log("22222");
         spec_parent_Api();
       }
-      
+
       console.log(student_num);
     }
   }, [props]);
@@ -64,45 +63,41 @@ const Manage_student = (props) => {
     grade: "",
     darkMode: false,
   });
-  const [parent, setparent] = useState([{
-    id: 1,
-    realName: "김엄마",
-    relation: "엄마",
-    phone: "010-1234-5432",
-    isPrimary: true,
-    createdAt: "2022-11-22T22:39:41.131Z",
-    status: "ACTIVE"
-  }]);
+  const [parent, setparent] = useState([
+    {
+      id: 1,
+      realName: "김엄마",
+      relation: "엄마",
+      phone: "010-1234-5432",
+      isPrimary: true,
+      createdAt: "2022-11-22T22:39:41.131Z",
+      status: "ACTIVE",
+    },
+  ]);
   const parentsList = parent.map((v) => (
-  
-
-                    <tr>
-                      <td>
-                        <div className="form-check form-check-sm form-check-custom form-check-solid">
-                          <span className="text-gray-600 text-hover-primary ms-4">
-                            1
-                          </span>
-                        </div>
-                      </td>
-                      <td data-order="Invalid date">{v.realName}</td>
-                      <td data-order="Invalid date">{v.relation}</td>
-                      <td data-order="Invalid date">{v.phone}</td>
-                      <td data-order="Invalid date t__center">
-                        <input
-                          className="form-check-input widget-13-check"
-                          type="checkbox"
-                          value="1"
-                          checked
-                          disabled
-                        />
-                      </td>
-                      <td data-order="Invalid date">{v.createdAt}</td>
-                      <td className="text-muted fw-semibold text-end">
-                        <span className="badge badge-light-success">{v.status}</span>
-                      </td>
-
-                    </tr>
-                  
+    <tr>
+      <td>
+        <div className="form-check form-check-sm form-check-custom form-check-solid">
+          <span className="text-gray-600 text-hover-primary ms-4">1</span>
+        </div>
+      </td>
+      <td data-order="Invalid date">{v.realName}</td>
+      <td data-order="Invalid date">{v.relation}</td>
+      <td data-order="Invalid date">{v.phone}</td>
+      <td data-order="Invalid date t__center">
+        <input
+          className="form-check-input widget-13-check"
+          type="checkbox"
+          value="1"
+          checked
+          disabled
+        />
+      </td>
+      <td data-order="Invalid date">{v.createdAt}</td>
+      <td className="text-muted fw-semibold text-end">
+        <span className="badge badge-light-success">{v.status}</span>
+      </td>
+    </tr>
   ));
   function spec_student_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
@@ -123,7 +118,7 @@ const Manage_student = (props) => {
   }
   function spec_parent_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users" + "/students/" + student_num+"/parents";
+    let url_set = url + "users" + "/students/" + student_num + "/parents";
     console.log("url:", url_set);
     axios
       .get(url_set)
@@ -514,7 +509,7 @@ const Manage_student = (props) => {
                   </thead>
 
                   <tbody className="fw-semibold text-gray-600">
-                  {parentsList}
+                    {parentsList}
                   </tbody>
                 </table>
               </div>
@@ -580,7 +575,7 @@ const Manage_student = (props) => {
               </div>
 
               <div className="row mb-5">
-                <div className="col-md-4 fv-row">
+                {/* <div className="col-md-4 fv-row">
                   <label className="fs-5 fw-semibold mb-2">
                     최종 수정자 ID
                   </label>
@@ -606,7 +601,7 @@ const Manage_student = (props) => {
                     name=""
                     readonly
                   />
-                </div>
+                </div> */}
 
                 <div className="col-md-4 fv-row">
                   <label className="fs-5 fw-semibold mb-2">사용</label>

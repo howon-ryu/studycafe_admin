@@ -11,7 +11,6 @@ const Sidebar = (props) => {
     //   setlogin(false);
     // }
     if (window.location.pathname == "/login") {
-      
       setlogin(false);
     }
     if (window.location.pathname == "/registration") {
@@ -78,7 +77,7 @@ const Sidebar = (props) => {
         >
           <div className="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
             <a href="../main">
-              <img src={main_logo} />
+              <img src={main_logo} width="120" />
             </a>
             <button onClick={() => toggleMenu()} className={styles.button}>
               {isOpen ? (

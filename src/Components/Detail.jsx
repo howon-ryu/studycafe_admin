@@ -198,7 +198,6 @@ const Detail = (props) => {
       axios
         .put(posturl_set, data_t, config)
         .then((response) => {
-          
           console.log(response.status);
           console.log(response.data);
         })
@@ -223,7 +222,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          event.preventDefault();
+          //event.preventDefault();
           handleSubmit(event);
         }}
       >
@@ -247,7 +246,7 @@ const Detail = (props) => {
             <div className="row mb-5">
               <div className="col-md-6 fv-row input_50">
                 <label className="required fs-5 fw-semibold mb-2">
-                  학원본사 ID
+                  본사 ID
                 </label>
 
                 <input
@@ -270,7 +269,7 @@ const Detail = (props) => {
 
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">
-                  학원본사 이름
+                  본사 이름
                 </label>
 
                 <input
@@ -399,7 +398,7 @@ const Detail = (props) => {
             </div>
 
             <div className="row mb-5">
-              <div className="col-md-4 fv-row">
+              {/* <div className="col-md-4 fv-row">
                 <label className="fs-5 fw-semibold mb-2">최종 수정자 ID</label>
 
                 <input
@@ -421,7 +420,7 @@ const Detail = (props) => {
                   name=""
                   readOnly
                 />
-              </div>
+              </div> */}
 
               <div className="col-md-4 fv-row">
                 <label className="fs-5 fw-semibold mb-2">사용</label>

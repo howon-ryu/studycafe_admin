@@ -166,7 +166,7 @@ const Branch_detail = (props) => {
   };
   return (
     <div className="branch_detail">
-      <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
+      <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap ">
         <form
           onSubmit={function (event) {
             event.preventDefault();
@@ -192,9 +192,7 @@ const Branch_detail = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
               <div className="row mb-5">
                 <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    학원본사
-                  </label>
+                  <label className="required fs-5 fw-semibold mb-2">본사</label>
 
                   <select
                     name="position"
@@ -281,7 +279,7 @@ const Branch_detail = (props) => {
               </div>
 
               <div className="row mb-5">
-                <div className="col-md-4 fv-row">
+                {/* <div className="col-md-4 fv-row">
                   <label className="fs-5 fw-semibold mb-2">
                     최종 수정자 ID
                   </label>
@@ -307,7 +305,7 @@ const Branch_detail = (props) => {
                     name=""
                     readonly
                   />
-                </div>
+                </div> */}
 
                 <div className="col-md-4 fv-row">
                   <label className="fs-5 fw-semibold mb-2">사용</label>

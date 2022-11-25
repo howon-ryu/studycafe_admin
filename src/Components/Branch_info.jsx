@@ -639,7 +639,7 @@ const Branch_info = (props) => {
                     <div className="row mb-5">
                       <div className="col-md-6 fv-row input_50">
                         <label className="required fs-5 fw-semibold mb-2">
-                          학원본사선택
+                          본사선택
                         </label>
                         {props.detail_num == 0 ? (
                           <select
@@ -675,7 +675,7 @@ const Branch_info = (props) => {
                       </div>
                       <div className="col-md-6 fv-row">
                         <label className="fs-5 fw-semibold mb-2">
-                          운영자 이름
+                          원장 이름
                         </label>
 
                         {props.detail_num == 0 ? (
@@ -752,7 +752,7 @@ const Branch_info = (props) => {
                     </div>
 
                     <div className="row mb-5">
-                      <div className="col-md-4 fv-row">
+                      {/* <div className="col-md-4 fv-row">
                         <label className="fs-5 fw-semibold mb-2">
                           최종 수정자 ID
                         </label>
@@ -778,7 +778,7 @@ const Branch_info = (props) => {
                           name=""
                           readOnly
                         />
-                      </div>
+                      </div> */}
 
                       <div className="col-md-4 fv-row">
                         <label className="fs-5 fw-semibold mb-2">사용</label>

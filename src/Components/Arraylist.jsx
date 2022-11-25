@@ -304,7 +304,7 @@ const AcademyList = (props) => {
                     </span>
                   </a>
                 </li>
-                <li className="nav-item m-0">
+                <li className="nav-item m-0" hidden>
                   <button
                     className="btn btn-sm btn-icon btn-light-primary btn__wight_sq"
                     type="button"
@@ -317,7 +317,7 @@ const AcademyList = (props) => {
               <div className="card-toolbar">
                 <button
                   type="button"
-                  className="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+                  className="btn btn-sm btn-icon btn-light-primary btn__wight_sq"
                   data-kt-menu-trigger="click"
                   data-kt-menu-placement="bottom-end"
                   onClick={() => {

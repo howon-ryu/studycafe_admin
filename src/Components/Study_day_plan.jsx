@@ -10,7 +10,6 @@ import Day_report from "./Day_report";
 
 // import { Container } from "react-bootstrap";
 const Study_day_plan = (props) => {
-  
   let widthh = props.width;
   return (
     <Container>
@@ -23,7 +22,7 @@ const Study_day_plan = (props) => {
         <div
           className="page-title d-flex flex-column justify-content-center flex-wrap me-3 "
           css={css`
-            margin: 30px 0;
+            margin-left: 30px;
           `}
         >
           <h1
@@ -48,7 +47,6 @@ const Study_day_plan = (props) => {
           className="re"
           css={css`
             flex: 1;
-            margin-right: 100px;
           `}
         >
           <Day_report />
@@ -61,7 +59,7 @@ const Study_day_plan = (props) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
+  // margin-left: 30px;
 
   padding-top: 20px;
 `;

@@ -1,16 +1,13 @@
-import {React, useEffect, useState} from 'react';
+import { React, useEffect, useState } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 const Day_report = () => {
-  useEffect(() => {searchplan()},[])
-  const [branchid, setbranch] = useState([
-   
-  ]);
+  useEffect(() => {
+    searchplan();
+  }, []);
+  const [branchid, setbranch] = useState([]);
   const handlesubmit_day = (e) => {
-    
-    const data_t = {
-      
-    };
+    const data_t = {};
     const headers = { "header-name": "value" };
     const config = { headers };
     console.log("data_t", data_t);
@@ -34,27 +31,27 @@ const Day_report = () => {
         console.log("re:", error.requests);
         console.log("re:", error.response.data);
       });
-  }
+  };
 
-  function searchplan(){
+  function searchplan() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches/1" + "/daily-progresses" ;
+    let url_set = url + "branches/1" + "/daily-progresses";
     console.log("url:", url_set);
     axios
       .get(url_set)
       .then(function (response) {
-        setdayplan(response.data)
+        setdayplan(response.data);
         // console.log("data:", data);
         // console.log("head:", data.head);
-        console.log("dayplan",response.data);
-        
+        console.log("dayplan", response.data);
+
         console.log("성공");
       })
       .catch(function (error) {
         console.log("실패");
       });
   }
-  const [dayplan,setdayplan] = useState([]);
+  const [dayplan, setdayplan] = useState([]);
   // const dayList = dayplan.map((v)=>{
   //                     <tr>
   //                       <td>
@@ -189,13 +186,13 @@ const Day_report = () => {
                     </svg>
                   </span>
                   <form onSubmit={handlesubmit_day}>
-                  <input
-                    type="text"
-                    id="kt_filter_search"
-                    className="form-control form-control-solid border-body ps-14 input__slim"
-                    placeholder="Search"
-                  />
-                  {/* <button>찾기</button> */}
+                    <input
+                      type="text"
+                      id="kt_filter_search"
+                      className="form-control form-control-solid border-body ps-14 input__slim"
+                      placeholder="Search"
+                    />
+                    {/* <button>찾기</button> */}
                   </form>
                 </div>
               </div>
@@ -377,75 +374,79 @@ const Day_report = () => {
                         <th className="min-w-50px text-end pe-5">전송유무</th>
                       </tr>
                     </thead>
-                    
+
                     <tbody className="fw-semibold text-gray-600 stdy_w_rpt_tbody">
-                    {dayplan.map((data) => (
+                      {dayplan.map((data) => (
                         <tr>
-                        <td>
-                          <div className="form-check form-check-sm form-check-custom form-check-solid">
-                            <input
-                              className="form-check-input widget-9-check"
-                              type="checkbox"
-                              value="1"
-                            />
-                          </div>
-                        </td>
+                          <td>
+                            <div className="form-check form-check-sm form-check-custom form-check-solid">
+                              <input
+                                className="form-check-input widget-9-check"
+                                type="checkbox"
+                                value="1"
+                              />
+                            </div>
+                          </td>
 
-                        <td className="text-gray-800 fw-bold">{data.user.room.name}</td>
-                        <td className="text-gray-800 fw-bold">{data.user.groupList[0].name}</td>
-                        <td>{data.user.seatNumber}</td>
-                        <td className="text-gray-800 fw-bold">{data.user.username}</td>
-                        <td>{data.doneCount}</td>
-                        <td>{data.toDoCount}</td>
-                        <td>{data.progressRate}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                          <a
-                            href="#"
-                            data-bs-toggle="modal"
-                            data-bs-target="#kt_modal_invite_friends"
-                          >
-                            보기
-                            <svg
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
+                          <td className="text-gray-800 fw-bold">
+                            {data.user.room.name}
+                          </td>
+                          <td className="text-gray-800 fw-bold">
+                            {data.user.groupList[0].name}
+                          </td>
+                          <td>{data.user.seatNumber}</td>
+                          <td className="text-gray-800 fw-bold">
+                            {data.user.username}
+                          </td>
+                          <td>{data.doneCount}</td>
+                          <td>{data.toDoCount}</td>
+                          <td>{data.progressRate}</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>
+                            <a
+                              href="#"
+                              data-bs-toggle="modal"
+                              data-bs-target="#kt_modal_invite_friends"
                             >
-                              <path
-                                opacity="0.3"
-                                d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                fill="currentColor"
-                              ></path>
-                              <rect
-                                x="21.9497"
-                                y="3.46448"
-                                width="13"
-                                height="2"
-                                rx="1"
-                                transform="rotate(135 21.9497 3.46448)"
-                                fill="currentColor"
-                              ></rect>
-                              <path
-                                d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                fill="currentColor"
-                              ></path>
-                            </svg>
-                          </a>
-                        </td>
+                              보기
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  opacity="0.3"
+                                  d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
+                                  fill="currentColor"
+                                ></path>
+                                <rect
+                                  x="21.9497"
+                                  y="3.46448"
+                                  width="13"
+                                  height="2"
+                                  rx="1"
+                                  transform="rotate(135 21.9497 3.46448)"
+                                  fill="currentColor"
+                                ></rect>
+                                <path
+                                  d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
+                                  fill="currentColor"
+                                ></path>
+                              </svg>
+                            </a>
+                          </td>
 
-                        <td className="text-end pe-5" data-order="27">
-                          <span className="badge badge-light-success">
-                            전송
-                          </span>
-                        </td>
-                      </tr>
-                      ))
-                      }
-                      
+                          <td className="text-end pe-5" data-order="27">
+                            <span className="badge badge-light-success">
+                              전송
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

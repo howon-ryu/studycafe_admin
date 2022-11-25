@@ -11,7 +11,6 @@ import Arraylist from "./Arraylist";
 import Manage_student from "./Manage_student";
 // import { Container } from "react-bootstrap";
 const Student__manage_info = (props) => {
-  
   const [detail_num, setDetailNum] = useState("");
   let widthh = props.width;
   return (
@@ -24,9 +23,9 @@ const Student__manage_info = (props) => {
       >
         <div
           className="page-title d-flex flex-column justify-content-center flex-wrap me-3 "
-          css={css`
-            margin: 30px 0;
-          `}
+          // css={css`
+          //   margin: 30px 0;
+          // `}
         >
           <h1
             className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0"
@@ -62,7 +61,7 @@ const Student__manage_info = (props) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
+  margin-left: 30px;
 
   padding-top: 20px;
 `;

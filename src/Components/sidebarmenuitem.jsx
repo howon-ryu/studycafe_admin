@@ -3,8 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Link } from "react-router-dom";
 
-function SidebarMenuItem({ title, to }) {
-  
+function SidebarMenuItem({ title, to, idx }) {
   // 토글을 닫아두기 위해 초기값을 false로 설정해두었다.
   const [isCheck, setCheck] = useState(false);
 
@@ -14,7 +13,16 @@ function SidebarMenuItem({ title, to }) {
         <span className="menu-bullet">
           <span className="bullet bullet-dot"></span>
         </span>
-        <span class="menu-title">{title}</span>
+        <span
+          class={"menu-title" + (isCheck == true ? "_active " : "")}
+          onClick={() => {
+            // setCheck로 state값을 변경해주자.
+            // e로 상태값을 받아왔다. 클릭시 상태값은 !상태값이므로 값이 반전된다 false -> true
+            setCheck((e) => !e);
+          }}
+        >
+          {title}
+        </span>
       </Link>
     </div>
   );

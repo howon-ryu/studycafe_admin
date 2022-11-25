@@ -6,24 +6,29 @@
     padding-top:50px;
 }
 .arraylist{
-    margin-top:10px;
+    margin-top:20px;
     
     
    
-    width:35%;
+    width:31%;
    
 }
 
 .detail{
+    
     float:right;
-    width:65%;
-    margin-left:100px;
-    margin-right:100px;
-    margin-top:10px;
+    width:100%;
+    margin-left:30px;
+    margin-right:30px;
+    margin-top:20px;
 
 }
 
 .page_header{   
     float:left;
     /* border:solid; */
+}
+
+.detail_css{
+    width:100%;
 }
