@@ -258,6 +258,7 @@ const AcademyList = (props) => {
     navigate({
       search: createSearchParams({
         student: value,
+        
       }).toString(),
     });
     // props.setheadnum(e);

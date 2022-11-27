@@ -27,13 +27,14 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import momentPlugin from "@fullcalendar/moment";
-import { getStudyPlanList } from "../remote/student/getStudyPlanList";
+import { getStudyPlanList,postStudyPlanList } from "../remote/student/getStudyPlanList";
 import { format } from "date-fns";
 //import './main.css';
 
 let id = 0;
 const START_DATE = "1970-01-01";
-const END_DATE = format(new Date(), "yyyy-MM-dd");
+const END_DATE = format(new Date('2030-12-31'), "yyyy-MM-dd");
+console.log("END_DATE",END_DATE);
 
 const Calendar_plan = (props) => {
   const [isOpenModal, setOpenModal] = React.useState(false);
@@ -42,6 +43,8 @@ const Calendar_plan = (props) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   let [nname, setnname] = useState("");
+  
+
   const [searchParams] = useSearchParams();
   const studentId = searchParams.get("student");
   console.log("student ID", studentId);
@@ -65,6 +68,7 @@ const Calendar_plan = (props) => {
   }, [isOpenModal]);
 
   const fetchStudentPlanList = useCallback(async () => {
+    console.log("click");
     if (studentId) {
       const data = await getStudyPlanList({
         studentId,
@@ -89,7 +93,10 @@ const Calendar_plan = (props) => {
 
   useEffect(() => {
     fetchStudentPlanList();
-  }, [studentId, startDate, endDate, fetchStudentPlanList]);
+  }, [ startDate, endDate, fetchStudentPlanList]);
+
+
+ 
 
   const onClickToggleModal_view = React.useCallback(() => {
     // let aa = $("#card__right");
@@ -151,6 +158,7 @@ const Calendar_plan = (props) => {
   let [start_time_text, setstart] = useState(Date);
   let [end_time_text, setend] = useState(Date);
   let [locaion_text, setlocation] = useState("");
+  
   let flag = 1;
   const handleDateSelect = (selectInfo) => {
     console.log("tt");
@@ -192,15 +200,30 @@ const Calendar_plan = (props) => {
     let calenderApi = selectInfo;
     // calenderApi.unselect()
     let event_name = document.getElementById("event_name").value;
-    // let event_descripton =(document.getElementById("event_descripton") as HTMLInputElement).value;
-    // let event_location =(document.getElementById("event_location") as HTMLInputElement).value;
-    // let event_start_date =(document.getElementById("kt_calendar_datepicker_start_date") as HTMLInputElement).value;
+    // console.log("event_name:",event_name);
+    let event_descripton =document.getElementById("event_description").value;
+    // console.log("event_descripton:",event_descripton);
+    let event_location =document.getElementById("event_location") .value;
+    let event_start_date =document.getElementById("kt_calendar_datepicker_start_date").value;
+    // console.log("event_start_date:",event_start_date);
     // let event_start_time =(document.getElementById("kt_calendar_datepicker_start_time") as HTMLInputElement).value;
-    // let event_end_date =(document.getElementById("kt_calendar_datepicker_end_date") as HTMLInputElement).value;
+    let event_end_date =document.getElementById("kt_calendar_datepicker_end_date").value;
     // let event_end_time =(document.getElementById("kt_calendar_datepicker_end_time") as HTMLInputElement).value;
     // let event_allday =(document.getElementById("kt_calendar_datepicker_allday") as HTMLInputElement).value;
     setnname(event_name);
+    
     console.log("gg", nname);
+    console.log("ggg",studentId);
+    postStudyPlanList({
+      studentId,
+      startTime: event_start_date,
+      endTime: event_end_date,
+      title : event_name,
+      description : event_descripton,
+      place : event_location,
+
+    });
+    setOpenModal(!isOpenModal);
     //return(handleDateSelect);
 
     //console.log("ev:",nname);
@@ -208,6 +231,7 @@ const Calendar_plan = (props) => {
 
     //   Calender.addEvent({
     //     id:String(id++),
+
     //     title: event_name,
     //     start:event_start_time,
     //     end:event_end_time,
