@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import "../css/study__weekly_plan.css";
+import { useSearchParams } from "react-router-dom";
 
 import styled from "@emotion/styled";
 import "../css/layout.css";
@@ -13,6 +14,7 @@ import Calendar_plan from "./Calendar_plan";
 const Study_weekly_plan = (props) => {
   let widthh = props.width;
   const [detail_num, setDetailNum] = useState("");
+
   return (
     <Container>
       <div
@@ -48,7 +50,6 @@ const Study_weekly_plan = (props) => {
           `}
         >
           <Arraylist setDetailNum={setDetailNum} flag="Study_weekly_plan" />
-
           <Calendar_plan detail_num={detail_num} />
         </div>
       </div>

@@ -2,12 +2,10 @@ import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 
 function Modal_view({ onClickToggleModal_view, children }) {
-  
   return (
     <ModalContainer>
-      <div>piu</div>
       <DialogBox>
-        <div>{children}</div>
+        <>{children}</>
       </DialogBox>
       <Backdrop
         onClick={(e) => {
@@ -32,8 +30,7 @@ const ModalContainer = styled.div`
   position: fixed;
 `;
 
-const DialogBox = styled.dialog`
-  width: 650px;
+const DialogBox = styled.div`
   height: 330px;
   display: flex;
   flex-direction: column;

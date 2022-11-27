@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { css } from "@emotion/react";
 import { buildEntryKey, compareByFieldSpec } from "@fullcalendar/core";
 import "../css/arraylist.css";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 const AcademyList = (props) => {
   const [isCheck, setCheck] = useState("2");
@@ -13,6 +14,7 @@ const AcademyList = (props) => {
   const [branches, setbranches] = useState([]);
   const [students, setstudents] = useState([]);
   const [rooms, setrooms] = useState([]);
+  const navigate = useNavigate();
   const [groups, setgroups] = useState([]);
   useEffect(() => {
     searchBrands();
@@ -250,10 +252,14 @@ const AcademyList = (props) => {
     // props.setheadnum("0");
   }
 
-  function listclick(e) {
-    console.log("cliL:", e);
-    props.setDetailNum(e);
-
+  function listclick(value) {
+    console.log("cliL:", value);
+    props.setDetailNum(value);
+    navigate({
+      search: createSearchParams({
+        student: value,
+      }).toString(),
+    });
     // props.setheadnum(e);
   }
 

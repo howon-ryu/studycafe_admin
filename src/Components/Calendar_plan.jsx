@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import moment from "moment";
 import { css } from "@emotion/react";
-import { useRef } from "react";
-import React, { useEffect, useState, useCallback } from "react";
-import { BrowserRouter } from "react-router-dom";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { BrowserRouter, useSearchParams } from "react-router-dom";
 import FullCalendar, {
   DateSelectArg,
   EventClickArg,
@@ -20,7 +19,6 @@ import styled from "styled-components";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import { Calendar, CalendarApi } from "@fullcalendar/core";
 import interactionPlugin, {
-  
   DateClickArg,
   EventDragStartArg,
   EventDragStopArg,
@@ -29,14 +27,24 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import momentPlugin from "@fullcalendar/moment";
+import { getStudyPlanList } from "../remote/student/getStudyPlanList";
+import { format } from "date-fns";
 //import './main.css';
 
 let id = 0;
+const START_DATE = "1970-01-01";
+const END_DATE = format(new Date(), "yyyy-MM-dd");
 
 const Calendar_plan = (props) => {
   const [isOpenModal, setOpenModal] = React.useState(false);
   const [isOpenModal_view, setOpenModal_view] = React.useState(false);
+  const [studentPlanList, setStudentPlanList] = React.useState([]);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   let [nname, setnname] = useState("");
+  const [searchParams] = useSearchParams();
+  const studentId = searchParams.get("student");
+  console.log("student ID", studentId);
   const onClickToggleModal = React.useCallback(() => {
     // let aa = $("#card__right");
     // console.log("aa:",aa);
@@ -55,6 +63,34 @@ const Calendar_plan = (props) => {
     console.log("nname", nname);
     console.log(flag);
   }, [isOpenModal]);
+
+  const fetchStudentPlanList = useCallback(async () => {
+    if (studentId) {
+      const data = await getStudyPlanList({
+        studentId,
+        startDate: START_DATE,
+        endDate: END_DATE,
+      });
+      const calendarFormatPlanList = data.map((item) => {
+        const parsedDate = (ISOString) => ISOString.substring(0, 10);
+
+        return {
+          start: parsedDate(item.startTime),
+          end: parsedDate(item.endTime),
+          title: item.title,
+          description: item.description,
+          id: item.id,
+        };
+      });
+      setStudentPlanList([...calendarFormatPlanList]);
+      console.log("플랜 목록: ", data);
+    }
+  }, [studentId, setStudentPlanList]);
+
+  useEffect(() => {
+    fetchStudentPlanList();
+  }, [studentId, startDate, endDate, fetchStudentPlanList]);
+
   const onClickToggleModal_view = React.useCallback(() => {
     // let aa = $("#card__right");
     // console.log("aa:",aa);
@@ -69,157 +105,14 @@ const Calendar_plan = (props) => {
     console.log(isOpenModal_view);
   }, [isOpenModal_view]);
   const [events, setEvents] = React.useState([]);
-  const today = new Date();
-  let O = moment().startOf("day");
-  let I = O.format("YYYY-MM");
-  let R = O.clone().subtract(1, "day").format("YYYY-MM-DD");
-  let V = O.format("YYYY-MM-DD");
-  let P = O.clone().add(1, "day").format("YYYY-MM-DD");
-  const [initialEvents, setinitialEvents] = React.useState([
-    {
-      id: String(20001),
-      title: "All Day Event",
-      start: new Date(today.setDate(today.getDate() - 2))
-        .toISOString()
-        .split("T")[0],
-      end: new Date(today.setDate(today.getDate() - 1))
-        .toISOString()
-        .split("T")[0],
-      description: "Toto lorem ipsum dolor sit incid idunt ut",
-      className: "fc-event-danger fc-event-solid-warning",
-      location: "Federation Square",
-    },
-    {
-      id: String(20001),
-      title: "Reporting",
-      start: new Date().toISOString().split("T")[0] + "-14T13:30:00",
-      description: "Lorem ipsum dolor incid idunt ut labore",
-      end: new Date().toISOString().split("T")[0] + "-14T14:30:00",
-      className: "fc-event-success",
-      location: "Meeting Room 7.03",
-    },
-    {
-      id: String(20001),
-      title: "Company Trip",
-      start: I + "-02",
-      description: "Lorem ipsum dolor sit tempor incid",
-      end: I + "-03",
-      className: "fc-event-primary",
-      location: "Seoul, Korea",
-    },
-    {
-      id: String(20001),
-      title: "ICT Expo 2021 - Product Release",
-      start: I + "-03",
-      description: "Lorem ipsum dolor sit tempor inci",
-      end: I + "-05",
-      className: "fc-event-light fc-event-solid-primary",
-      location: "Melbourne Exhibition Hall",
-    },
-    {
-      id: String(20001),
-      title: "Dinner",
-      start: I + "-12",
-      description: "Lorem ipsum dolor sit amet, conse ctetur",
-      end: I + "-13",
-      location: "Squire's Loft",
-    },
-    {
-      id: String(20001),
-      title: "Repeating Event",
-      start: I + "-09T16:00:00",
-      end: I + "-09T17:00:00",
-      description: "Lorem ipsum dolor sit ncididunt ut labore",
-      className: "fc-event-danger",
-      location: "General Area",
-    },
-    {
-      id: String(20001),
-      title: "Repeating Event",
-      description: "Lorem ipsum dolor sit amet, labore",
-      start: I + "-16T16:00:00",
-      end: I + "-16T17:00:00",
-      location: "General Area",
-    },
-    {
-      id: String(20001),
-      title: "Conference",
-      start: R,
-      end: P,
-      description: "Lorem ipsum dolor eius mod tempor labore",
-      className: "fc-event-primary",
-      location: "Conference Hall A",
-    },
-    {
-      id: String(20001),
-      title: "Meeting",
-      start: V + "T10:30:00",
-      end: V + "T12:30:00",
-      description: "Lorem ipsum dolor eiu idunt ut labore",
-      location: "Meeting Room 11.06",
-    },
-    {
-      id: String(20001),
-      title: "Lunch",
-      start: V + "T12:00:00",
-      end: V + "T14:00:00",
-      className: "fc-event-info",
-      description: "Lorem ipsum dolor sit amet, ut labore",
-      location: "Cafeteria",
-    },
-    {
-      id: String(20001),
-      title: "Meeting",
-      start: V + "T14:30:00",
-      end: V + "T15:30:00",
-      className: "fc-event-warning",
-      description: "Lorem ipsum conse ctetur adipi scing",
-      location: "Meeting Room 11.10",
-    },
-    {
-      id: String(20001),
-      title: "Happy Hour",
-      start: V + "T17:30:00",
-      end: V + "T21:30:00",
-      className: "fc-event-info",
-      description: "Lorem ipsum dolor sit amet, conse ctetur",
-      location: "The English Pub",
-    },
-    {
-      id: String(20001),
-      title: "Dinner",
-      start: P + "T18:00:00",
-      end: P + "T21:00:00",
-      className: "fc-event-solid-danger fc-event-light",
-      description: "Lorem ipsum dolor sit ctetur adipi scing",
-      location: "New York Steakhouse",
-    },
-    {
-      id: String(20001),
-      title: "Birthday Party",
-      start: P + "T12:00:00",
-      end: P + "T14:00:00",
-      className: "fc-event-primary",
-      description: "Lorem ipsum dolor sit amet, scing",
-      location: "The English Pub",
-    },
-    {
-      id: String(20001),
-      title: "Site visit",
-      start: I + "-28",
-      end: I + "-29",
-      className: "fc-event-solid-info fc-event-light",
-      description: "Lorem ipsum dolor sit amet, labore",
-      location: "271, Spring Street",
-    },
-  ]);
+
   let detail_num;
   React.useEffect(() => {
     console.log("eventler", events);
   }, [events]);
   console.log("props", props);
-    // setdetailnum(props.detail_num);
-    detail_num = props.detail_num;
+  // setdetailnum(props.detail_num);
+  detail_num = props.detail_num;
   const handleEvents = (events) => {
     setEvents(events);
   };
@@ -239,14 +132,14 @@ const Calendar_plan = (props) => {
     let start_time_text_prev = clickInfo.event.start;
     let end_time_text_prev = clickInfo.event.end;
     let location_text = clickInfo.event._def.extendedProps.location;
-    let start_time_text = moment(start_time_text_prev).format("YYYY-MM");
-    let end_time_text = moment(end_time_text_prev).format("YYYY-MM");
+    let start_time_text = moment(start_time_text_prev).format("YYYY-MM-DD");
+    let end_time_text = moment(end_time_text_prev).format("YYYY-MM-DD");
     settitle(title_textt);
     setdescription(description_text);
     setstart(start_time_text);
     setend(end_time_text);
     setlocation(location_text);
-    console.log(clickInfo.event);
+    console.log("이벤트: ", clickInfo.event);
     console.log(clickInfo.event._def.extendedProps.location);
     console.log(clickInfo.event.start);
     console.log(clickInfo.event.end);
@@ -287,6 +180,10 @@ const Calendar_plan = (props) => {
     } else {
       console.log("nname", nname);
     }
+  };
+
+  const handleEventDrag = (event) => {
+    console.log("드래그 이벤트", event.event);
   };
 
   const handleSubmit = (selectInfo) => {
@@ -361,6 +258,8 @@ const Calendar_plan = (props) => {
                 dateClick={(e) => {
                   console.log("dateclick", e);
                 }}
+                events={studentPlanList}
+                eventDragStop={handleEventDrag}
                 eventClick={handleEventClick}
                 // 예정에 대한 옵션
                 // eventContent = {renderEventContent}
@@ -371,7 +270,6 @@ const Calendar_plan = (props) => {
                 eventChange={(e) => {
                   console.log("event change", e);
                 }}
-                initialEvents={initialEvents}
                 initialView="dayGridMonth"
                 selectable={true}
                 editable={true}
@@ -400,207 +298,159 @@ const Calendar_plan = (props) => {
           <Main>
             {isOpenModal && (
               <Modal onClickToggleModal={onClickToggleModal}>
-                <div className="modal-dialog modal-dialog-centered mw-650px">
-                  <div className="modal-content">
-                    <form onSubmit={handleSubmit}>
-                      <div className="modal-header">
-                        <h2 className="fw-bold" data-kt-calendar="title">
-                          Add a New Event
-                        </h2>
+                <div className="modal-content">
+                  <form onSubmit={handleSubmit} className="w-100">
+                    <div className="modal-header">
+                      <h2 className="fw-bold" data-kt-calendar="title">
+                        학생 일정 추가
+                      </h2>
 
-                        <div
-                          className="btn btn-icon btn-sm btn-active-icon-primary"
-                          id="kt_modal_add_event_close"
-                        >
-                          <span className="svg-icon svg-icon-1">
-                            <svg
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <rect
-                                opacity="0.5"
-                                x="6"
-                                y="17.3137"
-                                width="16"
-                                height="2"
-                                rx="1"
-                                transform="rotate(-45 6 17.3137)"
-                                fill="currentColor"
-                              />
-                              <rect
-                                x="7.41422"
-                                y="6"
-                                width="16"
-                                height="2"
-                                rx="1"
-                                transform="rotate(45 7.41422 6)"
-                                fill="currentColor"
-                              />
-                            </svg>
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="fv-row mb-9">
-                        <label className="fs-6 fw-semibold required mb-2">
-                          Event Name
-                        </label>
-
-                        <input
-                          type="text"
-                          id="event_name"
-                          className="form-control form-control-solid"
-                          placeholder=""
-                          name="calendar_event_name"
-                        />
-                      </div>
-                      <div className="fv-row mb-9">
-                        <label className="fs-6 fw-semibold mb-2">
-                          Event Description
-                        </label>
-
-                        <input
-                          type="text"
-                          id="event_description"
-                          className="form-control form-control-solid"
-                          placeholder=""
-                          name="calendar_event_description"
-                        />
-                      </div>
-
-                      <div className="fv-row mb-9">
-                        <label className="fs-6 fw-semibold mb-2">
-                          Event Location
-                        </label>
-
-                        <input
-                          type="text"
-                          id="event_location"
-                          className="form-control form-control-solid"
-                          placeholder=""
-                          name="calendar_event_location"
-                        />
-                      </div>
-
-                      <div className="fv-row mb-9">
-                        <label className="form-check form-check-custom form-check-solid">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="kt_calendar_datepicker_allday"
-                          />
-                          <label
-                            className="form-check-label fw-semibold"
-                            htmlFor="kt_calendar_datepicker_allday"
+                      <div
+                        className="btn btn-icon btn-sm btn-active-icon-primary"
+                        id="kt_modal_add_event_close"
+                      >
+                        <span className="svg-icon svg-icon-1">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            All Day
+                            <rect
+                              opacity="0.5"
+                              x="6"
+                              y="17.3137"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(-45 6 17.3137)"
+                              fill="currentColor"
+                            />
+                            <rect
+                              x="7.41422"
+                              y="6"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(45 7.41422 6)"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="fv-row mb-9">
+                      <label className="fs-6 fw-semibold required mb-2">
+                        이벤트명
+                      </label>
+
+                      <input
+                        type="text"
+                        id="event_name"
+                        className="form-control form-control-solid"
+                        placeholder=""
+                        name="calendar_event_name"
+                      />
+                    </div>
+                    <div className="fv-row mb-9">
+                      <label className="fs-6 fw-semibold mb-2">
+                        이벤트 설명
+                      </label>
+
+                      <input
+                        type="text"
+                        id="event_description"
+                        className="form-control form-control-solid"
+                        placeholder=""
+                        name="calendar_event_description"
+                      />
+                    </div>
+
+                    <div className="fv-row mb-9">
+                      <label className="fs-6 fw-semibold mb-2">
+                        이벤트 장소
+                      </label>
+
+                      <input
+                        type="text"
+                        id="event_location"
+                        className="form-control form-control-solid"
+                        placeholder=""
+                        name="calendar_event_location"
+                      />
+                    </div>
+
+                    <div className="fv-row mb-9">
+                      <div className="col">
+                        <div className="fv-row mb-9">
+                          <label className="fs-6 fw-semibold mb-2 required">
+                            이벤트 시작일
                           </label>
-                        </label>
-                      </div>
-
-                      <div className="row row-cols-lg-2 g-10">
-                        <div className="col">
-                          <div className="fv-row mb-9">
-                            <label className="fs-6 fw-semibold mb-2 required">
-                              Event Start Date
-                            </label>
-                            onClickToggleModal
-                            <input
-                              className="form-control form-control-solid"
-                              name="calendar_event_start_date"
-                              placeholder="Pick a start date"
-                              id="kt_calendar_datepicker_start_date"
-                            />
-                          </div>
-                        </div>
-                        <div className="col" data-kt-calendar="datepicker">
-                          <div className="fv-row mb-9">
-                            <label className="fs-6 fw-semibold mb-2">
-                              Event Start Time
-                            </label>
-
-                            <input
-                              className="form-control form-control-solid"
-                              name="calendar_event_start_time"
-                              placeholder="Pick a start time"
-                              id="kt_calendar_datepicker_start_time"
-                            />
-                          </div>
+                          <input
+                            className="form-control form-control-solid"
+                            name="calendar_event_start_date"
+                            placeholder="YYYY-MM-DD 형식 날짜를 입력해주세요"
+                            id="kt_calendar_datepicker_start_date"
+                          />
                         </div>
                       </div>
+                    </div>
 
-                      <div className="row row-cols-lg-2 g-10">
-                        <div className="col">
-                          <div className="fv-row mb-9">
-                            <label className="fs-6 fw-semibold mb-2 required">
-                              Event End Date
-                            </label>
-
-                            <input
-                              className="form-control form-control-solid"
-                              name="calendar_event_end_date"
-                              placeholder="Pick a end date"
-                              id="kt_calendar_datepicker_end_date"
-                            />
-                          </div>
-                        </div>
-                        <div className="col" data-kt-calendar="datepicker">
-                          <div className="fv-row mb-9">
-                            <label className="fs-6 fw-semibold mb-2">
-                              Event End Time
-                            </label>
-
-                            <input
-                              className="form-control form-control-solid"
-                              name="calendar_event_end_time"
-                              placeholder="Pick a end time"
-                              id="kt_calendar_datepicker_end_time"
-                            />
-                          </div>
+                    <div className="fv-row mb-9">
+                      <div className="col">
+                        <div className="fv-row mb-9">
+                          <label className="fs-6 fw-semibold mb-2 required">
+                            이벤트 종료일
+                          </label>
+                          <input
+                            className="form-control form-control-solid"
+                            name="calendar_event_end_date"
+                            placeholder="YYYY-MM-DD 형식 날짜를 입력해주세요"
+                            id="kt_calendar_datepicker_end_date"
+                          />
                         </div>
                       </div>
-                      <div className="modal-footer flex-center">
-                        <button
-                          type="reset"
-                          id="kt_modal_add_event_cancel"
-                          className="btn btn-light me-3"
+                      <div className="col" data-kt-calendar="datepicker"></div>
+                    </div>
+                    <div className="modal-footer flex-center">
+                      <button
+                        type="reset"
+                        id="kt_modal_add_event_cancel"
+                        className="btn btn-light me-3"
+                      >
+                        취소
+                      </button>
+
+                      <button
+                        type="submit"
+                        id="kt_modal_add_event_submit"
+                        className="btn btn-primary"
+                      >
+                        <span
+                          className="indicator-label"
+                          onClick={(e) => {
+                            console.log("!!!!!!!!!!!");
+                            // e.preventDefault();
+                          }}
                         >
-                          Cancel
-                        </button>
-
-                        <button
-                          type="submit"
-                          id="kt_modal_add_event_submit"
-                          className="btn btn-primary"
-                        >
-                          <span
-                            className="indicator-label"
-                            onClick={(e) => {
-                              console.log("!!!!!!!!!!!");
-                              // e.preventDefault();
-                            }}
-                          >
-                            Submit
-                          </span>
-                          <span className="indicator-progress">
-                            Please wait...
-                            <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
-                          </span>
-                        </button>
-                      </div>
-                    </form>
-                  </div>
+                          제출
+                        </span>
+                        <span className="indicator-progress">
+                          Please wait...
+                          <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                      </button>
+                    </div>
+                  </form>
                 </div>
                 {/* //////////////////// */}
               </Modal>
             )}
             {isOpenModal_view && (
               <Modal_view onClickToggleModal_view={onClickToggleModal_view}>
-                <div className="modal-dialog modal-dialog-centered mw-650px">
+                <div className="modal-dialog modal-dialog-centered">
                   <div className="modal-content">
                     <div className="modal-header border-0 justify-content-end">
                       <div
@@ -761,32 +611,40 @@ const Calendar_plan = (props) => {
                         </span>
 
                         <div className="fs-6">
-                          <span className="fw-bold">Starts</span>
+                          <span className="fw-bold">시작일 </span>
                           <span data-kt-calendar="event_start_date">
                             {start_time_text}
                           </span>
                         </div>
                       </div>
-                      <div className="d-flex align-items-center mb-9">
-                        <span className="svg-icon svg-icon-1 svg-icon-danger me-5">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24px"
-                            height="24px"
-                            viewBox="0 0 24 24"
-                            version="1.1"
-                          >
-                            <circle fill="currentColor" cx="12" cy="12" r="8" />
-                          </svg>
-                        </span>
-
-                        <div className="fs-6">
-                          <span className="fw-bold">Ends</span>
-                          <span data-kt-calendar="event_end_date">
-                            {end_time_text}
+                      {end_time_text !== "Invalid date" && (
+                        <div className="d-flex align-items-center mb-9">
+                          <span className="svg-icon svg-icon-1 svg-icon-danger me-5">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24px"
+                              height="24px"
+                              viewBox="0 0 24 24"
+                              version="1.1"
+                            >
+                              <circle
+                                fill="currentColor"
+                                cx="12"
+                                cy="12"
+                                r="8"
+                              />
+                            </svg>
                           </span>
+
+                          <div className="fs-6">
+                            <span className="fw-bold">종료일 </span>
+                            <span data-kt-calendar="event_end_date">
+                              {end_time_text}
+                            </span>
+                          </div>
                         </div>
-                      </div>
+                      )}
+
                       <div className="d-flex align-items-center">
                         <span className="svg-icon svg-icon-1 svg-icon-muted me-5">
                           <svg
@@ -830,12 +688,6 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-<<<<<<< HEAD
-  
-  
-  
-=======
->>>>>>> df8ab010ca9d1238dc66a18cdc501313e13879f7
 `;
 
 const Title = styled.h3`

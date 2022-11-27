@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 
 function Modal({ onClickToggleModal, children }) {
-  
   const handleSubmit = (selectInfo) => {
     console.log("click!!!");
     let calenderApi = selectInfo;
@@ -23,9 +22,8 @@ function Modal({ onClickToggleModal, children }) {
 
   return (
     <ModalContainer>
-      <div>piu</div>
       <DialogBox>
-        <div>{children}</div>
+        <>{children}</>
       </DialogBox>
       <Backdrop
         onClick={(e) => {
