@@ -12,7 +12,7 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 
 const AcademyList = (props) => {
   const [isCheck, setCheck] = useState("2");
-  //필터 필터데이터
+
   const [ttext, setttext] = useState("모든학원본사");
   let [data, setdata] = useState([]);
   const [brands, setbrands] = useState([]);
@@ -20,19 +20,8 @@ const AcademyList = (props) => {
   const [branches, setbranches] = useState([]);
   const [students, setstudents] = useState([]);
   const [rooms, setrooms] = useState([]);
-
-  const [groups, setgroups] = useState([]);
-
-  //리스트 데이터
-  const [brands2, setbrands2] = useState([]);
-  const [owners2, setowners2] = useState([]);
-  const [branches2, setbranches2] = useState([]);
-  const [students2, setstudents2] = useState([]);
-  const [rooms2, setrooms2] = useState([]);
-
-  const [groups2, setgroups2] = useState([]);
-
   const navigate = useNavigate();
+  const [groups, setgroups] = useState([]);
   useEffect(() => {
     searchBrands();
     searchowner();
@@ -40,12 +29,6 @@ const AcademyList = (props) => {
     searchBranches();
     searchRooms();
     searchGroups();
-    searchBrands2();
-    searchowner2();
-    searchStudent2();
-    searchBranches2();
-    searchRooms2();
-    searchGroups2();
 
     console.log("props_arr", props);
 
@@ -53,27 +36,27 @@ const AcademyList = (props) => {
   }, []);
   useEffect(() => {
     if (props.flag == "office__head_office") {
-      setdata(brands2);
+      setdata(brands);
     }
   }, [brands]);
   useEffect(() => {
     if (props.flag == "office__branch_office") {
-      setdata(owners2);
+      setdata(owners);
     }
   }, [owners]);
   useEffect(() => {
     if (props.flag == "student__manage_info") {
-      setdata(students2);
+      setdata(students);
     }
   }, [students]);
   useEffect(() => {
     if (props.flag == "office__branch_info") {
-      setdata(branches2);
+      setdata(branches);
     }
   }, [branches]);
   useEffect(() => {
     if (props.flag == "Study_weekly_plan") {
-      setdata(students2);
+      setdata(students);
     }
   }, [students]);
   // useEffect(() => {
@@ -115,34 +98,7 @@ const AcademyList = (props) => {
         //setdata(response.data);
         setbrands(response.data);
         console.log("pa:", var_status);
-        console.log("bra1:", response.data);
-        console.log("성공");
-      })
-      .catch(function (error) {
-        console.log("실패");
-      });
-  }
-  function searchBrands2(props) {
-    let var_status = "";
-
-    if (props == undefined) {
-      var_status = "";
-    } else {
-      var_status = props.target[5].value;
-    }
-    const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "brands";
-    axios
-      .get(url_set, {
-        params: {
-          status: var_status,
-        },
-      })
-      .then(function (response) {
-        //setdata(response.data);
-        setbrands2(response.data);
-        console.log("pa:", var_status);
-        console.log("bra1:", response.data);
+        console.log("bra:", response.data);
         console.log("성공");
       })
       .catch(function (error) {
@@ -176,33 +132,6 @@ const AcademyList = (props) => {
         console.log("실패");
       });
   }
-  function searchRooms2(props) {
-    let var_status = "";
-
-    if (props == undefined) {
-      var_status = "";
-    } else {
-      var_status = props.target[5].value;
-    }
-    const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches/rooms";
-    axios
-      .get(url_set, {
-        params: {
-          status: var_status,
-        },
-      })
-      .then(function (response) {
-        //setdata(response.data);
-        setrooms2(response.data);
-        console.log("pa:", var_status);
-        console.log("bra:", response.data);
-        console.log("성공");
-      })
-      .catch(function (error) {
-        console.log("실패");
-      });
-  }
   function searchGroups(props) {
     let var_status = "";
 
@@ -222,33 +151,6 @@ const AcademyList = (props) => {
       .then(function (response) {
         //setdata(response.data);
         setgroups(response.data);
-        console.log("griyooooooooooooooooooooooooooooooooooooo:", var_status);
-        console.log("bra:", response.data);
-        console.log("성공");
-      })
-      .catch(function (error) {
-        console.log("실패");
-      });
-  }
-  function searchGroups2(props) {
-    let var_status = "";
-
-    if (props == undefined) {
-      var_status = "";
-    } else {
-      var_status = props.target[5].value;
-    }
-    const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users/groups";
-    axios
-      .get(url_set, {
-        params: {
-          status: var_status,
-        },
-      })
-      .then(function (response) {
-        //setdata(response.data);
-        setgroups2(response.data);
         console.log("griyooooooooooooooooooooooooooooooooooooo:", var_status);
         console.log("bra:", response.data);
         console.log("성공");
@@ -299,48 +201,6 @@ const AcademyList = (props) => {
         console.log("실패");
       });
   }
-  function searchStudent2(props) {
-    // 나중에 branch 맞춰줘야함
-
-    const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users/students";
-    let var_status = "";
-    let var_brandid = "";
-    let var_branchid = "";
-    let var_roomid = "";
-    let var_groupid = "";
-
-    if (props != undefined) {
-      console.log("asdfasdfasdf:", props);
-
-      var_brandid = props.target[0].value;
-      var_branchid = props.target[2].value;
-      var_roomid = props.target[3].value;
-      var_groupid = props.target[4].value;
-      var_status = props.target[5].value;
-    }
-    axios
-      .get(url_set, {
-        params: {
-          brandId: var_brandid,
-          branchId: var_branchid,
-          roomId: var_roomid,
-          groupId: var_groupid,
-          status: var_status,
-        },
-      })
-      .then(function (response) {
-        //setdata(response.data);
-
-        setstudents2(response.data);
-
-        console.log("studens:", response.data);
-        console.log("성공");
-      })
-      .catch(function (error) {
-        console.log("실패");
-      });
-  }
   function searchowner(props) {
     let var_status = "";
     let var_brandid = "";
@@ -364,35 +224,6 @@ const AcademyList = (props) => {
         //setdata(response.data);
 
         setowners(response.data);
-        console.log("owners:", response.data);
-      })
-      .catch(function (error) {
-        console.log("실패");
-      });
-  }
-  function searchowner2(props) {
-    let var_status = "";
-    let var_brandid = "";
-    if (props != undefined) {
-      console.log("props!!!!!!!!!!:", props);
-      console.log("propsowner!!!!!!!!!!:", props.target[0].value);
-      var_status = props.target[5].value;
-      var_brandid = props.target[0].value;
-    }
-
-    const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users/" + "owners";
-    axios
-      .get(url_set, {
-        params: {
-          status: var_status,
-          brandId: var_brandid,
-        },
-      })
-      .then(function (response) {
-        //setdata(response.data);
-
-        setowners2(response.data);
         console.log("owners:", response.data);
       })
       .catch(function (error) {
@@ -424,39 +255,6 @@ const AcademyList = (props) => {
         //setdata(response.data);
 
         setbranches(response.data);
-
-        console.log("branches", response.data);
-        console.log("성공");
-      })
-      .catch(function (error) {
-        console.log("실패");
-      });
-  }
-  function searchBranches2(props) {
-    const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches";
-    let var_status = "";
-    let var_brandid = "";
-    let var_ownerid = "";
-    if (props != undefined) {
-      console.log("props!!!!!!!!!!:", props);
-      console.log("propsbranch!!!!!!!!!!:", props.target[5].value);
-      var_status = props.target[5].value;
-      var_brandid = props.target[0].value;
-      var_ownerid = props.target[1].value;
-    }
-    axios
-      .get(url_set, {
-        params: {
-          status: var_status,
-          brandId: var_brandid,
-          ownerId: var_ownerid,
-        },
-      })
-      .then(function (response) {
-        //setdata(response.data);
-
-        setbranches2(response.data);
 
         console.log("branches", response.data);
         console.log("성공");
@@ -616,10 +414,10 @@ const AcademyList = (props) => {
                       event.preventDefault();
                       console.log("tat:", event);
                       setText(event.target[5].value);
-                      searchBrands2(event);
-                      searchowner2(event);
-                      searchBranches2(event);
-                      searchStudent2(event);
+                      searchBrands(event);
+                      searchowner(event);
+                      searchBranches(event);
+                      searchStudent(event);
                       setCheck("2");
                     }}
                   >
