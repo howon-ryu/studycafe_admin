@@ -191,9 +191,63 @@ const Branch_detail = (props) => {
 
             <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
               <div className="row mb-5">
+                {props.detail_num == "0" ? (
+                  <div className="col-md-6 fv-row">
+                    <label className="required fs-5 fw-semibold mb-2">
+                      원장 ID
+                    </label>
+
+                    {/* <select
+                    name="position"
+                    data-control="select2"
+                    data-placeholder="Select a position..."
+                    className="form-select form-select-solid"
+                  >
+                    <option value="Web Developer">겨울신록</option>
+                    <option value="Web Designer">봄신록</option>
+                    <option value="Art Director">여름신록</option>
+                    <option value="Finance Manager">가을신록</option>
+                    <option value="Project Manager">어나더레벨</option>
+                    <option value="System Administrator">최고최고최고</option>
+                  </select> */}
+                    <input
+                      type="text"
+                      className="form-control"
+                      defaultValue={data.username}
+                      name=""
+                    />
+                  </div>
+                ) : (
+                  <div className="col-md-6 fv-row">
+                    <label className="required fs-5 fw-semibold mb-2">
+                      원장 ID
+                    </label>
+
+                    {/* <select
+                    name="position"
+                    data-control="select2"
+                    data-placeholder="Select a position..."
+                    className="form-select form-select-solid"
+                  >
+                    <option value="Web Developer">겨울신록</option>
+                    <option value="Web Designer">봄신록</option>
+                    <option value="Art Director">여름신록</option>
+                    <option value="Finance Manager">가을신록</option>
+                    <option value="Project Manager">어나더레벨</option>
+                    <option value="System Administrator">최고최고최고</option>
+                  </select> */}
+                    <input
+                      type="text"
+                      className="form-control"
+                      defaultValue={data.username}
+                      name=""
+                      disabled
+                    />
+                  </div>
+                )}
                 <div className="col-md-6 fv-row">
                   <label className="required fs-5 fw-semibold mb-2">
-                    username
+                    원장 ID
                   </label>
 
                   {/* <select
@@ -212,7 +266,7 @@ const Branch_detail = (props) => {
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue=""
+                    defaultValue={data.username}
                     name=""
                   />
                 </div>

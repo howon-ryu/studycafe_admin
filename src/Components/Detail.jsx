@@ -184,9 +184,9 @@ const Detail = (props) => {
       }
       const data_t = {
         name: e.target[1].value,
-        homePageUrl: e.target[10].value + "here.study",
+        homePageUrl: e.target[9].value,
         isManagement: false,
-        businessRegistrationNumber: e.target[8].value,
+        businessRegistrationNumber: e.target[7].value,
         status: "사용",
         head: {
           id: data.head.id,
@@ -235,7 +235,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          //event.preventDefault();
+          event.preventDefault();
           handleSubmit(event);
         }}
       >
@@ -365,7 +365,12 @@ const Detail = (props) => {
               <div className="col-md-6 fv-row">
                 <label className="fs-5 fw-semibold mb-2">사업자등록증</label>
 
-                <input type="text" className="form-control " name="last_name" />
+                <input
+                  type="text"
+                  className="form-control "
+                  name="last_name"
+                  defaultValue={data.businessRegistrationNumber || ""}
+                />
               </div>
             </div>
 
@@ -389,7 +394,7 @@ const Detail = (props) => {
                 <input
                   type="text"
                   className="form-control "
-                  defaultValue=""
+                  defaultValue={data.homePageUrl || ""}
                   name="wintergreen.study"
                 />
               </div>

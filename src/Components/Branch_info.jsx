@@ -632,7 +632,7 @@ const Branch_info = (props) => {
         // },
         location: {
           zonecode: "12345",
-          address: "경기도 고양시 덕양구 항공대학로 76",
+          address: e.target[4].value,
           roadAddress: "경기도 고양시 덕양구 항공대학로 76",
           jibunAddress: "경기도 고양시 덕양구 현천동 188-8",
           sido: "경기도",
@@ -791,9 +791,7 @@ const Branch_info = (props) => {
                         )}
                       </div>
                       <div className="col-md-6 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">
-                          원장 이름
-                        </label>
+                        <label className="fs-5 fw-semibold mb-2">원장 ID</label>
 
                         {props.detail_num == 0 ? (
                           <select
@@ -862,8 +860,8 @@ const Branch_info = (props) => {
                         <input
                           type="text"
                           className="form-control "
-                          //defaultValue={data.location.address || ""}
-                          defaultValue=""
+                          defaultValue={data.location.address || ""}
+                          // defaultValue=""
                           name="first_name"
                         />
                       </div>
