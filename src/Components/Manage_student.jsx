@@ -141,14 +141,17 @@ const Manage_student = (props) => {
       console.log(e);
 
       const data_t = {
-        password: e.target[7].value,
-        password2: e.target[8].value,
-        realName: e.target[3].value,
-        nickname: e.target[3].value,
-        phone: e.target[4].value,
-        email: e.target[5].value,
-        school: e.target[10].value,
-        grade: e.target[11].value,
+        password: e.target[6].value,
+        password2: e.target[7].value,
+        realName: e.target[2].value,
+        nickname: e.target[2].value,
+        phone: e.target[3].value,
+        email: e.target[4].value,
+        school: e.target[9].value,
+        grade: e.target[10].value,
+        brandId: e.target[0].value,
+        branchId: e.target[1].value,
+        username: e.target[2].value,
       };
 
       const headers = { "header-name": "value" };
@@ -163,6 +166,7 @@ const Manage_student = (props) => {
       axios
         .post(posturl_set, data_t, config)
         .then((response) => {
+          alert("추가가 완료 되었습니다");
           console.log(response.status);
           console.log(response.data);
         })
@@ -254,6 +258,7 @@ const Manage_student = (props) => {
                   one_click("2");
                   two_click("1");
                 }}
+                hidden
               >
                 학부모정보
               </div>
@@ -264,7 +269,7 @@ const Manage_student = (props) => {
               <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
                 <form
                   onSubmit={function (event) {
-                    //event.preventDefault();
+                    event.preventDefault();
                     handleSubmit(event);
                   }}
                 >
@@ -281,14 +286,10 @@ const Manage_student = (props) => {
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
                           >
-                            <option value="Web Developer">겨울신록</option>
-                            <option value="Web Designer">봄신록</option>
-                            <option value="Art Director">여름신록</option>
-                            <option value="Finance Manager">가을신록</option>
-                            <option value="Project Manager">어나더레벨</option>
-                            <option value="System Administrator">
-                              최고최고최고
-                            </option>
+                            <option value="1">겨울신록</option>
+                            <option value="2">봄신록</option>
+                            <option value="3">여름신록</option>
+                            <option value="4">가을신록</option>
                           </select>
                         </div>
                         <div className="col-md-6 fv-row">
@@ -301,14 +302,9 @@ const Manage_student = (props) => {
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
                           >
-                            <option value="Web Developer">겨울신록</option>
-                            <option value="Web Designer">봄신록</option>
-                            <option value="Art Director">여름신록</option>
-                            <option value="Finance Manager">가을신록</option>
-                            <option value="Project Manager">어나더레벨</option>
-                            <option value="System Administrator">
-                              최고최고최고
-                            </option>
+                            <option value="1">동탄점</option>
+                            <option value="2">행신점</option>
+                            <option value="3">지점1</option>
                           </select>
                         </div>
                         <div className="col-md-6 fv-row">
@@ -412,7 +408,7 @@ const Manage_student = (props) => {
                           </label>
 
                           <input
-                            type="password"
+                            type="text"
                             className="form-control"
                             placeholder={data.school}
                             name=""

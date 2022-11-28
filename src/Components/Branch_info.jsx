@@ -595,6 +595,7 @@ const Branch_info = (props) => {
       axios
         .post(posturl_set, data_t, config)
         .then((response) => {
+          alert("추가가 완료 되었습니다");
           console.log(response.status);
           console.log(response.data);
         })
