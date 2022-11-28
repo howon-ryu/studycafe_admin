@@ -438,7 +438,7 @@ const Detail = (props) => {
               </div> */}
 
               <div className="col-md-4 fv-row">
-                <label className="fs-5 fw-semibold mb-2">사용</label>
+                <label className="fs-5 fw-semibold mb-2">상태</label>
 
                 <div className="d-flex check__use_wrap">
                   <div className="form-check form-check-custom form-check-solid me-5 check__use">

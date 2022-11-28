@@ -199,7 +199,7 @@ const Manage_student = (props) => {
   }
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
-      alert(e.target[2].value);
+      // alert(e.target[2].value);
       // event.preventDefalut();
 
       console.log(e);
@@ -244,7 +244,7 @@ const Manage_student = (props) => {
         });
     } else {
       // alert(event.target[1].value);
-      alert(e.target[2].value);
+      //alert(e.target[2].value);
       // event.preventDefalut();
 
       console.log(e);
@@ -333,47 +333,87 @@ const Manage_student = (props) => {
               <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
                 <form
                   onSubmit={function (event) {
-                    event.preventDefault();
+                    //event.preventDefault();
                     handleSubmit(event);
                   }}
                 >
                   <div className="card card-flush h-xl-100 card__right">
                     <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
                       <div className="row mb-5">
-                        <div className="col-md-6 fv-row">
-                          <label>브랜드</label>
-                          <div>
-                            <select
-                              className="form-select form-select-solid"
-                              data-kt-select2="true"
-                              data-dropdown-parent="#kt_menu_631f0553006ad"
-                              data-allow-clear="true"
-                            >
-                              {brands.map((item, idx) => (
-                                <option key={idx} value={item.id}>
-                                  {item.name}
-                                </option>
-                              ))}
-                            </select>
+                        {props.detail_num != "0" ? (
+                          <div className="col-md-6 fv-row" hidden>
+                            <label>브랜드</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-md-6 fv-row">
-                          <label>지점</label>
-                          <div>
-                            <select
-                              className="form-select form-select-solid"
-                              data-kt-select2="true"
-                              data-dropdown-parent="#kt_menu_631f0553006ad"
-                              data-allow-clear="true"
-                            >
-                              {branches.map((item, idx) => (
-                                <option key={idx} value={item.id}>
-                                  {item.name}
-                                </option>
-                              ))}
-                            </select>
+                        ) : (
+                          <div className="col-md-6 fv-row">
+                            <label>브랜드</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
                           </div>
-                        </div>
+                        )}
+                        {props.detail_num != "0" ? (
+                          <div className="col-md-6 fv-row" hidden>
+                            <label>지점</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                {branches.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="col-md-6 fv-row">
+                            <label>지점</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                {branches.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        )}
                         <div className="col-md-6 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
                             이름
@@ -488,7 +528,7 @@ const Manage_student = (props) => {
 
                           <input
                             type="text"
-                            className="form-control form-control-solid"
+                            className="form-control "
                             defaultValue={data.grade}
                           />
                         </div>
@@ -499,7 +539,7 @@ const Manage_student = (props) => {
 
                           <input
                             type="text"
-                            className="form-control form-control-solid"
+                            className="form-control "
                             defaultValue={data.birthDate}
                             readOnly
                           />
@@ -669,7 +709,7 @@ const Manage_student = (props) => {
                 </div> */}
 
                 <div className="col-md-4 fv-row">
-                  <label className="fs-5 fw-semibold mb-2">사용</label>
+                  <label className="fs-5 fw-semibold mb-2">상태</label>
 
                   <div className="d-flex check__use_wrap">
                     <div className="form-check form-check-custom form-check-solid me-5 check__use">
