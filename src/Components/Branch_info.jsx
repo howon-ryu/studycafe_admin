@@ -37,10 +37,15 @@ const Branch_info = (props) => {
 
   // ))
   useEffect(() => {
-    searchGroups();
+    if (props.detail_num != "0") {
+      console.log("fff");
+      searchGroups();
+    }
   }, [flag_two]);
   useEffect(() => {
-    searchRooms();
+    if (props.detail_num != "0") {
+      searchRooms();
+    }
   }, [flag_three]);
   const [groups, setgroups] = useState([]);
   const [specgroup, setspecgroup] = useState("none");
@@ -248,6 +253,9 @@ const Branch_info = (props) => {
       console.log("공백");
     } else if (props.detail_num == "0") {
       console.log("0");
+      one_click("1");
+      two_click("2");
+      three_click("2");
       setdata({
         id: "",
         name: "",
@@ -297,9 +305,14 @@ const Branch_info = (props) => {
         closedTime: null,
         status: "",
       });
-      reset.current.click();
+      if (flag_one == "1") {
+        reset.current.click();
+      }
     } else {
       detail_num = props.detail_num;
+      if (flag_one == "1") {
+        reset.current.click();
+      }
       spec_branch_Api();
       searchGroups();
       searchRooms();
@@ -644,7 +657,7 @@ const Branch_info = (props) => {
               </div>
               <div
                 className={
-                  flag_two == "1"
+                  flag_two == "1" && props.detail_num != "0"
                     ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn on"
                     : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn "
                 }
@@ -660,7 +673,7 @@ const Branch_info = (props) => {
               </div>
               <div
                 className={
-                  flag_three == "1"
+                  flag_three == "1" && props.detail_num != "0"
                     ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn on"
                     : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn"
                 }
@@ -931,7 +944,7 @@ const Branch_info = (props) => {
             </div>
           ) : null}
 
-          {flag_two == "1" ? (
+          {flag_two == "1" && props.detail_num != "0" ? (
             <div className="ad">
               <div className="right__tab02_table tab02 mb-20">
                 <div className="table_top">
@@ -1254,7 +1267,7 @@ const Branch_info = (props) => {
             </div>
           ) : null}
 
-          {flag_three == "1" ? (
+          {flag_three == "1" && props.detail_num != "0" ? (
             <div className="ad">
               <div className="right__tab02_table tab02 mb-20">
                 <div className="table_top">
