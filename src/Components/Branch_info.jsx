@@ -749,7 +749,7 @@ const Branch_info = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
               <form
                 onSubmit={function (event) {
-                  event.preventDefault();
+                  //event.preventDefault();
                   handleSubmit(event);
                 }}
               >

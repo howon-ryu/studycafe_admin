@@ -7,11 +7,75 @@ const Manage_student = (props) => {
   const one_click = (props) => setflagone(props);
   const [flag_two, setflagtwo] = useState("2");
   const two_click = (props) => setflagtwo(props);
+  const [brands, setbrands] = useState([]);
+  const [branches, setbranches] = useState([]);
   let student_num;
+  function searchBrands(props) {
+    let var_status = "";
+
+    if (props == undefined) {
+      var_status = "";
+    } else {
+      var_status = props.target[5].value;
+    }
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "brands";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+        setbrands(response.data);
+        console.log("pa:", var_status);
+        console.log("bra:", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchBranches(props) {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "branches";
+    let var_status = "";
+    let var_brandid = "";
+    let var_ownerid = "";
+    if (props != undefined) {
+      console.log("props!!!!!!!!!!:", props);
+      console.log("propsbranch!!!!!!!!!!:", props.target[5].value);
+      var_status = props.target[5].value;
+      var_brandid = props.target[0].value;
+      var_ownerid = props.target[1].value;
+    }
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+          ownerId: var_ownerid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setbranches(response.data);
+
+        console.log("branches", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   useEffect(() => {
     console.log("props", props);
     // setdetailnum(props.detail_num);
     student_num = props.detail_num;
+    searchBrands();
+    searchBranches();
     if (props.detail_num == "" || props.detail_num == undefined) {
       console.log("공백");
     } else if (props.detail_num == "0") {
@@ -186,14 +250,14 @@ const Manage_student = (props) => {
       console.log(e);
 
       const data_t = {
-        password: e.target[5].value,
-        password2: e.target[6].value,
+        password: e.target[6].value,
+        password2: e.target[7].value,
         realName: e.target[2].value,
 
         phone: e.target[3].value,
         email: e.target[4].value,
-        school: e.target[7].value,
-        grade: e.target[8].value,
+        school: e.target[9].value,
+        grade: e.target[10].value,
       };
 
       const headers = { "header-name": "value" };
@@ -277,35 +341,38 @@ const Manage_student = (props) => {
                     <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
                       <div className="row mb-5">
                         <div className="col-md-6 fv-row">
-                          <label className="required fs-5 fw-semibold mb-2">
-                            본사
-                          </label>
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                          >
-                            <option value="1">겨울신록</option>
-                            <option value="2">봄신록</option>
-                            <option value="3">여름신록</option>
-                            <option value="4">가을신록</option>
-                          </select>
+                          <label>브랜드</label>
+                          <div>
+                            <select
+                              className="form-select form-select-solid"
+                              data-kt-select2="true"
+                              data-dropdown-parent="#kt_menu_631f0553006ad"
+                              data-allow-clear="true"
+                            >
+                              {brands.map((item, idx) => (
+                                <option key={idx} value={item.id}>
+                                  {item.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
                         </div>
                         <div className="col-md-6 fv-row">
-                          <label className="required fs-5 fw-semibold mb-2">
-                            지점
-                          </label>
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                          >
-                            <option value="1">동탄점</option>
-                            <option value="2">행신점</option>
-                            <option value="3">지점1</option>
-                          </select>
+                          <label>지점</label>
+                          <div>
+                            <select
+                              className="form-select form-select-solid"
+                              data-kt-select2="true"
+                              data-dropdown-parent="#kt_menu_631f0553006ad"
+                              data-allow-clear="true"
+                            >
+                              {branches.map((item, idx) => (
+                                <option key={idx} value={item.id}>
+                                  {item.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
                         </div>
                         <div className="col-md-6 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
@@ -394,10 +461,12 @@ const Manage_student = (props) => {
                           </label>
 
                           <input
-                            type="password"
-                            id="password"
+                            type="text"
+                            id="text"
                             className="form-control"
-                            placeholer=""
+                            // defaultValue={
+                            //   data.room.name + "/" + data.room.availableSeat
+                            // }
                             disabled
                           />
                         </div>
@@ -410,7 +479,7 @@ const Manage_student = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            placeholder={data.school}
+                            defaultValue={data.school}
                             name=""
                           />
                         </div>

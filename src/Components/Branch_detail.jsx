@@ -100,6 +100,7 @@ const Branch_detail = (props) => {
         .then((response) => {
           console.log(response.status);
           console.log(response.data);
+          alert("추가가 완료 되었습니다");
         })
         // .catch((e) => console.log('something went wrong :(', e));
         .catch((error) => {
@@ -168,7 +169,7 @@ const Branch_detail = (props) => {
       <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap ">
         <form
           onSubmit={function (event) {
-            event.preventDefault();
+            //event.preventDefault();
             handleSubmit(event);
           }}
         >
