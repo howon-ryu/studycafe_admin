@@ -68,7 +68,7 @@ const Branch_info = (props) => {
     postGroup({
       name: modal_group_name,
       status: cu,
-      branchId: 1,
+      branchId: props.detail_num,
     });
   };
   const handleSubmit_addRoom = (event) => {
@@ -94,7 +94,7 @@ const Branch_info = (props) => {
       name: modal_room_name,
       status: cu,
       availableSeat: modal_room_seat,
-      branchId: 1,
+      branchId: props.detail_num,
     });
   };
   const grouopsList = groups.map((v) => (
@@ -300,7 +300,9 @@ const Branch_info = (props) => {
       reset.current.click();
     } else {
       detail_num = props.detail_num;
-      spec_brand_Api();
+      spec_branch_Api();
+      searchGroups();
+      searchRooms();
       console.log(detail_num);
     }
   }, [props]);
@@ -337,7 +339,7 @@ const Branch_info = (props) => {
   }
   function searchRooms() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches" + "/rooms";
+    let url_set = url + "branches/" + props.detail_num + "/rooms";
     axios
       .get(url_set)
       .then(function (response) {
@@ -348,7 +350,7 @@ const Branch_info = (props) => {
         console.log("실패");
       });
   }
-  function spec_brand_Api() {
+  function spec_branch_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "branches" + "/" + detail_num;
     console.log("url:", url_set);
@@ -367,15 +369,15 @@ const Branch_info = (props) => {
   }
   function searchGroups() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users" + "/groups";
-    console.log("url:", url_set);
+    let url_set = url + "branches/" + props.detail_num + "/groups";
+    console.log("urlgroup:", url_set);
     axios
       .get(url_set)
       .then(function (response) {
         setgroups(response.data);
         // console.log("data:", data);
         // console.log("head:", data.head);
-        console.log(response.data);
+        console.log("setgroup", response.data);
 
         console.log("성공");
       })

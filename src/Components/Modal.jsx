@@ -87,7 +87,7 @@ const DialogBox2 = styled.dialog`
   box-sizing: border-box;
   background-color: white;
   z-index: 10000;
-  margin-bottom: 135%;
+  margin-bottom: 75%;
   margin-left: 40%;
 `;
 const DialogBox3 = styled.dialog`
@@ -102,7 +102,7 @@ const DialogBox3 = styled.dialog`
   box-sizing: border-box;
   background-color: white;
   z-index: 10000;
-  margin-bottom: 205%;
+  margin-bottom: 95%;
   margin-left: 40%;
 `;
 
