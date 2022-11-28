@@ -31,18 +31,18 @@ const Student__manage_info = (props) => {
             className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0"
             css={css``}
           >
-            학원본사 관리
+            학생정보
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li className="breadcrumb-item text-muted">
               <a href="#" className="text-muted text-hover-primary">
-                지점 관리
+                학생관리
               </a>
             </li>
             <li className="breadcrumb-item">
               <span className="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <li className="breadcrumb-item text-muted">학원본사 관리</li>
+            <li className="breadcrumb-item text-muted">학생정보</li>
           </ul>
         </div>
         <div
