@@ -392,7 +392,7 @@ const Day_report = () => {
                             {data.user.room.name}
                           </td>
                           <td className="text-gray-800 fw-bold">
-                            {data.user.groupList[0].name}
+                            {data.user.groupList.realName}
                           </td>
                           <td>{data.user.seatNumber}</td>
                           <td className="text-gray-800 fw-bold">

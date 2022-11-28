@@ -2,12 +2,18 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { css } from "@emotion/react";
-import { buildEntryKey, compareByFieldSpec } from "@fullcalendar/core";
+import {
+  buildEntryKey,
+  buildSegTimeText,
+  compareByFieldSpec,
+} from "@fullcalendar/core";
 import "../css/arraylist.css";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
 const AcademyList = (props) => {
   const [isCheck, setCheck] = useState("2");
+
+  const [ttext, setttext] = useState("모든학원본사");
   let [data, setdata] = useState([]);
   const [brands, setbrands] = useState([]);
   const [owners, setowners] = useState([]);
@@ -59,7 +65,19 @@ const AcademyList = (props) => {
   //   searchStudent();
   //   searchBranches();
   // }, [data]);
-
+  function setText(props) {
+    console.log("text", props);
+    if (props == "") {
+      setttext("모든학원본사");
+    } else if (props == "사용") {
+      setttext("사용중인학원본사");
+    } else if (props == "대기") {
+      setttext("대기중인학원본사");
+    } else if (props == "삭제") {
+      setttext("삭제된학원본사");
+    }
+    console.log(ttext);
+  }
   function searchBrands(props) {
     let var_status = "";
 
@@ -258,7 +276,6 @@ const AcademyList = (props) => {
     navigate({
       search: createSearchParams({
         student: value,
-        
       }).toString(),
     });
     // props.setheadnum(e);
@@ -395,7 +412,8 @@ const AcademyList = (props) => {
                   <form
                     onSubmit={function (event) {
                       event.preventDefault();
-                      console.log("tat:", event.target[0].value);
+                      console.log("tat:", event);
+                      setText(event.target[5].value);
                       searchBrands(event);
                       searchowner(event);
                       searchBranches(event);
@@ -424,7 +442,7 @@ const AcademyList = (props) => {
                                 data-allow-clear="true"
                               >
                                 <option value="" selected="selected">
-                                  모두
+                                  모든학원본사
                                 </option>
                                 {brands.map((item, idx) => (
                                   <option key={idx} value={item.id}>
@@ -445,7 +463,7 @@ const AcademyList = (props) => {
                                 data-allow-clear="true"
                               >
                                 <option value="" selected="selected">
-                                  모두
+                                  모든학원본사
                                 </option>
                                 {brands.map((item, idx) => (
                                   <option key={idx} value={item.id}>
@@ -468,7 +486,7 @@ const AcademyList = (props) => {
                                 data-allow-clear="true"
                               >
                                 <option value="" selected="selected">
-                                  모두
+                                  모든학원본사
                                 </option>
                                 {owners.map((item, idx) => (
                                   <option key={idx} value={item.id}>
@@ -489,7 +507,7 @@ const AcademyList = (props) => {
                                 data-allow-clear="true"
                               >
                                 <option value="" selected="selected">
-                                  모두
+                                  모든학원본사
                                 </option>
                                 {owners.map((item, idx) => (
                                   <option key={idx} value={item.id}>
@@ -512,7 +530,7 @@ const AcademyList = (props) => {
                                   data-allow-clear="true"
                                 >
                                   <option value="" selected="selected">
-                                    모두
+                                    모든학원본사
                                   </option>
                                   {branches.map((item, idx) => (
                                     <option key={idx} value={item.id}>
@@ -532,7 +550,7 @@ const AcademyList = (props) => {
                                   data-allow-clear="true"
                                 >
                                   <option value="" selected="selected">
-                                    모두
+                                    모든학원본사
                                   </option>
                                   {rooms.map((item, idx) => (
                                     <option key={idx} value={item.id}>
@@ -552,7 +570,7 @@ const AcademyList = (props) => {
                                   data-allow-clear="true"
                                 >
                                   <option value="" selected="selected">
-                                    모두
+                                    모든학원본사
                                   </option>
                                   {groups.map((item, idx) => (
                                     <option key={idx} value={item.id}>
@@ -575,7 +593,7 @@ const AcademyList = (props) => {
                                   data-allow-clear="true"
                                 >
                                   <option value="" selected="selected">
-                                    모두
+                                    모든학원본사
                                   </option>
                                   {branches.map((item, idx) => (
                                     <option key={idx} value={item.id}>
@@ -595,7 +613,7 @@ const AcademyList = (props) => {
                                   data-allow-clear="true"
                                 >
                                   <option value="" selected="selected">
-                                    모두
+                                    모든학원본사
                                   </option>
                                   {rooms.map((item, idx) => (
                                     <option key={idx} value={item.id}>
@@ -615,7 +633,7 @@ const AcademyList = (props) => {
                                   data-allow-clear="true"
                                 >
                                   <option value="" selected="selected">
-                                    모두
+                                    모든학원본사
                                   </option>
                                   {groups.map((item, idx) => (
                                     <option key={idx} value={item.id}>
@@ -638,7 +656,7 @@ const AcademyList = (props) => {
                               data-allow-clear="true"
                             >
                               <option value="" selected="selected">
-                                모두
+                                모든학원본사
                               </option>
                               <option value="사용">사용중인 학원본사</option>
                               <option value="대기">대기중인 학원본사</option>
@@ -695,7 +713,7 @@ const AcademyList = (props) => {
                     ></path>
                   </svg>
                 </span>
-                사용중인 학원본사
+                {ttext}
               </span>
             </div>
             <div className="d-flex align-items-center position-relative my-1 card_l_h_sch">
@@ -813,7 +831,7 @@ const AcademyList = (props) => {
                                 </a> */}
                                 {props.flag === "office__head_office" ? (
                                   <span className="text-muted fw-semibold d-block fs-7">
-                                    {data.nickname}
+                                    {data.head.realName}
                                   </span>
                                 ) : props.flag === "office__branch_office" ? (
                                   <span className="text-muted fw-semibold d-block fs-7">

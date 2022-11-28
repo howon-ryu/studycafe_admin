@@ -27,14 +27,17 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import momentPlugin from "@fullcalendar/moment";
-import { getStudyPlanList,postStudyPlanList } from "../remote/student/getStudyPlanList";
+import {
+  getStudyPlanList,
+  postStudyPlanList,
+} from "../remote/student/getStudyPlanList";
 import { format } from "date-fns";
 //import './main.css';
 
 let id = 0;
 const START_DATE = "1970-01-01";
-const END_DATE = format(new Date('2030-12-31'), "yyyy-MM-dd");
-console.log("END_DATE",END_DATE);
+const END_DATE = format(new Date("2030-12-31"), "yyyy-MM-dd");
+console.log("END_DATE", END_DATE);
 
 const Calendar_plan = (props) => {
   const [isOpenModal, setOpenModal] = React.useState(false);
@@ -43,7 +46,6 @@ const Calendar_plan = (props) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   let [nname, setnname] = useState("");
-  
 
   const [searchParams] = useSearchParams();
   const studentId = searchParams.get("student");
@@ -93,10 +95,7 @@ const Calendar_plan = (props) => {
 
   useEffect(() => {
     fetchStudentPlanList();
-  }, [ startDate, endDate, fetchStudentPlanList]);
-
-
- 
+  }, [startDate, endDate, fetchStudentPlanList]);
 
   const onClickToggleModal_view = React.useCallback(() => {
     // let aa = $("#card__right");
@@ -158,7 +157,7 @@ const Calendar_plan = (props) => {
   let [start_time_text, setstart] = useState(Date);
   let [end_time_text, setend] = useState(Date);
   let [locaion_text, setlocation] = useState("");
-  
+
   let flag = 1;
   const handleDateSelect = (selectInfo) => {
     console.log("tt");
@@ -201,27 +200,30 @@ const Calendar_plan = (props) => {
     // calenderApi.unselect()
     let event_name = document.getElementById("event_name").value;
     // console.log("event_name:",event_name);
-    let event_descripton =document.getElementById("event_description").value;
+    let event_descripton = document.getElementById("event_description").value;
     // console.log("event_descripton:",event_descripton);
-    let event_location =document.getElementById("event_location") .value;
-    let event_start_date =document.getElementById("kt_calendar_datepicker_start_date").value;
+    let event_location = document.getElementById("event_location").value;
+    let event_start_date = document.getElementById(
+      "kt_calendar_datepicker_start_date"
+    ).value;
     // console.log("event_start_date:",event_start_date);
     // let event_start_time =(document.getElementById("kt_calendar_datepicker_start_time") as HTMLInputElement).value;
-    let event_end_date =document.getElementById("kt_calendar_datepicker_end_date").value;
+    let event_end_date = document.getElementById(
+      "kt_calendar_datepicker_end_date"
+    ).value;
     // let event_end_time =(document.getElementById("kt_calendar_datepicker_end_time") as HTMLInputElement).value;
     // let event_allday =(document.getElementById("kt_calendar_datepicker_allday") as HTMLInputElement).value;
     setnname(event_name);
-    
+
     console.log("gg", nname);
-    console.log("ggg",studentId);
+    console.log("ggg", studentId);
     postStudyPlanList({
       studentId,
       startTime: event_start_date,
       endTime: event_end_date,
-      title : event_name,
-      description : event_descripton,
-      place : event_location,
-
+      title: event_name,
+      description: event_descripton,
+      place: event_location,
     });
     setOpenModal(!isOpenModal);
     //return(handleDateSelect);
@@ -691,6 +693,7 @@ const Calendar_plan = (props) => {
                         </span>
 
                         <div className="fs-6" data-kt-calendar="event_location">
+                          <span className="fw-bold">이벤트 장소 </span>
                           {locaion_text}
                         </div>
                       </div>

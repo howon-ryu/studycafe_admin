@@ -56,6 +56,8 @@ const Detail = (props) => {
       reset.current.click();
     } else {
       detail_num = props.detail_num;
+      console.log("변경", detail_num);
+      reset.current.click();
       spec_brand_Api();
       console.log(detail_num);
     }
@@ -168,21 +170,31 @@ const Detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[11].checked;
+      let cu2 = e.target[12].checked;
+      let cu3 = e.target[13].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
-        name: e.target[2].value,
+        name: e.target[1].value,
         homePageUrl: e.target[10].value + "here.study",
         isManagement: false,
         businessRegistrationNumber: e.target[8].value,
-        status: e.target[12].value,
+        status: "사용",
         head: {
           id: data.head.id,
-          password: e.target[3].value,
-          password2: e.target[4].value,
-          realName: e.target[5].value,
-          nickname: e.target[5].value,
-          phone: e.target[6].value,
-          email: e.target[7].value,
+          password: e.target[2].value,
+          password2: e.target[3].value,
+          realName: e.target[4].value,
+          nickname: e.target[4].value,
+          phone: e.target[5].value,
+          email: e.target[6].value,
         },
       };
 
@@ -258,17 +270,15 @@ const Detail = (props) => {
                 />
                 <span className="me-3">.here.study</span>
                 {props.detail_num == "0" ? (
-                 <button
-                 data-kt-ecommerce-settings-type="cancel"
-                 className="btn btn-primary"
-                 onClick={doublecheck}
-                 type="button"
-               
-               >
-                 중복확인
-               </button>
+                  <button
+                    data-kt-ecommerce-settings-type="cancel"
+                    className="btn btn-primary"
+                    onClick={doublecheck}
+                    type="button"
+                  >
+                    중복확인
+                  </button>
                 ) : null}
-                
               </div>
 
               <div className="col-md-6 fv-row">
@@ -434,7 +444,7 @@ const Detail = (props) => {
                     <input
                       className="form-check-input check__use_input"
                       type="radio"
-                      value="사용"
+                      defaultValue="사용"
                       name="choice_use"
                       id="product_tax_yes"
                       checked={true}
@@ -450,7 +460,7 @@ const Detail = (props) => {
                     <input
                       className="form-check-input check__hold_input"
                       type="radio"
-                      value="대기"
+                      defaultValue="대기"
                       name="choice_use"
                     />
                     <label
@@ -460,11 +470,11 @@ const Detail = (props) => {
                       대기
                     </label>
                   </div>
-                  <div className="form-check form-check-custom form-check-solid check__delet">
+                  <div className="form-check form-check-custom form-check-solid check__delet use">
                     <input
                       className="form-check-input check__delet_input"
                       type="radio"
-                      defaultValue=""
+                      defaultValue="삭제"
                       name="choice_use"
                     />
                     <label

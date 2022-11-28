@@ -15,4 +15,11 @@
     width:31%;
    
 }
-
+.add_btn{
+    float :right;
+    
+}
+.table_top{
+    display: flex;
+    
+}

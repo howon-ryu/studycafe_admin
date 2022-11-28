@@ -77,15 +77,13 @@ const Branch_detail = (props) => {
       console.log(e);
 
       const data_t = {
-      
-
         username: e.target[0].value,
         password: e.target[4].value,
         password2: e.target[5].value,
         realName: e.target[1].value,
         phone: e.target[2].value,
         email: e.target[3].value,
-        gender : "남자"
+        gender: "남자",
       };
 
       const headers = { "header-name": "value" };
@@ -193,7 +191,9 @@ const Branch_detail = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
               <div className="row mb-5">
                 <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">username</label>
+                  <label className="required fs-5 fw-semibold mb-2">
+                    username
+                  </label>
 
                   {/* <select
                     name="position"
@@ -208,7 +208,7 @@ const Branch_detail = (props) => {
                     <option value="Project Manager">어나더레벨</option>
                     <option value="System Administrator">최고최고최고</option>
                   </select> */}
-                   <input
+                  <input
                     type="text"
                     className="form-control"
                     defaultValue=""
@@ -342,7 +342,7 @@ const Branch_detail = (props) => {
                         대기
                       </label>
                     </div>
-                    <div className="form-check form-check-custom form-check-solid check__delet">
+                    <div className="form-check form-check-custom form-check-solid check__delet use">
                       <input
                         className="form-check-input check__delet_input"
                         type="radio"
