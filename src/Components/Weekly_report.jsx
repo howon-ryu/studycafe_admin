@@ -7,29 +7,48 @@ const Weekly_report = (props) => {
   const END_DATE = format(new Date("2030-12-31"), "yyyy-MM-dd");
   const [start_date, setstart] = useState(START_DATE);
   const [end_date, setend] = useState(END_DATE);
-  let detail_num;
+  function setsstart(e) {
+    console.log(e);
+    setstart(e.target.value);
+  }
+  function seteend(e) {
+    console.log(e);
+    setend(e.target.value);
+  }
+  let detail_num=1;
   // useEffect(() => {
-  //   searchreport();
+  //   searchreport(1);
   // }, []);
   useEffect(() => {
-    console.log("props", props);
+    console.log("props!!!!", props);
     // setdetailnum(props.detail_num);
     detail_num = props.detail_num;
 
-    detail_num = props.detail_num;
+    if(props.detail_num=='' || props.detail_num ==undefined){
+      detail_num=1;
+    }
+    //setstudent(props.detail_num);
     console.log("변경", detail_num);
 
-    searchreport();
+    searchreport(detail_num);
     console.log(detail_num);
   }, [props]);
   useEffect(() => {
     console.log("props", props);
+    detail_num = props.detail_num;
+    if(props.detail_num=='' || props.detail_num ==undefined){
+      detail_num=1;
+    }
+    if(start_date!=undefined && end_date!=undefined){
+      searchreport(detail_num);
+    }
     // setdetailnum(props.detail_num);
-
-    searchreport();
-    console.log(detail_num);
+    console.log("sd:",start_date);
+    console.log("se:",end_date);
+    
+    
   }, [start_date, end_date]);
-  const [branchid, setbranch] = useState([]);
+  const [studentid, setstudent] = useState(1);
   const handlesubmit_week = (e) => {
     const data_t = {
       branchId: 1,
@@ -47,7 +66,7 @@ const Weekly_report = (props) => {
     axios
       .get(posturl_set, data_t, config)
       .then((response) => {
-        setbranch(response.data);
+        
         console.log(response.status);
         console.log(response.data);
       })
@@ -60,19 +79,21 @@ const Weekly_report = (props) => {
         console.log("re:", error.response.data);
       });
   };
-  function searchreport() {
+  function searchreport(detail_num) {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches/1" + "/weekly-report";
+    let url_set = url + "users/students/" + detail_num+"/daily-reports";
     console.log("url:", url_set);
     const data_t = {
-      branchId: 1,
+      
+      studentId: detail_num,
       startDate: "2022-01-01",
       endDate: "2022-12-31",
     };
+    
     axios
       .get(url_set, {
         params: {
-          branchId: 1,
+          studentId: detail_num,
           startDate: start_date,
           endDate: end_date,
         },
@@ -149,11 +170,11 @@ const Weekly_report = (props) => {
       </td>
 
       <td className="text-gray-800 fw-bold">
-        {JSON.stringify(v.createdAt)}
+        {(""+v.createdAt).substr(0,10)}
         {/* {"" + JSON.stringify(v.createdAt).substr(1, 11)} */}
       </td>
       <td className="text-gray-800 fw-bold">
-        {JSON.stringify(v.totalTime)}
+        {(""+v.totalTime).substr(0,10)}
         {/* {"" + JSON.stringify(v.totalTime).substr(1, 8)} */}
       </td>
       {/* <td>{v.user.room.availableSeat}</td>
@@ -218,7 +239,7 @@ const Weekly_report = (props) => {
                 <div className="stdy_w_rpt_date d-flex align-items-center">
                   <label
                     className="col-form-label date_label me-4"
-                    for="example-date"
+                    htmlFor="example-date"
                   >
                     시작일{weekreport.id}
                   </label>
@@ -228,12 +249,13 @@ const Weekly_report = (props) => {
                       type="date"
                       name="date"
                       id="example-date"
-                      onChange={setstart}
+                      defaultValue=""
+                      onChange={setsstart}
                     />
                   </div>
                   <label
                     className="col-form-label date_label me-4"
-                    for="example-date"
+                    htmlFor="example-date"
                   >
                     종료일
                   </label>
@@ -243,8 +265,9 @@ const Weekly_report = (props) => {
                       type="date"
                       name="date"
                       id="example-date"
+                      defaultValue=""
                       placeholder="w"
-                      onChange={setend}
+                      onChange={seteend}
                     />
                   </div>
                 </div>
