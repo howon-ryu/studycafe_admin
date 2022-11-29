@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
-import React from "react";
+import { React, useState } from "react";
 
 import styled from "@emotion/styled";
 import "../css/layout.css";
+import Arraylist from "./Arraylist";
+import "../css/study__weekly_plan.css";
 import Weekly_report from "./Weekly_report";
 // import "./main.css";
 // import { Link } from "react-router-dom";
@@ -11,6 +13,7 @@ import Weekly_report from "./Weekly_report";
 // import { Container } from "react-bootstrap";
 const Study_weekly_report = (props) => {
   let widthh = props.width;
+  const [detail_num, setDetailNum] = useState("");
   return (
     <Container>
       <div
@@ -29,28 +32,28 @@ const Study_weekly_report = (props) => {
             className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0"
             css={css``}
           >
-            학원본사 관리
+            주간레포트
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li className="breadcrumb-item text-muted">
               <a href="#" className="text-muted text-hover-primary">
-                지점 관리
+                학습관리
               </a>
             </li>
             <li className="breadcrumb-item">
               <span className="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <li className="breadcrumb-item text-muted">학원본사 관리</li>
+            <li className="breadcrumb-item text-muted">주간레포트</li>
           </ul>
         </div>
         <div
           className="re"
           css={css`
-            flex: 1;
-            // margin-right: 100px;
+            display: flex;
           `}
         >
-          <Weekly_report />
+          <Arraylist setDetailNum={setDetailNum} flag="Study_weekly_plan" />
+          <Weekly_report detail_num={detail_num} />
         </div>
       </div>
     </Container>

@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import axios from "axios";
-const Weekly_report = (props) => {
+const Weekly_report = () => {
   useEffect(() => {
     searchreport();
   }, []);

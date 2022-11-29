@@ -8,6 +8,7 @@ const Manage_student = (props) => {
   const [flag_two, setflagtwo] = useState("2");
   const two_click = (props) => setflagtwo(props);
   const [brands, setbrands] = useState([]);
+  const [rooms, setrooms] = useState([]);
   const [branches, setbranches] = useState([]);
   let student_num;
   function searchBrands(props) {
@@ -70,12 +71,31 @@ const Manage_student = (props) => {
         console.log("실패");
       });
   }
+  function searchRooms(props) {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "branches/rooms";
+
+    axios
+      .get(url_set)
+      .then(function (response) {
+        //setdata(response.data);
+
+        setrooms(response.data);
+
+        console.log("branches", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   useEffect(() => {
     console.log("props", props);
     // setdetailnum(props.detail_num);
     student_num = props.detail_num;
     searchBrands();
     searchBranches();
+    searchRooms();
     if (props.detail_num == "" || props.detail_num == undefined) {
       console.log("공백");
     } else if (props.detail_num == "0") {
@@ -205,17 +225,20 @@ const Manage_student = (props) => {
       console.log(e);
 
       const data_t = {
+        username: e.target[13].value,
         password: e.target[6].value,
         password2: e.target[7].value,
         realName: e.target[2].value,
-        nickname: e.target[2].value,
+        gender: "남자",
         phone: e.target[3].value,
         email: e.target[4].value,
-        school: e.target[9].value,
-        grade: e.target[10].value,
+        birthDate: e.target[12].value,
+        school: e.target[10].value,
+        grade: e.target[11].value,
         brandId: e.target[0].value,
         branchId: e.target[1].value,
-        username: e.target[2].value,
+        roomId: e.target[8].value,
+        seatNumber: e.target[9].value,
       };
 
       const headers = { "header-name": "value" };
@@ -256,8 +279,11 @@ const Manage_student = (props) => {
 
         phone: e.target[3].value,
         email: e.target[4].value,
-        school: e.target[9].value,
-        grade: e.target[10].value,
+        birthDate: e.target[12].value,
+        school: e.target[10].value,
+        grade: e.target[11].value,
+        roomId: e.target[8].value,
+        seatNumber: e.target[9].value,
       };
 
       const headers = { "header-name": "value" };
@@ -333,7 +359,7 @@ const Manage_student = (props) => {
               <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
                 <form
                   onSubmit={function (event) {
-                    //event.preventDefault();
+                    event.preventDefault();
                     handleSubmit(event);
                   }}
                 >
@@ -494,23 +520,38 @@ const Manage_student = (props) => {
                         </div>
                       </div>
 
-                      <div className="row mb-5 row__line">
+                      <div className="row mb-5 ">
                         <div className="col-md-6 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
-                            학습관/좌석
+                            학습관
                           </label>
+
+                          <select
+                            className="form-select "
+                            data-kt-select2="true"
+                            data-dropdown-parent="#kt_menu_631f0553006ad"
+                            data-allow-clear="true"
+                            key={rooms.id}
+                            defaultValue={rooms.name}
+                          >
+                            {rooms.map((item, idx) => (
+                              <option key={idx} value={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-md-6 fv-row">
+                          <label className="fs-5 fw-semibold mb-2">좌석</label>
 
                           <input
                             type="text"
-                            id="text"
-                            className="form-control"
-                            // defaultValue={
-                            //   data.room.name + "/" + data.room.availableSeat
-                            // }
-                            disabled
+                            className="form-control "
+                            defaultValue={data.username}
                           />
                         </div>
-
+                      </div>
+                      <div className="row mb-5 ">
                         <div className="col-md-6 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
                             학교
@@ -526,22 +567,54 @@ const Manage_student = (props) => {
                         <div className="col-md-6 fv-row">
                           <label className="fs-5 fw-semibold mb-2">학년</label>
 
-                          <input
+                          <select
+                            className="form-select "
+                            data-kt-select2="true"
+                            data-dropdown-parent="#kt_menu_631f0553006ad"
+                            data-allow-clear="true"
+                            key={data.id}
+                            defaultValue={data.grade}
+                          >
+                            <option value="중1">중1</option>
+                            <option value="중2">중2</option>
+                            <option value="중3">중3</option>
+                            <option value="고1">고1</option>
+                            <option value="고2">고2</option>
+
+                            <option value="고3">고3</option>
+                            <option value="재수">재수</option>
+                            <option value="삼수">삼수</option>
+                            <option value="사수">사수</option>
+                            <option value="n수">n수</option>
+                            <option value="공시">공시</option>
+                            <option value="기타">기타</option>
+                          </select>
+                          {/* <input
                             type="text"
                             className="form-control "
                             defaultValue={data.grade}
-                          />
+                          /> */}
                         </div>
+                      </div>
+                      <div className="row mb-5 row__line">
                         <div className="col-md-6 fv-row">
                           <label className="fs-5 fw-semibold mb-2">
                             생년월일
                           </label>
 
                           <input
-                            type="text"
+                            type="date"
                             className="form-control "
                             defaultValue={data.birthDate}
-                            readOnly
+                          />
+                        </div>
+                        <div className="col-md-6 fv-row">
+                          <label className="fs-5 fw-semibold mb-2">ID</label>
+
+                          <input
+                            type="text"
+                            className="form-control "
+                            defaultValue={data.username}
                           />
                         </div>
                       </div>
