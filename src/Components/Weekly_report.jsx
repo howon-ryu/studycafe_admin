@@ -25,7 +25,7 @@ const Weekly_report = (props) => {
     detail_num = props.detail_num;
 
     if(props.detail_num=='' || props.detail_num ==undefined){
-      detail_num=1;
+      detail_num=10;
     }
     //setstudent(props.detail_num);
     console.log("변경", detail_num);
@@ -37,7 +37,7 @@ const Weekly_report = (props) => {
     console.log("props", props);
     detail_num = props.detail_num;
     if(props.detail_num=='' || props.detail_num ==undefined){
-      detail_num=1;
+      detail_num=10;
     }
     if(start_date!=undefined && end_date!=undefined){
       searchreport(detail_num);
