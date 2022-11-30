@@ -83,6 +83,7 @@ const Branch_detail = (props) => {
         realName: e.target[1].value,
         phone: e.target[2].value,
         email: e.target[3].value,
+        birthDate: e.target[6].value,
         gender: "남자",
       };
 
@@ -169,7 +170,7 @@ const Branch_detail = (props) => {
       <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap ">
         <form
           onSubmit={function (event) {
-            //event.preventDefault();
+            event.preventDefault();
             handleSubmit(event);
           }}
         >
@@ -245,31 +246,7 @@ const Branch_detail = (props) => {
                     />
                   </div>
                 )}
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    원장 ID
-                  </label>
-
-                  {/* <select
-                    name="position"
-                    data-control="select2"
-                    data-placeholder="Select a position..."
-                    className="form-select form-select-solid"
-                  >
-                    <option value="Web Developer">겨울신록</option>
-                    <option value="Web Designer">봄신록</option>
-                    <option value="Art Director">여름신록</option>
-                    <option value="Finance Manager">가을신록</option>
-                    <option value="Project Manager">어나더레벨</option>
-                    <option value="System Administrator">최고최고최고</option>
-                  </select> */}
-                  <input
-                    type="text"
-                    className="form-control"
-                    defaultValue={data.username}
-                    name=""
-                  />
-                </div>
+                
 
                 <div className="col-md-6 fv-row">
                   <label className="required fs-5 fw-semibold mb-2">
@@ -311,8 +288,8 @@ const Branch_detail = (props) => {
                   />
                 </div>
               </div>
-
-              <div className="row mb-5 row__line">
+              
+              <div className="row mb-5">
                 <div className="col-md-6 fv-row">
                   <label className="required fs-5 fw-semibold mb-2">
                     비밀번호
@@ -338,6 +315,19 @@ const Branch_detail = (props) => {
                     name=""
                   />
                 </div>
+              </div>
+              <div className="row mb-5 row__line">
+                        <div className="col-md-6 fv-row">
+                          <label className="fs-5 fw-semibold mb-2">
+                            생년월일
+                          </label>
+
+                          <input
+                            type="date"
+                            className="form-control "
+                            defaultValue={data.birthDate}
+                          />
+                        </div>
               </div>
 
               <div className="row mb-5">
