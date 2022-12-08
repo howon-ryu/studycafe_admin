@@ -381,7 +381,7 @@ const Detail = (props) => {
                 <input
                   type="text"
                   className="form-control "
-                  defaultValue={data.head.location || ""}
+                  defaultValue={data.head.location.address || ""}
                   name="first_name"
                 />
               </div>
