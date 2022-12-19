@@ -21,6 +21,7 @@ const AcademyList = (props) => {
   const [students, setstudents] = useState([]);
   const [rooms, setrooms] = useState([]);
   const navigate = useNavigate();
+  const [clickflag, setclickflag] = useState("0");
   const [groups, setgroups] = useState([]);
   useEffect(() => {
     searchBrands();
@@ -31,31 +32,73 @@ const AcademyList = (props) => {
     searchGroups();
 
     console.log("props_arr", props);
+    //console.log(owners[0].id);
+    //props.setDetailNum(owners[0].id);
 
     console.log("1");
   }, []);
   useEffect(() => {
     if (props.flag == "office__head_office") {
+      if (clickflag == "0") {
+        if (props.flag == "office__head_office") {
+          if (brands[0] != undefined) {
+            props.setDetailNum(brands[0].id);
+            console.log("wpqkf", brands[0]);
+          }
+        }
+      }
       setdata(brands);
     }
   }, [brands]);
   useEffect(() => {
     if (props.flag == "office__branch_office") {
+      if (clickflag == "0") {
+        if (props.flag == "office__branch_office") {
+          if (owners[0] != undefined) {
+            props.setDetailNum(owners[0].id);
+            console.log("wpqkf", owners[0]);
+          }
+        }
+      }
       setdata(owners);
     }
   }, [owners]);
   useEffect(() => {
     if (props.flag == "student__manage_info") {
+      if (clickflag == "0") {
+        if (props.flag == "student__manage_info") {
+          if (students[0] != undefined) {
+            props.setDetailNum(students[0].id);
+            console.log("wpqkf", students[0]);
+          }
+        }
+      }
       setdata(students);
     }
   }, [students]);
   useEffect(() => {
     if (props.flag == "office__branch_info") {
+      if (clickflag == "0") {
+        if (props.flag == "office__branch_info") {
+          if (branches[0] != undefined) {
+            props.setDetailNum(branches[0].id);
+            console.log("wpqkf", branches[0]);
+          }
+        }
+      }
       setdata(branches);
     }
   }, [branches]);
   useEffect(() => {
     if (props.flag == "Study_weekly_plan") {
+      if (clickflag == "0") {
+        if (props.flag == "Study_weekly_plan") {
+          if (students[0] != undefined) {
+            props.setDetailNum(students[0].id);
+            console.log("wpqkf", students[0]);
+          }
+        }
+      }
       setdata(students);
     }
   }, [students]);
@@ -224,6 +267,8 @@ const AcademyList = (props) => {
         //setdata(response.data);
 
         setowners(response.data);
+
+        console.log(response.data[0].id);
         console.log("owners:", response.data);
       })
       .catch(function (error) {
@@ -272,6 +317,7 @@ const AcademyList = (props) => {
 
   function listclick(value) {
     console.log("cliL:", value);
+    setclickflag("1");
     props.setDetailNum(value);
     navigate({
       search: createSearchParams({
@@ -775,7 +821,7 @@ const AcademyList = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((data) => (
+                    {data.map((data, idx) => (
                       <tr
                         className={"list_" + data.id}
                         onClick={(e) => {
@@ -785,15 +831,15 @@ const AcademyList = (props) => {
                       >
                         {/* <td>{data.id}</td> */}
                         {props.flag === "office__head_office" ? (
-                          <td>{data.id}</td>
+                          <td>{idx + 1}</td>
                         ) : props.flag === "office__branch_office" ? (
-                          <td>{data.id}</td>
+                          <td>{idx + 1}</td>
                         ) : props.flag === "student__manage_info" ? (
-                          <td>{data.id}</td>
+                          <td>{idx + 1}</td>
                         ) : props.flag === "office__branch_info" ? (
-                          <td>{data.id}</td>
+                          <td>{idx + 1}</td>
                         ) : props.flag === "Study_weekly_plan" ? (
-                          <td>{data.id}</td>
+                          <td>{idx + 1}</td>
                         ) : null}
 
                         <td className="n_empty"></td>

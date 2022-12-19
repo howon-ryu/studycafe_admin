@@ -15,7 +15,7 @@ const Weekly_report = (props) => {
     console.log(e);
     setend(e.target.value);
   }
-  let detail_num=1;
+  let detail_num = 1;
   // useEffect(() => {
   //   searchreport(1);
   // }, []);
@@ -24,8 +24,8 @@ const Weekly_report = (props) => {
     // setdetailnum(props.detail_num);
     detail_num = props.detail_num;
 
-    if(props.detail_num=='' || props.detail_num ==undefined){
-      detail_num=10;
+    if (props.detail_num == "" || props.detail_num == undefined) {
+      detail_num = 10;
     }
     //setstudent(props.detail_num);
     console.log("변경", detail_num);
@@ -36,17 +36,15 @@ const Weekly_report = (props) => {
   useEffect(() => {
     console.log("props", props);
     detail_num = props.detail_num;
-    if(props.detail_num=='' || props.detail_num ==undefined){
-      detail_num=10;
+    if (props.detail_num == "" || props.detail_num == undefined) {
+      detail_num = 10;
     }
-    if(start_date!=undefined && end_date!=undefined){
+    if (start_date != undefined && end_date != undefined) {
       searchreport(detail_num);
     }
     // setdetailnum(props.detail_num);
-    console.log("sd:",start_date);
-    console.log("se:",end_date);
-    
-    
+    console.log("sd:", start_date);
+    console.log("se:", end_date);
   }, [start_date, end_date]);
   const [studentid, setstudent] = useState(1);
   const handlesubmit_week = (e) => {
@@ -66,7 +64,6 @@ const Weekly_report = (props) => {
     axios
       .get(posturl_set, data_t, config)
       .then((response) => {
-        
         console.log(response.status);
         console.log(response.data);
       })
@@ -81,15 +78,14 @@ const Weekly_report = (props) => {
   };
   function searchreport(detail_num) {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users/students/" + detail_num+"/daily-reports";
+    let url_set = url + "users/students/" + detail_num + "/daily-reports";
     console.log("url:", url_set);
     const data_t = {
-      
       studentId: detail_num,
       startDate: "2022-01-01",
       endDate: "2022-12-31",
     };
-    
+
     axios
       .get(url_set, {
         params: {
@@ -120,7 +116,7 @@ const Weekly_report = (props) => {
         email: "jack.bitlworks@gmail.com",
         birthDate: "1999-05-01",
         gender: "M",
-        nickname: "김비틀웍스",
+        //nickname: "김비틀웍스",
         profileImgUrl: "https://image.naver.com",
         room: {
           id: 1,
@@ -170,11 +166,11 @@ const Weekly_report = (props) => {
       </td>
 
       <td className="text-gray-800 fw-bold">
-        {(""+v.createdAt).substr(0,10)}
+        {("" + v.createdAt).substr(0, 10)}
         {/* {"" + JSON.stringify(v.createdAt).substr(1, 11)} */}
       </td>
       <td className="text-gray-800 fw-bold">
-        {(""+v.totalTime).substr(0,10)}
+        {("" + v.totalTime).substr(0, 10)}
         {/* {"" + JSON.stringify(v.totalTime).substr(1, 8)} */}
       </td>
       {/* <td>{v.user.room.availableSeat}</td>

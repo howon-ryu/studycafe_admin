@@ -34,6 +34,7 @@ const Branch_info = (props) => {
   }, [isOpenModal]);
   const [brands, setbrands] = useState([]);
   const [owners, setowners] = useState([]);
+  const [managers, setmanagers] = useState([]);
   // const moment = require("moment");
   // const brandsList = brands.map((v) => (
   //   <option>{v.name}</option>
@@ -207,9 +208,9 @@ const Branch_info = (props) => {
     businessRegistrationNumber: "",
     homePageUrl: null,
     isManagement: false,
-    location: {
-      address: "",
-    },
+
+    address: "",
+
     brand: {
       id: "",
       name: "",
@@ -224,9 +225,9 @@ const Branch_info = (props) => {
       email: "",
       birthDate: "",
       gender: "",
-      nickname: "",
+
       profileImgUrl: "",
-      location: null,
+      address: null,
       status: "",
       lastLoginAt: "",
       darkMode: false,
@@ -239,9 +240,9 @@ const Branch_info = (props) => {
       email: "",
       birthDate: "",
       gender: "",
-      nickname: "",
+
       profileImgUrl: "",
-      location: null,
+      address: null,
       status: "",
       lastLoginAt: "",
       darkMode: false,
@@ -280,9 +281,9 @@ const Branch_info = (props) => {
         businessRegistrationNumber: "",
         homePageUrl: null,
         isManagement: false,
-        location: {
-          address: "",
-        },
+
+        address: "",
+
         brand: {
           id: "",
           name: "",
@@ -297,9 +298,9 @@ const Branch_info = (props) => {
           email: "",
           birthDate: "",
           gender: "",
-          nickname: "",
+
           profileImgUrl: "",
-          location: null,
+          address: null,
           status: "",
           lastLoginAt: "",
           darkMode: false,
@@ -312,9 +313,9 @@ const Branch_info = (props) => {
           email: "",
           birthDate: "",
           gender: "",
-          nickname: "",
+
           profileImgUrl: "",
-          location: null,
+          address: null,
           status: "",
           lastLoginAt: "",
           darkMode: false,
@@ -341,6 +342,7 @@ const Branch_info = (props) => {
   useEffect(() => {
     searchBrands();
     searchOwners();
+    searchManager();
   }, []);
   function searchBrands() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
@@ -350,6 +352,24 @@ const Branch_info = (props) => {
       .then(function (response) {
         setbrands(response.data);
         console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchManager() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/manager";
+    axios
+      .get(url_set, {
+        params: {
+          brandId: props.detail_num,
+          status: data.status,
+        },
+      })
+      .then(function (response) {
+        setmanagers(response.data);
+        console.log("man:", response.data);
       })
       .catch(function (error) {
         console.log("실패");
@@ -483,8 +503,7 @@ const Branch_info = (props) => {
     let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
     let posturl_set = posturl + "users/" + "groups/" + specgroup.id;
     console.log("puturl:", posturl_set);
-    // setTimeout(console.log("puturl:", posturl_set), 30000);
-
+    // setTimeout(console.log("puturl:", posturl_set), 30000).put
     axios
       .put(posturl_set, data_t, config)
       .then((response) => {
@@ -546,8 +565,8 @@ const Branch_info = (props) => {
   };
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
-      alert(e.target[2].value);
-      // event.preventDefalut();
+      //alert(e.target[2].value);
+      e.preventDefalut();
 
       console.log("e", e);
 
@@ -569,17 +588,18 @@ const Branch_info = (props) => {
         //   bname1: data.location.bname1,
         //   additionalInfo: data.location.additionalInfo
         // },
-        location: {
-          zonecode: "12345",
-          address: e.target[4].value,
-          roadAddress: "경기도 고양시 덕양구 항공대학로 76",
-          jibunAddress: "경기도 고양시 덕양구 현천동 188-8",
-          sido: "경기도",
-          sigungu: "고양시",
-          bname: "현천동",
-          bname1: "화전읍",
-          additionalInfo: "중소기업벤쳐센터 311호",
-        },
+        // location: {
+        //   zonecode: "12345",
+        //   address: e.target[4].value,
+        //   roadAddress: "경기도 고양시 덕양구 항공대학로 76",
+        //   jibunAddress: "경기도 고양시 덕양구 현천동 188-8",
+        //   sido: "경기도",
+        //   sigungu: "고양시",
+        //   bname: "현천동",
+        //   bname1: "화전읍",
+        //   additionalInfo: "중소기업벤쳐센터 311호",
+        // },
+        address: e.target[4].value,
         ownerUsername: e.target[1].value,
       };
 
@@ -630,17 +650,17 @@ const Branch_info = (props) => {
         //   bname1: data.location.bname1,
         //   additionalInfo: data.location.additionalInfo
         // },
-        location: {
-          zonecode: "12345",
-          address: e.target[4].value,
-          roadAddress: "경기도 고양시 덕양구 항공대학로 76",
-          jibunAddress: "경기도 고양시 덕양구 현천동 188-8",
-          sido: "경기도",
-          sigungu: "고양시",
-          bname: "현천동",
-          bname1: "화전읍",
-          additionalInfo: "중소기업벤쳐센터 311호",
-        },
+        // location: {
+        //   zonecode: "12345",
+        //   address: e.target[4].value,
+        //   roadAddress: "경기도 고양시 덕양구 항공대학로 76",
+        //   jibunAddress: "경기도 고양시 덕양구 현천동 188-8",
+        //   sido: "경기도",
+        //   sigungu: "고양시",
+        //   bname: "현천동",
+        //   bname1: "화전읍",
+        //   additionalInfo: "중소기업벤쳐센터 311호",
+        // },
         ownerUsername: e.target[1].value,
       };
 
@@ -749,7 +769,7 @@ const Branch_info = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
               <form
                 onSubmit={function (event) {
-                  //event.preventDefault();
+                  event.preventDefault();
                   handleSubmit(event);
                 }}
               >
@@ -791,7 +811,9 @@ const Branch_info = (props) => {
                         )}
                       </div>
                       <div className="col-md-6 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">원장 ID</label>
+                        <label className="fs-5 fw-semibold mb-2">
+                          원장선택
+                        </label>
 
                         {props.detail_num == 0 ? (
                           <select
@@ -799,11 +821,16 @@ const Branch_info = (props) => {
                             data-control="select2"
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
-                            defaultValue={data.owner.username || ""}
+                            defaultValue={
+                              data.owner.realName +
+                                "(" +
+                                data.owner.realName +
+                                ")" || ""
+                            }
                           >
                             {owners.map((item, idx) => (
                               <option key={idx} value={item.value}>
-                                {item.username}
+                                {item.realName}
                               </option>
                             ))}
                           </select>
@@ -813,11 +840,16 @@ const Branch_info = (props) => {
                             data-control="select2"
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
-                            defaultValue={data.owner.username || ""}
+                            defaultValue={
+                              data.owner.realName +
+                                "(" +
+                                data.owner.realName +
+                                ")" || ""
+                            }
                           >
                             {owners.map((item, idx) => (
                               <option key={idx} value={item.value}>
-                                {item.username}
+                                {item.realName}
                               </option>
                             ))}
                           </select>
@@ -860,7 +892,7 @@ const Branch_info = (props) => {
                         <input
                           type="text"
                           className="form-control "
-                          defaultValue={data.location.address || ""}
+                          defaultValue={data.address || ""}
                           // defaultValue=""
                           name="first_name"
                         />
@@ -895,6 +927,51 @@ const Branch_info = (props) => {
                           readOnly
                         />
                       </div> */}
+                      <div className="col-md-6 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">
+                          매니저선택
+                        </label>
+
+                        {props.detail_num == 0 ? (
+                          <select
+                            name="position"
+                            data-control="select2"
+                            data-placeholder="Select a position..."
+                            className="form-select form-select-solid"
+                            defaultValue={
+                              data.owner.realName +
+                                "(" +
+                                data.owner.realName +
+                                ")" || ""
+                            }
+                          >
+                            {managers.map((item, idx) => (
+                              <option key={idx} value={item.value}>
+                                {item.realName}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <select
+                            name="position"
+                            data-control="select2"
+                            data-placeholder="Select a position..."
+                            className="form-select form-select-solid"
+                            defaultValue={
+                              data.owner.realName +
+                                "(" +
+                                data.owner.realName +
+                                ")" || ""
+                            }
+                          >
+                            {managers.map((item, idx) => (
+                              <option key={idx} value={item.value}>
+                                {item.realName}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </div>
 
                       <div className="col-md-4 fv-row">
                         <label className="fs-5 fw-semibold mb-2">상태</label>

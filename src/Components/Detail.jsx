@@ -17,7 +17,7 @@ const Detail = (props) => {
     head: {
       email: "",
       phone: "",
-      location: "",
+      address: "",
       nickname: "",
     },
   });
@@ -49,7 +49,7 @@ const Detail = (props) => {
         head: {
           email: "",
           phone: "",
-          location: "",
+          address: "",
           nickname: "",
         },
       });
@@ -122,21 +122,26 @@ const Detail = (props) => {
       console.log(e);
       // alert(e.target[1].value);
       const data_t = {
-        name: e.target[2].value,
-        homePageUrl: "wintergreen.study",
+        name: e.target[1].value,
+        serviceDomian: e.target[11].value,
+        homePageUrl: e.target[10].value,
         isManagement: false,
-        businessRegistrationNumber: "123-123-123",
-        status: "사용",
+        businessRegistrationNumber: e.target[2].value,
+        status: e.target[13].value,
+        address: e.target[9].value,
         head: {
-          username: double,
-          password: e.target[3].value,
-          password2: e.target[4].value,
-          realName: e.target[5].value,
-          phone: e.target[6].value,
-          email: e.target[7].value,
+          password: e.target[5].value,
+          password2: e.target[6].value,
+          realName: e.target[2].value,
+          phone: e.target[7].value,
+          email: e.target[8].value,
+          username: e.target[3].value,
+          address: e.target[9].value,
+          birthDate: "1999-05-01",
         },
       };
 
+      console.log(data_t);
       const headers = { "header-name": "value" };
       const config = { headers };
       console.log("data_t", data_t);
@@ -172,9 +177,9 @@ const Detail = (props) => {
 
       console.log(e);
       let cu = "사용";
-      let cu1 = e.target[11].checked;
-      let cu2 = e.target[12].checked;
-      let cu3 = e.target[13].checked;
+      let cu1 = e.target[12].checked;
+      let cu2 = e.target[13].checked;
+      let cu3 = e.target[14].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -182,20 +187,24 @@ const Detail = (props) => {
       } else if (cu3 == true) {
         cu = "삭제";
       }
+      console.log(cu);
       const data_t = {
-        name: e.target[1].value,
+        name: e.target[0].value,
+        serviceDomian: e.target[10].value,
         homePageUrl: e.target[9].value,
         isManagement: false,
-        businessRegistrationNumber: e.target[7].value,
-        status: "사용",
+        businessRegistrationNumber: e.target[1].value,
+        status: cu,
+        address: e.target[9].value,
         head: {
-          id: data.head.id,
-          password: e.target[2].value,
-          password2: e.target[3].value,
-          realName: e.target[4].value,
-          nickname: e.target[4].value,
-          phone: e.target[5].value,
-          email: e.target[6].value,
+          password: e.target[4].value,
+          password2: e.target[5].value,
+          realName: e.target[2].value,
+          phone: e.target[6].value,
+          email: e.target[7].value,
+          username: e.target[3].value,
+          address: e.target[8].value,
+          birthDate: "1999-05-01",
         },
       };
 
@@ -257,31 +266,6 @@ const Detail = (props) => {
 
           <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
             <div className="row mb-5">
-              <div className="col-md-6 fv-row input_50">
-                <label className="required fs-5 fw-semibold mb-2">
-                  본사 ID
-                </label>
-
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={data.head.username}
-                  name="first_name"
-                  onChange={onchange_fuc}
-                />
-                <span className="me-3">.here.study</span>
-                {props.detail_num == "0" ? (
-                  <button
-                    data-kt-ecommerce-settings-type="cancel"
-                    className="btn btn-primary"
-                    onClick={doublecheck}
-                    type="button"
-                  >
-                    중복확인
-                  </button>
-                ) : null}
-              </div>
-
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">
                   본사 이름
@@ -294,8 +278,40 @@ const Detail = (props) => {
                   name=""
                 />
               </div>
-            </div>
+              <div className="col-md-6 fv-row">
+                <label className="fs-5 fw-semibold mb-2">사업자등록증</label>
 
+                <input
+                  type="text"
+                  className="form-control "
+                  name="last_name"
+                  defaultValue={data.businessRegistrationNumber || ""}
+                />
+              </div>
+            </div>
+            <div className="row mb-5">
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">대표자</label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={data.head.realName || ""}
+                  name=""
+                />
+              </div>
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">
+                  대표자 ID
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={data.head.username || ""}
+                  name=""
+                />
+              </div>
+            </div>
             <div className="row mb-5">
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">
@@ -320,22 +336,12 @@ const Detail = (props) => {
                   className="form-control"
                   placeholder=""
                   name=""
+                  defaultValue=""
                 />
               </div>
             </div>
 
             <div className="row mb-5">
-              <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">대표자</label>
-
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={data.head.nickname || ""}
-                  name=""
-                />
-              </div>
-
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">
                   대표 연락처
@@ -348,9 +354,6 @@ const Detail = (props) => {
                   name=""
                 />
               </div>
-            </div>
-
-            <div className="row mb-5">
               <div className="col-md-6 fv-row">
                 <label className="fs-5 fw-semibold mb-2">대표 이메일</label>
 
@@ -359,17 +362,6 @@ const Detail = (props) => {
                   className="form-control "
                   defaultValue={data.head.email || ""}
                   name="first_name"
-                />
-              </div>
-
-              <div className="col-md-6 fv-row">
-                <label className="fs-5 fw-semibold mb-2">사업자등록증</label>
-
-                <input
-                  type="text"
-                  className="form-control "
-                  name="last_name"
-                  defaultValue={data.businessRegistrationNumber || ""}
                 />
               </div>
             </div>
@@ -381,13 +373,12 @@ const Detail = (props) => {
                 <input
                   type="text"
                   className="form-control "
-                  defaultValue={data.head.location.address || ""}
+                  defaultValue={data.head.address || ""}
                   name="first_name"
                 />
               </div>
             </div>
-
-            <div className="row mb-5 row__line">
+            <div className="row mb-5">
               <div className="col-md-6 fv-row">
                 <label className="fs-5 fw-semibold mb-2">홈페이지</label>
 
@@ -398,7 +389,31 @@ const Detail = (props) => {
                   name="wintergreen.study"
                 />
               </div>
+              <div className="col-md-6 fv-row input_50">
+                <label className="required fs-5 fw-semibold mb-2">도메인</label>
 
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={data.serviceDomain}
+                  name="first_name"
+                  onChange={onchange_fuc}
+                />
+                <span className="me-3">.here.study</span>
+                {props.detail_num == "0" ? (
+                  <button
+                    data-kt-ecommerce-settings-type="cancel"
+                    className="btn btn-primary"
+                    onClick={doublecheck}
+                    type="button"
+                  >
+                    중복확인
+                  </button>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="row mb-5 row__line">
               <div className="col-md-6 fv-row check__use_wrap">
                 <label className="fs-5 fw-semibold mb-2">학습관리</label>
 

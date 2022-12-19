@@ -16,13 +16,14 @@ const Branch_detail = (props) => {
     head: {
       email: "",
       phone: "",
-      location: "",
+      address: "",
       nickname: "",
     },
   });
   let detail_num;
   useEffect(() => {
     console.log("props", props);
+
     // setdetailnum(props.detail_num);
     detail_num = props.detail_num;
     if (props.detail_num == "" || props.detail_num == undefined) {
@@ -36,7 +37,7 @@ const Branch_detail = (props) => {
         head: {
           email: "",
           phone: "",
-          location: "",
+          address: "",
           nickname: "",
         },
       });
@@ -49,8 +50,8 @@ const Branch_detail = (props) => {
   }, [props]);
   function spec_branch_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users" + "/owners/" + detail_num;
-    console.log("url:", url_set);
+    let url_set = url + "users/" + detail_num;
+    console.log("url@@@@@@@@@@@@:", url_set);
     axios
       .get(url_set)
       .then(function (response) {
@@ -246,7 +247,6 @@ const Branch_detail = (props) => {
                     />
                   </div>
                 )}
-                
 
                 <div className="col-md-6 fv-row">
                   <label className="required fs-5 fw-semibold mb-2">
@@ -288,7 +288,7 @@ const Branch_detail = (props) => {
                   />
                 </div>
               </div>
-              
+
               <div className="row mb-5">
                 <div className="col-md-6 fv-row">
                   <label className="required fs-5 fw-semibold mb-2">
@@ -317,17 +317,15 @@ const Branch_detail = (props) => {
                 </div>
               </div>
               <div className="row mb-5 row__line">
-                        <div className="col-md-6 fv-row">
-                          <label className="fs-5 fw-semibold mb-2">
-                            생년월일
-                          </label>
+                <div className="col-md-6 fv-row">
+                  <label className="fs-5 fw-semibold mb-2">생년월일</label>
 
-                          <input
-                            type="date"
-                            className="form-control "
-                            defaultValue={data.birthDate}
-                          />
-                        </div>
+                  <input
+                    type="date"
+                    className="form-control "
+                    defaultValue={data.birthDate}
+                  />
+                </div>
               </div>
 
               <div className="row mb-5">

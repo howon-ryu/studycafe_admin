@@ -110,7 +110,7 @@ const Manage_student = (props) => {
         gender: "",
         nickname: "",
         profileImgUrl: "",
-        location: null,
+        address: null,
         status: "",
         lastLoginAt: "",
         school: "",
@@ -140,7 +140,7 @@ const Manage_student = (props) => {
     gender: "",
     nickname: "",
     profileImgUrl: "",
-    location: null,
+    address: null,
     status: "",
     lastLoginAt: "",
     school: "",
@@ -185,8 +185,8 @@ const Manage_student = (props) => {
   ));
   function spec_student_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users" + "/students/" + student_num;
-    console.log("url:", url_set);
+    let url_set = url + "users/" + student_num;
+    console.log("url!!!!!!!!:", url_set);
     axios
       .get(url_set)
       .then(function (response) {
@@ -487,7 +487,7 @@ const Manage_student = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue={data.location}
+                            defaultValue={data.address}
                             name=""
                           />
                         </div>
@@ -547,7 +547,7 @@ const Manage_student = (props) => {
                           <input
                             type="text"
                             className="form-control "
-                            defaultValue={data.username}
+                            defaultValue={data.seatNumber}
                           />
                         </div>
                       </div>
