@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Components/header";
 import Calendar_plan from "./Components/Calendar_plan";
+import { useCookies } from "react-cookie";
 import Sidebar from "./Components/sidebar";
 import SidebarMenu from "./Components/sidebarmenu";
 import SidebarMenuItem from "./Components/sidebarmenuitem";
@@ -20,7 +21,33 @@ import Study_day_plan from "./Components/Study_day_plan";
 import { React, useState, useEffect } from "react";
 function App() {
   const [value, setValue] = useState(265);
+  let varrrr = "1";
   const [login_flag, setLoginFlag] = useState(true);
+  const [cookies, setCookie, removeCookie] = useCookies({
+    cookie: {
+      data: {
+        role: {
+          id: "10",
+        },
+      },
+    },
+  });
+  let roleid = "10";
+  useEffect(() => {
+    console.log("1");
+    console.log(cookies);
+    if (cookies != undefined) {
+      console.log("ck:", cookies);
+      console.log("cok:", cookies.cookie.data);
+      roleid = cookies.cookie.data.role.id;
+      console.log("riririririri", roleid);
+    }
+    if (cookies.cookie.data == undefined) {
+      cookies.cookie.data.role.id = "20";
+    }
+    //window.location.reload();
+  }, []);
+  console.log(cookies);
   return (
     <div className="App">
       <BrowserRouter>
@@ -30,21 +57,29 @@ function App() {
               title="본사관리"
               to="/Office__head_office"
               idx="1"
+              flag="1"
+              roleid={cookies.cookie.data.role.id || "10"}
             />
             <SidebarMenuItem
               title="원장관리"
               to="/Office__branch_office"
               idx="2"
+              flag="2"
+              roleid={cookies.cookie.data.role.id}
             />
             <SidebarMenuItem
               title="매니저관리"
               to="/Office__manager_office"
               idx="3"
+              flag="3"
+              roleid={cookies.cookie.data.role.id}
             />
             <SidebarMenuItem
               title="지점관리"
               to="/Office__branch_info"
               idx="4"
+              flag="3.5"
+              roleid={cookies.cookie.data.role.id}
             />
           </SidebarMenu>
           <SidebarMenu title="학생관리" icon_num="2">

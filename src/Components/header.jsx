@@ -6,7 +6,7 @@ import { css, jsx } from "@emotion/react";
 import "../css/style.bundle.css";
 import "../css/layout.css";
 import "../css/header.css";
-
+import { useCookies } from "react-cookie";
 import logo from "../assets/media/logos/logo_black.png";
 import icon_menu_btn from "../assets/media/images/icon_menu_btn.svg";
 import icon_user from "../assets/media/images/icon_user.png";
@@ -17,6 +17,7 @@ import user_empty from "../assets/media/avatars/user_empty.png";
 const Header = (props) => {
   console.log(props);
   const [login_check, setlogin] = useState(true);
+  const [cookies, setCookie, removeCookie] = useCookies([]);
   let varrrrrr = 1;
   useEffect(() => {
     console.log(window.location.pathname);
@@ -86,11 +87,12 @@ const Header = (props) => {
 
               <div className="app-navbar-item ms-1 ms-lg-3">
                 <a
-                  href="#"
+                  href="/login"
                   className="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px"
                   data-kt-menu-trigger="{default:'click', lg: 'hover'}"
                   data-kt-menu-attach="parent"
                   data-kt-menu-placement="bottom-end"
+                  onClick={() => removeCookie("cookie")}
                 >
                   <span className="svg-icon theme-light-show svg-icon-2">
                     <svg
@@ -174,7 +176,7 @@ const Header = (props) => {
                 >
                   <div className="menu-item px-3 my-0">
                     <a
-                      href="#"
+                      href="/login"
                       className="menu-link px-3 py-2"
                       data-kt-element="mode"
                       data-kt-value="light"
@@ -233,7 +235,7 @@ const Header = (props) => {
 
                   <div className="menu-item px-3 my-0">
                     <a
-                      href="#"
+                      href="/login"
                       className="menu-link px-3 py-2"
                       data-kt-element="mode"
                       data-kt-value="dark"
@@ -287,7 +289,6 @@ const Header = (props) => {
                     시스템관리자
                   </span>
                 </div>
-
                 <div
                   className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                   data-kt-menu="true"
