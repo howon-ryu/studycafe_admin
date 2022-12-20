@@ -566,41 +566,20 @@ const Branch_info = (props) => {
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
       //alert(e.target[2].value);
-      e.preventDefalut();
+      //e.preventDefalut();
 
       console.log("e", e);
 
       const data_t = {
         brandId: e.target[0].value,
         name: e.target[2].value,
-        homePageUrl: data.homePageUrl,
+        homePageUrl: "new.branch.study",
         isManagement: false,
         businessRegistrationNumber: e.target[3].value,
-        status: e.target[5].value,
-        // location: {
-        //   zonecode: data.location.zonecode,
-        //   address: data.location.address,
-        //   roadAddress: data.location.roadAddress,
-        //   jibunAddress: data.location.jibunAddress,
-        //   sido: data.location.sido,
-        //   sigungu: data.location.sigungu,
-        //   bname: data.location.bname,
-        //   bname1: data.location.bname1,
-        //   additionalInfo: data.location.additionalInfo
-        // },
-        // location: {
-        //   zonecode: "12345",
-        //   address: e.target[4].value,
-        //   roadAddress: "경기도 고양시 덕양구 항공대학로 76",
-        //   jibunAddress: "경기도 고양시 덕양구 현천동 188-8",
-        //   sido: "경기도",
-        //   sigungu: "고양시",
-        //   bname: "현천동",
-        //   bname1: "화전읍",
-        //   additionalInfo: "중소기업벤쳐센터 311호",
-        // },
+        status: e.target[6].value,
+
         address: e.target[4].value,
-        ownerUsername: e.target[1].value,
+        ownerId: e.target[1].value,
       };
 
       const headers = { "header-name": "value" };
@@ -609,7 +588,7 @@ const Branch_info = (props) => {
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
       let posturl_set = posturl + "branches";
-      console.log("puturl:", posturl_set);
+      console.log("posturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
       axios
@@ -633,35 +612,15 @@ const Branch_info = (props) => {
       console.log("e", e);
 
       const data_t = {
-        brandId: data.brand.id,
+        brandId: e.target[0].value,
         name: e.target[2].value,
-        homePageUrl: data.homePageUrl,
+        homePageUrl: "",
         isManagement: false,
-        businessRegistrationNumber: data.businessRegistrationNumber,
+        businessRegistrationNumber: e.target[3].value,
         status: data.status,
-        // location: {
-        //   zonecode: data.location.zonecode,
-        //   address: data.location.address,
-        //   roadAddress: data.location.roadAddress,
-        //   jibunAddress: data.location.jibunAddress,
-        //   sido: data.location.sido,
-        //   sigungu: data.location.sigungu,
-        //   bname: data.location.bname,
-        //   bname1: data.location.bname1,
-        //   additionalInfo: data.location.additionalInfo
-        // },
-        // location: {
-        //   zonecode: "12345",
-        //   address: e.target[4].value,
-        //   roadAddress: "경기도 고양시 덕양구 항공대학로 76",
-        //   jibunAddress: "경기도 고양시 덕양구 현천동 188-8",
-        //   sido: "경기도",
-        //   sigungu: "고양시",
-        //   bname: "현천동",
-        //   bname1: "화전읍",
-        //   additionalInfo: "중소기업벤쳐센터 311호",
-        // },
-        ownerUsername: e.target[1].value,
+        address: e.target[4].value,
+
+        ownerId: e.target[1].value,
       };
 
       const headers = { "header-name": "value" };
@@ -802,6 +761,9 @@ const Branch_info = (props) => {
                             className="form-select form-select-solid"
                             defaultValue={data.brand.name}
                           >
+                            <option value={data.brand.id}>
+                              {data.brand.name}
+                            </option>
                             {brands.map((item, idx) => (
                               <option key={idx} value={item.id}>
                                 {item.name}
@@ -821,12 +783,7 @@ const Branch_info = (props) => {
                             data-control="select2"
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
-                            defaultValue={
-                              data.owner.realName +
-                                "(" +
-                                data.owner.realName +
-                                ")" || ""
-                            }
+                            defaultValue={data.owner.realName}
                           >
                             {owners.map((item, idx) => (
                               <option key={idx} value={item.value}>
@@ -840,18 +797,18 @@ const Branch_info = (props) => {
                             data-control="select2"
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
-                            defaultValue={
-                              data.owner.realName +
-                                "(" +
-                                data.owner.realName +
-                                ")" || ""
-                            }
+                            defaultValue={data.owner.id}
                           >
-                            {owners.map((item, idx) => (
-                              <option key={idx} value={item.value}>
-                                {item.realName}
-                              </option>
-                            ))}
+                            <option value={data.owner.username}>
+                              {data.owner.realName}({data.owner.id})
+                            </option>
+                            {owners.map((item, idx) =>
+                              item.realName != data.owner.realName ? (
+                                <option key={idx} value={item.username}>
+                                  {item.realName}({item.username} )
+                                </option>
+                              ) : null
+                            )}
                           </select>
                         )}
                       </div>
@@ -939,17 +896,22 @@ const Branch_info = (props) => {
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
                             defaultValue={
-                              data.owner.realName +
+                              data.manager.realName +
                                 "(" +
-                                data.owner.realName +
+                                data.manager.realName +
                                 ")" || ""
                             }
                           >
-                            {managers.map((item, idx) => (
-                              <option key={idx} value={item.value}>
-                                {item.realName}
-                              </option>
-                            ))}
+                            <option value={data.manager.id}>
+                              {data.manager.realName}({data.manager.username})
+                            </option>
+                            {managers.map((item, idx) =>
+                              item.realName != data.manager.realName ? (
+                                <option key={idx} value={item.id}>
+                                  {item.realName}({item.username} )
+                                </option>
+                              ) : null
+                            )}
                           </select>
                         ) : (
                           <select

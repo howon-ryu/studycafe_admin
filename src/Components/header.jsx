@@ -17,6 +17,7 @@ import user_empty from "../assets/media/avatars/user_empty.png";
 const Header = (props) => {
   console.log(props);
   const [login_check, setlogin] = useState(true);
+  let varrrrrr = 1;
   useEffect(() => {
     console.log(window.location.pathname);
     // if (window.location.pathname == "/") {

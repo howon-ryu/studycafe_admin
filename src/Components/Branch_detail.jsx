@@ -13,14 +13,17 @@ const Branch_detail = (props) => {
     id: "",
     name: "",
     status: "",
-    head: {
-      email: "",
-      phone: "",
-      address: "",
-      
+    brand: {
+      id: "",
+      name: "",
+      status: "",
     },
   });
   let detail_num;
+  const [brands, setbrands] = useState([]);
+  useEffect(() => {
+    searchBrands();
+  }, []);
   useEffect(() => {
     console.log("props", props);
 
@@ -34,11 +37,10 @@ const Branch_detail = (props) => {
         id: "",
         name: "",
         status: "",
-        head: {
-          email: "",
-          phone: "",
-          address: "",
-          
+        brand: {
+          id: "",
+          name: "",
+          status: "",
         },
       });
       reset.current.click();
@@ -66,6 +68,19 @@ const Branch_detail = (props) => {
         alert("유효성 검사 확인 필요", error.message);
       });
   }
+  function searchBrands() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "brands";
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setbrands(response.data);
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   const handles = (e) => {
     e.preventDefalut();
   };
@@ -78,14 +93,16 @@ const Branch_detail = (props) => {
       console.log(e);
 
       const data_t = {
-        username: e.target[0].value,
-        password: e.target[4].value,
-        password2: e.target[5].value,
-        realName: e.target[1].value,
-        phone: e.target[2].value,
-        email: e.target[3].value,
-        birthDate: e.target[6].value,
+        brandId: e.target[0].value,
+        username: e.target[1].value,
+        password: e.target[5].value,
+        password2: e.target[6].value,
+        realName: e.target[2].value,
+        phone: e.target[3].value,
+        email: e.target[4].value,
+        birthDate: e.target[7].value,
         gender: "남자",
+        address: "abc",
       };
 
       const headers = { "header-name": "value" };
@@ -119,25 +136,17 @@ const Branch_detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-      // console.log(event.target[0].value);
 
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
-      // console.log(e.target[0].value);
       const data_t = {
-        password: e.target[4].value,
-        password2: e.target[5].value,
-        realName: e.target[1].value,
-        phone: e.target[2].value,
-        email: e.target[3].value,
+        brandId: e.target[0].value,
+        password: e.target[5].value,
+        password2: e.target[6].value,
+        realName: e.target[2].value,
+        phone: e.target[3].value,
+        email: e.target[4].value,
+        address: "abc",
+        birthDate: e.target[7].value,
+        username: e.target[1].value,
       };
 
       const headers = { "header-name": "value" };
@@ -192,6 +201,43 @@ const Branch_detail = (props) => {
             </div>
 
             <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
+              <div className="row mb-5">
+                <div className="col-md-6 fv-row input_50">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    본사선택
+                  </label>
+                  {props.detail_num == 0 ? (
+                    <select
+                      name="position"
+                      data-control="select2"
+                      data-placeholder="Select a position..."
+                      className="form-select form-select-solid"
+                      defaultValue={data.brand.name}
+                    >
+                      {brands.map((item, idx) => (
+                        <option key={idx} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <select
+                      name="position"
+                      data-control="select2"
+                      data-placeholder="Select a position..."
+                      className="form-select form-select-solid"
+                      defaultValue={data.brand.name}
+                    >
+                      <option value={data.brand.id}>{data.brand.name}</option>
+                      {brands.map((item, idx) => (
+                        <option key={idx} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              </div>
               <div className="row mb-5">
                 {props.detail_num == "0" ? (
                   <div className="col-md-6 fv-row">

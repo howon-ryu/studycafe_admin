@@ -14,14 +14,16 @@ const Manager_detail = (props) => {
     id: "",
     name: "",
     status: "",
-    head: {
-      email: "",
-      phone: "",
-      address: "",
+
+    targetUser: {
+      id: "",
+      realName: "",
     },
   });
   let detail_num;
   useEffect(() => {
+    detail_num = props.detail_num;
+    console.log("dn:", detail_num);
     searchBrands();
     searchOwners();
   }, []);
@@ -42,6 +44,10 @@ const Manager_detail = (props) => {
           email: "",
           phone: "",
           address: "",
+        },
+        targetUser: {
+          id: "",
+          realName: "",
         },
       });
       reset.current.click();
@@ -88,6 +94,7 @@ const Manager_detail = (props) => {
         console.log("data:", data);
         console.log("head:", data.head);
         console.log(response.data);
+        console.log(data.targetUser.id);
         console.log("성공");
       })
       .catch(function (error) {
@@ -107,7 +114,7 @@ const Manager_detail = (props) => {
       console.log(e);
 
       const data_t = {
-        ownerUsername: e.target[1].value,
+        ownerId: e.target[1].value,
         brandId: e.target[0].value,
         username: e.target[2].value,
         password: e.target[6].value,
@@ -152,7 +159,7 @@ const Manager_detail = (props) => {
       console.log(e);
 
       const data_t = {
-        ownerUsername: e.target[1].value,
+        ownerId: e.target[1].value,
         username: e.target[2].value,
         brandId: e.target[0].value,
         password: e.target[6].value,
@@ -160,6 +167,7 @@ const Manager_detail = (props) => {
         realName: e.target[3].value,
         phone: e.target[4].value,
         email: e.target[5].value,
+        birthDate: "1999-01-01",
       };
 
       const headers = { "header-name": "value" };
@@ -261,7 +269,7 @@ const Manager_detail = (props) => {
                       defaultValue=""
                     >
                       {owners.map((item, idx) => (
-                        <option key={idx} value={item.value}>
+                        <option key={idx} value={item.id}>
                           {item.realName}
                         </option>
                       ))}
@@ -274,11 +282,16 @@ const Manager_detail = (props) => {
                       className="form-select form-select-solid"
                       defaultValue=""
                     >
-                      {owners.map((item, idx) => (
-                        <option key={idx} value={item.value}>
-                          {item.realName}
-                        </option>
-                      ))}
+                      <option value={data.targetUser.id || data.id}>
+                        {data.targetUser.realName || data.realName}
+                      </option>
+                      {owners.map((item, idx) =>
+                        item.realName != data.targetUser.realName ? (
+                          <option key={idx} value={item.id}>
+                            {item.realName}
+                          </option>
+                        ) : null
+                      )}
                     </select>
                   )}
                 </div>

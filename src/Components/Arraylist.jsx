@@ -315,7 +315,7 @@ const AcademyList = (props) => {
         setmanagers(response.data);
 
         console.log(response.data[0].id);
-        console.log("owners:", response.data);
+        console.log("managers:", response.data);
       })
       .catch(function (error) {
         console.log("실패");
