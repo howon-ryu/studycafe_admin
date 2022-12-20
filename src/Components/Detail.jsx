@@ -18,7 +18,6 @@ const Detail = (props) => {
       email: "",
       phone: "",
       address: "",
-      
     },
   });
   // let [detail_num, setdetailnum] = useState([1]);
@@ -50,7 +49,6 @@ const Detail = (props) => {
           email: "",
           phone: "",
           address: "",
-          
         },
       });
       reset.current.click();

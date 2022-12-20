@@ -577,7 +577,7 @@ const Branch_info = (props) => {
         isManagement: false,
         businessRegistrationNumber: e.target[3].value,
         status: e.target[6].value,
-
+        managerId: e.target[5].value,
         address: e.target[4].value,
         ownerId: e.target[1].value,
       };
@@ -619,7 +619,7 @@ const Branch_info = (props) => {
         businessRegistrationNumber: e.target[3].value,
         status: data.status,
         address: e.target[4].value,
-
+        managerId: e.target[5].value,
         ownerId: e.target[1].value,
       };
 
@@ -783,10 +783,10 @@ const Branch_info = (props) => {
                             data-control="select2"
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
-                            defaultValue={data.owner.realName}
+                            defaultValue={data.owner.id}
                           >
                             {owners.map((item, idx) => (
-                              <option key={idx} value={item.value}>
+                              <option key={idx} value={item.id}>
                                 {item.realName}
                               </option>
                             ))}
@@ -799,13 +799,14 @@ const Branch_info = (props) => {
                             className="form-select form-select-solid"
                             defaultValue={data.owner.id}
                           >
-                            <option value={data.owner.username}>
-                              {data.owner.realName}({data.owner.id})
+                            <option value={data.owner.id}>
+                              {data.owner.realName}({data.owner.username})
                             </option>
                             {owners.map((item, idx) =>
                               item.realName != data.owner.realName ? (
-                                <option key={idx} value={item.username}>
+                                <option key={idx} value={item.id}>
                                   {item.realName}({item.username} )
+                                  {/* {item.id} */}
                                 </option>
                               ) : null
                             )}
@@ -895,23 +896,13 @@ const Branch_info = (props) => {
                             data-control="select2"
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
-                            defaultValue={
-                              data.manager.realName +
-                                "(" +
-                                data.manager.realName +
-                                ")" || ""
-                            }
+                            defaultValue={data.manager.id}
                           >
-                            <option value={data.manager.id}>
-                              {data.manager.realName}({data.manager.username})
-                            </option>
-                            {managers.map((item, idx) =>
-                              item.realName != data.manager.realName ? (
-                                <option key={idx} value={item.id}>
-                                  {item.realName}({item.username} )
-                                </option>
-                              ) : null
-                            )}
+                            {managers.map((item, idx) => (
+                              <option key={idx} value={item.id}>
+                                {item.realName}
+                              </option>
+                            ))}
                           </select>
                         ) : (
                           <select
@@ -919,18 +910,18 @@ const Branch_info = (props) => {
                             data-control="select2"
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
-                            defaultValue={
-                              data.owner.realName +
-                                "(" +
-                                data.owner.realName +
-                                ")" || ""
-                            }
+                            defaultValue={data.owner.id}
                           >
-                            {managers.map((item, idx) => (
-                              <option key={idx} value={item.value}>
-                                {item.realName}
-                              </option>
-                            ))}
+                            <option value={data.manager.id}>
+                              {data.manager.realName}({data.manager.username})
+                            </option>
+                            {managers.map((item, idx) =>
+                              item.realName != data.manager.realName ? (
+                                <option key={idx} value={item.id}>
+                                  {item.realName}({item.username})
+                                </option>
+                              ) : null
+                            )}
                           </select>
                         )}
                       </div>
