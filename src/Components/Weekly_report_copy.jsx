@@ -74,7 +74,7 @@ const Weekly_report = () => {
         email: "jack.bitlworks@gmail.com",
         birthDate: "1999-05-01",
         gender: "M",
-        nickname: "김비틀웍스",
+        //nickname: "김비틀웍스",
         profileImgUrl: "https://image.naver.com",
         room: {
           id: 1,

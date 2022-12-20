@@ -11,6 +11,7 @@ import Login from "./Components/Login";
 import Registration from "./Components/Registration";
 import Office__head_office from "./Components/Office__head_office";
 import Office__branch_office from "./Components/Office__branch_office";
+import Office__manager_office from "./Components/Office__manager_office";
 import Office__branch_info from "./Components/Office__branch_info";
 import Student__manage_info from "./Components/Student__manage_info";
 import Study_weekly_plan from "./Components/Study_weekly_plan";
@@ -36,9 +37,14 @@ function App() {
               idx="2"
             />
             <SidebarMenuItem
+              title="매니저관리"
+              to="/Office__manager_office"
+              idx="3"
+            />
+            <SidebarMenuItem
               title="지점관리"
               to="/Office__branch_info"
-              idx="3"
+              idx="4"
             />
           </SidebarMenu>
           <SidebarMenu title="학생관리" icon_num="2">
@@ -78,6 +84,11 @@ function App() {
             exact
             path="/Office__branch_office"
             element={<Office__branch_office width={value} />}
+          />
+          <Route
+            exact
+            path="/Office__manager_office"
+            element={<Office__manager_office width={value} />}
           />
           <Route
             exact

@@ -108,7 +108,7 @@ const Manage_student = (props) => {
         email: "",
         birthDate: "",
         gender: "",
-        nickname: "",
+        
         profileImgUrl: "",
         address: null,
         status: "",
@@ -138,7 +138,7 @@ const Manage_student = (props) => {
     email: "",
     birthDate: "",
     gender: "",
-    nickname: "",
+    
     profileImgUrl: "",
     address: null,
     status: "",

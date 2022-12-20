@@ -19,6 +19,7 @@ const AcademyList = (props) => {
   const [owners, setowners] = useState([]);
   const [branches, setbranches] = useState([]);
   const [students, setstudents] = useState([]);
+  const [managers, setmanagers] = useState([]);
   const [rooms, setrooms] = useState([]);
   const navigate = useNavigate();
   const [clickflag, setclickflag] = useState("0");
@@ -26,6 +27,7 @@ const AcademyList = (props) => {
   useEffect(() => {
     searchBrands();
     searchowner();
+    searchmanager();
     searchStudent();
     searchBranches();
     searchRooms();
@@ -61,6 +63,19 @@ const AcademyList = (props) => {
         }
       }
       setdata(owners);
+    }
+  }, [owners]);
+  useEffect(() => {
+    if (props.flag == "office__manager_office") {
+      if (clickflag == "0") {
+        if (props.flag == "office__manager_office") {
+          if (managers[0] != undefined) {
+            props.setDetailNum(managers[0].id);
+            console.log("wpqkf", managers[0]);
+          }
+        }
+      }
+      setdata(managers);
     }
   }, [owners]);
   useEffect(() => {
@@ -275,6 +290,37 @@ const AcademyList = (props) => {
         console.log("실패");
       });
   }
+  function searchmanager(props) {
+    let var_status = "";
+    let var_brandid = "";
+    if (props != undefined) {
+      console.log("props!!!!!!!!!!:", props);
+      console.log("propsowner!!!!!!!!!!:", props.target[0].value);
+      var_status = props.target[5].value;
+      var_brandid = props.target[0].value;
+    }
+
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + "manager";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setmanagers(response.data);
+
+        console.log(response.data[0].id);
+        console.log("owners:", response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   function searchBranches(props) {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "branches";
@@ -462,6 +508,7 @@ const AcademyList = (props) => {
                       setText(event.target[5].value);
                       searchBrands(event);
                       searchowner(event);
+                      searchmanager(event);
                       searchBranches(event);
                       searchStudent(event);
                       setCheck("2");
@@ -556,6 +603,49 @@ const AcademyList = (props) => {
                                   ALL
                                 </option>
                                 {owners.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        )}
+                        {props.flag == "office__manager_office" ? (
+                          <div className="mb-10">
+                            <label>원장</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                <option value="" selected="selected">
+                                  ALL
+                                </option>
+                                {managers.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="mb-10" hidden>
+                            <label>매니저</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                <option value="" selected="selected">
+                                  ALL
+                                </option>
+                                {managers.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.realName}
                                   </option>
@@ -814,6 +904,8 @@ const AcademyList = (props) => {
                         <th className="min-w-150px">지점명/브랜드</th>
                       ) : props.flag === "Study_weekly_plan" ? (
                         <th className="min-w-150px">학생명/학교명</th>
+                      ) : props.flag === "office__manager_office" ? (
+                        <th className="min-w-150px">매니저명</th>
                       ) : null}
 
                       <th className="min-w-25px n_empty"></th>
@@ -840,6 +932,8 @@ const AcademyList = (props) => {
                           <td>{idx + 1}</td>
                         ) : props.flag === "Study_weekly_plan" ? (
                           <td>{idx + 1}</td>
+                        ) : props.flag === "office__manager_office" ? (
+                          <td>{idx + 1}</td>
                         ) : null}
 
                         <td className="n_empty"></td>
@@ -864,6 +958,10 @@ const AcademyList = (props) => {
                                     {data.name}
                                   </a>
                                 ) : props.flag === "Study_weekly_plan" ? (
+                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                    {data.realName}
+                                  </a>
+                                ) : props.flag === "office__manager_office" ? (
                                   <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
                                     {data.realName}
                                   </a>
@@ -894,6 +992,10 @@ const AcademyList = (props) => {
                                 ) : props.flag === "Study_weekly_plan" ? (
                                   <span className="text-muted fw-semibold d-block fs-7">
                                     {data.school}
+                                  </span>
+                                ) : props.flag === "office__manager_office" ? (
+                                  <span className="text-muted fw-semibold d-block fs-7">
+                                    {data.name}
                                   </span>
                                 ) : null}
                               </div>
