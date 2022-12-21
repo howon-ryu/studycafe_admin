@@ -23,6 +23,7 @@ function App() {
   const [value, setValue] = useState(265);
   let varrrr = "1";
   const [login_flag, setLoginFlag] = useState(true);
+  const [roleid, setroleid] = useState(true);
   const [cookies, setCookie, removeCookie] = useCookies({
     cookie: {
       data: {
@@ -32,22 +33,21 @@ function App() {
       },
     },
   });
-  let roleid = "10";
+
   useEffect(() => {
     console.log("1");
     console.log(cookies);
-    if (cookies != undefined) {
+    if (cookies.cookie != undefined) {
       console.log("ck:", cookies);
       console.log("cok:", cookies.cookie.data);
-      roleid = cookies.cookie.data.role.id;
+      setroleid(cookies.cookie.data.role.id);
+      console.log(roleid);
       console.log("riririririri", roleid);
     }
-    if (cookies.cookie.data == undefined) {
-      cookies.cookie.data.role.id = "20";
-    }
+    console.log("roleid", roleid);
     //window.location.reload();
   }, []);
-  console.log(cookies);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -58,28 +58,29 @@ function App() {
               to="/Office__head_office"
               idx="1"
               flag="1"
-              roleid={cookies.cookie.data.role.id || "10"}
+              // roleid={cookies.cookie.data.role.id || "10"}
+              roleid={roleid}
             />
             <SidebarMenuItem
               title="원장관리"
               to="/Office__branch_office"
               idx="2"
               flag="2"
-              roleid={cookies.cookie.data.role.id}
+              roleid={roleid}
             />
             <SidebarMenuItem
               title="매니저관리"
               to="/Office__manager_office"
               idx="3"
               flag="3"
-              roleid={cookies.cookie.data.role.id}
+              roleid={roleid}
             />
             <SidebarMenuItem
               title="지점관리"
               to="/Office__branch_info"
               idx="4"
               flag="3.5"
-              roleid={cookies.cookie.data.role.id}
+              roleid={roleid}
             />
           </SidebarMenu>
           <SidebarMenu title="학생관리" icon_num="2">
@@ -101,7 +102,7 @@ function App() {
           <Route
             exact
             path="/"
-            element={<Office__head_office width={value} />}
+            element={<Login width={0} setLoginFlag={setLoginFlag} />}
           />
           <Route exact path="/registration" element={<Registration />} />
           <Route exact path="/main" element={<Main width={value} />} />

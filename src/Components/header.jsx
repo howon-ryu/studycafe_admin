@@ -21,9 +21,9 @@ const Header = (props) => {
   let varrrrrr = 1;
   useEffect(() => {
     console.log(window.location.pathname);
-    // if (window.location.pathname == "/") {
-    //   setlogin(false);
-    // }
+    if (window.location.pathname == "/") {
+      setlogin(false);
+    }
     if (window.location.pathname == "/login") {
       setlogin(false);
     }

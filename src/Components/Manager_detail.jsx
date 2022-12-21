@@ -14,7 +14,10 @@ const Manager_detail = (props) => {
     id: "",
     name: "",
     status: "",
-
+    brand: {
+      id: "",
+      name: "",
+    },
     targetUser: {
       id: "",
       realName: "",
@@ -44,6 +47,10 @@ const Manager_detail = (props) => {
           email: "",
           phone: "",
           address: "",
+        },
+        brand: {
+          id: "",
+          name: "",
         },
         targetUser: {
           id: "",
@@ -249,11 +256,20 @@ const Manager_detail = (props) => {
                       className="form-select form-select-solid"
                       defaultValue=""
                     >
-                      {brands.map((item, idx) => (
+                      {/* {brands.map((item, idx) => (
                         <option key={idx} value={item.id}>
                           {item.name}
                         </option>
-                      ))}
+                      ))} */}
+
+                      <option value={data.brand.id}>{data.brand.name}</option>
+                      {brands.map((item, idx) =>
+                        item.name != data.brand.name ? (
+                          <option key={idx} value={item.id}>
+                            {item.name}
+                          </option>
+                        ) : null
+                      )}
                     </select>
                   )}
                 </div>
