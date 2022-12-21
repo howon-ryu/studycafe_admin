@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useCookies } from "react-cookie";
+import { click } from "@testing-library/user-event/dist/click";
 import { css } from "@emotion/react";
 import {
   buildEntryKey,
@@ -12,9 +14,40 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 
 const AcademyList = (props) => {
   const [isCheck, setCheck] = useState("2");
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const [ttext, setttext] = useState("모든학원본사");
   let [data, setdata] = useState([]);
+  // const [event2, setevent2] = useState({
+  //   target: {
+  //     0: { value: cookies.cookie.data.brand.id },
+  //     1: { value: cookies.cookie.data.id }, //owner
+  //     2: { value: cookies.cookie.data.branch.id }, // branch
+  //     3: { value: cookies.cookie.data.room.id }, //room
+  //     4: { value: cookies.cookie.data.groupList }, //group
+  //     5: { value: cookies.cookie.data.status }, //status
+  //   },
+  // });
+  // const [event2, setevent2] = useState({
+  //   target: {
+  //     0: null,
+  //     1: null, //owner
+  //     2: null, // branch
+  //     3: null, //room
+  //     4: null, //group
+  //     5: null, //status
+  //   },
+  // });
+  let event2 = {
+    target: {
+      0: "",
+      1: "", //owner
+      2: "", // branch
+      3: "", //room
+      4: "", //group
+      5: "", //status
+    },
+  };
   const [brands, setbrands] = useState([]);
   const [owners, setowners] = useState([]);
   const [branches, setbranches] = useState([]);
@@ -24,7 +57,57 @@ const AcademyList = (props) => {
   const navigate = useNavigate();
   const [clickflag, setclickflag] = useState("0");
   const [groups, setgroups] = useState([]);
+  const setuserrole = () => {
+    console.log("cookies.cookie.data.role.id", cookies.cookie.data.role.id);
+    if (cookies.cookie.data.role.id == 2) {
+      //console.log("cookies.cookie.data.role.id", cookies.cookie.data.brand.id);
+      // setevent2({
+      //   target: {
+      //     0: { value: cookies.cookie.data.brand.id }, //brand
+      //     1: null, //owner
+      //     2: null, // branch
+      //     3: null, //room
+      //     4: null, //group
+      //     5: { value: cookies.cookie.data.status }, //status
+      //   },
+      // });
+      event2 = {
+        target: {
+          0: { value: cookies.cookie.data.brand.id }, //brand
+          1: "", //owner
+          2: "", // branch
+          3: "", //room
+          4: "", //group
+          5: "", //status
+        },
+      };
+    } else if (cookies.cookie.data.role.id == 3) {
+      event2 = {
+        target: {
+          0: { value: cookies.cookie.data.brand.id }, //brand
+          1: { value: cookies.cookie.data.id }, //owner
+          2: "", // branch
+          3: "", //room
+          4: "", //group
+          5: "", //status
+        },
+      };
+    } else if (cookies.cookie.data.role.id == 4) {
+      event2 = {
+        target: {
+          0: { value: cookies.cookie.data.brand.id }, //brand
+          1: { value: cookies.cookie.data.id }, //owner
+          2: "", // branch
+          3: "", //room
+          4: "", //group
+          5: "", //status
+        },
+      };
+    }
+    console.log("event2_init", event2);
+  };
   useEffect(() => {
+    setuserrole();
     searchBrands();
     searchowner();
     searchmanager();
@@ -32,20 +115,25 @@ const AcademyList = (props) => {
     searchBranches();
     searchRooms();
     searchGroups();
+    if (cookies.cookie.data.role.id != 1) {
+      handleSubmit("1");
+    }
 
     console.log("props_arr", props);
     //console.log(owners[0].id);
     //props.setDetailNum(owners[0].id);
-
-    console.log("1");
   }, []);
+  // useEffect(() => {
+
+  //   console.log("dataeffect_da:", data);
+  //   console.log("dataeffect");
+  // }, [data]);
   useEffect(() => {
     if (props.flag == "office__head_office") {
       if (clickflag == "0") {
         if (props.flag == "office__head_office") {
           if (brands[0] != undefined) {
             props.setDetailNum(brands[0].id);
-            console.log("wpqkf", brands[0]);
           }
         }
       }
@@ -58,7 +146,6 @@ const AcademyList = (props) => {
         if (props.flag == "office__branch_office") {
           if (owners[0] != undefined) {
             props.setDetailNum(owners[0].id);
-            console.log("wpqkf", owners[0]);
           }
         }
       }
@@ -71,20 +158,18 @@ const AcademyList = (props) => {
         if (props.flag == "office__manager_office") {
           if (managers[0] != undefined) {
             props.setDetailNum(managers[0].id);
-            console.log("wpqkf", managers[0]);
           }
         }
       }
       setdata(managers);
     }
-  }, [owners]);
+  }, [managers]);
   useEffect(() => {
     if (props.flag == "student__manage_info") {
       if (clickflag == "0") {
         if (props.flag == "student__manage_info") {
           if (students[0] != undefined) {
             props.setDetailNum(students[0].id);
-            console.log("wpqkf", students[0]);
           }
         }
       }
@@ -97,7 +182,6 @@ const AcademyList = (props) => {
         if (props.flag == "office__branch_info") {
           if (branches[0] != undefined) {
             props.setDetailNum(branches[0].id);
-            console.log("wpqkf", branches[0]);
           }
         }
       }
@@ -110,7 +194,6 @@ const AcademyList = (props) => {
         if (props.flag == "Study_weekly_plan") {
           if (students[0] != undefined) {
             props.setDetailNum(students[0].id);
-            console.log("wpqkf", students[0]);
           }
         }
       }
@@ -124,7 +207,6 @@ const AcademyList = (props) => {
   //   searchBranches();
   // }, [data]);
   function setText(props) {
-    console.log("text", props);
     if (props == "") {
       setttext("모든학원본사");
     } else if (props == "사용") {
@@ -134,11 +216,10 @@ const AcademyList = (props) => {
     } else if (props == "삭제") {
       setttext("삭제된학원본사");
     }
-    console.log(ttext);
   }
   function searchBrands(props) {
     let var_status = "";
-
+    console.log("props:", props);
     if (props == undefined) {
       var_status = "";
     } else {
@@ -155,8 +236,8 @@ const AcademyList = (props) => {
       .then(function (response) {
         //setdata(response.data);
         setbrands(response.data);
-        console.log("pa:", var_status);
-        console.log("bra:", response.data);
+
+        console.log("brands:", response.data);
         console.log("성공");
       })
       .catch(function (error) {
@@ -182,8 +263,8 @@ const AcademyList = (props) => {
       .then(function (response) {
         //setdata(response.data);
         setrooms(response.data);
-        console.log("pa:", var_status);
-        console.log("bra:", response.data);
+
+        console.log("rooms:", response.data);
         console.log("성공");
       })
       .catch(function (error) {
@@ -209,8 +290,8 @@ const AcademyList = (props) => {
       .then(function (response) {
         //setdata(response.data);
         setgroups(response.data);
-        console.log("griyooooooooooooooooooooooooooooooooooooo:", var_status);
-        console.log("bra:", response.data);
+
+        console.log("group:", response.data);
         console.log("성공");
       })
       .catch(function (error) {
@@ -237,6 +318,7 @@ const AcademyList = (props) => {
       var_groupid = props.target[4].value;
       var_status = props.target[5].value;
     }
+
     axios
       .get(url_set, {
         params: {
@@ -263,8 +345,6 @@ const AcademyList = (props) => {
     let var_status = "";
     let var_brandid = "";
     if (props != undefined) {
-      console.log("props!!!!!!!!!!:", props);
-      console.log("propsowner!!!!!!!!!!:", props.target[0].value);
       var_status = props.target[5].value;
       var_brandid = props.target[0].value;
     }
@@ -283,7 +363,6 @@ const AcademyList = (props) => {
 
         setowners(response.data);
 
-        console.log(response.data[0].id);
         console.log("owners:", response.data);
       })
       .catch(function (error) {
@@ -293,11 +372,11 @@ const AcademyList = (props) => {
   function searchmanager(props) {
     let var_status = "";
     let var_brandid = "";
+    let var_ownerid = "";
     if (props != undefined) {
-      console.log("props!!!!!!!!!!:", props);
-      console.log("propsowner!!!!!!!!!!:", props.target[0].value);
       var_status = props.target[5].value;
       var_brandid = props.target[0].value;
+      var_ownerid = props.target[1].value;
     }
 
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
@@ -307,6 +386,7 @@ const AcademyList = (props) => {
         params: {
           status: var_status,
           brandId: var_brandid,
+          ownerId: var_ownerid,
         },
       })
       .then(function (response) {
@@ -314,7 +394,6 @@ const AcademyList = (props) => {
 
         setmanagers(response.data);
 
-        console.log(response.data[0].id);
         console.log("managers:", response.data);
       })
       .catch(function (error) {
@@ -322,18 +401,21 @@ const AcademyList = (props) => {
       });
   }
   function searchBranches(props) {
+    console.log("b_props", props);
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "branches";
     let var_status = "";
     let var_brandid = "";
     let var_ownerid = "";
     if (props != undefined) {
-      console.log("props!!!!!!!!!!:", props);
-      console.log("propsbranch!!!!!!!!!!:", props.target[5].value);
       var_status = props.target[5].value;
       var_brandid = props.target[0].value;
       var_ownerid = props.target[1].value;
     }
+    console.log(url_set);
+    console.log(var_status);
+    console.log(var_brandid);
+    console.log(var_ownerid);
     axios
       .get(url_set, {
         params: {
@@ -355,14 +437,12 @@ const AcademyList = (props) => {
       });
   }
   function addarray() {
-    console.log("click");
     // 정수 0은 undefined 혹은 공백 처리 되어 문자 "0" 사용
     props.setDetailNum("0");
     // props.setheadnum("0");
   }
 
   function listclick(value) {
-    console.log("cliL:", value);
     setclickflag("1");
     props.setDetailNum(value);
     navigate({
@@ -372,6 +452,35 @@ const AcademyList = (props) => {
     });
     // props.setheadnum(e);
   }
+  const handleSubmit = (event) => {
+    console.log("event:", event);
+    if (event != "1") {
+      event.preventDefault();
+      console.log("tat:", event);
+      console.log(event.target[0].value);
+      console.log(event.target[1].value);
+      console.log(event.target[2].value);
+      console.log(event.target[3].value);
+      console.log(event.target[4].value);
+      console.log(event.target[5].value);
+      setText(event.target[5].value);
+      searchBrands(event);
+      searchowner(event);
+      searchmanager(event);
+      searchBranches(event);
+      searchStudent(event);
+      setCheck("2");
+    } else {
+      console.log("event2:", event2);
+      console.log(cookies);
+      searchBrands(event2);
+      searchowner(event2);
+      searchmanager(event2);
+      searchBranches(event2);
+      searchStudent(event2);
+      console.log("ㅋㅋㅋㅋ:", event2);
+    }
+  };
 
   return (
     <div className="arraylist">
@@ -439,11 +548,8 @@ const AcademyList = (props) => {
                   onClick={() => {
                     if (isCheck == "2") {
                       setCheck("1");
-                      console.log("is:", isCheck);
                     } else {
-                      console.log("2");
                       setCheck("2");
-                      console.log(isCheck);
                     }
                   }}
                 >
@@ -502,17 +608,18 @@ const AcademyList = (props) => {
 
                 {isCheck == "1" ? (
                   <form
-                    onSubmit={function (event) {
-                      event.preventDefault();
-                      console.log("tat:", event);
-                      setText(event.target[5].value);
-                      searchBrands(event);
-                      searchowner(event);
-                      searchmanager(event);
-                      searchBranches(event);
-                      searchStudent(event);
-                      setCheck("2");
-                    }}
+                    // onSubmit={function (event) {
+                    //   event.preventDefault();
+                    //   console.log("tat:", event);
+                    //   setText(event.target[5].value);
+                    //   searchBrands(event);
+                    //   searchowner(event);
+                    //   searchmanager(event);
+                    //   searchBranches(event);
+                    //   searchStudent(event);
+                    //   setCheck("2");
+                    // }}
+                    onSubmit={handleSubmit}
                   >
                     <div
                       className="menu menu-sub menu-sub-dropdown  menu-sub_arr  w-250px w-md-300px show"
@@ -812,7 +919,6 @@ const AcademyList = (props) => {
                             type="submit"
                             className="btn btn-sm btn-primary"
                             data-kt-menu-dismiss="true"
-                            // onClick={() => setCheck("2")}
                           >
                             적용
                           </button>

@@ -6,8 +6,11 @@ import axios from "axios";
 import { click } from "@testing-library/user-event/dist/click";
 import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
+import { useCookies } from "react-cookie";
+
 const Manager_detail = (props) => {
   const reset = useRef();
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [brands, setbrands] = useState([]);
   const [owners, setowners] = useState([]);
   const [data, setdata] = useState({
@@ -234,81 +237,199 @@ const Manager_detail = (props) => {
                   <label className="required fs-5 fw-semibold mb-2">
                     본사선택
                   </label>
-                  {props.detail_num == 0 ? (
-                    <select
-                      name="position"
-                      data-control="select2"
-                      data-placeholder="Select a position..."
-                      className="form-select form-select-solid"
-                      defaultValue=""
-                    >
-                      {brands.map((item, idx) => (
-                        <option key={idx} value={item.id}>
-                          {item.name}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <select
-                      name="position"
-                      data-control="select2"
-                      data-placeholder="Select a position..."
-                      className="form-select form-select-solid"
-                      defaultValue=""
-                    >
-                      {/* {brands.map((item, idx) => (
-                        <option key={idx} value={item.id}>
-                          {item.name}
-                        </option>
-                      ))} */}
-
-                      <option value={data.brand.id}>{data.brand.name}</option>
-                      {brands.map((item, idx) =>
-                        item.name != data.brand.name ? (
-                          <option key={idx} value={item.id}>
-                            {item.name}
+                  {cookies.cookie.data.role.id == 1 ? (
+                    <div>
+                      {props.detail_num == 0 ? (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                        >
+                          {brands.map((item, idx) => (
+                            <option key={idx} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                        >
+                          <option value={data.brand.id}>
+                            {data.brand.name}
                           </option>
-                        ) : null
+                          {brands.map((item, idx) =>
+                            item.name != data.brand.name ? (
+                              <option key={idx} value={item.id}>
+                                {item.name}
+                              </option>
+                            ) : null
+                          )}
+                        </select>
                       )}
-                    </select>
+                    </div>
+                  ) : (
+                    <div>
+                      {props.detail_num == 0 ? (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                          disabled
+                        >
+                          {brands.map((item, idx) => (
+                            <option key={idx} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                          disabled
+                        >
+                          <option value={data.brand.id}>
+                            {data.brand.name}
+                          </option>
+                          {brands.map((item, idx) =>
+                            item.name != data.brand.name ? (
+                              <option key={idx} value={item.id}>
+                                {item.name}
+                              </option>
+                            ) : null
+                          )}
+                        </select>
+                      )}
+                    </div>
                   )}
                 </div>
                 <div className="col-md-6 fv-row">
                   <label className="fs-5 fw-semibold mb-2">원장선택</label>
-
-                  {props.detail_num == 0 ? (
-                    <select
-                      name="position"
-                      data-control="select2"
-                      data-placeholder="Select a position..."
-                      className="form-select form-select-solid"
-                      defaultValue=""
-                    >
-                      {owners.map((item, idx) => (
-                        <option key={idx} value={item.id}>
-                          {item.realName}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <select
-                      name="position"
-                      data-control="select2"
-                      data-placeholder="Select a position..."
-                      className="form-select form-select-solid"
-                      defaultValue=""
-                    >
-                      <option value={data.targetUser.id || data.id}>
-                        {data.targetUser.realName || data.realName}
-                      </option>
-                      {owners.map((item, idx) =>
-                        item.realName != data.targetUser.realName ? (
-                          <option key={idx} value={item.id}>
-                            {item.realName}
+                  {cookies.cookie.data.role.id == 1 ? (
+                    <div>
+                      {props.detail_num == 0 ? (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                        >
+                          {owners.map((item, idx) => (
+                            <option key={idx} value={item.id}>
+                              {item.realName}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                        >
+                          <option value={data.targetUser.id || data.id}>
+                            {data.targetUser.realName || data.realName}
                           </option>
-                        ) : null
+                          {owners.map((item, idx) =>
+                            item.realName != data.targetUser.realName ? (
+                              <option key={idx} value={item.id}>
+                                {item.realName}
+                              </option>
+                            ) : null
+                          )}
+                        </select>
                       )}
-                    </select>
+                    </div>
+                  ) : cookies.cookie.data.role.id == 2 ? (
+                    <div>
+                      {props.detail_num == 0 ? (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                        >
+                          {owners.map((item, idx) => (
+                            <option key={idx} value={item.id}>
+                              {item.realName}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                        >
+                          <option value={data.targetUser.id || data.id}>
+                            {data.targetUser.realName || data.realName}
+                          </option>
+                          {owners.map((item, idx) =>
+                            item.realName != data.targetUser.realName ? (
+                              <option key={idx} value={item.id}>
+                                {item.realName}
+                              </option>
+                            ) : null
+                          )}
+                        </select>
+                      )}
+                    </div>
+                  ) : (
+                    <div>
+                      {props.detail_num == 0 ? (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                          disabled
+                        >
+                          {owners.map((item, idx) => (
+                            <option key={idx} value={item.id}>
+                              {item.realName}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue=""
+                          disabled
+                        >
+                          <option value={data.targetUser.id || data.id}>
+                            {data.targetUser.realName || data.realName}
+                          </option>
+                          {owners.map((item, idx) =>
+                            item.realName != data.targetUser.realName ? (
+                              <option key={idx} value={item.id}>
+                                {item.realName}
+                              </option>
+                            ) : null
+                          )}
+                        </select>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
