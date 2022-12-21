@@ -108,15 +108,17 @@ const AcademyList = (props) => {
   };
   useEffect(() => {
     setuserrole();
-    searchBrands();
-    searchowner();
-    searchmanager();
-    searchStudent();
-    searchBranches();
-    searchRooms();
-    searchGroups();
+    searchBrands(event2);
+    searchowner(event2);
+    searchmanager(event2);
+    searchStudent(event2);
+    searchBranches(event2);
+    searchRooms(event2);
+    searchGroups(event2);
     if (cookies.cookie.data.role.id != 1) {
+      console.log("llllklklklkl");
       handleSubmit("1");
+      console.log("llllklklklkl");
     }
 
     console.log("props_arr", props);
@@ -398,7 +400,11 @@ const AcademyList = (props) => {
         //setdata(response.data);
 
         setmanagers(response.data);
-
+        console.log("flag");
+        console.log(props);
+        console.log(var_status);
+        console.log(var_brandid);
+        console.log(var_ownerid);
         console.log("managers:", response.data);
       })
       .catch(function (error) {
@@ -636,96 +642,249 @@ const AcademyList = (props) => {
                       </div>
                       <div className="separator border-gray-200"></div>
                       <div className="px-7 py-5">
-                        {props.flag == "office__head_office" ? (
-                          <div className="mb-10" hidden>
-                            <label>브랜드</label>
-                            <div>
-                              <select
-                                className="form-select form-select-solid"
-                                data-kt-select2="true"
-                                data-dropdown-parent="#kt_menu_631f0553006ad"
-                                data-allow-clear="true"
-                              >
-                                <option value="" selected="selected">
-                                  ALL
-                                </option>
-                                {brands.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.name}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
+                        {cookies.cookie.data.role.id == 1 ? (
+                          <div>
+                            {props.flag == "office__head_office" ? (
+                              <div className="mb-10" hidden>
+                                <label>브랜드</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option value="" selected="selected">
+                                      ALL
+                                    </option>
+                                    {brands.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="mb-10">
+                                <label>브랜드</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option value="" selected="selected">
+                                      ALL
+                                    </option>
+                                    {brands.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         ) : (
-                          <div className="mb-10">
-                            <label>브랜드</label>
-                            <div>
-                              <select
-                                className="form-select form-select-solid"
-                                data-kt-select2="true"
-                                data-dropdown-parent="#kt_menu_631f0553006ad"
-                                data-allow-clear="true"
-                              >
-                                <option value="" selected="selected">
-                                  ALL
-                                </option>
-                                {brands.map((item, idx) => (
+                          <div>
+                            {props.flag == "office__head_office" ? (
+                              <div className="mb-10" hidden>
+                                <label>브랜드</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option value="" selected="selected">
+                                      ALL
+                                    </option>
+                                    {brands.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="mb-10">
+                                <label>브랜드</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                    disabled
+                                  >
+                                    <option
+                                      value={cookies.cookie.data.brand.id}
+                                      selected="selected"
+                                    >
+                                      {cookies.cookie.data.brand.name}
+                                    </option>
+                                    {/* {brands.map((item, idx) => (
+                                    <option key={idx} value={item.id}>
+                                      {item.name}
+                                    </option>
+                                  ))} */}
+                                  </select>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        {cookies.cookie.data.role.id == 1 ? (
+                          <div>
+                            {props.flag == "office__branch_info" ? (
+                              <div className="mb-10">
+                                <label>원장</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option value="" selected="selected">
+                                      ALL
+                                    </option>
+                                    {owners.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.realName}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="mb-10" hidden>
+                                <label>원장</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option value="" selected="selected">
+                                      ALL
+                                    </option>
+                                    {owners.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.realName}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ) : cookies.cookie.data.role.id == 2 ? (
+                          <div>
+                            {props.flag == "office__branch_info" ? (
+                              <div className="mb-10">
+                                <label>원장</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option value="" selected="selected">
+                                      ALL
+                                    </option>
+                                    {owners.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.realName}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="mb-10" hidden>
+                                <label>원장</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option value="" selected="selected">
+                                      ALL
+                                    </option>
+                                    {owners.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.realName}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div>
+                            {props.flag == "office__branch_info" ? (
+                              <div className="mb-10">
+                                <label>원장</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option value="" selected="selected">
+                                      ALL
+                                    </option>
+                                    {owners.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.realName}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="mb-10" hidden>
+                                <label>원장</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option
+                                      value={cookies.cookie.data.id}
+                                      selected="selected"
+                                    >
+                                      {cookies.cookie.data.id}
+                                    </option>
+                                    {/* {owners.map((item, idx) => (
                                   <option key={idx} value={item.id}>
-                                    {item.name}
+                                    {item.realName}
                                   </option>
-                                ))}
-                              </select>
-                            </div>
+                                ))} */}
+                                  </select>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         )}
 
-                        {props.flag == "office__branch_info" ? (
-                          <div className="mb-10">
-                            <label>원장</label>
-                            <div>
-                              <select
-                                className="form-select form-select-solid"
-                                data-kt-select2="true"
-                                data-dropdown-parent="#kt_menu_631f0553006ad"
-                                data-allow-clear="true"
-                              >
-                                <option value="" selected="selected">
-                                  ALL
-                                </option>
-                                {owners.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.realName}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="mb-10" hidden>
-                            <label>원장</label>
-                            <div>
-                              <select
-                                className="form-select form-select-solid"
-                                data-kt-select2="true"
-                                data-dropdown-parent="#kt_menu_631f0553006ad"
-                                data-allow-clear="true"
-                              >
-                                <option value="" selected="selected">
-                                  ALL
-                                </option>
-                                {owners.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.realName}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </div>
-                        )}
                         {props.flag == "office__manager_office" ? (
                           <div className="mb-10">
-                            <label>원장</label>
+                            <label>매니저</label>
                             <div>
                               <select
                                 className="form-select form-select-solid"
