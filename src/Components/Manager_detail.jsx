@@ -62,8 +62,9 @@ const Manager_detail = (props) => {
       });
       reset.current.click();
     } else {
+      console.log("spec");
       detail_num = props.detail_num;
-      spec_branch_Api();
+      spec_manager_Api();
       console.log(detail_num);
     }
   }, [props]);
@@ -93,7 +94,7 @@ const Manager_detail = (props) => {
         console.log("실패");
       });
   }
-  function spec_branch_Api() {
+  function spec_manager_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users/" + detail_num;
     console.log("url@@@@@@@@@@@@:", url_set);

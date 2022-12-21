@@ -300,7 +300,7 @@ const AcademyList = (props) => {
   }
   function searchStudent(props) {
     // 나중에 branch 맞춰줘야함
-
+    console.log("ppp", props);
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users/students";
     let var_status = "";
@@ -318,7 +318,12 @@ const AcademyList = (props) => {
       var_groupid = props.target[4].value;
       var_status = props.target[5].value;
     }
-
+    console.log("var_brandid", var_brandid);
+    console.log("var_branchid", var_branchid);
+    console.log("var_roomid", var_roomid);
+    console.log("var_groupid", var_groupid);
+    console.log("var_status", var_status);
+    console.log(url_set);
     axios
       .get(url_set, {
         params: {

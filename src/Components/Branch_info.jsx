@@ -12,8 +12,10 @@ import styled from "styled-components";
 import Modal_view from "./Modal_view";
 import "../css/branch_info.css";
 import { postGroup, postRoom } from "../remote/student/branch_info_group_room";
+import { useCookies } from "react-cookie";
 const Branch_info = (props) => {
   const reset = useRef();
+  const [cookies, setCookie, removeCookie] = useCookies();
   let flag = 1;
   const [flag_act, setact] = useState("추가");
   const [flag_one, setflagone] = useState("1");
@@ -737,80 +739,200 @@ const Branch_info = (props) => {
                     <div className="row mb-5">
                       <div className="col-md-6 fv-row input_50">
                         <label className="required fs-5 fw-semibold mb-2">
-                          본사선택
+                          본사
                         </label>
-                        {props.detail_num == 0 ? (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.brand.name}
-                          >
-                            {brands.map((item, idx) => (
-                              <option key={idx} value={item.id}>
-                                {item.name}
-                              </option>
-                            ))}
-                          </select>
+                        {cookies.cookie.data.role.id == 1 ? (
+                          <div>
+                            {props.detail_num == 0 ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.name}
+                              >
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.name}
+                              >
+                                <option value={data.brand.id}>
+                                  {data.brand.name}
+                                </option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
                         ) : (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.brand.name}
-                          >
-                            <option value={data.brand.id}>
-                              {data.brand.name}
-                            </option>
-                            {brands.map((item, idx) => (
-                              <option key={idx} value={item.id}>
-                                {item.name}
-                              </option>
-                            ))}
-                          </select>
+                          <div>
+                            {props.detail_num == 0 ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.name}
+                                disabled
+                              >
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.name}
+                                disabled
+                              >
+                                <option value={data.brand.id}>
+                                  {data.brand.name}
+                                </option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
                         )}
                       </div>
                       <div className="col-md-6 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">
-                          원장선택
-                        </label>
-
-                        {props.detail_num == 0 ? (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.owner.id}
-                          >
-                            {owners.map((item, idx) => (
-                              <option key={idx} value={item.id}>
-                                {item.realName}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.owner.id}
-                          >
-                            <option value={data.owner.id}>
-                              {data.owner.realName}({data.owner.username})
-                            </option>
-                            {owners.map((item, idx) =>
-                              item.realName != data.owner.realName ? (
-                                <option key={idx} value={item.id}>
-                                  {item.realName}({item.username} )
-                                  {/* {item.id} */}
+                        <label className="fs-5 fw-semibold mb-2">원장</label>
+                        {cookies.cookie.data.role.id == 1 ? (
+                          <div>
+                            {props.detail_num == 0 ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                              >
+                                {owners.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                              >
+                                <option value={data.owner.id}>
+                                  {data.owner.realName}({data.owner.username})
                                 </option>
-                              ) : null
+                                {owners.map((item, idx) =>
+                                  item.realName != data.owner.realName ? (
+                                    <option key={idx} value={item.id}>
+                                      {item.realName}({item.username} )
+                                      {/* {item.id} */}
+                                    </option>
+                                  ) : null
+                                )}
+                              </select>
                             )}
-                          </select>
+                          </div>
+                        ) : cookies.cookie.data.role.id == 2 ? (
+                          <div>
+                            {props.detail_num == 0 ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                              >
+                                {owners.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                              >
+                                <option value={data.owner.id}>
+                                  {data.owner.realName}({data.owner.username})
+                                </option>
+                                {owners.map((item, idx) =>
+                                  item.realName != data.owner.realName ? (
+                                    <option key={idx} value={item.id}>
+                                      {item.realName}({item.username} )
+                                      {/* {item.id} */}
+                                    </option>
+                                  ) : null
+                                )}
+                              </select>
+                            )}
+                          </div>
+                        ) : (
+                          <div>
+                            {props.detail_num == 0 ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                                disabled
+                              >
+                                {owners.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                                disabled
+                              >
+                                <option value={data.owner.id}>
+                                  {data.owner.realName}({data.owner.username})
+                                </option>
+                                {owners.map((item, idx) =>
+                                  item.realName != data.owner.realName ? (
+                                    <option key={idx} value={item.id}>
+                                      {item.realName}({item.username} )
+                                      {/* {item.id} */}
+                                    </option>
+                                  ) : null
+                                )}
+                              </select>
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>

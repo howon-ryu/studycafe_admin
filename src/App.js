@@ -87,7 +87,7 @@ function App() {
             <SidebarMenuItem
               title="학생정보"
               to="/Student__manage_info"
-              flag="3.5"
+              flag="4"
               roleid={roleid}
             />
           </SidebarMenu>
@@ -95,19 +95,19 @@ function App() {
             <SidebarMenuItem
               title="학습계획"
               to="/Study_weekly_plan"
-              flag="3.5"
+              flag="4"
               roleid={roleid}
             />
             <SidebarMenuItem
               title="학습현황"
               to="/Study_day_plan"
-              flag="3.5"
+              flag="4"
               roleid={roleid}
             />
             <SidebarMenuItem
               title="주간레포트"
               to="/Study_weekly_report"
-              flag="3.5"
+              flag="4"
               roleid={roleid}
             />
           </SidebarMenu>
