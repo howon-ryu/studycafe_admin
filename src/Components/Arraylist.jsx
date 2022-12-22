@@ -713,8 +713,10 @@ const AcademyList = (props) => {
       });
   }
   function addarray() {
+    console.log(props.flag);
     // 정수 0은 undefined 혹은 공백 처리 되어 문자 "0" 사용
     props.setDetailNum("0");
+
     // props.setheadnum("0");
   }
 

@@ -153,6 +153,7 @@ const Day_report = (props) => {
                     href="#"
                     className="btn btn-primary btn__slim btn_css"
                     id="kt_invoice_submit_button"
+                    hidden
                   >
                     <span className="svg-icon svg-icon-3">
                       <svg
@@ -230,7 +231,13 @@ const Day_report = (props) => {
                           <td className="text-gray-800 fw-bold">
                             {data.studyStartTime}
                           </td>
-                          <td>{data.user.groupList[0].name}</td>
+                          {/* <td>{data.user.groupList[0].name}</td> */}
+                          {data.user.groupList[0] == undefined ? (
+                            <td></td>
+                          ) : (
+                            <td>{data.user.groupList[0].name}</td>
+                          )}
+
                           <td className="text-gray-800 fw-bold">
                             {data.user.room.name}
                           </td>

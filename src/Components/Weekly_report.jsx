@@ -245,7 +245,7 @@ const Weekly_report = (props) => {
                       type="date"
                       name="date"
                       id="example-date"
-                      defaultValue=""
+                      defaultValue="2022-11-14"
                       onChange={setsstart}
                     />
                   </div>
@@ -261,7 +261,7 @@ const Weekly_report = (props) => {
                       type="date"
                       name="date"
                       id="example-date"
-                      defaultValue=""
+                      defaultValue="2022-11-20"
                       placeholder="w"
                       onChange={seteend}
                     />
@@ -271,9 +271,12 @@ const Weekly_report = (props) => {
 
               <div className="card-body pt-0">
                 <div className="d-flex flex-column gap-6 mt-4">
-                  <div className="d-flex justify-content-between stdy_w_rpt_top">
-                    <ul className="nav mb-2 mb-sm-0 stdy_w__top_input">
-                      <li className="nav-item me-10">
+                  <div
+                    className="d-flex justify-content-between stdy_w_rpt_top"
+                    hidden
+                  >
+                    <ul className="nav mb-2 mb-sm-0 stdy_w__top_input" hidden>
+                      <li className="nav-item me-10" hidden>
                         <button
                           type="button"
                           className="btn btn-light-primary btn__slim"
@@ -338,7 +341,7 @@ const Weekly_report = (props) => {
                       </li>
                     </ul>
 
-                    <div className="card-toolbar">
+                    <div className="card-toolbar" hidden>
                       <div className="stdy_w_rpt_radio">
                         <div className="form-check form-check-custom form-check-solid me-5 check__use">
                           <input
