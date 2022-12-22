@@ -5,7 +5,7 @@ function Modal_view({ onClickToggleModal_view, children }) {
   return (
     <ModalContainer>
       <DialogBox>
-        <>{children}</>
+        <div>{children}</div>
       </DialogBox>
       <Backdrop
         onClick={(e) => {
@@ -31,10 +31,12 @@ const ModalContainer = styled.div`
 `;
 
 const DialogBox = styled.div`
-  height: 330px;
+  height: 280px;
+  width: 550px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  // flex-direction: column;
+  //align-items: center;
+  padding-top: 2%;
   border: none;
   border-radius: 3px;
   box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);

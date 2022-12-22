@@ -18,6 +18,7 @@ const Header = (props) => {
   console.log(props);
   const [login_check, setlogin] = useState(true);
   const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [header_realName, sethearname] = useState("시스템 관리자");
   let varrrrrr = 1;
   useEffect(() => {
     console.log(window.location.pathname);
@@ -31,6 +32,11 @@ const Header = (props) => {
       setlogin(false);
     }
   }, [props]);
+  useEffect(() => {
+    if (cookies.cookie != undefined) {
+      sethearname(cookies.cookie.data.realName);
+    }
+  }, []);
   let widthh = props.width;
 
   if (login_check) {
@@ -286,7 +292,9 @@ const Header = (props) => {
                 >
                   <img src={user_empty} alt="user" />
                   <span className="fw-bold d-flex align-items-center fs-5">
-                    시스템관리자
+                    {/* 시스템관리자 */}
+
+                    {header_realName}
                   </span>
                 </div>
                 <div

@@ -87,7 +87,10 @@ const Branch_detail = (props) => {
   const handles = (e) => {
     e.preventDefalut();
   };
-
+  const [radio, setradio] = useState("사용");
+  const handleClickRadioButton = (e) => {
+    console.log(e.target.value);
+  };
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
       // alert(e.target[2].value);
@@ -166,6 +169,7 @@ const Branch_detail = (props) => {
         .then((response) => {
           console.log(response.status);
           console.log(response.data);
+          alert("저장되었습니다");
         })
         // .catch((e) => console.log('something went wrong :(', e));
         .catch((error) => {
@@ -183,7 +187,7 @@ const Branch_detail = (props) => {
       <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap ">
         <form
           onSubmit={function (event) {
-            event.preventDefault();
+            //event.preventDefault();
             handleSubmit(event);
           }}
         >
@@ -206,9 +210,7 @@ const Branch_detail = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
               <div className="row mb-5">
                 <div className="col-md-6 fv-row input_50">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    본사선택
-                  </label>
+                  <label className="required fs-5 fw-semibold mb-2">본사</label>
                   {cookies.cookie.data.role.id == 1 ? (
                     <div>
                       {props.detail_num == 0 ? (
@@ -460,7 +462,7 @@ const Branch_detail = (props) => {
                         value="사용"
                         name="choice_use"
                         id="product_tax_yes"
-                        defaultChecked="checked"
+                        defaultChecked={data.status == "사용"}
                       />
                       <label className="form-check-label" for="product_tax_yes">
                         사용
@@ -472,6 +474,7 @@ const Branch_detail = (props) => {
                         type="radio"
                         value="대기"
                         name="choice_use"
+                        defaultChecked={data.status == "대기"}
                       />
                       <label className="form-check-label" for="product_tax_no">
                         대기
@@ -483,6 +486,7 @@ const Branch_detail = (props) => {
                         type="radio"
                         defaultValue=""
                         name="choice_use"
+                        defaultChecked={data.status == "삭제"}
                       />
                       <label className="form-check-label" for="product_tax_no">
                         삭제

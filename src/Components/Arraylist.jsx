@@ -42,43 +42,41 @@ const AcademyList = (props) => {
     target: {
       0: "",
       1: "", //owner
-      2: "", // branch
-      3: "", //room
-      4: "", //group
-      5: "", //status
+      2: "", //manager
+      3: "", // branch
+      4: "", //room
+      5: "", //group
+      6: "", //status
     },
   };
   const [brands, setbrands] = useState([]);
+  const [brands2, setbrands2] = useState([]);
   const [owners, setowners] = useState([]);
+  const [owners2, setowners2] = useState([]);
   const [branches, setbranches] = useState([]);
+  const [branches2, setbranches2] = useState([]);
   const [students, setstudents] = useState([]);
+  const [students2, setstudents2] = useState([]);
   const [managers, setmanagers] = useState([]);
+  const [managers2, setmanagers2] = useState([]);
   const [rooms, setrooms] = useState([]);
+  const [rooms2, setrooms2] = useState([]);
   const navigate = useNavigate();
   const [clickflag, setclickflag] = useState("0");
   const [groups, setgroups] = useState([]);
+  const [groups2, setgroups2] = useState([]);
   const setuserrole = () => {
     console.log("cookies.cookie.data.role.id", cookies.cookie.data.role.id);
     if (cookies.cookie.data.role.id == 2) {
-      //console.log("cookies.cookie.data.role.id", cookies.cookie.data.brand.id);
-      // setevent2({
-      //   target: {
-      //     0: { value: cookies.cookie.data.brand.id }, //brand
-      //     1: null, //owner
-      //     2: null, // branch
-      //     3: null, //room
-      //     4: null, //group
-      //     5: { value: cookies.cookie.data.status }, //status
-      //   },
-      // });
       event2 = {
         target: {
           0: { value: cookies.cookie.data.brand.id }, //brand
           1: "", //owner
-          2: "", // branch
-          3: "", //room
-          4: "", //group
-          5: "", //status
+          2: "", //manager
+          3: "", // branch
+          4: "", //room
+          5: "", //group
+          6: "", //status
         },
       };
     } else if (cookies.cookie.data.role.id == 3) {
@@ -86,10 +84,11 @@ const AcademyList = (props) => {
         target: {
           0: { value: cookies.cookie.data.brand.id }, //brand
           1: { value: cookies.cookie.data.id }, //owner
-          2: "", // branch
-          3: "", //room
-          4: "", //group
-          5: "", //status
+          2: "", //manager
+          3: "", // branch
+          4: "", //room
+          5: "", //group
+          6: "", //status
         },
       };
     } else if (cookies.cookie.data.role.id == 4) {
@@ -97,10 +96,11 @@ const AcademyList = (props) => {
         target: {
           0: { value: cookies.cookie.data.brand.id }, //brand
           1: { value: cookies.cookie.data.id }, //owner
-          2: "", // branch
-          3: "", //room
-          4: "", //group
-          5: "", //status
+          2: "", //manager
+          3: "", // branch
+          4: "", //room
+          5: "", //group
+          6: "", //status
         },
       };
     }
@@ -109,17 +109,24 @@ const AcademyList = (props) => {
   useEffect(() => {
     setuserrole();
     searchBrands(event2);
+    searchBrands_filter(event2);
     searchowner(event2);
+    searchowner_filter(event2);
     searchmanager(event2);
+    searchmanager_filter(event2);
     searchStudent(event2);
+    searchStudent_filter(event2);
     searchBranches(event2);
+    searchBranches_filter(event2);
     searchRooms(event2);
+    searchRooms_filter(event2);
     searchGroups(event2);
-    if (cookies.cookie.data.role.id != 1) {
-      console.log("llllklklklkl");
-      handleSubmit("1");
-      console.log("llllklklklkl");
-    }
+    searchGroups_filter(event2);
+    // if (cookies.cookie.data.role.id != 1) {
+    //   console.log("llllklklklkl");
+    //   handleSubmit("1");
+    //   console.log("llllklklklkl");
+    // }
 
     console.log("props_arr", props);
     //console.log(owners[0].id);
@@ -136,6 +143,9 @@ const AcademyList = (props) => {
         if (props.flag == "office__head_office") {
           if (brands[0] != undefined) {
             props.setDetailNum(brands[0].id);
+          } else {
+            console.log("0");
+            props.setDetailNum("0");
           }
         }
       }
@@ -144,10 +154,13 @@ const AcademyList = (props) => {
   }, [brands]);
   useEffect(() => {
     if (props.flag == "office__branch_office") {
+      console.log("1231231231", owners[0]);
       if (clickflag == "0") {
         if (props.flag == "office__branch_office") {
           if (owners[0] != undefined) {
             props.setDetailNum(owners[0].id);
+          } else {
+            props.setDetailNum("0");
           }
         }
       }
@@ -160,6 +173,8 @@ const AcademyList = (props) => {
         if (props.flag == "office__manager_office") {
           if (managers[0] != undefined) {
             props.setDetailNum(managers[0].id);
+          } else {
+            props.setDetailNum("0");
           }
         }
       }
@@ -172,6 +187,8 @@ const AcademyList = (props) => {
         if (props.flag == "student__manage_info") {
           if (students[0] != undefined) {
             props.setDetailNum(students[0].id);
+          } else {
+            props.setDetailNum("0");
           }
         }
       }
@@ -184,6 +201,8 @@ const AcademyList = (props) => {
         if (props.flag == "office__branch_info") {
           if (branches[0] != undefined) {
             props.setDetailNum(branches[0].id);
+          } else {
+            props.setDetailNum("0");
           }
         }
       }
@@ -196,6 +215,8 @@ const AcademyList = (props) => {
         if (props.flag == "Study_weekly_plan") {
           if (students[0] != undefined) {
             props.setDetailNum(students[0].id);
+          } else {
+            props.setDetailNum("0");
           }
         }
       }
@@ -225,7 +246,7 @@ const AcademyList = (props) => {
     if (props == undefined) {
       var_status = "";
     } else {
-      var_status = props.target[5].value;
+      var_status = props.target[6].value;
     }
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "brands";
@@ -246,13 +267,40 @@ const AcademyList = (props) => {
         console.log("실패");
       });
   }
+  function searchBrands_filter(props) {
+    let var_status = "";
+    console.log("props:", props);
+    if (props == undefined) {
+      var_status = "";
+    } else {
+      var_status = props.target[6].value;
+    }
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "brands";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+        setbrands2(response.data);
+
+        console.log("brands:", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   function searchRooms(props) {
     let var_status = "";
 
     if (props == undefined) {
       var_status = "";
     } else {
-      var_status = props.target[5].value;
+      var_status = props.target[6].value;
     }
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "branches/rooms";
@@ -273,13 +321,40 @@ const AcademyList = (props) => {
         console.log("실패");
       });
   }
+  function searchRooms_filter(props) {
+    let var_status = "";
+
+    if (props == undefined) {
+      var_status = "";
+    } else {
+      var_status = props.target[6].value;
+    }
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "branches/rooms";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+        setrooms2(response.data);
+
+        console.log("rooms:", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   function searchGroups(props) {
     let var_status = "";
 
     if (props == undefined) {
       var_status = "";
     } else {
-      var_status = props.target[5].value;
+      var_status = props.target[6].value;
     }
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users/groups";
@@ -292,6 +367,33 @@ const AcademyList = (props) => {
       .then(function (response) {
         //setdata(response.data);
         setgroups(response.data);
+
+        console.log("group:", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchGroups_filter(props) {
+    let var_status = "";
+
+    if (props == undefined) {
+      var_status = "";
+    } else {
+      var_status = props.target[6].value;
+    }
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/groups";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+        setgroups2(response.data);
 
         console.log("group:", response.data);
         console.log("성공");
@@ -318,7 +420,7 @@ const AcademyList = (props) => {
       var_branchid = props.target[2].value;
       var_roomid = props.target[3].value;
       var_groupid = props.target[4].value;
-      var_status = props.target[5].value;
+      var_status = props.target[6].value;
     }
     console.log("var_brandid", var_brandid);
     console.log("var_branchid", var_branchid);
@@ -348,11 +450,59 @@ const AcademyList = (props) => {
         console.log("실패");
       });
   }
+  function searchStudent_filter(props) {
+    // 나중에 branch 맞춰줘야함
+    console.log("ppp", props);
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/students";
+    let var_status = "";
+    let var_brandid = "";
+    let var_branchid = "";
+    let var_roomid = "";
+    let var_groupid = "";
+
+    if (props != undefined) {
+      console.log("asdfasdfasdf:", props);
+
+      var_brandid = props.target[0].value;
+      var_branchid = props.target[2].value;
+      var_roomid = props.target[3].value;
+      var_groupid = props.target[4].value;
+      var_status = props.target[6].value;
+    }
+    console.log("var_brandid", var_brandid);
+    console.log("var_branchid", var_branchid);
+    console.log("var_roomid", var_roomid);
+    console.log("var_groupid", var_groupid);
+    console.log("var_status", var_status);
+    console.log(url_set);
+    axios
+      .get(url_set, {
+        params: {
+          brandId: var_brandid,
+          branchId: var_branchid,
+          roomId: var_roomid,
+          groupId: var_groupid,
+          status: var_status,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setstudents2(response.data);
+
+        console.log("studens:", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   function searchowner(props) {
     let var_status = "";
     let var_brandid = "";
     if (props != undefined) {
-      var_status = props.target[5].value;
+      var_status = props.target[6].value;
       var_brandid = props.target[0].value;
     }
 
@@ -376,12 +526,40 @@ const AcademyList = (props) => {
         console.log("실패");
       });
   }
+  function searchowner_filter(props) {
+    let var_status = "";
+    let var_brandid = "";
+    if (props != undefined) {
+      var_status = props.target[6].value;
+      var_brandid = props.target[0].value;
+    }
+
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + "owners";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setowners2(response.data);
+
+        console.log("owners:", response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   function searchmanager(props) {
     let var_status = "";
     let var_brandid = "";
     let var_ownerid = "";
     if (props != undefined) {
-      var_status = props.target[5].value;
+      var_status = props.target[6].value;
       var_brandid = props.target[0].value;
       var_ownerid = props.target[1].value;
     }
@@ -411,6 +589,41 @@ const AcademyList = (props) => {
         console.log("실패");
       });
   }
+  function searchmanager_filter(props) {
+    let var_status = "";
+    let var_brandid = "";
+    let var_ownerid = "";
+    if (props != undefined) {
+      var_status = props.target[6].value;
+      var_brandid = props.target[0].value;
+      var_ownerid = props.target[1].value;
+    }
+
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + "manager";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+          ownerId: var_ownerid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setmanagers2(response.data);
+        console.log("flag");
+        console.log(props);
+        console.log(var_status);
+        console.log(var_brandid);
+        console.log(var_ownerid);
+        console.log("managers:", response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   function searchBranches(props) {
     console.log("b_props", props);
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
@@ -419,7 +632,7 @@ const AcademyList = (props) => {
     let var_brandid = "";
     let var_ownerid = "";
     if (props != undefined) {
-      var_status = props.target[5].value;
+      var_status = props.target[6].value;
       var_brandid = props.target[0].value;
       var_ownerid = props.target[1].value;
     }
@@ -439,6 +652,42 @@ const AcademyList = (props) => {
         //setdata(response.data);
 
         setbranches(response.data);
+
+        console.log("branches", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchBranches_filter(props) {
+    console.log("b_props", props);
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "branches";
+    let var_status = "";
+    let var_brandid = "";
+    let var_ownerid = "";
+    if (props != undefined) {
+      var_status = props.target[6].value;
+      var_brandid = props.target[0].value;
+      var_ownerid = props.target[1].value;
+    }
+    console.log(url_set);
+    console.log(var_status);
+    console.log(var_brandid);
+    console.log(var_ownerid);
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+          ownerId: var_ownerid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setbranches2(response.data);
 
         console.log("branches", response.data);
         console.log("성공");
@@ -468,13 +717,14 @@ const AcademyList = (props) => {
     if (event != "1") {
       event.preventDefault();
       console.log("tat:", event);
-      console.log(event.target[0].value);
+      console.log("filter_brandId:", event.target[0].value);
       console.log(event.target[1].value);
       console.log(event.target[2].value);
       console.log(event.target[3].value);
       console.log(event.target[4].value);
       console.log(event.target[5].value);
-      setText(event.target[5].value);
+      console.log("filter_status:", event.target[6].value);
+      setText(event.target[6].value);
       searchBrands(event);
       searchowner(event);
       searchmanager(event);
@@ -657,7 +907,7 @@ const AcademyList = (props) => {
                                     <option value="" selected="selected">
                                       ALL
                                     </option>
-                                    {brands.map((item, idx) => (
+                                    {brands2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.name}
                                       </option>
@@ -678,7 +928,7 @@ const AcademyList = (props) => {
                                     <option value="" selected="selected">
                                       ALL
                                     </option>
-                                    {brands.map((item, idx) => (
+                                    {brands2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.name}
                                       </option>
@@ -703,7 +953,7 @@ const AcademyList = (props) => {
                                     <option value="" selected="selected">
                                       ALL
                                     </option>
-                                    {brands.map((item, idx) => (
+                                    {brands2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.name}
                                       </option>
@@ -754,7 +1004,28 @@ const AcademyList = (props) => {
                                     <option value="" selected="selected">
                                       ALL
                                     </option>
-                                    {owners.map((item, idx) => (
+                                    {owners2.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.realName}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            ) : props.flag == "office__manager_office" ? (
+                              <div className="mb-10">
+                                <label>원장</label>
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                  >
+                                    <option value="" selected="selected">
+                                      ALL
+                                    </option>
+                                    {owners2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.realName}
                                       </option>
@@ -775,7 +1046,7 @@ const AcademyList = (props) => {
                                     <option value="" selected="selected">
                                       ALL
                                     </option>
-                                    {owners.map((item, idx) => (
+                                    {owners2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.realName}
                                       </option>
@@ -800,7 +1071,7 @@ const AcademyList = (props) => {
                                     <option value="" selected="selected">
                                       ALL
                                     </option>
-                                    {owners.map((item, idx) => (
+                                    {owners2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.realName}
                                       </option>
@@ -821,7 +1092,7 @@ const AcademyList = (props) => {
                                     <option value="" selected="selected">
                                       ALL
                                     </option>
-                                    {owners.map((item, idx) => (
+                                    {owners2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.realName}
                                       </option>
@@ -842,15 +1113,19 @@ const AcademyList = (props) => {
                                     data-kt-select2="true"
                                     data-dropdown-parent="#kt_menu_631f0553006ad"
                                     data-allow-clear="true"
+                                    disabled
                                   >
-                                    <option value="" selected="selected">
-                                      ALL
+                                    <option
+                                      value={cookies.cookie.data.id}
+                                      selected="selected"
+                                    >
+                                      {cookies.cookie.data.realName}
                                     </option>
-                                    {owners.map((item, idx) => (
+                                    {/* {owners.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.realName}
                                       </option>
-                                    ))}
+                                    ))} */}
                                   </select>
                                 </div>
                               </div>
@@ -882,8 +1157,8 @@ const AcademyList = (props) => {
                           </div>
                         )}
 
-                        {props.flag == "office__manager_office" ? (
-                          <div className="mb-10">
+                        {props.flag == "office__branch_info" ? (
+                          <div className="mb-10" hidden>
                             <label>매니저</label>
                             <div>
                               <select
@@ -895,7 +1170,7 @@ const AcademyList = (props) => {
                                 <option value="" selected="selected">
                                   ALL
                                 </option>
-                                {managers.map((item, idx) => (
+                                {managers2.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.realName}
                                   </option>
@@ -916,7 +1191,7 @@ const AcademyList = (props) => {
                                 <option value="" selected="selected">
                                   ALL
                                 </option>
-                                {managers.map((item, idx) => (
+                                {managers2.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.realName}
                                   </option>
@@ -939,7 +1214,7 @@ const AcademyList = (props) => {
                                   <option value="" selected="selected">
                                     ALL
                                   </option>
-                                  {branches.map((item, idx) => (
+                                  {branches2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
                                     </option>
@@ -959,7 +1234,7 @@ const AcademyList = (props) => {
                                   <option value="" selected="selected">
                                     ALL
                                   </option>
-                                  {rooms.map((item, idx) => (
+                                  {rooms2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
                                     </option>
@@ -979,7 +1254,7 @@ const AcademyList = (props) => {
                                   <option value="" selected="selected">
                                     ALL
                                   </option>
-                                  {groups.map((item, idx) => (
+                                  {groups2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
                                     </option>
@@ -1002,7 +1277,7 @@ const AcademyList = (props) => {
                                   <option value="" selected="selected">
                                     ALL
                                   </option>
-                                  {branches.map((item, idx) => (
+                                  {branches2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
                                     </option>
@@ -1022,7 +1297,7 @@ const AcademyList = (props) => {
                                   <option value="" selected="selected">
                                     ALL
                                   </option>
-                                  {rooms.map((item, idx) => (
+                                  {rooms2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
                                     </option>
@@ -1042,7 +1317,7 @@ const AcademyList = (props) => {
                                   <option value="" selected="selected">
                                     ALL
                                   </option>
-                                  {groups.map((item, idx) => (
+                                  {groups2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
                                     </option>

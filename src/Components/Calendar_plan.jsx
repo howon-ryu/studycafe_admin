@@ -328,12 +328,15 @@ const Calendar_plan = (props) => {
                   <form onSubmit={handleSubmit} className="w-100">
                     <div className="modal-header">
                       <h2 className="fw-bold" data-kt-calendar="title">
-                        학생 일정 추가
+                        학습 계획 추가
                       </h2>
 
                       <div
                         className="btn btn-icon btn-sm btn-active-icon-primary"
                         id="kt_modal_add_event_close"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
                       >
                         <span className="svg-icon svg-icon-1">
                           <svg
@@ -369,7 +372,7 @@ const Calendar_plan = (props) => {
 
                     <div className="fv-row mb-9">
                       <label className="fs-6 fw-semibold required mb-2">
-                        이벤트명
+                        학습항목
                       </label>
 
                       <input
@@ -380,7 +383,7 @@ const Calendar_plan = (props) => {
                         name="calendar_event_name"
                       />
                     </div>
-                    <div className="fv-row mb-9">
+                    <div className="fv-row mb-9" hidden>
                       <label className="fs-6 fw-semibold mb-2">
                         이벤트 설명
                       </label>
@@ -390,11 +393,12 @@ const Calendar_plan = (props) => {
                         id="event_description"
                         className="form-control form-control-solid"
                         placeholder=""
+                        value=""
                         name="calendar_event_description"
                       />
                     </div>
 
-                    <div className="fv-row mb-9">
+                    <div className="fv-row mb-9" hidden>
                       <label className="fs-6 fw-semibold mb-2">
                         이벤트 장소
                       </label>
@@ -404,6 +408,7 @@ const Calendar_plan = (props) => {
                         id="event_location"
                         className="form-control form-control-solid"
                         placeholder=""
+                        value=""
                         name="calendar_event_location"
                       />
                     </div>
@@ -412,7 +417,7 @@ const Calendar_plan = (props) => {
                       <div className="col">
                         <div className="fv-row mb-9">
                           <label className="fs-6 fw-semibold mb-2 required">
-                            이벤트 시작일
+                            학습 시작일
                           </label>
                           <input
                             className="form-control form-control-solid"
@@ -428,7 +433,7 @@ const Calendar_plan = (props) => {
                       <div className="col">
                         <div className="fv-row mb-9">
                           <label className="fs-6 fw-semibold mb-2 required">
-                            이벤트 종료일
+                            학습 종료일
                           </label>
                           <input
                             className="form-control form-control-solid"
@@ -445,6 +450,9 @@ const Calendar_plan = (props) => {
                         type="reset"
                         id="kt_modal_add_event_cancel"
                         className="btn btn-light me-3"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
                       >
                         취소
                       </button>
@@ -461,7 +469,7 @@ const Calendar_plan = (props) => {
                             // e.preventDefault();
                           }}
                         >
-                          제출
+                          등록
                         </span>
                         <span className="indicator-progress">
                           Please wait...
@@ -477,7 +485,12 @@ const Calendar_plan = (props) => {
             {isOpenModal_view && (
               <Modal_view onClickToggleModal_view={onClickToggleModal_view}>
                 <div className="modal-dialog modal-dialog-centered">
-                  <div className="modal-content">
+                  <div
+                    className="modal-content"
+                    style={{
+                      width: "520px",
+                    }}
+                  >
                     <div className="modal-header border-0 justify-content-end">
                       <div
                         className="btn btn-icon btn-sm btn-color-gray-400 btn-active-icon-primary me-2"
@@ -485,6 +498,7 @@ const Calendar_plan = (props) => {
                         data-bs-dismiss="click"
                         title="Edit Event"
                         id="kt_modal_view_event_edit"
+                        hidden
                       >
                         <span className="svg-icon svg-icon-2">
                           <svg
@@ -512,6 +526,7 @@ const Calendar_plan = (props) => {
                         data-bs-dismiss="click"
                         title="Delete Event"
                         id="kt_modal_view_event_delete"
+                        hidden
                       >
                         <span className="svg-icon svg-icon-2">
                           <svg
@@ -543,6 +558,9 @@ const Calendar_plan = (props) => {
                         data-bs-toggle="tooltip"
                         title="Hide Event"
                         data-bs-dismiss="modal"
+                        onClick={() => {
+                          setOpenModal_view(!isOpenModal_view);
+                        }}
                       >
                         <span className="svg-icon svg-icon-1">
                           <svg
@@ -618,6 +636,7 @@ const Calendar_plan = (props) => {
                           <div
                             className="fs-6"
                             data-kt-calendar="event_description"
+                            hidden
                           >
                             {description_text}
                           </div>
@@ -672,7 +691,10 @@ const Calendar_plan = (props) => {
                       )}
 
                       <div className="d-flex align-items-center">
-                        <span className="svg-icon svg-icon-1 svg-icon-muted me-5">
+                        <span
+                          className="svg-icon svg-icon-1 svg-icon-muted me-5"
+                          hidden
+                        >
                           <svg
                             width="24"
                             height="24"
@@ -692,7 +714,11 @@ const Calendar_plan = (props) => {
                           </svg>
                         </span>
 
-                        <div className="fs-6" data-kt-calendar="event_location">
+                        <div
+                          className="fs-6"
+                          data-kt-calendar="event_location"
+                          hidden
+                        >
                           <span className="fw-bold">이벤트 장소 </span>
                           {locaion_text}
                         </div>

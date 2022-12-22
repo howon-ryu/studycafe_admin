@@ -108,7 +108,7 @@ const Manage_student = (props) => {
         email: "",
         birthDate: "",
         gender: "",
-        
+
         profileImgUrl: "",
         address: null,
         status: "",
@@ -138,7 +138,7 @@ const Manage_student = (props) => {
     email: "",
     birthDate: "",
     gender: "",
-    
+
     profileImgUrl: "",
     address: null,
     status: "",
@@ -230,6 +230,7 @@ const Manage_student = (props) => {
         password2: e.target[7].value,
         realName: e.target[2].value,
         gender: "남자",
+        address: e.target[5].value,
         phone: e.target[3].value,
         email: e.target[4].value,
         birthDate: e.target[12].value,
@@ -276,7 +277,8 @@ const Manage_student = (props) => {
         password: e.target[6].value,
         password2: e.target[7].value,
         realName: e.target[2].value,
-
+        username: e.target[13].value,
+        address: e.target[5].value,
         phone: e.target[3].value,
         email: e.target[4].value,
         birthDate: e.target[12].value,
@@ -300,6 +302,7 @@ const Manage_student = (props) => {
         .then((response) => {
           console.log(response.status);
           console.log(response.data);
+          alert("저장되었습니다");
         })
         // .catch((e) => console.log('something went wrong :(', e));
         .catch((error) => {
@@ -359,7 +362,7 @@ const Manage_student = (props) => {
               <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
                 <form
                   onSubmit={function (event) {
-                    event.preventDefault();
+                    //event.preventDefault();
                     handleSubmit(event);
                   }}
                 >
@@ -791,12 +794,9 @@ const Manage_student = (props) => {
                         type="radio"
                         value=""
                         name="choice_use"
-                        id="product_tax_yes"
-                        checked="checked"
+                        defaultChecked={data.status == "사용"}
                       />
-                      <label className="form-check-label" for="product_tax_yes">
-                        사용
-                      </label>
+                      <label className="form-check-label">사용</label>
                     </div>
                     <div className="form-check form-check-custom form-check-solid me-5 check__hold">
                       <input
@@ -804,10 +804,9 @@ const Manage_student = (props) => {
                         type="radio"
                         value=""
                         name="choice_use"
+                        defaultChecked={data.status == "대기"}
                       />
-                      <label className="form-check-label" for="product_tax_no">
-                        대기
-                      </label>
+                      <label className="form-check-label">대기</label>
                     </div>
                     <div className="form-check form-check-custom form-check-solid check__delet">
                       <input
@@ -815,10 +814,9 @@ const Manage_student = (props) => {
                         type="radio"
                         value=""
                         name="choice_use"
+                        defaultChecked={data.status == "삭제"}
                       />
-                      <label className="form-check-label" for="product_tax_no">
-                        삭제
-                      </label>
+                      <label className="form-check-label">삭제</label>
                     </div>
                   </div>
                 </div>

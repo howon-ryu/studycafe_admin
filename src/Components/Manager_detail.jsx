@@ -62,7 +62,6 @@ const Manager_detail = (props) => {
       });
       reset.current.click();
     } else {
-      console.log("spec");
       detail_num = props.detail_num;
       spec_manager_Api();
       console.log(detail_num);
@@ -114,7 +113,7 @@ const Manager_detail = (props) => {
       });
   }
   const handles = (e) => {
-    e.preventDefalut();
+    //e.preventDefalut();
   };
 
   const handleSubmit = (e) => {
@@ -195,6 +194,7 @@ const Manager_detail = (props) => {
         .then((response) => {
           console.log(response.status);
           console.log(response.data);
+          alert("저장되었습니다");
         })
         // .catch((e) => console.log('something went wrong :(', e));
         .catch((error) => {
@@ -212,7 +212,7 @@ const Manager_detail = (props) => {
       <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap ">
         <form
           onSubmit={function (event) {
-            event.preventDefault();
+            //event.preventDefault();
             handleSubmit(event);
           }}
         >
@@ -235,9 +235,7 @@ const Manager_detail = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
               <div className="row mb-5">
                 <div className="col-md-6 fv-row input_50">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    본사선택
-                  </label>
+                  <label className="required fs-5 fw-semibold mb-2">본사</label>
                   {cookies.cookie.data.role.id == 1 ? (
                     <div>
                       {props.detail_num == 0 ? (
@@ -317,7 +315,7 @@ const Manager_detail = (props) => {
                   )}
                 </div>
                 <div className="col-md-6 fv-row">
-                  <label className="fs-5 fw-semibold mb-2">원장선택</label>
+                  <label className="fs-5 fw-semibold mb-2">원장</label>
                   {cookies.cookie.data.role.id == 1 ? (
                     <div>
                       {props.detail_num == 0 ? (
@@ -603,23 +601,20 @@ const Manager_detail = (props) => {
                         type="radio"
                         value="사용"
                         name="choice_use"
-                        id="product_tax_yes"
-                        defaultChecked="checked"
+                        defaultChecked={data.status == "사용"}
                       />
-                      <label className="form-check-label" for="product_tax_yes">
-                        사용
-                      </label>
+                      <label className="form-check-label">사용</label>
                     </div>
+
                     <div className="form-check form-check-custom form-check-solid me-5 check__hold">
                       <input
                         className="form-check-input check__hold_input"
                         type="radio"
-                        value="대기"
+                        defaultValue="대기"
                         name="choice_use"
+                        defaultChecked={data.status == "대기"}
                       />
-                      <label className="form-check-label" for="product_tax_no">
-                        대기
-                      </label>
+                      <label className="form-check-label">대기</label>
                     </div>
                     <div className="form-check form-check-custom form-check-solid check__delet use">
                       <input
@@ -627,10 +622,9 @@ const Manager_detail = (props) => {
                         type="radio"
                         defaultValue=""
                         name="choice_use"
+                        defaultChecked={data.status == "삭제"}
                       />
-                      <label className="form-check-label" for="product_tax_no">
-                        삭제
-                      </label>
+                      <label className="form-check-label">삭제</label>
                     </div>
                   </div>
                 </div>
