@@ -852,14 +852,17 @@ const Branch_info = (props) => {
                                 data-control="select2"
                                 data-placeholder="Select a position..."
                                 className="form-select form-select-solid"
-                                defaultValue={data.brand.name}
+                                defaultValue={cookies.cookie.data.brand.id}
                                 disabled
                               >
-                                {brands.map((item, idx) => (
+                                <option value={cookies.cookie.data.brand.id}>
+                                  {cookies.cookie.data.brand.name}
+                                </option>
+                                {/* {brands.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.name}
                                   </option>
-                                ))}
+                                ))} */}
                               </select>
                             ) : (
                               <select

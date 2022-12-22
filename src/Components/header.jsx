@@ -74,7 +74,7 @@ const Header = (props) => {
             id="kt_app_header_wrapper"
           >
             <div className="app-navbar flex-shrink-0">
-              <div className="app-navbar-item ms-1">
+              <div className="app-navbar-item ms-1" hidden>
                 <div className="d-flex align-items-center">
                   <select
                     className="form-select form-select-sm form-select-solid w-100px w-xxl-125px"

@@ -281,9 +281,12 @@ const Manager_detail = (props) => {
                           data-control="select2"
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
-                          defaultValue=""
+                          defaultValue={cookies.cookie.data.brand.id}
                           disabled
                         >
+                          <option value={cookies.cookie.data.brand.id}>
+                            {cookies.cookie.data.brand.name}
+                          </option>
                           {brands.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.name}
