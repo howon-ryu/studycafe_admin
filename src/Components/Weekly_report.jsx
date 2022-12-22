@@ -182,11 +182,7 @@ const Weekly_report = (props) => {
       <td>{v.concentrateRate}/5</td>
       <td>{v.accomplishmentRate}/5</td>
       <td>
-        <a
-          href="#"
-          data-bs-toggle="modal"
-          data-bs-target="#kt_modal_invite_friends"
-        >
+        <a data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">
           보기
           <svg
             width="16"
