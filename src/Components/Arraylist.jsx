@@ -196,6 +196,22 @@ const AcademyList = (props) => {
     }
   }, [students]);
   useEffect(() => {
+    console.log("props.flagprops.flag", props.flag);
+    if (props.flag == "Study_weekly_plan") {
+      if (clickflag == "0") {
+        if (props.flag == "Study_weekly_plan") {
+          if (students[0] != undefined) {
+            console.log("!!!!!!!");
+            props.setDetailNum(students[0].id);
+          } else {
+            props.setDetailNum("0");
+          }
+        }
+      }
+      setdata(students);
+    }
+  }, [students]);
+  useEffect(() => {
     if (props.flag == "office__branch_info") {
       if (clickflag == "0") {
         if (props.flag == "office__branch_info") {

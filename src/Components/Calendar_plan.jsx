@@ -40,6 +40,7 @@ const END_DATE = format(new Date("2030-12-31"), "yyyy-MM-dd");
 console.log("END_DATE", END_DATE);
 
 const Calendar_plan = (props) => {
+  console.log("props!!");
   const [isOpenModal, setOpenModal] = React.useState(false);
   const [isOpenModal_view, setOpenModal_view] = React.useState(false);
   const [studentPlanList, setStudentPlanList] = React.useState([]);
@@ -48,7 +49,15 @@ const Calendar_plan = (props) => {
   let [nname, setnname] = useState("");
 
   const [searchParams] = useSearchParams();
-  const studentId = searchParams.get("student");
+  let studentId = searchParams.get("student");
+  // const studentId = props.detail_num;
+  useEffect(() => {
+    if (studentId == null) {
+      console.log("student ID", studentId);
+      console.log("props.detail_num", props.detail_num);
+      studentId = props.detail_num;
+    }
+  }, []);
   console.log("student ID", studentId);
   const onClickToggleModal = React.useCallback(() => {
     // let aa = $("#card__right");

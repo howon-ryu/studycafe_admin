@@ -119,9 +119,9 @@ const Detail = (props) => {
 
       console.log(e);
       let cu = "사용";
-      let cu1 = e.target[12].checked;
-      let cu2 = e.target[13].checked;
-      let cu3 = e.target[14].checked;
+      let cu1 = e.target[13].checked;
+      let cu2 = e.target[14].checked;
+      let cu3 = e.target[15].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -137,7 +137,7 @@ const Detail = (props) => {
         isManagement: false,
         businessRegistrationNumber: e.target[1].value,
         status: cu,
-        address: e.target[9].value,
+        address: e.target[8].value,
         head: {
           password: e.target[4].value,
           password2: e.target[5].value,
@@ -186,9 +186,9 @@ const Detail = (props) => {
 
       console.log(e);
       let cu = "사용";
-      let cu1 = e.target[12].checked;
-      let cu2 = e.target[13].checked;
-      let cu3 = e.target[14].checked;
+      let cu1 = e.target[13].checked;
+      let cu2 = e.target[14].checked;
+      let cu3 = e.target[15].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -199,12 +199,13 @@ const Detail = (props) => {
       console.log(cu);
       const data_t = {
         name: e.target[0].value,
-        serviceDomian: e.target[10].value,
+        serviceDomain: e.target[10].value,
+
         homePageUrl: e.target[9].value,
         isManagement: false,
         businessRegistrationNumber: e.target[1].value,
         status: cu,
-        address: e.target[9].value,
+        address: e.target[8].value,
         head: {
           password: e.target[4].value,
           password2: e.target[5].value,
@@ -254,7 +255,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          //event.preventDefault();
+          event.preventDefault();
           handleSubmit(event);
         }}
       >
