@@ -20,6 +20,8 @@ const Branch_info = (props) => {
   const [flag_act, setact] = useState("추가");
   const [flag_one, setflagone] = useState("1");
   const one_click = (props) => setflagone(props);
+  const [owners2, setowners2] = useState([{id:"1"}]);
+  const [managers2, setmanagers2] = useState([{id:"1"}]);
   const [flag_two, setflagtwo] = useState("2");
   const two_click = (props) => setflagtwo(props);
   const [flag_three, setflagthree] = useState("2");
@@ -34,14 +36,15 @@ const Branch_info = (props) => {
 
     console.log(flag);
   }, [isOpenModal]);
-  const [brands, setbrands] = useState([]);
-  const [owners, setowners] = useState([]);
+  const [brands, setbrands] = useState([{id:"1"}]);
+  const [owners, setowners] = useState([{id:"1",brand:{id:"119"}}]);
   const [managers, setmanagers] = useState([]);
   // const moment = require("moment");
   // const brandsList = brands.map((v) => (
   //   <option>{v.name}</option>
 
   // ))
+  console.log("owners2!!!!!",owners2);
   useEffect(() => {
     if (props.detail_num != "0") {
       console.log("fff");
@@ -82,6 +85,89 @@ const Branch_info = (props) => {
       branchId: props.detail_num,
     });
   };
+  function set_brandid_onfilter(e){
+    console.log("1234",e.target.value);
+    let owner_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+    let branch_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+    let manager_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+    console.log("1234pp",owner_props);
+    searchowner_filter(owner_props);
+    // searchBranches_filter(branch_props);
+    // searchRooms_filter(branch_props);
+    //searchmanager_filter(manager_props)
+  }
+  function set_owner_onfilter(e){
+    console.log("1234",e.target.value);
+    
+    let manager_props = {target:{0:{value:""},1:{value:e.target.value},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+    console.log("1234pp",manager_props);
+    searchmanager_filter(manager_props);
+    // searchBranches_filter(branch_props);
+    // searchRooms_filter(branch_props);
+  }
+  function searchmanager_filter(props) {
+    console.log("1234props",props);
+    let var_status = "";
+    let var_brandid = "";
+    let var_ownerid = "";
+    if (props != undefined) {
+      console.log("1234propsif",props);
+      var_status = props.target[6].value;
+      var_brandid = props.target[0].value;
+      var_ownerid = props.target[1].value;
+    }
+    console.log(var_brandid)
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + "manager";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+          ownerId : var_ownerid
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setmanagers2(response.data);
+
+        console.log("owners:", response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchowner_filter(props) {
+    console.log("1234props",props);
+    let var_status = "";
+    let var_brandid = "";
+    if (props != undefined) {
+      console.log("1234propsif",props);
+      var_status = props.target[6].value;
+      var_brandid = props.target[0].value;
+    }
+    console.log(var_brandid)
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + "owners";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+        console.log("!!!!!",response.data);
+        setowners2(response.data);
+
+        console.log("owners:", response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   const handleSubmit_addRoom = (event) => {
     //event.preventDefault();
     console.log(event);
@@ -284,6 +370,21 @@ const Branch_info = (props) => {
     if (props.detail_num == "" || props.detail_num == undefined) {
       console.log("공백");
     } else if (props.detail_num == "0") {
+      // if(cookies.cookie.data.brand!=null){
+      //   let owner_props = {target:{0:{value:cookies.cookie.data.brand.id},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+      //   searchowner_filter(owner_props)
+      //   let manager_props = {target:{0:{value:cookies.cookie.data.brand.id},1:{value:cookies.cookie.data.brand.id},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+      //   searchmanager_filter(manager_props)
+      // }
+      // else{
+      //   console.log("1234ppinit",brands[0].id);
+      //   console.log("1234ppinit",owners[0]);
+      //   let owner_props = {target:{0:{value:owners[0].brand.id},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+      //   searchowner_filter(owner_props)
+      //   let manager_props = {target:{0:{value:owners[0].brand.id},1:{value:owners[0].id},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+      
+      //   searchmanager_filter(manager_props)
+      // }
       console.log("!!!!!!:dn", props.detail_num);
       console.log("!!!!!!:flag_one", flag_one);
       console.log("0");
@@ -722,814 +823,7 @@ const Branch_info = (props) => {
     <div className="branch_info">
       <div className="col-xl-12  mb-5 mb-xl-10 card__right_wrap">
         <div className="card card-flush h-xl-100 card__right">
-          <div className="card-header py-7">
-            <div
-              className="card-title mb-0 gap-4 gap-lg-8 gap-xl-10 nav nav-tabs border-bottom-0"
-              data-kt-table-widget-3="tabs_nav"
-            >
-              <div
-                className={
-                  flag_one == "1"
-                    ? "fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn on"
-                    : "fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn "
-                }
-                data-kt-table-widget-3="tab"
-                data-kt-table-widget-3-value="Show All"
-                onClick={() => {
-                  one_click("1");
-                  two_click("2");
-                  three_click("2");
-                }}
-              >
-                상세정보
-              </div>
-              <div
-                className={
-                  flag_two == "1" && props.detail_num != "0"
-                    ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn on"
-                    : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn "
-                }
-                data-kt-table-widget-3="tab"
-                data-kt-table-widget-3-value="Pending"
-                onClick={() => {
-                  one_click("2");
-                  two_click("1");
-                  three_click("2");
-                }}
-              >
-                관리그룹
-              </div>
-              <div
-                className={
-                  flag_three == "1" && props.detail_num != "0"
-                    ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn on"
-                    : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn"
-                }
-                data-kt-table-widget-3="tab"
-                data-kt-table-widget-3-value="Pending"
-                onClick={() => {
-                  one_click("2");
-                  two_click("2");
-                  three_click("1");
-                }}
-              >
-                학습실
-              </div>
-              {/* <div
-                className={
-                  flag_four == "1"
-                    ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn on"
-                    : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn"
-                }
-                data-kt-table-widget-3="tab"
-                data-kt-table-widget-3-value="Pending"
-                onClick={() => {
-                  one_click("2");
-                  two_click("2");
-                  three_click("2");
-                  four_click("1");
-                }}
-              >
-                알림톡 설정
-              </div> */}
-            </div>
-          </div>
-          {flag_one == "1" ? (
-            <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
-              <form
-                onSubmit={function (event) {
-                  //event.preventDefault();
-                  handleSubmit(event);
-                }}
-              >
-                <div className="card card-flush h-xl-100 card__right">
-                  <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
-                    <div className="row mb-5">
-                      <div className="col-md-6 fv-row input_50">
-                        <label className="required fs-5 fw-semibold mb-2">
-                          본사
-                        </label>
-                        {cookies.cookie.data.role.id == 1 ? (
-                          <div>
-                            {props.detail_num == "0" ? (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={data.brand.name}
-                               
-                              >
-                                {brands.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.name}
-                                  </option>
-                                ))}
-                              </select>
-                            ) : (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={data.brand.name}
-                                disabled
-                              >
-                                <option value={data.brand.id}>
-                                  {data.brand.name}
-                                </option>
-                                {brands.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.name}
-                                  </option>
-                                ))}
-                              </select>
-                            )}
-                          </div>
-                        ) : (
-                          <div>
-                            {props.detail_num == "0" ? (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={cookies.cookie.data.brand.id}
-                                disabled
-                              >
-                                <option value={cookies.cookie.data.brand.id}>
-                                  {cookies.cookie.data.brand.name}
-                                </option>
-                                {/* {brands.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.name}
-                                  </option>
-                                ))} */}
-                              </select>
-                            ) : (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={data.brand.name}
-                                disabled
-                              >
-                                <option value={data.brand.id}>
-                                  {data.brand.name}
-                                </option>
-                                {brands.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.name}
-                                  </option>
-                                ))}
-                              </select>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-md-6 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">원장</label>
-                        {cookies.cookie.data.role.id == 1 ? (
-                          <div>
-                            {props.detail_num == "0" ? (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={data.owner.id}
-                                
-                              >
-                                {owners.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.realName}
-                                  </option>
-                                ))}
-                              </select>
-                            ) : (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={data.owner.id}
-                                disabled
-                              >
-                                <option value={data.owner.id}>
-                                  {data.owner.realName}({data.owner.username})
-                                </option>
-                                {owners.map((item, idx) =>
-                                  item.realName != data.owner.realName ? (
-                                    <option key={idx} value={item.id}>
-                                      {item.realName}({item.username} )
-                                      {/* {item.id} */}
-                                    </option>
-                                  ) : null
-                                )}
-                              </select>
-                            )}
-                          </div>
-                        ) : cookies.cookie.data.role.id == 2 ? (
-                          <div>
-                            {props.detail_num == "0" ? (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={data.owner.id}
-                                
-                                
-                              >
-                                {owners.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.realName}
-                                  </option>
-                                ))}
-                              </select>
-                            ) : (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={data.owner.id}
-                                disabled
-                              >
-                                <option value={data.owner.id}>
-                                  {data.owner.realName}({data.owner.username})
-                                </option>
-                                {owners.map((item, idx) =>
-                                  item.realName != data.owner.realName ? (
-                                    <option key={idx} value={item.id}>
-                                      {item.realName}({item.username} )
-                                      {/* {item.id} */}
-                                    </option>
-                                  ) : null
-                                )}
-                              </select>
-                            )}
-                          </div>
-                        ) : (
-                          <div>
-                            {props.detail_num == "0" ? (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={data.owner.id}
-                                disabled
-                              >
-                                {owners.map((item, idx) => (
-                                  <option key={idx} value={item.id}>
-                                    {item.realName}
-                                  </option>
-                                ))}
-                              </select>
-                            ) : (
-                              <select
-                                name="position"
-                                data-control="select2"
-                                data-placeholder="Select a position..."
-                                className="form-select form-select-solid"
-                                defaultValue={data.owner.id}
-                                disabled
-                              >
-                                <option value={data.owner.id}>
-                                  {data.owner.realName}({data.owner.username})
-                                </option>
-                                {owners.map((item, idx) =>
-                                  item.realName != data.owner.realName ? (
-                                    <option key={idx} value={item.id}>
-                                      {item.realName}({item.username} )
-                                      {/* {item.id} */}
-                                    </option>
-                                  ) : null
-                                )}
-                              </select>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="row mb-5">
-                      <div className="col-md-6 fv-row">
-                        <label className="required fs-5 fw-semibold mb-2">
-                          지점 이름
-                        </label>
-
-                        <input
-                          type="text"
-                          className="form-control"
-                          defaultValue={data.name}
-                          name=""
-                        />
-                      </div>
-
-                      <div className="col-md-6 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">
-                          사업자등록증
-                        </label>
-
-                        <input
-                          type="text"
-                          className="form-control "
-                          defaultValue={data.businessRegistrationNumber}
-                          name="last_name"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="row mb-5">
-                      <div className="col-md-12 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">주소</label>
-
-                        <input
-                          type="text"
-                          className="form-control "
-                          defaultValue={data.address || ""}
-                          // defaultValue=""
-                          name="first_name"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="row mb-5">
-                      {/* <div className="col-md-4 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">
-                          최종 수정자 ID
-                        </label>
-
-                        <input
-                          type="text"
-                          className="form-control form-control-solid"
-                          defaultValue="wintergreen"
-                          name=""
-                          readOnly
-                        />
-                      </div>
-
-                      <div className="col-md-4 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">
-                          최종 수정 일시
-                        </label>
-
-                        <input
-                          type="date"
-                          className="form-control form-control-solid"
-                          defaultValue="2019-09-22"
-                          name=""
-                          readOnly
-                        />
-                      </div> */}
-                      <div className="col-md-6 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">
-                          매니저선택
-                        </label>
-
-                        {props.detail_num == 0 ? (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.manager.id}
-                            
-                          >
-                            {managers.map((item, idx) => (
-                              <option key={idx} value={item.id}>
-                                {item.realName}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.owner.id}
-                            disabled
-                          >
-                            <option value={data.manager.id}>
-                              {data.manager.realName}({data.manager.username})
-                            </option>
-                            {managers.map((item, idx) =>
-                              item.realName != data.manager.realName ? (
-                                <option key={idx} value={item.id}>
-                                  {item.realName}({item.username})
-                                </option>
-                              ) : null
-                            )}
-                          </select>
-                        )}
-                      </div>
-
-                      <div className="col-md-4 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">상태</label>
-
-                        <div className="d-flex check__use_wrap">
-                          <div className="form-check form-check-custom form-check-solid me-5 check__use">
-                            <input
-                              className="form-check-input check__use_input"
-                              type="radio"
-                              defaultValue="사용"
-                              name="choice_use"
-                              defaultChecked={data.status == "사용"}
-                            />
-                            <label className="form-check-label">사용</label>
-                          </div>
-                          <div className="form-check form-check-custom form-check-solid me-5 check__hold">
-                            <input
-                              className="form-check-input check__hold_input"
-                              type="radio"
-                              defaultValue="대기"
-                              name="choice_use"
-                              defaultChecked={data.status == "대기"}
-                            />
-                            <label className="form-check-label">대기</label>
-                          </div>
-                          <div className="form-check form-check-custom form-check-solid check__delet use">
-                            <input
-                              className="form-check-input check__delet_input"
-                              type="radio"
-                              defaultValue="삭제"
-                              name="choice_use"
-                              defaultChecked={data.status == "식제"}
-                            />
-                            <label className="form-check-label">삭제</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <button type="reset" hidden>
-                    <span ref={reset}></span>
-                  </button>
-                  <div className="card-footer d-flex justify-content-end py-6">
-                    <button
-                      type="reset"
-                      className="btn btn-light btn-active-light-primary me-2"
-                    >
-                      취소
-                    </button>
-                    {props.detail_num != "0" ? (
-                      <button
-                        type="submit"
-                        className="btn btn-primary"
-                        id="submit_btn"
-                      >
-                        변경사항 저장
-                      </button>
-                    ) : (
-                      <button
-                        type="submit"
-                        className="btn btn-primary"
-                        id="submit_btn"
-                      >
-                        추가
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </form>
-            </div>
-          ) : null}
-
-          {flag_two == "1" && props.detail_num != "0" ? (
-            <div className="ad">
-              <div className="right__tab02_table tab02 mb-20">
-                <div className="table_top">
-                  <select
-                    name="status"
-                    data-control="select2"
-                    data-hide-search="true"
-                    data-placeholder="Filter"
-                    className="form-select form-select-solid form-select-sm fw-bold w-200px"
-                    hidden
-                  >
-                    <option value="1" selected="selected">
-                      사용중인 관리그룹
-                    </option>
-                    <option value="2">대기중인 관리그룹</option>
-                    <option value="3">삭제된 관리그룹</option>
-                  </select>
-                  <button
-                    type="button"
-                    className="btn btn-primary add_btn"
-                    onClick={() => {
-                      setact("추가");
-                      setOpenModal(!isOpenModal);
-                    }}
-                  >
-                    추가
-                  </button>
-                </div>
-                <table
-                  className="table align-middle table-row-dashed fs-6 gy-5"
-                  id="kt_project_users_table"
-                >
-                  <thead className="text-gray-400">
-                    <tr className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                      <th className="min-w-25px">NO.</th>
-                      <th className="min-w-150px">관리그룹 이름</th>
-                      <th className="min-w-100px">등록일</th>
-                      <th className="min-w-25x n_empty"></th>
-                      <th className="min-w-50px ">사용여부</th>
-                      <th className="min-w-50px pe-5 ">관리</th>
-                    </tr>
-                  </thead>
-
-                  <tbody className="fw-semibold text-gray-600">
-                    {/* {grouopsList} */}
-
-                    {groups.map((v, idx) => (
-                      <tr>
-                        <td>
-                          <div className="form-check form-check-sm form-check-custom form-check-solid">
-                            <span className="text-gray-600 text-hover-primary ms-4">
-                              {v.id}
-                            </span>
-                          </div>
-                        </td>
-                        <td data-order="Invalid date">{v.name}</td>
-                        <td data-order="Invalid date">
-                          {v.createdAt.substr(0, 10)}
-                        </td>
-                        <td className="n_empty"></td>
-                        <td className="text-muted fw-semibold ">
-                          <span className="badge badge-light-success me-2">
-                            {v.status}
-                          </span>
-                        </td>
-                        <td data-order="Invalid date text-end">
-                          {/* <button
-                          onClick={() => {
-                            one_click(() => spec_group_api(v.id));
-                          }}
-                        >
-                          수정
-                        </button> */}
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                            // onClick={() => {
-                            //   setact("수정");
-                            //   spec_group_api(v.id);
-                            //   spec_group_api(v.id);
-                            //   setOpenModal(!isOpenModal);
-                            //   setOpenModal(!isOpenModal);
-                            //   setOpenModal(!isOpenModal);
-                            // }}
-                            onClick={() => {
-                              setact("수정");
-                              spec_group_api(v.id);
-
-                              //clicktwo(v.id);
-                              //setOpenModal(!isOpenModal);
-                            }}
-                          >
-                            수정
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-
-                    {/* {groups&&groups.product.map((data)=>{
-                    <tr>
-                      <td>
-                        <div className="form-check form-check-sm form-check-custom form-check-solid">
-                          <span className="text-gray-600 text-hover-primary ms-4">
-                            {data.id}
-                          </span>
-                        </div>
-                      </td>
-                      <td data-order="Invalid date">재수</td>
-                      <td data-order="Invalid date">2022-08-05</td>
-                      <td className="n_empty"></td>
-                      <td className="text-muted fw-semibold text-end">
-                        <span className="badge badge-light-success me-2">
-                          사용
-                        </span>
-                      </td>
-                    </tr>
-                    
-                  })} */}
-
-                    {/* <tr>
-                    <td>
-                      <div className="form-check form-check-sm form-check-custom form-check-solid">
-                        <span className="text-gray-600 text-hover-primary ms-4">
-                          1
-                        </span>
-                      </div>
-                    </td>
-                    <td data-order="Invalid date">재수</td>
-                    <td data-order="Invalid date">2022-08-05</td>
-                    <td className="n_empty"></td>
-                    <td className="text-muted fw-semibold text-end">
-                      <span className="badge badge-light-success me-2">
-                        사용
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="form-check form-check-sm form-check-custom form-check-solid">
-                        <span className="text-gray-600 text-hover-primary ms-4">
-                          2
-                        </span>
-                      </div>
-                    </td>
-                    <td data-order="Invalid date">재학</td>
-                    <td data-order="Invalid date">2022-08-08</td>
-                    <td className="n_empty"></td>
-                    <td className="text-muted fw-semibold text-end">
-                      <span className="badge badge-light-warning me-2">
-                        대기
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="form-check form-check-sm form-check-custom form-check-solid">
-                        <span className="text-gray-600 text-hover-primary ms-4">
-                          3
-                        </span>
-                      </div>
-                    </td>
-                    <td data-order="Invalid date">재학</td>
-                    <td data-order="Invalid date">2022-08-24</td>
-                    <td className="n_empty"></td>
-                    <td className="text-muted fw-semibold text-end">
-                      <span className="badge badge-light-danger me-2">
-                        삭제
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="form-check form-check-sm form-check-custom form-check-solid">
-                        <span className="text-gray-600 text-hover-primary ms-4">
-                          4
-                        </span>
-                      </div>
-                    </td>
-                    <td data-order="Invalid date">재수</td>
-                    <td data-order="Invalid date">2022-08-05</td>
-                    <td className="n_empty"></td>
-                    <td className="text-muted fw-semibold text-end">
-                      <span className="badge badge-light-success me-2">
-                        사용
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="form-check form-check-sm form-check-custom form-check-solid">
-                        <span className="text-gray-600 text-hover-primary ms-4">
-                          5
-                        </span>
-                      </div>
-                    </td>
-                    <td data-order="Invalid date">재학</td>
-                    <td data-order="Invalid date">2022-08-08</td>
-                    <td className="n_empty"></td>
-                    <td className="text-muted fw-semibold text-end">
-                      <span className="badge badge-light-warning me-2">
-                        대기
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="form-check form-check-sm form-check-custom form-check-solid">
-                        <span className="text-gray-600 text-hover-primary ms-4">
-                          6
-                        </span>
-                      </div>
-                    </td>
-                    <td data-order="Invalid date">재학</td>
-                    <td data-order="Invalid date">2022-08-24</td>
-                    <td className="n_empty"></td>
-                    <td className="text-muted fw-semibold text-end">
-                      <span className="badge badge-light-danger me-2">
-                        삭제
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="form-check form-check-sm form-check-custom form-check-solid">
-                        <span className="text-gray-600 text-hover-primary ms-4">
-                          7
-                        </span>
-                      </div>
-                    </td>
-                    <td data-order="Invalid date">재수</td>
-                    <td data-order="Invalid date">2022-08-05</td>
-                    <td className="n_empty"></td>
-                    <td className="text-muted fw-semibold text-end">
-                      <span className="badge badge-light-success me-2">
-                        사용
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="form-check form-check-sm form-check-custom form-check-solid">
-                        <span className="text-gray-600 text-hover-primary ms-4">
-                          8
-                        </span>
-                      </div>
-                    </td>
-                    <td data-order="Invalid date">재학</td>
-                    <td data-order="Invalid date">2022-08-08</td>
-                    <td className="n_empty"></td>
-                    <td className="text-muted fw-semibold text-end">
-                      <span className="badge badge-light-warning me-2">
-                        대기
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="form-check form-check-sm form-check-custom form-check-solid">
-                        <span className="text-gray-600 text-hover-primary ms-4">
-                          9
-                        </span>
-                      </div>
-                    </td>
-                    <td data-order="Invalid date">재학</td>
-                    <td data-order="Invalid date">2022-08-24</td>
-                    <td className="n_empty"></td>
-                    <td className="text-muted fw-semibold text-end">
-                      <span className="badge badge-light-danger me-2">
-                        삭제
-                      </span>
-                    </td>
-                  </tr> */}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ) : null}
-
-          {flag_three == "1" && props.detail_num != "0" ? (
-            <div className="ad">
-              <div className="right__tab02_table tab02 mb-20">
-                <div className="table_top">
-                  <select
-                    name="status"
-                    data-control="select2"
-                    data-hide-search="true"
-                    data-placeholder="Filter"
-                    className="form-select form-select-solid form-select-sm fw-bold w-200px"
-                    hidden
-                  >
-                    <option value="1" selected="selected">
-                      사용중인 학습실
-                    </option>
-                    <option value="2">대기중인 학습실</option>
-                    <option value="3">삭제된 학습실</option>
-                  </select>
-                  <button
-                    type="button"
-                    className="btn btn-primary add_btn"
-                    onClick={() => {
-                      setact("추가");
-                      setOpenModal(!isOpenModal);
-                    }}
-                  >
-                    추가
-                  </button>
-                </div>
-                <table
-                  className="table align-middle table-row-dashed fs-6 gy-5"
-                  id="kt_project_users_table"
-                >
-                  <thead className="text-gray-400">
-                    <tr className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                      <th className="min-w-25px">NO.</th>
-                      <th className="min-w-150px">학습실 이름 </th>
-                      <th className="min-w-100px">좌석수</th>
-                      <th className="min-w-25x n_empty"></th>
-                      <th className="min-w-50px pe-5 ">사용여부</th>
-                      <th className="min-w-50px pe-5 ">관리</th>
-                    </tr>
-                  </thead>
-                  <tbody className="fw-semibold text-gray-600">
-                    {roomsList}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ) : null}
-
-          <Main>
+        <Main>
             {isOpenModal && flag_two == "1" && flag_act == "추가" && (
               <Modal
                 onClickToggleModal={onClickToggleModal}
@@ -2136,6 +1430,828 @@ const Branch_info = (props) => {
               </Modal>
             )}
           </Main>
+          <div className="card-header py-7" style={{position:"absolute"}}>
+            <div
+              className="card-title mb-0 gap-4 gap-lg-8 gap-xl-10 nav nav-tabs border-bottom-0"
+              data-kt-table-widget-3="tabs_nav"
+            >
+              <div
+                className={
+                  flag_one == "1"
+                    ? "fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn on"
+                    : "fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn "
+                }
+                data-kt-table-widget-3="tab"
+                data-kt-table-widget-3-value="Show All"
+                onClick={() => {
+                  one_click("1");
+                  two_click("2");
+                  three_click("2");
+                }}
+              >
+                상세정보
+              </div>
+              <div
+                className={
+                  flag_two == "1" && props.detail_num != "0"
+                    ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn on"
+                    : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn "
+                }
+                data-kt-table-widget-3="tab"
+                data-kt-table-widget-3-value="Pending"
+                onClick={() => {
+                  one_click("2");
+                  two_click("1");
+                  three_click("2");
+                }}
+              >
+                관리그룹
+              </div>
+              <div
+                className={
+                  flag_three == "1" && props.detail_num != "0"
+                    ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn on"
+                    : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn"
+                }
+                data-kt-table-widget-3="tab"
+                data-kt-table-widget-3-value="Pending"
+                onClick={() => {
+                  one_click("2");
+                  two_click("2");
+                  three_click("1");
+                }}
+              >
+                학습실
+              </div>
+              {/* <div
+                className={
+                  flag_four == "1"
+                    ? "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn on"
+                    : "fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn"
+                }
+                data-kt-table-widget-3="tab"
+                data-kt-table-widget-3-value="Pending"
+                onClick={() => {
+                  one_click("2");
+                  two_click("2");
+                  three_click("2");
+                  four_click("1");
+                }}
+              >
+                알림톡 설정
+              </div> */}
+            </div>
+          </div>
+          {flag_one == "1" ? (
+            <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
+              <form
+                onSubmit={function (event) {
+                  //event.preventDefault();
+                  handleSubmit(event);
+                }}
+              >
+                <div className="card card-flush h-xl-100 card__right">
+                  <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
+                    <div className="row mb-5">
+                      <div className="col-md-6 fv-row input_50">
+                        <label className="required fs-5 fw-semibold mb-2">
+                          본사
+                        </label>
+                        {cookies.cookie.data.role.id == 1 ? (
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.id}
+                                onChange={set_brandid_onfilter}
+                               
+                              >
+                                <option value = "">본사를 선택해주세요</option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.name}
+                                disabled
+                              >
+                                <option value={data.brand.id}>
+                                  {data.brand.name}
+                                </option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
+                        ) : (
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={cookies.cookie.data.brand.id}
+                                onChange={set_brandid_onfilter}
+                                
+                              >
+                                <option value = "">본사를 선택해주세요</option>
+                                <option value={cookies.cookie.data.brand.id}>
+                                  {cookies.cookie.data.brand.name}
+                                </option>
+                                {/* {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))} */}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.name}
+                                disabled
+                              >
+                                <option value={data.brand.id}>
+                                  {data.brand.name}
+                                </option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      <div className="col-md-6 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">원장</label>
+                        {cookies.cookie.data.role.id == 1 ? (
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                // defaultValue={owners2[0].id}
+                                onChange={set_owner_onfilter}
+
+                                
+                              >
+                                {owners2.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                                disabled
+                              >
+                                <option value={data.owner.id}>
+                                  {data.owner.realName}({data.owner.username})
+                                </option>
+                                {owners2.map((item, idx) =>
+                                  item.realName != data.owner.realName ? (
+                                    <option key={idx} value={item.id}>
+                                      {item.realName}({item.username} )
+                                      {/* {item.id} */}
+                                    </option>
+                                  ) : null
+                                )}
+                              </select>
+                            )}
+                          </div>
+                        ) : cookies.cookie.data.role.id == 2 ? (
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                onChange={set_owner_onfilter}
+                                // defaultValue={owners2[0].id}
+                                
+                              >
+                                
+                                {owners2.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                                disabled
+                              >
+                                <option value={data.owner.id}>
+                                  {data.owner.realName}({data.owner.username})
+                                </option>
+                                {owners.map((item, idx) =>
+                                  item.realName != data.owner.realName ? (
+                                    <option key={idx} value={item.id}>
+                                      {item.realName}({item.username} )
+                                      {/* {item.id} */}
+                                    </option>
+                                  ) : null
+                                )}
+                              </select>
+                            )}
+                          </div>
+                        ) : (
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                
+                                onChange={set_owner_onfilter}
+                                // disabled
+                              >
+                                <option value={cookies.cookie.data.id}>
+                                  원장을 선택해 주세요
+                                </option>
+                                <option value={cookies.cookie.data.id}>
+                                  {cookies.cookie.data.realName}({cookies.cookie.data.username})
+                                </option>
+                                {/* {owners.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))} */}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                                disabled
+                              >
+                                <option value={data.owner.id}>
+                                  {data.owner.realName}({data.owner.username})
+                                </option>
+                                {owners.map((item, idx) =>
+                                  item.realName != data.owner.realName ? (
+                                    <option key={idx} value={item.id}>
+                                      {item.realName}({item.username} )
+                                      {/* {item.id} */}
+                                    </option>
+                                  ) : null
+                                )}
+                              </select>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="row mb-5">
+                      <div className="col-md-6 fv-row">
+                        <label className="required fs-5 fw-semibold mb-2">
+                          지점 이름
+                        </label>
+
+                        <input
+                          type="text"
+                          className="form-control"
+                          defaultValue={data.name}
+                          name=""
+                        />
+                      </div>
+
+                      <div className="col-md-6 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">
+                          사업자등록증
+                        </label>
+
+                        <input
+                          type="text"
+                          className="form-control "
+                          defaultValue={data.businessRegistrationNumber}
+                          name="last_name"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row mb-5">
+                      <div className="col-md-12 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">주소</label>
+
+                        <input
+                          type="text"
+                          className="form-control "
+                          defaultValue={data.address || ""}
+                          // defaultValue=""
+                          name="first_name"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row mb-5">
+                      {/* <div className="col-md-4 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">
+                          최종 수정자 ID
+                        </label>
+
+                        <input
+                          type="text"
+                          className="form-control form-control-solid"
+                          defaultValue="wintergreen"
+                          name=""
+                          readOnly
+                        />
+                      </div>
+
+                      <div className="col-md-4 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">
+                          최종 수정 일시
+                        </label>
+
+                        <input
+                          type="date"
+                          className="form-control form-control-solid"
+                          defaultValue="2019-09-22"
+                          name=""
+                          readOnly
+                        />
+                      </div> */}
+                      <div className="col-md-6 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">
+                          매니저선택
+                        </label>
+
+                        {props.detail_num == "0" ? (
+                          <select
+                            name="position"
+                            data-control="select2"
+                            data-placeholder="Select a position..."
+                            className="form-select form-select-solid"
+                            defaultValue={data.manager.id}
+                            
+                          >
+                            {managers2.map((item, idx) => (
+                              <option key={idx} value={item.id}>
+                                {item.realName}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <select
+                            name="position"
+                            data-control="select2"
+                            data-placeholder="Select a position..."
+                            className="form-select form-select-solid"
+                            defaultValue={data.owner.id}
+                            disabled
+                          >
+                            <option value={data.manager.id}>
+                              {data.manager.realName}({data.manager.username})
+                            </option>
+                            {managers.map((item, idx) =>
+                              item.realName != data.manager.realName ? (
+                                <option key={idx} value={item.id}>
+                                  {item.realName}({item.username})
+                                </option>
+                              ) : null
+                            )}
+                          </select>
+                        )}
+                      </div>
+
+                      <div className="col-md-4 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">상태</label>
+
+                        <div className="d-flex check__use_wrap">
+                          <div className="form-check form-check-custom form-check-solid me-5 check__use">
+                            <input
+                              className="form-check-input check__use_input"
+                              type="radio"
+                              defaultValue="사용"
+                              name="choice_use"
+                              defaultChecked={data.status == "사용"}
+                            />
+                            <label className="form-check-label">사용</label>
+                          </div>
+                          <div className="form-check form-check-custom form-check-solid me-5 check__hold">
+                            <input
+                              className="form-check-input check__hold_input"
+                              type="radio"
+                              defaultValue="대기"
+                              name="choice_use"
+                              defaultChecked={data.status == "대기"}
+                            />
+                            <label className="form-check-label">대기</label>
+                          </div>
+                          <div className="form-check form-check-custom form-check-solid check__delet use">
+                            <input
+                              className="form-check-input check__delet_input"
+                              type="radio"
+                              defaultValue="삭제"
+                              name="choice_use"
+                              defaultChecked={data.status == "식제"}
+                            />
+                            <label className="form-check-label">삭제</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="reset" hidden>
+                    <span ref={reset}></span>
+                  </button>
+                  <div className="card-footer d-flex justify-content-end py-6">
+                    <button
+                      type="reset"
+                      className="btn btn-light btn-active-light-primary me-2"
+                    >
+                      취소
+                    </button>
+                    {props.detail_num != "0" ? (
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        id="submit_btn"
+                      >
+                        변경사항 저장
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        id="submit_btn"
+                      >
+                        추가
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </form>
+            </div>
+          ) : null}
+
+          {flag_two == "1" && props.detail_num != "0" ? (
+            <div className="ad">
+              <div className="right__tab02_table tab02 mb-20">
+                <div className="table_top">
+                  <select
+                    name="status"
+                    data-control="select2"
+                    data-hide-search="true"
+                    data-placeholder="Filter"
+                    className="form-select form-select-solid form-select-sm fw-bold w-200px"
+                    hidden
+                  >
+                    <option value="1" selected="selected">
+                      사용중인 관리그룹
+                    </option>
+                    <option value="2">대기중인 관리그룹</option>
+                    <option value="3">삭제된 관리그룹</option>
+                  </select>
+                  <button
+                    type="button"
+                    className="btn btn-primary add_btn"
+                    onClick={() => {
+                      setact("추가");
+                      setOpenModal(!isOpenModal);
+                    }}
+                  >
+                    추가
+                  </button>
+                </div>
+                <table
+                  className="table align-middle table-row-dashed fs-6 gy-5"
+                  id="kt_project_users_table"
+                >
+                  <thead className="text-gray-400">
+                    <tr className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                      <th className="min-w-25px">NO.</th>
+                      <th className="min-w-150px">관리그룹 이름</th>
+                      <th className="min-w-100px">등록일</th>
+                      <th className="min-w-25x n_empty"></th>
+                      <th className="min-w-50px ">사용여부</th>
+                      <th className="min-w-50px pe-5 ">관리</th>
+                    </tr>
+                  </thead>
+
+                  <tbody className="fw-semibold text-gray-600">
+                    {/* {grouopsList} */}
+
+                    {groups.map((v, idx) => (
+                      <tr>
+                        <td>
+                          <div className="form-check form-check-sm form-check-custom form-check-solid">
+                            <span className="text-gray-600 text-hover-primary ms-4">
+                              {v.id}
+                            </span>
+                          </div>
+                        </td>
+                        <td data-order="Invalid date">{v.name}</td>
+                        <td data-order="Invalid date">
+                          {v.createdAt.substr(0, 10)}
+                        </td>
+                        <td className="n_empty"></td>
+                        <td className="text-muted fw-semibold ">
+                          <span className="badge badge-light-success me-2">
+                            {v.status}
+                          </span>
+                        </td>
+                        <td data-order="Invalid date text-end">
+                          {/* <button
+                          onClick={() => {
+                            one_click(() => spec_group_api(v.id));
+                          }}
+                        >
+                          수정
+                        </button> */}
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            // onClick={() => {
+                            //   setact("수정");
+                            //   spec_group_api(v.id);
+                            //   spec_group_api(v.id);
+                            //   setOpenModal(!isOpenModal);
+                            //   setOpenModal(!isOpenModal);
+                            //   setOpenModal(!isOpenModal);
+                            // }}
+                            onClick={() => {
+                              setact("수정");
+                              spec_group_api(v.id);
+
+                              //clicktwo(v.id);
+                              //setOpenModal(!isOpenModal);
+                            }}
+                          >
+                            수정
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+
+                    {/* {groups&&groups.product.map((data)=>{
+                    <tr>
+                      <td>
+                        <div className="form-check form-check-sm form-check-custom form-check-solid">
+                          <span className="text-gray-600 text-hover-primary ms-4">
+                            {data.id}
+                          </span>
+                        </div>
+                      </td>
+                      <td data-order="Invalid date">재수</td>
+                      <td data-order="Invalid date">2022-08-05</td>
+                      <td className="n_empty"></td>
+                      <td className="text-muted fw-semibold text-end">
+                        <span className="badge badge-light-success me-2">
+                          사용
+                        </span>
+                      </td>
+                    </tr>
+                    
+                  })} */}
+
+                    {/* <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          1
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재수</td>
+                    <td data-order="Invalid date">2022-08-05</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-success me-2">
+                        사용
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          2
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-08</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-warning me-2">
+                        대기
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          3
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-24</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-danger me-2">
+                        삭제
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          4
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재수</td>
+                    <td data-order="Invalid date">2022-08-05</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-success me-2">
+                        사용
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          5
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-08</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-warning me-2">
+                        대기
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          6
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-24</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-danger me-2">
+                        삭제
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          7
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재수</td>
+                    <td data-order="Invalid date">2022-08-05</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-success me-2">
+                        사용
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          8
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-08</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-warning me-2">
+                        대기
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="form-check form-check-sm form-check-custom form-check-solid">
+                        <span className="text-gray-600 text-hover-primary ms-4">
+                          9
+                        </span>
+                      </div>
+                    </td>
+                    <td data-order="Invalid date">재학</td>
+                    <td data-order="Invalid date">2022-08-24</td>
+                    <td className="n_empty"></td>
+                    <td className="text-muted fw-semibold text-end">
+                      <span className="badge badge-light-danger me-2">
+                        삭제
+                      </span>
+                    </td>
+                  </tr> */}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ) : null}
+
+          {flag_three == "1" && props.detail_num != "0" ? (
+            <div className="ad">
+              <div className="right__tab02_table tab02 mb-20">
+                <div className="table_top">
+                  <select
+                    name="status"
+                    data-control="select2"
+                    data-hide-search="true"
+                    data-placeholder="Filter"
+                    className="form-select form-select-solid form-select-sm fw-bold w-200px"
+                    hidden
+                  >
+                    <option value="1" selected="selected">
+                      사용중인 학습실
+                    </option>
+                    <option value="2">대기중인 학습실</option>
+                    <option value="3">삭제된 학습실</option>
+                  </select>
+                  <button
+                    type="button"
+                    className="btn btn-primary add_btn"
+                    onClick={() => {
+                      setact("추가");
+                      setOpenModal(!isOpenModal);
+                    }}
+                  >
+                    추가
+                  </button>
+                </div>
+                <table
+                  className="table align-middle table-row-dashed fs-6 gy-5"
+                  id="kt_project_users_table"
+                >
+                  <thead className="text-gray-400">
+                    <tr className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                      <th className="min-w-25px">NO.</th>
+                      <th className="min-w-150px">학습실 이름 </th>
+                      <th className="min-w-100px">좌석수</th>
+                      <th className="min-w-25x n_empty"></th>
+                      <th className="min-w-50px pe-5 ">사용여부</th>
+                      <th className="min-w-50px pe-5 ">관리</th>
+                    </tr>
+                  </thead>
+                  <tbody className="fw-semibold text-gray-600">
+                    {roomsList}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ) : null}
+
+         
         </div>
       </div>
     </div>
@@ -2143,9 +2259,11 @@ const Branch_info = (props) => {
 };
 export default Branch_info;
 const Main = styled.main`
-  width: 10%;
+  width: 5%;
   height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position:relative;
+  vertical-align: top;
 `;

@@ -1026,7 +1026,7 @@ const AcademyList = (props) => {
                               </div>
                             ) : (
                               <div className="mb-10">
-                                <label>브랜드s</label>
+                                <label>브랜드</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1073,7 +1073,7 @@ const AcademyList = (props) => {
                               </div>
                             ) : (
                               <div className="mb-10">
-                                <label>브랜드d</label>
+                                <label>브랜드</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1315,7 +1315,7 @@ const AcademyList = (props) => {
                         {props.flag == "student__manage_info" ? (
                           <div>
                             <div className="mb-10">
-                              <label>지점d</label>
+                              <label>지점</label>
                               <div>
                                 <select
                                   className="form-select form-select-solid"

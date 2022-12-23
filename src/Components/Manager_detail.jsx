@@ -12,6 +12,7 @@ const Manager_detail = (props) => {
   const reset = useRef();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [brands, setbrands] = useState([]);
+  const [owners2, setowners2] = useState([{id:"1"}]);
   const [owners, setowners] = useState([]);
   const [data, setdata] = useState({
     id: "",
@@ -40,7 +41,10 @@ const Manager_detail = (props) => {
     detail_num = props.detail_num;
     if (props.detail_num == "" || props.detail_num == undefined) {
       console.log("공백");
+      
     } else if (props.detail_num == "0") {
+      let owner_props = {target:{0:{value:1},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+      searchowner_filter(owner_props)
       console.log("0");
       setdata({
         id: "",
@@ -115,7 +119,45 @@ const Manager_detail = (props) => {
   const handles = (e) => {
     //e.preventDefalut();
   };
+  function set_brandid_onfilter(e){
+    console.log("1234",e.target.value);
+    let owner_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+    let branch_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+    console.log("1234pp",owner_props);
+    searchowner_filter(owner_props);
+    // searchBranches_filter(branch_props);
+    // searchRooms_filter(branch_props);
+  }
+  function searchowner_filter(props) {
+    console.log("1234props",props);
+    let var_status = "";
+    let var_brandid = "";
+    if (props != undefined) {
+      console.log("1234propsif",props);
+      var_status = props.target[6].value;
+      var_brandid = props.target[0].value;
+    }
+    console.log(var_brandid)
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + "owners";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+        console.log("!!!!!",response.data);
+        setowners2(response.data);
 
+        console.log("owners:", response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
       // alert(e.target[2].value);
@@ -244,9 +286,10 @@ const Manager_detail = (props) => {
                           data-control="select2"
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
-                          defaultValue=""
-                          
+                          defaultValue="1"
+                          onChange={set_brandid_onfilter}
                         >
+                         
                           {brands.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.name}
@@ -284,16 +327,19 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue={cookies.cookie.data.brand.id}
-                          disabled
+                          onChange={set_brandid_onfilter}
                         >
+                          <option value="">
+                            본사를 선택해 주세요
+                          </option>
                           <option value={cookies.cookie.data.brand.id}>
                             {cookies.cookie.data.brand.name}
                           </option>
-                          {brands.map((item, idx) => (
+                          {/* {brands.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.name}
                             </option>
-                          ))}
+                          ))} */}
                         </select>
                       ) : (
                         <select
@@ -329,14 +375,18 @@ const Manager_detail = (props) => {
                           data-control="select2"
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
-                          defaultValue=""
+                          // defaultValue={owners2[0].id}
                           
                         >
-                          {owners.map((item, idx) => (
+
+
+                          
+                          {owners2.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.realName}
                             </option>
                           ))}
+                          
                         </select>
                       ) : (
                         <select
@@ -350,7 +400,7 @@ const Manager_detail = (props) => {
                           <option value={data.targetUser.id || data.id}>
                             {data.targetUser.realName || data.realName}
                           </option>
-                          {owners.map((item, idx) =>
+                          {owners2.map((item, idx) =>
                             item.realName != data.targetUser.realName ? (
                               <option key={idx} value={item.id}>
                                 {item.realName}
@@ -362,7 +412,7 @@ const Manager_detail = (props) => {
                     </div>
                   ) : cookies.cookie.data.role.id == 2 ? (
                     <div>
-                      {props.detail_num == 0 ? (
+                      {props.detail_num == "0" ? (
                         <select
                           name="position"
                           data-control="select2"
@@ -371,7 +421,7 @@ const Manager_detail = (props) => {
                           defaultValue=""
                           
                         >
-                          {owners.map((item, idx) => (
+                          {owners2.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.realName}
                             </option>
@@ -384,7 +434,7 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
-                          disabledv
+                          disabled
                         >
                           <option value={data.targetUser.id || data.id}>
                             {data.targetUser.realName || data.realName}
@@ -408,13 +458,19 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
-                          disabled
+                          
                         >
-                          {owners.map((item, idx) => (
+                          <option value={cookies.cookie.data.id||""}>
+                            원장을 선택해주세요
+                          </option>
+                          <option value={cookies.cookie.data.id||""}>
+                            {cookies.cookie.data.realName||""}
+                          </option>
+                          {/* {owners.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.realName}
                             </option>
-                          ))}
+                          ))} */}
                         </select>
                       ) : (
                         <select
@@ -444,7 +500,7 @@ const Manager_detail = (props) => {
               <div className="row mb-5">
                 {props.detail_num == "0" ? (
                   <div className="col-md-6 fv-row">
-                    <label className="required fs-5 fw-semibold mb-2">ID</label>
+                    <label className="required fs-5 fw-semibold mb-2">ID{data.targetUser.id}</label>
 
                     {/* <select
                     name="position"
