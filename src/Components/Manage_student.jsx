@@ -108,13 +108,44 @@ const Manage_student = (props) => {
         email: "",
         birthDate: "",
         gender: "",
-
+        brand: {
+          id: "",
+          name: "",
+          homePageUrl: "ACTIVE",
+          isManagement: true,
+          status: "",
+          address: "",
+          businessRegistrationNumber: "",
+          createdAt: ""
+        },
+        branch: {
+          id: 1,
+          name: "",
+          serviceDomain: "",
+          businessRegistrationNumber: "",
+          homePageUrl: "",
+          isManagement: true,
+          address: "",
+          division: "",
+          closedTime: {
+            hour: 0,
+            minute: 0,
+            second: 0,
+            nano: 0
+          },
+          status: "",
+          createdAt: ""
+        },
         profileImgUrl: "",
         address: null,
         status: "",
         lastLoginAt: "",
         school: "",
         grade: "",
+        room:{
+          id : "",
+          name : ""
+        },
         darkMode: false,
       });
       reset.current.click();
@@ -138,7 +169,38 @@ const Manage_student = (props) => {
     email: "",
     birthDate: "",
     gender: "",
-
+    brand: {
+      id: "",
+      name: "",
+      homePageUrl: "",
+      isManagement: true,
+      status: "",
+      address: "",
+      businessRegistrationNumber: "",
+      createdAt: ""
+    },
+    branch: {
+      id: 1,
+      name: "",
+      serviceDomain: "",
+      businessRegistrationNumber: "",
+      homePageUrl: "",
+      isManagement: true,
+      address: "",
+      division: "",
+      closedTime: {
+        hour: 0,
+        minute: 0,
+        second: 0,
+        nano: 0
+      },
+      status: "",
+      createdAt: ""
+    },
+    room:{
+      id : "",
+      name : ""
+    },
     profileImgUrl: "",
     address: null,
     status: "",
@@ -370,7 +432,7 @@ const Manage_student = (props) => {
                     <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
                       <div className="row mb-5">
                         {props.detail_num != "0" ? (
-                          <div className="col-md-6 fv-row" hidden>
+                          <div className="col-md-6 fv-row" >
                             <label>브랜드</label>
                             <div>
                               <select
@@ -378,7 +440,9 @@ const Manage_student = (props) => {
                                 data-kt-select2="true"
                                 data-dropdown-parent="#kt_menu_631f0553006ad"
                                 data-allow-clear="true"
+                                disabled
                               >
+                                <option value = {data.brand.id}>{data.brand.name}</option>
                                 {brands.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.name}
@@ -396,7 +460,9 @@ const Manage_student = (props) => {
                                 data-kt-select2="true"
                                 data-dropdown-parent="#kt_menu_631f0553006ad"
                                 data-allow-clear="true"
+                                // disabled
                               >
+                                {/* <option value = {data.brand.id}>{data.brand.name}</option> */}
                                 {brands.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.name}
@@ -407,7 +473,7 @@ const Manage_student = (props) => {
                           </div>
                         )}
                         {props.detail_num != "0" ? (
-                          <div className="col-md-6 fv-row" hidden>
+                          <div className="col-md-6 fv-row" >
                             <label>지점</label>
                             <div>
                               <select
@@ -415,7 +481,9 @@ const Manage_student = (props) => {
                                 data-kt-select2="true"
                                 data-dropdown-parent="#kt_menu_631f0553006ad"
                                 data-allow-clear="true"
+                                disabled
                               >
+                                <option value = {data.branch.id}>{data.branch.name}</option>
                                 {branches.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.name}
@@ -433,7 +501,9 @@ const Manage_student = (props) => {
                                 data-kt-select2="true"
                                 data-dropdown-parent="#kt_menu_631f0553006ad"
                                 data-allow-clear="true"
+                                
                               >
+                                {/* <option value = {data.branch.id}>{data.branch.name}</option> */}
                                 {branches.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.name}
@@ -536,7 +606,9 @@ const Manage_student = (props) => {
                             data-allow-clear="true"
                             key={rooms.id}
                             defaultValue={rooms.name}
+                            
                           >
+                            <option value = {data.room.id}>{data.room.name} </option>
                             {rooms.map((item, idx) => (
                               <option key={idx} value={item.id}>
                                 {item.name}

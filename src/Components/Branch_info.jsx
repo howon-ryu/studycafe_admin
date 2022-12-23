@@ -811,13 +811,14 @@ const Branch_info = (props) => {
                         </label>
                         {cookies.cookie.data.role.id == 1 ? (
                           <div>
-                            {props.detail_num == 0 ? (
+                            {props.detail_num == "0" ? (
                               <select
                                 name="position"
                                 data-control="select2"
                                 data-placeholder="Select a position..."
                                 className="form-select form-select-solid"
                                 defaultValue={data.brand.name}
+                               
                               >
                                 {brands.map((item, idx) => (
                                   <option key={idx} value={item.id}>
@@ -832,6 +833,7 @@ const Branch_info = (props) => {
                                 data-placeholder="Select a position..."
                                 className="form-select form-select-solid"
                                 defaultValue={data.brand.name}
+                                disabled
                               >
                                 <option value={data.brand.id}>
                                   {data.brand.name}
@@ -846,7 +848,7 @@ const Branch_info = (props) => {
                           </div>
                         ) : (
                           <div>
-                            {props.detail_num == 0 ? (
+                            {props.detail_num == "0" ? (
                               <select
                                 name="position"
                                 data-control="select2"
@@ -890,13 +892,14 @@ const Branch_info = (props) => {
                         <label className="fs-5 fw-semibold mb-2">원장</label>
                         {cookies.cookie.data.role.id == 1 ? (
                           <div>
-                            {props.detail_num == 0 ? (
+                            {props.detail_num == "0" ? (
                               <select
                                 name="position"
                                 data-control="select2"
                                 data-placeholder="Select a position..."
                                 className="form-select form-select-solid"
                                 defaultValue={data.owner.id}
+                                
                               >
                                 {owners.map((item, idx) => (
                                   <option key={idx} value={item.id}>
@@ -911,6 +914,7 @@ const Branch_info = (props) => {
                                 data-placeholder="Select a position..."
                                 className="form-select form-select-solid"
                                 defaultValue={data.owner.id}
+                                disabled
                               >
                                 <option value={data.owner.id}>
                                   {data.owner.realName}({data.owner.username})
@@ -928,13 +932,15 @@ const Branch_info = (props) => {
                           </div>
                         ) : cookies.cookie.data.role.id == 2 ? (
                           <div>
-                            {props.detail_num == 0 ? (
+                            {props.detail_num == "0" ? (
                               <select
                                 name="position"
                                 data-control="select2"
                                 data-placeholder="Select a position..."
                                 className="form-select form-select-solid"
                                 defaultValue={data.owner.id}
+                                
+                                
                               >
                                 {owners.map((item, idx) => (
                                   <option key={idx} value={item.id}>
@@ -949,6 +955,7 @@ const Branch_info = (props) => {
                                 data-placeholder="Select a position..."
                                 className="form-select form-select-solid"
                                 defaultValue={data.owner.id}
+                                disabled
                               >
                                 <option value={data.owner.id}>
                                   {data.owner.realName}({data.owner.username})
@@ -966,7 +973,7 @@ const Branch_info = (props) => {
                           </div>
                         ) : (
                           <div>
-                            {props.detail_num == 0 ? (
+                            {props.detail_num == "0" ? (
                               <select
                                 name="position"
                                 data-control="select2"
@@ -1090,6 +1097,7 @@ const Branch_info = (props) => {
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
                             defaultValue={data.manager.id}
+                            
                           >
                             {managers.map((item, idx) => (
                               <option key={idx} value={item.id}>
@@ -1104,6 +1112,7 @@ const Branch_info = (props) => {
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
                             defaultValue={data.owner.id}
+                            disabled
                           >
                             <option value={data.manager.id}>
                               {data.manager.realName}({data.manager.username})

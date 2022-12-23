@@ -213,13 +213,14 @@ const Branch_detail = (props) => {
                   <label className="required fs-5 fw-semibold mb-2">본사</label>
                   {cookies.cookie.data.role.id == 1 ? (
                     <div>
-                      {props.detail_num == 0 ? (
+                      {props.detail_num == "0" ? (
                         <select
                           name="position"
                           data-control="select2"
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue={data.brand.name}
+                          
                         >
                           {brands.map((item, idx) => (
                             <option key={idx} value={item.id}>
@@ -234,6 +235,7 @@ const Branch_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue={data.brand.name}
+                          disabled
                         >
                           <option value={data.brand.id}>
                             {data.brand.name}
@@ -248,7 +250,7 @@ const Branch_detail = (props) => {
                     </div>
                   ) : (
                     <div>
-                      {props.detail_num == 0 ? (
+                      {props.detail_num == "0" ? (
                         <select
                           name="position"
                           data-control="select2"
@@ -508,6 +510,7 @@ const Branch_detail = (props) => {
                   data-hide-search="true"
                   data-placeholder="Filter"
                   className="form-select form-select-solid form-select-sm fw-bold w-100px"
+                  disabled
                 >
                   <option value="1" selected="selected">
                     사용

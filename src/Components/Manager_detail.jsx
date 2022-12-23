@@ -238,13 +238,14 @@ const Manager_detail = (props) => {
                   <label className="required fs-5 fw-semibold mb-2">본사</label>
                   {cookies.cookie.data.role.id == 1 ? (
                     <div>
-                      {props.detail_num == 0 ? (
+                      {props.detail_num == "0" ? (
                         <select
                           name="position"
                           data-control="select2"
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
+                          
                         >
                           {brands.map((item, idx) => (
                             <option key={idx} value={item.id}>
@@ -259,6 +260,7 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
+                          disabled
                         >
                           <option value={data.brand.id}>
                             {data.brand.name}
@@ -275,7 +277,7 @@ const Manager_detail = (props) => {
                     </div>
                   ) : (
                     <div>
-                      {props.detail_num == 0 ? (
+                      {props.detail_num == "0" ? (
                         <select
                           name="position"
                           data-control="select2"
@@ -321,13 +323,14 @@ const Manager_detail = (props) => {
                   <label className="fs-5 fw-semibold mb-2">원장</label>
                   {cookies.cookie.data.role.id == 1 ? (
                     <div>
-                      {props.detail_num == 0 ? (
+                      {props.detail_num == "0" ? (
                         <select
                           name="position"
                           data-control="select2"
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
+                          
                         >
                           {owners.map((item, idx) => (
                             <option key={idx} value={item.id}>
@@ -342,6 +345,7 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
+                          disabled
                         >
                           <option value={data.targetUser.id || data.id}>
                             {data.targetUser.realName || data.realName}
@@ -365,6 +369,7 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
+                          
                         >
                           {owners.map((item, idx) => (
                             <option key={idx} value={item.id}>
@@ -379,6 +384,7 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
+                          disabledv
                         >
                           <option value={data.targetUser.id || data.id}>
                             {data.targetUser.realName || data.realName}
@@ -395,7 +401,7 @@ const Manager_detail = (props) => {
                     </div>
                   ) : (
                     <div>
-                      {props.detail_num == 0 ? (
+                      {props.detail_num == "0" ? (
                         <select
                           name="position"
                           data-control="select2"

@@ -242,7 +242,7 @@ const Day_report = (props) => {
                             {data.user.room.name}
                           </td>
                           <td>{data.user.seatNumber}</td>
-                          <td>{data.user.username}</td>
+                          <td>{data.user.realName}</td>
                           <td>{data.totalStudyTime}</td>
                           <td>{data.nowStudyTime}</td>
                           <td>{data.toDoCount}</td>
