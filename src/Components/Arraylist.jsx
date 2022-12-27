@@ -1150,7 +1150,7 @@ const AcademyList = (props) => {
                           <div>
                             {props.flag == "office__branch_info" ? (
                               <div className="mb-10">
-                                <label>원장</label>
+                                <label>원장명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1171,7 +1171,7 @@ const AcademyList = (props) => {
                               </div>
                             ) : props.flag == "office__manager_office" ? (
                               <div className="mb-10">
-                                <label>원장</label>
+                                <label>원장명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1192,7 +1192,7 @@ const AcademyList = (props) => {
                               </div>
                             ) : (
                               <div className="mb-10" hidden>
-                                <label>원장</label>
+                                <label>원장명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1217,7 +1217,7 @@ const AcademyList = (props) => {
                           <div>
                             {props.flag == "office__branch_info" ? (
                               <div className="mb-10">
-                                <label>원장</label>
+                                <label>원장명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1238,7 +1238,7 @@ const AcademyList = (props) => {
                               </div>
                             ) : (
                               <div className="mb-10" hidden>
-                                <label>원장</label>
+                                <label>원장명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1263,7 +1263,7 @@ const AcademyList = (props) => {
                           <div>
                             {props.flag == "office__branch_info" ? (
                               <div className="mb-10">
-                                <label>원장</label>
+                                <label>원장명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1288,7 +1288,7 @@ const AcademyList = (props) => {
                               </div>
                             ) : (
                               <div className="mb-10" hidden>
-                                <label>원장</label>
+                                <label>원장명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1741,7 +1741,7 @@ const AcademyList = (props) => {
                       <th className="ps-4 min-w-25px">NO.</th>
                       <th className="min-w-25px n_empty"></th>
                       {props.flag === "office__head_office" ? (
-                        <th className="min-w-150px">지점명/대표자명</th>
+                        <th className="min-w-150px">본사명/대표자명</th>
                       ) : props.flag === "office__branch_office" ? (
                         <th className="min-w-150px">원장명</th>
                       ) : props.flag === "student__manage_info" ? (
