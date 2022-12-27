@@ -209,7 +209,7 @@ const Branch_detail = (props) => {
       <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap ">
         <form
           onSubmit={function (event) {
-            //event.preventDefault();
+            event.preventDefault();
             handleSubmit(event);
           }}
         >
@@ -389,7 +389,7 @@ const Branch_detail = (props) => {
                   </label>
 
                   <input
-                    type="tel"
+                    type="text"
                     className="form-control"
                     defaultValue={data.phone}
                   />

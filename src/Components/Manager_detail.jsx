@@ -611,7 +611,7 @@ const Manager_detail = (props) => {
                   </label>
 
                   <input
-                    type="tel"
+                    type="text"
                     className="form-control"
                     defaultValue={data.phone}
                   />

@@ -1651,6 +1651,7 @@ const Branch_info = (props) => {
                                 // defaultValue={owners2[0].id}
                                 onChange={set_owner_onfilter}
                               >
+                                <option value="">원장을 선택해 주세요</option>
                                 {owners2.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.realName}
@@ -1691,6 +1692,7 @@ const Branch_info = (props) => {
                                 onChange={set_owner_onfilter}
                                 // defaultValue={owners2[0].id}
                               >
+                                <option value="">원장을 선택해 주세요</option>
                                 {owners2.map((item, idx) => (
                                   <option key={idx} value={item.id}>
                                     {item.realName}
@@ -1731,9 +1733,7 @@ const Branch_info = (props) => {
                                 onChange={set_owner_onfilter}
                                 // disabled
                               >
-                                <option value={cookies.cookie.data.id}>
-                                  원장을 선택해 주세요
-                                </option>
+                                <option value="">원장을 선택해 주세요</option>
                                 <option value={cookies.cookie.data.id}>
                                   {cookies.cookie.data.realName}(
                                   {cookies.cookie.data.username})
@@ -1854,6 +1854,7 @@ const Branch_info = (props) => {
                             className="form-select form-select-solid"
                             defaultValue={data.manager.id}
                           >
+                            <option value="">매니저를 선택해 주세요</option>
                             {managers2.map((item, idx) => (
                               <option key={idx} value={item.id}>
                                 {item.realName}
