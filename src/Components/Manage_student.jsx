@@ -469,21 +469,21 @@ const Manage_student = (props) => {
         cu = "삭제";
       }
       const data_t = {
-        username: e.target[13].value,
-        password: e.target[6].value,
-        password2: e.target[7].value,
+        username: e.target[3].value,
+        password: e.target[4].value,
+        password2: e.target[5].value,
         realName: e.target[2].value,
         gender: "남자",
-        address: e.target[5].value,
-        phone: e.target[3].value,
-        email: e.target[4].value,
-        birthDate: e.target[12].value,
-        school: e.target[10].value,
-        grade: e.target[11].value,
+        address: e.target[8].value,
+        phone: e.target[6].value,
+        email: e.target[7].value,
+        birthDate: "1999-01-01",
+        school: e.target[9].value,
+        grade: e.target[10].value,
         brandId: e.target[0].value,
         branchId: e.target[1].value,
-        roomId: e.target[8].value,
-        seatNumber: e.target[9].value,
+        roomId: e.target[11].value,
+        seatNumber: e.target[12].value,
         status: cu,
       };
 
@@ -529,18 +529,18 @@ const Manage_student = (props) => {
         cu = "삭제";
       }
       const data_t = {
-        password: e.target[6].value,
-        password2: e.target[7].value,
+        password: e.target[4].value,
+        password2: e.target[5].value,
         realName: e.target[2].value,
-        username: e.target[13].value,
-        address: e.target[5].value,
-        phone: e.target[3].value,
-        email: e.target[4].value,
-        birthDate: e.target[12].value,
-        school: e.target[10].value,
-        grade: e.target[11].value,
-        roomId: e.target[8].value,
-        seatNumber: e.target[9].value,
+        username: e.target[3].value,
+        address: e.target[8].value,
+        phone: e.target[6].value,
+        email: e.target[7].value,
+        birthDate: "1999-01-01",
+        school: e.target[9].value,
+        grade: e.target[10].value,
+        roomId: e.target[11].value,
+        seatNumber: e.targetp[12].value,
         status: cu,
       };
 
@@ -774,42 +774,12 @@ const Manage_student = (props) => {
                         </div>
 
                         <div className="col-md-6 fv-row">
-                          <label className="required fs-5 fw-semibold mb-2">
-                            전화번호
-                          </label>
+                          <label className="fs-5 fw-semibold mb-2">ID</label>
 
                           <input
                             type="text"
-                            className="form-control"
-                            defaultValue={data.phone}
-                            name=""
-                          />
-                        </div>
-                      </div>
-
-                      <div className="row mb-5">
-                        <div className="col-md-6 fv-row">
-                          <label className="required fs-5 fw-semibold mb-2">
-                            이메일
-                          </label>
-
-                          <input
-                            type="email"
-                            className="form-control"
-                            defaultValue={data.email}
-                          />
-                        </div>
-
-                        <div className="col-md-6 fv-row">
-                          <label className="required fs-5 fw-semibold mb-2">
-                            거주지
-                          </label>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            defaultValue={data.address}
-                            name=""
+                            className="form-control "
+                            defaultValue={data.username}
                           />
                         </div>
                       </div>
@@ -838,6 +808,91 @@ const Manage_student = (props) => {
                             placeholder=""
                             name=""
                           />
+                        </div>
+                      </div>
+                      <div className="row mb-5">
+                        <div className="col-md-6 fv-row">
+                          <label className="required fs-5 fw-semibold mb-2">
+                            전화번호
+                          </label>
+
+                          <input
+                            type="text"
+                            className="form-control"
+                            defaultValue={data.phone}
+                            name=""
+                          />
+                        </div>
+                        <div className="col-md-6 fv-row">
+                          <label className="required fs-5 fw-semibold mb-2">
+                            이메일
+                          </label>
+
+                          <input
+                            type="email"
+                            className="form-control"
+                            defaultValue={data.email}
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-5 ">
+                        <div className="col-md-12 fv-row">
+                          <label className="required fs-5 fw-semibold mb-2">
+                            거주지
+                          </label>
+
+                          <input
+                            type="text"
+                            className="form-control"
+                            defaultValue={data.address}
+                            name=""
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-5 ">
+                        <div className="col-md-6 fv-row">
+                          <label className="required fs-5 fw-semibold mb-2">
+                            학교
+                          </label>
+
+                          <input
+                            type="text"
+                            className="form-control"
+                            defaultValue={data.school}
+                            name=""
+                          />
+                        </div>
+                        <div className="col-md-6 fv-row">
+                          <label className="fs-5 fw-semibold mb-2">학년</label>
+
+                          <select
+                            className="form-select "
+                            data-kt-select2="true"
+                            data-dropdown-parent="#kt_menu_631f0553006ad"
+                            data-allow-clear="true"
+                            key={data.id}
+                            defaultValue={data.grade}
+                          >
+                            <option value="중1">중1</option>
+                            <option value="중2">중2</option>
+                            <option value="중3">중3</option>
+                            <option value="고1">고1</option>
+                            <option value="고2">고2</option>
+
+                            <option value="고3">고3</option>
+                            {/* <option value="대학생">대학생</option> */}
+                            <option value="재수">재수</option>
+                            <option value="삼수">삼수</option>
+                            <option value="사수">사수</option>
+                            <option value="n수">n수</option>
+                            <option value="공시">공시</option>
+                            <option value="기타">기타</option>
+                          </select>
+                          {/* <input
+                            type="text"
+                            className="form-control "
+                            defaultValue={data.grade}
+                          /> */}
                         </div>
                       </div>
 
@@ -895,54 +950,8 @@ const Manage_student = (props) => {
                           />
                         </div>
                       </div>
-                      <div className="row mb-5 ">
-                        <div className="col-md-6 fv-row">
-                          <label className="required fs-5 fw-semibold mb-2">
-                            학교
-                          </label>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            defaultValue={data.school}
-                            name=""
-                          />
-                        </div>
-                        <div className="col-md-6 fv-row">
-                          <label className="fs-5 fw-semibold mb-2">학년</label>
-
-                          <select
-                            className="form-select "
-                            data-kt-select2="true"
-                            data-dropdown-parent="#kt_menu_631f0553006ad"
-                            data-allow-clear="true"
-                            key={data.id}
-                            defaultValue={data.grade}
-                          >
-                            <option value="중1">중1</option>
-                            <option value="중2">중2</option>
-                            <option value="중3">중3</option>
-                            <option value="고1">고1</option>
-                            <option value="고2">고2</option>
-
-                            <option value="고3">고3</option>
-                            {/* <option value="대학생">대학생</option> */}
-                            <option value="재수">재수</option>
-                            <option value="삼수">삼수</option>
-                            <option value="사수">사수</option>
-                            <option value="n수">n수</option>
-                            <option value="공시">공시</option>
-                            <option value="기타">기타</option>
-                          </select>
-                          {/* <input
-                            type="text"
-                            className="form-control "
-                            defaultValue={data.grade}
-                          /> */}
-                        </div>
-                      </div>
                       <div className="row mb-5 row__line">
-                        <div className="col-md-6 fv-row">
+                        <div className="col-md-6 fv-row" hidden>
                           <label className="fs-5 fw-semibold mb-2">
                             생년월일
                           </label>
@@ -951,15 +960,6 @@ const Manage_student = (props) => {
                             type="date"
                             className="form-control "
                             defaultValue={data.birthDate}
-                          />
-                        </div>
-                        <div className="col-md-6 fv-row">
-                          <label className="fs-5 fw-semibold mb-2">ID</label>
-
-                          <input
-                            type="text"
-                            className="form-control "
-                            defaultValue={data.username}
                           />
                         </div>
                       </div>

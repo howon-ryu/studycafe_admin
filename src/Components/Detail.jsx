@@ -366,7 +366,7 @@ const Detail = (props) => {
                 />
               </div>
               <div className="col-md-6 fv-row">
-                <label className="fs-5 fw-semibold mb-2">대표 이메일</label>
+                <label className="fs-5 fw-semibold mb-2">이메일</label>
 
                 <input
                   type="text"

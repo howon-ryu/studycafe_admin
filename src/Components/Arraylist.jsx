@@ -876,8 +876,8 @@ const AcademyList = (props) => {
   function listclick(value) {
     setclickflag("1");
     const tempbtn = document.getElementsByClassName(`list_` + value);
-    tempbtn[0].classList.add("on");
-    console.log("tempbtn", tempbtn[0].classList);
+    // tempbtn[0].classList.add("on");
+    // console.log("tempbtn", tempbtn[0].classList);
     props.setDetailNum(value);
     navigate({
       search: createSearchParams({
@@ -1684,6 +1684,7 @@ const AcademyList = (props) => {
                     width="8.15546"
                     height="2"
                     rx="1"
+                    listclick
                     transform="rotate(45 17.0365 15.1223)"
                     fill="currentColor"
                   />

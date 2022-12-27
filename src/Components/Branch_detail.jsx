@@ -330,7 +330,7 @@ const Branch_detail = (props) => {
                 {props.detail_num == "0" ? (
                   <div className="col-md-6 fv-row">
                     <label className="required fs-5 fw-semibold mb-2">
-                      원장 ID
+                      아이디
                     </label>
 
                     <input
