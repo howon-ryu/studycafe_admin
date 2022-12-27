@@ -132,7 +132,7 @@ const Detail = (props) => {
       // alert(e.target[1].value);
       const data_t = {
         name: e.target[0].value,
-        serviceDomian: e.target[10].value,
+        serviceDomain: e.target[10].value,
         homePageUrl: e.target[9].value,
         isManagement: false,
         businessRegistrationNumber: e.target[1].value,
@@ -255,7 +255,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          event.preventDefault();
+          //event.preventDefault();
           handleSubmit(event);
         }}
       >

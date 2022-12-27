@@ -24,7 +24,6 @@ function Modal({ onClickToggleModal, flag, children }) {
   return (
     <ModalContainer>
       {flag == "office_branch_info_group" ? (
-        
         <DialogBox2>
           <>{children}</>
         </DialogBox2>
@@ -60,7 +59,6 @@ const ModalContainer = styled.div`
   justify-content: center;
   position: fixed;
   vertical-align: top;
-  
 `;
 
 const DialogBox = styled.dialog`
@@ -69,13 +67,14 @@ const DialogBox = styled.dialog`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: fixed;
   border: none;
   border-radius: 3px;
   box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
   box-sizing: border-box;
   background-color: white;
   z-index: 10000;
-  
+  margin-bottom: 105%;
   margin-left: 40%;
 `;
 const DialogBox2 = styled.dialog`
@@ -91,8 +90,8 @@ const DialogBox2 = styled.dialog`
   box-sizing: border-box;
   background-color: white;
   z-index: 10000;
-  margin-bottom : 20%;
-  
+  margin-bottom: 20%;
+
   margin-left: 40%;
 `;
 const DialogBox3 = styled.dialog`
@@ -107,8 +106,8 @@ const DialogBox3 = styled.dialog`
   box-sizing: border-box;
   background-color: white;
   z-index: 10000;
-  margin-bottom : 20%;
-  
+  margin-bottom: 20%;
+
   margin-left: 40%;
 `;
 

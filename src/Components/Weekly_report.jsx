@@ -437,7 +437,7 @@ const Weekly_report = (props) => {
                         <th className="min-w-50px">계획</th>
                         <th className="min-w-50px">실천</th>
                         <th className="min-w-50px">실천률</th>
-                        <th className="min-w-80px">학습컨티션</th>
+                        <th className="min-w-80px">학습컨디션</th>
                         <th className="min-w-50px">집중</th>
                         <th className="min-w-50px">성취감</th>
                         <th className="min-w-50px">레포트</th>
