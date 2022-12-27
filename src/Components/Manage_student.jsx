@@ -12,7 +12,7 @@ const Manage_student = (props) => {
   const [rooms, setrooms] = useState([]);
   const [rooms2, setrooms2] = useState([]);
   const [branches, setbranches] = useState([]);
-  const [branches2, setbranches2] = useState([{brand:{id:"1"},id:"1"}]);
+  const [branches2, setbranches2] = useState([{ brand: { id: "1" }, id: "1" }]);
   const [cookies, setCookie, removeCookie] = useCookies();
   let student_num;
   function searchBrands(props) {
@@ -78,15 +78,34 @@ const Manage_student = (props) => {
         console.log("실패");
       });
   }
-  useEffect(()=>{
-    
-    searchRooms_filter_basebranch(event2)
-  },[branches2])
-  function set_brandid_onfilter(e){
-    console.log("1234",e.target.value);
+  useEffect(() => {
+    searchRooms_filter_basebranch(event2);
+  }, [branches2]);
+  function set_brandid_onfilter(e) {
+    console.log("1234", e.target.value);
     //let owner_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
-    let branch_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
-    let room_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:e.target.value},4:{value:""},5:{value:""},6:{value:""}}}
+    let branch_props = {
+      target: {
+        0: { value: e.target.value },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: "" },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    let room_props = {
+      target: {
+        0: { value: e.target.value },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: e.target.value },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
     //searchowner_filter(owner_props);
     searchBranches_filter(branch_props);
     searchRooms_filter_basebranch(room_props);
@@ -143,46 +162,66 @@ const Manage_student = (props) => {
         console.log("실패");
       });
   }
-  function set_branch_onfilter(e){
-    console.log("1234",e.target);
-    console.log("1234",e.target.value);
-    
-    let room_props = {target:{0:{value:""},1:{value:""},2:{value:""},3:{value:e.target.value},4:{value:""},5:{value:""},6:{value:""}}}
-    let group_props = {target:{0:{value:""},1:{value:""},2:{value:""},3:{value:e.target.value},4:{value:""},5:{value:""},6:{value:""}}}
-    console.log("1234pp",room_props);
-    
+  function set_branch_onfilter(e) {
+    console.log("1234", e.target);
+    console.log("1234", e.target.value);
+
+    let room_props = {
+      target: {
+        0: { value: "" },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: e.target.value },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    let group_props = {
+      target: {
+        0: { value: "" },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: e.target.value },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    console.log("1234pp", room_props);
+
     searchRooms_filter_basebranch(room_props);
-    
   }
   function searchRooms_filter_basebranch(props) {
     let var_status = "";
-    console.log("12344pp",props);
-    if(props.target[3].value!=""){
-    if (props == undefined) {
-      var_status = "";
-    } else {
-      var_status = props.target[6].value;
-    }
-    const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches/"+props.target[3].value+"/rooms";
-    axios
-      .get(url_set, {
-        params: {
-          status: var_status,
-        },
-      })
-      .then(function (response) {
-        //setdata(response.data);
-        setrooms2(response.data);
-
-        console.log("rooms:", response.data);
-        console.log("성공");
-      })
-      .catch(function (error) {
-        console.log("실패");
-      });}else{
-        searchRooms_filter(event2)
+    console.log("12344pp", props);
+    if (props.target[3].value != "") {
+      if (props == undefined) {
+        var_status = "";
+      } else {
+        var_status = props.target[6].value;
       }
+      const url = "https://farm01.bitlworks.co.kr/api/v1/";
+      let url_set = url + "branches/" + props.target[3].value + "/rooms";
+      axios
+        .get(url_set, {
+          params: {
+            status: var_status,
+          },
+        })
+        .then(function (response) {
+          //setdata(response.data);
+          setrooms2(response.data);
+
+          console.log("rooms:", response.data);
+          console.log("성공");
+        })
+        .catch(function (error) {
+          console.log("실패");
+        });
+    } else {
+      searchRooms_filter(event2);
+    }
   }
   let event2 = {
     target: {
@@ -249,7 +288,7 @@ const Manage_student = (props) => {
           status: "",
           address: "",
           businessRegistrationNumber: "",
-          createdAt: ""
+          createdAt: "",
         },
         branch: {
           id: 1,
@@ -264,10 +303,10 @@ const Manage_student = (props) => {
             hour: 0,
             minute: 0,
             second: 0,
-            nano: 0
+            nano: 0,
           },
           status: "",
-          createdAt: ""
+          createdAt: "",
         },
         profileImgUrl: "",
         address: null,
@@ -275,9 +314,9 @@ const Manage_student = (props) => {
         lastLoginAt: "",
         school: "",
         grade: "",
-        room:{
-          id : "",
-          name : ""
+        room: {
+          id: "",
+          name: "",
         },
         darkMode: false,
       });
@@ -310,7 +349,7 @@ const Manage_student = (props) => {
       status: "",
       address: "",
       businessRegistrationNumber: "",
-      createdAt: ""
+      createdAt: "",
     },
     branch: {
       id: 1,
@@ -325,14 +364,14 @@ const Manage_student = (props) => {
         hour: 0,
         minute: 0,
         second: 0,
-        nano: 0
+        nano: 0,
       },
       status: "",
-      createdAt: ""
+      createdAt: "",
     },
-    room:{
-      id : "",
-      name : ""
+    room: {
+      id: "",
+      name: "",
     },
     profileImgUrl: "",
     address: null,
@@ -418,7 +457,17 @@ const Manage_student = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[14].checked;
+      let cu2 = e.target[15].checked;
+      let cu3 = e.target[16].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         username: e.target[13].value,
         password: e.target[6].value,
@@ -435,6 +484,7 @@ const Manage_student = (props) => {
         branchId: e.target[1].value,
         roomId: e.target[8].value,
         seatNumber: e.target[9].value,
+        status: cu,
       };
 
       const headers = { "header-name": "value" };
@@ -467,7 +517,17 @@ const Manage_student = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[14].checked;
+      let cu2 = e.target[15].checked;
+      let cu3 = e.target[16].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         password: e.target[6].value,
         password2: e.target[7].value,
@@ -481,6 +541,7 @@ const Manage_student = (props) => {
         grade: e.target[11].value,
         roomId: e.target[8].value,
         seatNumber: e.target[9].value,
+        status: cu,
       };
 
       const headers = { "header-name": "value" };
@@ -557,37 +618,37 @@ const Manage_student = (props) => {
               <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
                 <form
                   onSubmit={function (event) {
-                    //event.preventDefault();
+                    event.preventDefault();
                     handleSubmit(event);
                   }}
                 >
                   <div className="card card-flush h-xl-100 card__right">
                     <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
                       <div className="row mb-5">
-                        
-                          
-                            <div className="col-md-6 fv-row" >
-                              <label>본사</label>
-                              {cookies.cookie.data.role.id ==1 ?(
-                              <div>
-                              {props.detail_num != "0" ? (<div>
-                                <select
-                                  className="form-select form-select-solid"
-                                  data-kt-select2="true"
-                                  data-dropdown-parent="#kt_menu_631f0553006ad"
-                                  data-allow-clear="true"
-                                  disabled
-                                >
-                                  <option value = {data.brand.id}>{data.brand.name}</option>
-                                  {brands.map((item, idx) => (
-                                    <option key={idx} value={item.id}>
-                                      {item.name}
+                        <div className="col-md-6 fv-row">
+                          <label>본사</label>
+                          {cookies.cookie.data.role.id == 1 ? (
+                            <div>
+                              {props.detail_num != "0" ? (
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                    disabled
+                                  >
+                                    <option value={data.brand.id}>
+                                      {data.brand.name}
                                     </option>
-                                  ))}
-                                </select>
-                              </div>):(
-                              
-                              
+                                    {brands.map((item, idx) => (
+                                      <option key={idx} value={item.id}>
+                                        {item.name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              ) : (
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -597,7 +658,9 @@ const Manage_student = (props) => {
                                     onChange={set_brandid_onfilter}
                                     // disabled
                                   >
-                                    <option value = "">본사를 선택해주세요</option>
+                                    <option value="">
+                                      본사를 선택해주세요
+                                    </option>
                                     {brands.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.name}
@@ -605,98 +668,99 @@ const Manage_student = (props) => {
                                     ))}
                                   </select>
                                 </div>
-                            
-                            )}
-                              
+                              )}
                             </div>
                           ) : (
-                            
-                        
-                        <div>
-                          {props.detail_num != "0" ? (
-                            
-                              <div>
-                                <select
-                                  className="form-select form-select-solid"
-                                  data-kt-select2="true"
-                                  data-dropdown-parent="#kt_menu_631f0553006ad"
-                                  data-allow-clear="true"
-                                  disabled
-                                >
-                                  
-                                  <option value = {data.brand.id}>{data.brand.name}</option>
-                                  {/* {brands.map((item, idx) => (
+                            <div>
+                              {props.detail_num != "0" ? (
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                    disabled
+                                  >
+                                    <option value={data.brand.id}>
+                                      {data.brand.name}
+                                    </option>
+                                    {/* {brands.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
                                     </option>
                                   ))} */}
-                                </select>
-                              </div>
-                            
-                          ) : (
-                            
-                              <div>
-                                <select
-                                  className="form-select form-select-solid"
-                                  data-kt-select2="true"
-                                  data-dropdown-parent="#kt_menu_631f0553006ad"
-                                  data-allow-clear="true"
-                                  onChange={set_brandid_onfilter}
-                                >
-                                  <option value = "">본사를 선택해주세요</option>
-                                  <option value = {cookies.cookie.data.brand.id}>{cookies.cookie.data.brand.name}</option>
-                                  {/* {brands.map((item, idx) => (
+                                  </select>
+                                </div>
+                              ) : (
+                                <div>
+                                  <select
+                                    className="form-select form-select-solid"
+                                    data-kt-select2="true"
+                                    data-dropdown-parent="#kt_menu_631f0553006ad"
+                                    data-allow-clear="true"
+                                    onChange={set_brandid_onfilter}
+                                  >
+                                    <option value="">
+                                      본사를 선택해주세요
+                                    </option>
+                                    <option
+                                      value={cookies.cookie.data.brand.id}
+                                    >
+                                      {cookies.cookie.data.brand.name}
+                                    </option>
+                                    {/* {brands.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
                                     </option>
                                   ))} */}
-                                </select>
-                              </div>
-                            
+                                  </select>
+                                </div>
+                              )}
+                            </div>
                           )}
-                        </div>)}
-                        
                         </div>
-                            <div className="col-md-6 fv-row" >
-                              <label>지점</label>
-                              {props.detail_num != "0" ? (<div>
-                                <select
-                                  className="form-select form-select-solid"
-                                  data-kt-select2="true"
-                                  data-dropdown-parent="#kt_menu_631f0553006ad"
-                                  data-allow-clear="true"
-                                  disabled
-                                >
-                                  <option value = {data.branch.id}>{data.branch.name}</option>
-                                  {branches.map((item, idx) => (
-                                    <option key={idx} value={item.id}>
-                                      {item.name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>):(<div>
-                                <select
-                                  className="form-select form-select-solid"
-                                  data-kt-select2="true"
-                                  data-dropdown-parent="#kt_menu_631f0553006ad"
-                                  data-allow-clear="true"
-                                  onChange={set_branch_onfilter} 
-                                >
-                                  <option value = "">본사를 선택해주세요</option>
-                                  {branches2.map((item, idx) => (
-                                    <option key={idx} value={item.id}>
-                                      {item.name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>)}
-                              
+                        <div className="col-md-6 fv-row">
+                          <label>지점</label>
+                          {props.detail_num != "0" ? (
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                                disabled
+                              >
+                                <option value={data.branch.id}>
+                                  {data.branch.name}
+                                </option>
+                                {branches.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
                             </div>
-                          
-                          
-                        
+                          ) : (
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                                onChange={set_branch_onfilter}
+                              >
+                                <option value="">본사를 선택해주세요</option>
+                                {branches2.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          )}
                         </div>
-                        <div className="row mb-5">
+                      </div>
+                      <div className="row mb-5">
                         <div className="col-md-6 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
                             이름
@@ -782,48 +846,44 @@ const Manage_student = (props) => {
                           <label className="required fs-5 fw-semibold mb-2">
                             학습관
                           </label>
-                          {props.detail_num =="0"?(  
-                          <div>
-                          <select
-                            className="form-select "
-                            data-kt-select2="true"
-                            data-dropdown-parent="#kt_menu_631f0553006ad"
-                            data-allow-clear="true"
-                            
-                            defaultValue={rooms.name}
-                            
-                          >
-                            <option value = "">학습관을 선택해주세요 </option>
-                            
-                            {rooms2.map((item, idx) => (
-                              <option key={idx} value={item.id}>
-                                {item.name}
-                              </option>
-                            ))}
-                          </select>
-                          </div>
-                          ):(
+                          {props.detail_num == "0" ? (
                             <div>
-                            <select
-                              className="form-select "
-                              data-kt-select2="true"
-                              data-dropdown-parent="#kt_menu_631f0553006ad"
-                              data-allow-clear="true"
-                              
-                              defaultValue={rooms.name}
-                              
-                            >
-                              <option value = {data.room.id}>{data.room.name} </option>
-                              {rooms2.map((item, idx) => (
-                                <option key={idx} value={item.id}>
-                                  {item.name}
-                                </option>
-                              ))}
-                            </select>
-                            </div>
+                              <select
+                                className="form-select "
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                                defaultValue={rooms.name}
+                              >
+                                <option value="">학습관을 선택해주세요 </option>
 
+                                {rooms2.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          ) : (
+                            <div>
+                              <select
+                                className="form-select "
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                                defaultValue={rooms.name}
+                              >
+                                <option value={data.room.id}>
+                                  {data.room.name}{" "}
+                                </option>
+                                {rooms2.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
                           )}
-                        
                         </div>
                         <div className="col-md-6 fv-row">
                           <label className="fs-5 fw-semibold mb-2">좌석</label>
@@ -866,6 +926,7 @@ const Manage_student = (props) => {
                             <option value="고2">고2</option>
 
                             <option value="고3">고3</option>
+                            <option value="대학생">대학생</option>
                             <option value="재수">재수</option>
                             <option value="삼수">삼수</option>
                             <option value="사수">사수</option>
@@ -900,6 +961,42 @@ const Manage_student = (props) => {
                             className="form-control "
                             defaultValue={data.username}
                           />
+                        </div>
+                      </div>
+                      <div className="col-md-4 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">상태</label>
+
+                        <div className="d-flex check__use_wrap">
+                          <div className="form-check form-check-custom form-check-solid me-5 check__use">
+                            <input
+                              className="form-check-input check__use_input"
+                              type="radio"
+                              defaultValue="사용"
+                              name="choice_use"
+                              defaultChecked={data.status == "사용"}
+                            />
+                            <label className="form-check-label">사용</label>
+                          </div>
+                          <div className="form-check form-check-custom form-check-solid me-5 check__hold">
+                            <input
+                              className="form-check-input check__hold_input"
+                              type="radio"
+                              defaultValue="대기"
+                              name="choice_use"
+                              defaultChecked={data.status == "대기"}
+                            />
+                            <label className="form-check-label">대기</label>
+                          </div>
+                          <div className="form-check form-check-custom form-check-solid check__delet use">
+                            <input
+                              className="form-check-input check__delet_input"
+                              type="radio"
+                              defaultValue="삭제"
+                              name="choice_use"
+                              defaultChecked={data.status == "식제"}
+                            />
+                            <label className="form-check-label">삭제</label>
+                          </div>
                         </div>
                       </div>
                     </div>

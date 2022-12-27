@@ -146,6 +146,7 @@ const Detail = (props) => {
           email: e.target[7].value,
           username: e.target[3].value,
           address: e.target[8].value,
+          status: cu,
           birthDate: "1999-05-01",
         },
       };
@@ -215,6 +216,7 @@ const Detail = (props) => {
           username: e.target[3].value,
           address: e.target[8].value,
           birthDate: "1999-05-01",
+          status: cu,
         },
       };
 
@@ -255,7 +257,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          //event.preventDefault();
+          event.preventDefault();
           handleSubmit(event);
         }}
       >
