@@ -540,7 +540,7 @@ const Manage_student = (props) => {
         school: e.target[9].value,
         grade: e.target[10].value,
         roomId: e.target[11].value,
-        seatNumber: e.targetp[12].value,
+        seatNumber: e.target[12].value,
         status: cu,
       };
 

@@ -875,15 +875,44 @@ const AcademyList = (props) => {
 
   function listclick(value) {
     setclickflag("1");
+
     const tempbtn = document.getElementsByClassName(`list_` + value);
-    // tempbtn[0].classList.add("on");
-    // console.log("tempbtn", tempbtn[0].classList);
+    tempbtn[0].classList.add("on");
+    console.log("tempbtn", tempbtn[0].classList);
+    listunclick(value);
     props.setDetailNum(value);
     navigate({
       search: createSearchParams({
         student: value,
       }).toString(),
     });
+    // props.setheadnum(e);
+  }
+  function listunclick(value) {
+    console.log("unclick_v", value);
+    console.log("unclick", data);
+    data.forEach((currentElement, index, array) => {
+      console.log("currentElement", currentElement);
+      // console.log("index", index);
+      if (currentElement.id != value) {
+        const untempbtn = document.getElementsByClassName(
+          `list_` + currentElement.id
+        );
+        untempbtn[0].classList.remove("on");
+        console.log("tempbtn", untempbtn[0].classList);
+      }
+      // console.log("array", array);
+    });
+    // setclickflag("1");
+    // const tempbtn = document.getElementsByClassName(`list_` + value);
+    // // tempbtn[0].classList.add("on");
+    // // console.log("tempbtn", tempbtn[0].classList);
+    // props.setDetailNum(value);
+    // navigate({
+    //   search: createSearchParams({
+    //     student: value,
+    //   }).toString(),
+    // });
     // props.setheadnum(e);
   }
   const handleSubmit = (event) => {
