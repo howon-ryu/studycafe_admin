@@ -257,7 +257,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          event.preventDefault();
+          // event.preventDefault();
           handleSubmit(event);
         }}
       >
@@ -280,9 +280,7 @@ const Detail = (props) => {
           <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
             <div className="row mb-5">
               <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">
-                  본사 이름
-                </label>
+                <label className="required fs-5 fw-semibold mb-2">본사명</label>
 
                 <input
                   type="text"
@@ -304,7 +302,9 @@ const Detail = (props) => {
             </div>
             <div className="row mb-5">
               <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">대표자</label>
+                <label className="required fs-5 fw-semibold mb-2">
+                  대표자명
+                </label>
 
                 <input
                   type="text"
@@ -314,9 +314,7 @@ const Detail = (props) => {
                 />
               </div>
               <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">
-                  대표자 ID
-                </label>
+                <label className="required fs-5 fw-semibold mb-2">아이디</label>
                 <input
                   type="text"
                   className="form-control"
@@ -357,7 +355,7 @@ const Detail = (props) => {
             <div className="row mb-5">
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">
-                  대표 연락처
+                  전화번호
                 </label>
 
                 <input

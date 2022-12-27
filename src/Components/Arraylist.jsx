@@ -10,12 +10,25 @@ import {
   compareByFieldSpec,
 } from "@fullcalendar/core";
 import "../css/arraylist.css";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate, useLocation } from "react-router-dom";
 
 const AcademyList = (props) => {
   const [isCheck, setCheck] = useState("2");
   const [cookies, setCookie, removeCookie] = useCookies();
-
+  const location = useLocation();
+  const [addflag, setaddflag] = useState("1");
+  useEffect(() => {
+    console.log("location", location);
+    if (location.pathname == "/Study_weekly_plan") {
+      setaddflag("2");
+    } else if (location.pathname == "/Study_weekly_report") {
+      setaddflag("2");
+    } else if (location.pathname == "/Study_day_plan") {
+      setaddflag("2");
+    } else {
+      setaddflag("1");
+    }
+  }, [location]);
   const [ttext, setttext] = useState("모든학원본사");
   let [data, setdata] = useState([]);
   // const [event2, setevent2] = useState({
@@ -912,42 +925,45 @@ const AcademyList = (props) => {
           <div className="card card-flush h-xl-100 card__left">
             <div className="card-header border-0 pt-5 card_l_h">
               <ul className="nav mb-2 mb-sm-0 card__left_tab">
-                <li className="nav-item m-0">
-                  <a
-                    className="btn btn-sm btn-icon btn-bg-light btn-primary me-4"
-                    data-bs-toggle="tab"
-                    onClick={addarray}
-                  >
-                    <span className="svg-icon svg-icon-2">
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          opacity="0.5"
-                          x="11.364"
-                          y="20.364"
-                          width="16"
-                          height="2"
-                          rx="1"
-                          transform="rotate(-90 11.364 20.364)"
-                          fill="currentColor"
-                        ></rect>
-                        <rect
-                          x="4.36396"
-                          y="11.364"
-                          width="16"
-                          height="2"
-                          rx="1"
-                          fill="currentColor"
-                        ></rect>
-                      </svg>
-                    </span>
-                  </a>
-                </li>
+                {addflag == "1" ? (
+                  <li className="nav-item m-0">
+                    <a
+                      className="btn btn-sm btn-icon btn-bg-light btn-primary me-4"
+                      data-bs-toggle="tab"
+                      onClick={addarray}
+                    >
+                      <span className="svg-icon svg-icon-2">
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            opacity="0.5"
+                            x="11.364"
+                            y="20.364"
+                            width="16"
+                            height="2"
+                            rx="1"
+                            transform="rotate(-90 11.364 20.364)"
+                            fill="currentColor"
+                          ></rect>
+                          <rect
+                            x="4.36396"
+                            y="11.364"
+                            width="16"
+                            height="2"
+                            rx="1"
+                            fill="currentColor"
+                          ></rect>
+                        </svg>
+                      </span>
+                    </a>
+                  </li>
+                ) : null}
+
                 <li className="nav-item m-0" hidden>
                   <button
                     className="btn btn-sm btn-icon btn-light-primary btn__wight_sq"

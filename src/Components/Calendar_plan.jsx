@@ -2,7 +2,8 @@
 import moment from "moment";
 import { css } from "@emotion/react";
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { BrowserRouter, useSearchParams } from "react-router-dom";
+import { BrowserRouter, useSearchParams, useLocation } from "react-router-dom";
+
 import FullCalendar, {
   DateSelectArg,
   EventClickArg,

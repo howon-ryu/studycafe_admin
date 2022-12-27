@@ -1555,7 +1555,7 @@ const Branch_info = (props) => {
                     <div className="row mb-5">
                       <div className="col-md-6 fv-row input_50">
                         <label className="required fs-5 fw-semibold mb-2">
-                          본사
+                          본사명
                         </label>
                         {cookies.cookie.data.role.id == 1 ? (
                           <div>
@@ -1639,7 +1639,7 @@ const Branch_info = (props) => {
                         )}
                       </div>
                       <div className="col-md-6 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">원장</label>
+                        <label className="fs-5 fw-semibold mb-2">원장명</label>
                         {cookies.cookie.data.role.id == 1 ? (
                           <div>
                             {props.detail_num == "0" ? (
@@ -1774,7 +1774,7 @@ const Branch_info = (props) => {
                     <div className="row mb-5">
                       <div className="col-md-6 fv-row">
                         <label className="required fs-5 fw-semibold mb-2">
-                          지점 이름
+                          지점명
                         </label>
 
                         <input
@@ -1843,7 +1843,7 @@ const Branch_info = (props) => {
                       </div> */}
                       <div className="col-md-6 fv-row">
                         <label className="fs-5 fw-semibold mb-2">
-                          매니저선택
+                          매니저명
                         </label>
 
                         {props.detail_num == "0" ? (

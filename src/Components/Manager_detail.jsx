@@ -207,13 +207,13 @@ const Manager_detail = (props) => {
       const data_t = {
         ownerId: e.target[1].value,
         brandId: e.target[0].value,
-        username: e.target[2].value,
-        password: e.target[6].value,
-        password2: e.target[7].value,
-        realName: e.target[3].value,
-        phone: e.target[4].value,
-        email: e.target[5].value,
-        birthDate: e.target[8].value,
+        username: e.target[3].value,
+        password: e.target[4].value,
+        password2: e.target[5].value,
+        realName: e.target[2].value,
+        phone: e.target[6].value,
+        email: e.target[7].value,
+        birthDate: "1999-01-01",
         gender: "남자",
         status: cu,
       };
@@ -262,13 +262,13 @@ const Manager_detail = (props) => {
       }
       const data_t = {
         ownerId: e.target[1].value,
-        username: e.target[2].value,
+        username: e.target[3].value,
         brandId: e.target[0].value,
-        password: e.target[6].value,
-        password2: e.target[7].value,
-        realName: e.target[3].value,
-        phone: e.target[4].value,
-        email: e.target[5].value,
+        password: e.target[4].value,
+        password2: e.target[5].value,
+        realName: e.target[2].value,
+        phone: e.target[6].value,
+        email: e.target[7].value,
         birthDate: "1999-01-01",
         status: cu,
       };
@@ -328,7 +328,9 @@ const Manager_detail = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
               <div className="row mb-5">
                 <div className="col-md-6 fv-row input_50">
-                  <label className="required fs-5 fw-semibold mb-2">본사</label>
+                  <label className="required fs-5 fw-semibold mb-2">
+                    본사명
+                  </label>
                   {cookies.cookie.data.role.id == 1 ? (
                     <div>
                       {props.detail_num == "0" ? (
@@ -414,7 +416,7 @@ const Manager_detail = (props) => {
                   )}
                 </div>
                 <div className="col-md-6 fv-row">
-                  <label className="fs-5 fw-semibold mb-2">원장</label>
+                  <label className="fs-5 fw-semibold mb-2">원장명</label>
                   {cookies.cookie.data.role.id == 1 ? (
                     <div>
                       {props.detail_num == "0" ? (
@@ -539,6 +541,18 @@ const Manager_detail = (props) => {
                 </div>
               </div>
               <div className="row mb-5">
+                <div className="col-md-6 fv-row">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    매니저명
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    defaultValue={data.realName}
+                    name=""
+                  />
+                </div>
                 {props.detail_num == "0" ? (
                   <div className="col-md-6 fv-row">
                     <label className="required fs-5 fw-semibold mb-2">
@@ -567,7 +581,9 @@ const Manager_detail = (props) => {
                   </div>
                 ) : (
                   <div className="col-md-6 fv-row">
-                    <label className="required fs-5 fw-semibold mb-2">ID</label>
+                    <label className="required fs-5 fw-semibold mb-2">
+                      아이디
+                    </label>
 
                     {/* <select
                     name="position"
@@ -591,46 +607,7 @@ const Manager_detail = (props) => {
                     />
                   </div>
                 )}
-
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">이름</label>
-
-                  <input
-                    type="text"
-                    className="form-control"
-                    defaultValue={data.realName}
-                    name=""
-                  />
-                </div>
               </div>
-
-              <div className="row mb-5">
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    연락처
-                  </label>
-
-                  <input
-                    type="text"
-                    className="form-control"
-                    defaultValue={data.phone}
-                  />
-                </div>
-
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    이메일
-                  </label>
-
-                  <input
-                    type="email"
-                    className="form-control"
-                    defaultValue={data.email}
-                    name=""
-                  />
-                </div>
-              </div>
-
               <div className="row mb-5">
                 <div className="col-md-6 fv-row">
                   <label className="required fs-5 fw-semibold mb-2">
@@ -658,8 +635,35 @@ const Manager_detail = (props) => {
                   />
                 </div>
               </div>
-              <div className="row mb-5 row__line">
+              <div className="row mb-5">
                 <div className="col-md-6 fv-row">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    전화번호
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    defaultValue={data.phone}
+                  />
+                </div>
+
+                <div className="col-md-6 fv-row">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    이메일
+                  </label>
+
+                  <input
+                    type="email"
+                    className="form-control"
+                    defaultValue={data.email}
+                    name=""
+                  />
+                </div>
+              </div>
+
+              <div className="row mb-5 row__line">
+                <div className="col-md-6 fv-row" hidden>
                   <label className="fs-5 fw-semibold mb-2">생년월일</label>
 
                   <input

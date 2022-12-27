@@ -110,10 +110,10 @@ const Branch_detail = (props) => {
       }
       const data_t = {
         brandId: e.target[0].value,
-        username: e.target[1].value,
+        username: e.target[2].value,
         password: e.target[5].value,
         password2: e.target[6].value,
-        realName: e.target[2].value,
+        realName: e.target[1].value,
         phone: e.target[3].value,
         email: e.target[4].value,
         birthDate: e.target[7].value,
@@ -168,12 +168,12 @@ const Branch_detail = (props) => {
         brandId: e.target[0].value,
         password: e.target[5].value,
         password2: e.target[6].value,
-        realName: e.target[2].value,
+        realName: e.target[1].value,
         phone: e.target[3].value,
         email: e.target[4].value,
         address: "abc",
         birthDate: e.target[7].value,
-        username: e.target[1].value,
+        username: e.target[2].value,
         status: cu,
       };
 
@@ -232,7 +232,9 @@ const Branch_detail = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
               <div className="row mb-5">
                 <div className="col-md-6 fv-row input_50">
-                  <label className="required fs-5 fw-semibold mb-2">본사</label>
+                  <label className="required fs-5 fw-semibold mb-2">
+                    본사명
+                  </label>
                   {cookies.cookie.data.role.id == 1 ? (
                     <div>
                       {props.detail_num == "0" ? (
@@ -313,25 +315,24 @@ const Branch_detail = (props) => {
                 </div>
               </div>
               <div className="row mb-5">
+                <div className="col-md-6 fv-row">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    원장명
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    defaultValue={data.realName}
+                    name=""
+                  />
+                </div>
                 {props.detail_num == "0" ? (
                   <div className="col-md-6 fv-row">
                     <label className="required fs-5 fw-semibold mb-2">
                       원장 ID
                     </label>
 
-                    {/* <select
-                    name="position"
-                    data-control="select2"
-                    data-placeholder="Select a position..."
-                    className="form-select form-select-solid"
-                  >
-                    <option value="Web Developer">겨울신록</option>
-                    <option value="Web Designer">봄신록</option>
-                    <option value="Art Director">여름신록</option>
-                    <option value="Finance Manager">가을신록</option>
-                    <option value="Project Manager">어나더레벨</option>
-                    <option value="System Administrator">최고최고최고</option>
-                  </select> */}
                     <input
                       type="text"
                       className="form-control"
@@ -367,25 +368,12 @@ const Branch_detail = (props) => {
                     />
                   </div>
                 )}
-
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    원장명
-                  </label>
-
-                  <input
-                    type="text"
-                    className="form-control"
-                    defaultValue={data.realName}
-                    name=""
-                  />
-                </div>
               </div>
 
               <div className="row mb-5">
                 <div className="col-md-6 fv-row">
                   <label className="required fs-5 fw-semibold mb-2">
-                    연락처
+                    전화번호
                   </label>
 
                   <input
