@@ -116,7 +116,7 @@ const Branch_detail = (props) => {
         realName: e.target[1].value,
         phone: e.target[5].value,
         email: e.target[6].value,
-        birthDate: e.target[7].value,
+        birthDate: "1999-01-01",
         gender: "남자",
         address: "abc",
         status: cu,
@@ -172,7 +172,7 @@ const Branch_detail = (props) => {
         phone: e.target[5].value,
         email: e.target[6].value,
         address: "abc",
-        birthDate: e.target[7].value,
+        birthDate: "1999-01-01",
         username: e.target[2].value,
         status: cu,
       };
@@ -424,7 +424,7 @@ const Branch_detail = (props) => {
               </div>
 
               <div className="row mb-5 row__line">
-                <div className="col-md-6 fv-row">
+                <div className="col-md-6 fv-row" hidden>
                   <label className="fs-5 fw-semibold mb-2">생년월일</label>
 
                   <input

@@ -1052,7 +1052,7 @@ const AcademyList = (props) => {
                           <div>
                             {props.flag == "office__head_office" ? (
                               <div className="mb-10" hidden>
-                                <label>브랜드</label>
+                                <label>본사명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1073,7 +1073,7 @@ const AcademyList = (props) => {
                               </div>
                             ) : (
                               <div className="mb-10">
-                                <label>브랜드</label>
+                                <label>본사명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1099,7 +1099,7 @@ const AcademyList = (props) => {
                           <div>
                             {props.flag == "office__head_office" ? (
                               <div className="mb-10" hidden>
-                                <label>브랜드</label>
+                                <label>본사명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1120,7 +1120,7 @@ const AcademyList = (props) => {
                               </div>
                             ) : (
                               <div className="mb-10">
-                                <label>브랜드</label>
+                                <label>본사명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1360,7 +1360,7 @@ const AcademyList = (props) => {
                         {props.flag == "student__manage_info" ? (
                           <div>
                             <div className="mb-10">
-                              <label>지점</label>
+                              <label>지점명</label>
                               <div>
                                 <select
                                   className="form-select form-select-solid"
@@ -1424,7 +1424,7 @@ const AcademyList = (props) => {
                         ) : props.flag == "Study_weekly_plan" ? (
                           <div>
                             <div className="mb-10">
-                              <label>지점</label>
+                              <label>지점명</label>
                               <div>
                                 <select
                                   className="form-select form-select-solid"
@@ -1488,7 +1488,7 @@ const AcademyList = (props) => {
                         ) : (
                           <div hidden>
                             <div className="mb-10">
-                              <label>지점</label>
+                              <label>지점명</label>
                               <div>
                                 <select
                                   className="form-select form-select-solid"
@@ -1741,13 +1741,13 @@ const AcademyList = (props) => {
                       <th className="ps-4 min-w-25px">NO.</th>
                       <th className="min-w-25px n_empty"></th>
                       {props.flag === "office__head_office" ? (
-                        <th className="min-w-150px">지점명/대표자</th>
+                        <th className="min-w-150px">지점명/대표자명</th>
                       ) : props.flag === "office__branch_office" ? (
                         <th className="min-w-150px">원장명</th>
                       ) : props.flag === "student__manage_info" ? (
                         <th className="min-w-150px">학생명/학교명</th>
                       ) : props.flag === "office__branch_info" ? (
-                        <th className="min-w-150px">지점명/브랜드</th>
+                        <th className="min-w-150px">지점명/본사명</th>
                       ) : props.flag === "Study_weekly_plan" ? (
                         <th className="min-w-150px">학생명/학교명</th>
                       ) : props.flag === "office__manager_office" ? (

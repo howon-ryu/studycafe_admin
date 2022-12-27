@@ -289,7 +289,19 @@ const Branch_info = (props) => {
       <td data-order="text-muted">{v.availableSeat}</td>
       <td className="n_empty"></td>
       <td className="text-muted fw-semibold ">
-        <span className="badge badge-light-success me-2">{v.status}</span>
+        {v.status == "사용" ? (
+          <span className="badge badge-light-success fw-bold px-4 py-3">
+            {v.status}
+          </span>
+        ) : v.status == "대기" ? (
+          <span className="badge badge-light-warning fw-bold px-4 py-3">
+            {v.status}
+          </span>
+        ) : (
+          <span className="badge badge-light-danger fw-bold px-4 py-3">
+            {v.status}
+          </span>
+        )}
       </td>
       <td data-order="Invalid date text-end">
         <button
@@ -2018,9 +2030,19 @@ const Branch_info = (props) => {
                         </td>
                         <td className="n_empty"></td>
                         <td className="text-muted fw-semibold ">
-                          <span className="badge badge-light-success me-2">
-                            {v.status}
-                          </span>
+                          {v.status == "사용" ? (
+                            <span className="badge badge-light-success fw-bold px-4 py-3">
+                              {v.status}
+                            </span>
+                          ) : v.status == "대기" ? (
+                            <span className="badge badge-light-warning fw-bold px-4 py-3">
+                              {v.status}
+                            </span>
+                          ) : (
+                            <span className="badge badge-light-danger fw-bold px-4 py-3">
+                              {v.status}
+                            </span>
+                          )}
                         </td>
                         <td data-order="Invalid date text-end">
                           {/* <button
