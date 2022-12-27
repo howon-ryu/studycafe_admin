@@ -97,7 +97,17 @@ const Branch_detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[8].checked;
+      let cu2 = e.target[9].checked;
+      let cu3 = e.target[10].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         brandId: e.target[0].value,
         username: e.target[1].value,
@@ -109,6 +119,7 @@ const Branch_detail = (props) => {
         birthDate: e.target[7].value,
         gender: "남자",
         address: "abc",
+        status: cu,
       };
 
       const headers = { "header-name": "value" };
@@ -142,7 +153,17 @@ const Branch_detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[8].checked;
+      let cu2 = e.target[9].checked;
+      let cu3 = e.target[10].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         brandId: e.target[0].value,
         password: e.target[5].value,
@@ -153,6 +174,7 @@ const Branch_detail = (props) => {
         address: "abc",
         birthDate: e.target[7].value,
         username: e.target[1].value,
+        status: cu,
       };
 
       const headers = { "header-name": "value" };
@@ -220,7 +242,6 @@ const Branch_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue={data.brand.name}
-                          
                         >
                           {brands.map((item, idx) => (
                             <option key={idx} value={item.id}>

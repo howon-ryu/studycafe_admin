@@ -12,7 +12,7 @@ const Manager_detail = (props) => {
   const reset = useRef();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [brands, setbrands] = useState([]);
-  const [owners2, setowners2] = useState([{id:"1"}]);
+  const [owners2, setowners2] = useState([{ id: "1" }]);
   const [owners, setowners] = useState([]);
   const [data, setdata] = useState({
     id: "",
@@ -41,10 +41,19 @@ const Manager_detail = (props) => {
     detail_num = props.detail_num;
     if (props.detail_num == "" || props.detail_num == undefined) {
       console.log("공백");
-      
     } else if (props.detail_num == "0") {
-      let owner_props = {target:{0:{value:1},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
-      searchowner_filter(owner_props)
+      let owner_props = {
+        target: {
+          0: { value: 1 },
+          1: { value: "" },
+          2: { value: "" },
+          3: { value: "" },
+          4: { value: "" },
+          5: { value: "" },
+          6: { value: "" },
+        },
+      };
+      searchowner_filter(owner_props);
       console.log("0");
       setdata({
         id: "",
@@ -119,25 +128,45 @@ const Manager_detail = (props) => {
   const handles = (e) => {
     //e.preventDefalut();
   };
-  function set_brandid_onfilter(e){
-    console.log("1234",e.target.value);
-    let owner_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
-    let branch_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
-    console.log("1234pp",owner_props);
+  function set_brandid_onfilter(e) {
+    console.log("1234", e.target.value);
+    let owner_props = {
+      target: {
+        0: { value: e.target.value },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: "" },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    let branch_props = {
+      target: {
+        0: { value: e.target.value },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: "" },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    console.log("1234pp", owner_props);
     searchowner_filter(owner_props);
     // searchBranches_filter(branch_props);
     // searchRooms_filter(branch_props);
   }
   function searchowner_filter(props) {
-    console.log("1234props",props);
+    console.log("1234props", props);
     let var_status = "";
     let var_brandid = "";
     if (props != undefined) {
-      console.log("1234propsif",props);
+      console.log("1234propsif", props);
       var_status = props.target[6].value;
       var_brandid = props.target[0].value;
     }
-    console.log(var_brandid)
+    console.log(var_brandid);
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users/" + "owners";
     axios
@@ -149,7 +178,7 @@ const Manager_detail = (props) => {
       })
       .then(function (response) {
         //setdata(response.data);
-        console.log("!!!!!",response.data);
+        console.log("!!!!!", response.data);
         setowners2(response.data);
 
         console.log("owners:", response.data);
@@ -164,7 +193,17 @@ const Manager_detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[9].checked;
+      let cu2 = e.target[10].checked;
+      let cu3 = e.target[11].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         ownerId: e.target[1].value,
         brandId: e.target[0].value,
@@ -176,6 +215,7 @@ const Manager_detail = (props) => {
         email: e.target[5].value,
         birthDate: e.target[8].value,
         gender: "남자",
+        status: cu,
       };
 
       const headers = { "header-name": "value" };
@@ -209,7 +249,17 @@ const Manager_detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[9].checked;
+      let cu2 = e.target[10].checked;
+      let cu3 = e.target[11].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         ownerId: e.target[1].value,
         username: e.target[2].value,
@@ -220,6 +270,7 @@ const Manager_detail = (props) => {
         phone: e.target[4].value,
         email: e.target[5].value,
         birthDate: "1999-01-01",
+        status: cu,
       };
 
       const headers = { "header-name": "value" };
@@ -289,7 +340,6 @@ const Manager_detail = (props) => {
                           defaultValue="1"
                           onChange={set_brandid_onfilter}
                         >
-                         
                           {brands.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.name}
@@ -329,9 +379,7 @@ const Manager_detail = (props) => {
                           defaultValue={cookies.cookie.data.brand.id}
                           onChange={set_brandid_onfilter}
                         >
-                          <option value="">
-                            본사를 선택해 주세요
-                          </option>
+                          <option value="">본사를 선택해 주세요</option>
                           <option value={cookies.cookie.data.brand.id}>
                             {cookies.cookie.data.brand.name}
                           </option>
@@ -376,17 +424,12 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           // defaultValue={owners2[0].id}
-                          
                         >
-
-
-                          
                           {owners2.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.realName}
                             </option>
                           ))}
-                          
                         </select>
                       ) : (
                         <select
@@ -419,7 +462,6 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
-                          
                         >
                           {owners2.map((item, idx) => (
                             <option key={idx} value={item.id}>
@@ -458,13 +500,12 @@ const Manager_detail = (props) => {
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
                           defaultValue=""
-                          
                         >
-                          <option value={cookies.cookie.data.id||""}>
+                          <option value={cookies.cookie.data.id || ""}>
                             원장을 선택해주세요
                           </option>
-                          <option value={cookies.cookie.data.id||""}>
-                            {cookies.cookie.data.realName||""}
+                          <option value={cookies.cookie.data.id || ""}>
+                            {cookies.cookie.data.realName || ""}
                           </option>
                           {/* {owners.map((item, idx) => (
                             <option key={idx} value={item.id}>
@@ -500,7 +541,9 @@ const Manager_detail = (props) => {
               <div className="row mb-5">
                 {props.detail_num == "0" ? (
                   <div className="col-md-6 fv-row">
-                    <label className="required fs-5 fw-semibold mb-2">ID{data.targetUser.id}</label>
+                    <label className="required fs-5 fw-semibold mb-2">
+                      ID{data.targetUser.id}
+                    </label>
 
                     {/* <select
                     name="position"
