@@ -875,6 +875,9 @@ const AcademyList = (props) => {
 
   function listclick(value) {
     setclickflag("1");
+    const tempbtn = document.getElementsByClassName(`list_` + value);
+    tempbtn[0].classList.add("on");
+    console.log("tempbtn", tempbtn[0].classList);
     props.setDetailNum(value);
     navigate({
       search: createSearchParams({
@@ -924,57 +927,7 @@ const AcademyList = (props) => {
         <div className="col-xl-12 mb-xl-10">
           <div className="card card-flush h-xl-100 card__left">
             <div className="card-header border-0 pt-5 card_l_h">
-              <ul className="nav mb-2 mb-sm-0 card__left_tab">
-                {addflag == "1" ? (
-                  <li className="nav-item m-0">
-                    <a
-                      className="btn btn-sm btn-icon btn-bg-light btn-primary me-4"
-                      data-bs-toggle="tab"
-                      onClick={addarray}
-                    >
-                      <span className="svg-icon svg-icon-2">
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect
-                            opacity="0.5"
-                            x="11.364"
-                            y="20.364"
-                            width="16"
-                            height="2"
-                            rx="1"
-                            transform="rotate(-90 11.364 20.364)"
-                            fill="currentColor"
-                          ></rect>
-                          <rect
-                            x="4.36396"
-                            y="11.364"
-                            width="16"
-                            height="2"
-                            rx="1"
-                            fill="currentColor"
-                          ></rect>
-                        </svg>
-                      </span>
-                    </a>
-                  </li>
-                ) : null}
-
-                <li className="nav-item m-0" hidden>
-                  <button
-                    className="btn btn-sm btn-icon btn-light-primary btn__wight_sq"
-                    type="button"
-                  >
-                    <i className="bi bi-download fs-3"></i>
-                  </button>
-                </li>
-              </ul>
-
-              <div className="card-toolbar">
+              <div className="card-toolbar" style={{ border: "solid;" }}>
                 <button
                   type="button"
                   className="btn btn-sm btn-icon btn-light-primary btn__wight_sq"
@@ -1607,9 +1560,87 @@ const AcademyList = (props) => {
                   </form>
                 ) : null}
               </div>
+              <span className="d-flex align-items-center fs-7 fw-bold text-gray-600 mb-2 selected__txt ttext">
+                <span className="svg-icon svg-icon-6 svg-icon-gray-600 me-2">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      opacity="0.3"
+                      x="2"
+                      y="2"
+                      width="20"
+                      height="20"
+                      rx="5"
+                      fill="currentColor"
+                    ></rect>
+                    <path
+                      d="M11.9343 12.5657L9.53696 14.963C9.22669 15.2733 9.18488 15.7619 9.43792 16.1204C9.7616 16.5789 10.4211 16.6334 10.8156 16.2342L14.3054 12.7029C14.6903 12.3134 14.6903 11.6866 14.3054 11.2971L10.8156 7.76582C10.4211 7.3666 9.7616 7.42107 9.43792 7.87962C9.18488 8.23809 9.22669 8.72669 9.53696 9.03696L11.9343 11.4343C12.2467 11.7467 12.2467 12.2533 11.9343 12.5657Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </span>
+                {ttext}
+              </span>
+              <ul
+                className="nav mb-2 mb-sm-0 card__left_tab"
+                style={{ border: "solid;" }}
+              >
+                {addflag == "1" ? (
+                  <li className="nav-item m-0">
+                    <a
+                      className="btn btn-sm btn-icon btn-bg-light btn-primary me-4"
+                      data-bs-toggle="tab"
+                      onClick={addarray}
+                    >
+                      <span className="svg-icon svg-icon-2">
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            opacity="0.5"
+                            x="11.364"
+                            y="20.364"
+                            width="16"
+                            height="2"
+                            rx="1"
+                            transform="rotate(-90 11.364 20.364)"
+                            fill="currentColor"
+                          ></rect>
+                          <rect
+                            x="4.36396"
+                            y="11.364"
+                            width="16"
+                            height="2"
+                            rx="1"
+                            fill="currentColor"
+                          ></rect>
+                        </svg>
+                      </span>
+                    </a>
+                  </li>
+                ) : null}
+
+                <li className="nav-item m-0" hidden>
+                  <button
+                    className="btn btn-sm btn-icon btn-light-primary btn__wight_sq"
+                    type="button"
+                  >
+                    <i className="bi bi-download fs-3"></i>
+                  </button>
+                </li>
+              </ul>
             </div>
 
-            <div className="selected__txt_wrap">
+            <div className="selected__txt_wrap" hidden>
               <span className="d-flex align-items-center fs-7 fw-bold text-gray-600 mb-2 selected__txt">
                 <span className="svg-icon svg-icon-6 svg-icon-gray-600 me-2">
                   <svg
@@ -1722,7 +1753,7 @@ const AcademyList = (props) => {
                         ) : null}
 
                         <td className="n_empty"></td>
-                        <td className="text-muted fw-semibold">
+                        <td className="text-muted fw-semibold ">
                           <div className="d-flex flex-stack">
                             <div className="d-flex align-items-center flex-row-fluid flex-wrap">
                               <div className="flex-grow-1 me-2">

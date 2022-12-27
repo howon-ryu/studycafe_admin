@@ -32,7 +32,7 @@ const Study_weekly_report = (props) => {
             className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0"
             css={css``}
           >
-            주간레포트
+            학생학습이력
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li className="breadcrumb-item text-muted">
@@ -43,7 +43,7 @@ const Study_weekly_report = (props) => {
             <li className="breadcrumb-item">
               <span className="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <li className="breadcrumb-item text-muted">주간레포트</li>
+            <li className="breadcrumb-item text-muted">학생학습이력</li>
           </ul>
         </div>
         <div

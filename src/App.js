@@ -93,19 +93,20 @@ function App() {
           </SidebarMenu>
           <SidebarMenu title="학습관리" icon_num="3">
             <SidebarMenuItem
-              title="학습계획"
-              to="/Study_weekly_plan"
-              flag="4"
-              roleid={roleid}
-            />
-            <SidebarMenuItem
-              title="학습현황"
+              title="지점학습현황"
               to="/Study_day_plan"
               flag="4"
               roleid={roleid}
             />
             <SidebarMenuItem
-              title="주간레포트"
+              title="학생학습계획"
+              to="/Study_weekly_plan"
+              flag="4"
+              roleid={roleid}
+            />
+
+            <SidebarMenuItem
+              title="학생학습이력"
               to="/Study_weekly_report"
               flag="4"
               roleid={roleid}

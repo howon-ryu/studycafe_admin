@@ -17,3 +17,9 @@
         margin: 0px;
         transform: translate(-59px, 214px);
     }
+.ttext {
+    /* border:solid; */
+    float:left;
+    margin-right:55%; 
+    
+}
