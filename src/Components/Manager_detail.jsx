@@ -556,7 +556,7 @@ const Manager_detail = (props) => {
                 {props.detail_num == "0" ? (
                   <div className="col-md-6 fv-row">
                     <label className="required fs-5 fw-semibold mb-2">
-                      ID{data.targetUser.id}
+                      아이디{data.targetUser.id}
                     </label>
 
                     {/* <select

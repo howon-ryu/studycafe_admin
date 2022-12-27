@@ -111,11 +111,11 @@ const Branch_detail = (props) => {
       const data_t = {
         brandId: e.target[0].value,
         username: e.target[2].value,
-        password: e.target[5].value,
-        password2: e.target[6].value,
+        password: e.target[3].value,
+        password2: e.target[4].value,
         realName: e.target[1].value,
-        phone: e.target[3].value,
-        email: e.target[4].value,
+        phone: e.target[5].value,
+        email: e.target[6].value,
         birthDate: e.target[7].value,
         gender: "남자",
         address: "abc",
@@ -166,11 +166,11 @@ const Branch_detail = (props) => {
       }
       const data_t = {
         brandId: e.target[0].value,
-        password: e.target[5].value,
-        password2: e.target[6].value,
+        password: e.target[3].value,
+        password2: e.target[4].value,
         realName: e.target[1].value,
-        phone: e.target[3].value,
-        email: e.target[4].value,
+        phone: e.target[5].value,
+        email: e.target[6].value,
         address: "abc",
         birthDate: e.target[7].value,
         username: e.target[2].value,
@@ -209,7 +209,7 @@ const Branch_detail = (props) => {
       <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap ">
         <form
           onSubmit={function (event) {
-            event.preventDefault();
+            //event.preventDefault();
             handleSubmit(event);
           }}
         >
@@ -343,7 +343,7 @@ const Branch_detail = (props) => {
                 ) : (
                   <div className="col-md-6 fv-row">
                     <label className="required fs-5 fw-semibold mb-2">
-                      원장 ID
+                      아이디
                     </label>
 
                     {/* <select
@@ -369,34 +369,6 @@ const Branch_detail = (props) => {
                   </div>
                 )}
               </div>
-
-              <div className="row mb-5">
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    전화번호
-                  </label>
-
-                  <input
-                    type="text"
-                    className="form-control"
-                    defaultValue={data.phone}
-                  />
-                </div>
-
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    이메일
-                  </label>
-
-                  <input
-                    type="email"
-                    className="form-control"
-                    defaultValue={data.email}
-                    name=""
-                  />
-                </div>
-              </div>
-
               <div className="row mb-5">
                 <div className="col-md-6 fv-row">
                   <label className="required fs-5 fw-semibold mb-2">
@@ -424,6 +396,33 @@ const Branch_detail = (props) => {
                   />
                 </div>
               </div>
+              <div className="row mb-5">
+                <div className="col-md-6 fv-row">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    전화번호
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    defaultValue={data.phone}
+                  />
+                </div>
+
+                <div className="col-md-6 fv-row">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    이메일
+                  </label>
+
+                  <input
+                    type="email"
+                    className="form-control"
+                    defaultValue={data.email}
+                    name=""
+                  />
+                </div>
+              </div>
+
               <div className="row mb-5 row__line">
                 <div className="col-md-6 fv-row">
                   <label className="fs-5 fw-semibold mb-2">생년월일</label>

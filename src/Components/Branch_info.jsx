@@ -1813,8 +1813,8 @@ const Branch_info = (props) => {
                       </div>
                     </div>
 
-                    <div className="row mb-5">
-                      {/* <div className="col-md-4 fv-row">
+                    <div className="row mb-5 row__line">
+                      {/* <div className="c ol-md-4 fv-row">
                         <label className="fs-5 fw-semibold mb-2">
                           최종 수정자 ID
                         </label>
@@ -1883,7 +1883,8 @@ const Branch_info = (props) => {
                           </select>
                         )}
                       </div>
-
+                    </div>
+                    <div className="row mb-5 ">
                       <div className="col-md-4 fv-row">
                         <label className="fs-5 fw-semibold mb-2">상태</label>
 

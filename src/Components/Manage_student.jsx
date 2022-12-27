@@ -618,7 +618,7 @@ const Manage_student = (props) => {
               <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap">
                 <form
                   onSubmit={function (event) {
-                    event.preventDefault();
+                    //event.preventDefault();
                     handleSubmit(event);
                   }}
                 >
@@ -774,7 +774,9 @@ const Manage_student = (props) => {
                         </div>
 
                         <div className="col-md-6 fv-row">
-                          <label className="fs-5 fw-semibold mb-2">ID</label>
+                          <label className="fs-5 fw-semibold mb-2">
+                            아이디
+                          </label>
 
                           <input
                             type="text"
@@ -838,7 +840,7 @@ const Manage_student = (props) => {
                       <div className="row mb-5 ">
                         <div className="col-md-12 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
-                            거주지
+                            주소
                           </label>
 
                           <input
