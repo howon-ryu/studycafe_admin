@@ -124,9 +124,19 @@ const AcademyList = (props) => {
     searchGroups_filter(event2);
 
     if (cookies.cookie.data.role.id == 4) {
-      let branch_props = {target:{0:{value:cookies.cookie.data.brand.id},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+      let branch_props = {
+        target: {
+          0: { value: cookies.cookie.data.brand.id },
+          1: { value: "" },
+          2: { value: "" },
+          3: { value: "" },
+          4: { value: "" },
+          5: { value: "" },
+          6: { value: "" },
+        },
+      };
       console.log("777");
-      searchBranches_filter(branch_props)
+      searchBranches_filter(branch_props);
     }
 
     console.log("props_arr", props);
@@ -189,7 +199,7 @@ const AcademyList = (props) => {
           if (students[0] != undefined) {
             props.setDetailNum(students[0].id);
           } else {
-            console.log("ppp!!!!!!!!!!")
+            console.log("ppp!!!!!!!!!!");
             props.setDetailNum("0");
           }
         }
@@ -258,23 +268,63 @@ const AcademyList = (props) => {
       setttext("삭제된학원본사");
     }
   }
-  function set_brandid_onfilter(e){
-    console.log("1234",e.target.value);
-    let owner_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
-    let branch_props = {target:{0:{value:e.target.value},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
-    console.log("1234pp",owner_props);
+  function set_brandid_onfilter(e) {
+    console.log("1234", e.target.value);
+    let owner_props = {
+      target: {
+        0: { value: e.target.value },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: "" },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    let branch_props = {
+      target: {
+        0: { value: e.target.value },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: "" },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    console.log("1234pp", owner_props);
     searchowner_filter(owner_props);
     searchBranches_filter(branch_props);
     // searchRooms_filter(branch_props);
   }
-  function set_branch_onfilter(e){
-    console.log("1234",e.target);
-    console.log("1234",e.target.value);
-    
-    let room_props = {target:{0:{value:""},1:{value:""},2:{value:""},3:{value:e.target.value},4:{value:""},5:{value:""},6:{value:""}}}
-    let group_props = {target:{0:{value:""},1:{value:""},2:{value:""},3:{value:e.target.value},4:{value:""},5:{value:""},6:{value:""}}}
-    console.log("1234pp",room_props);
-    
+  function set_branch_onfilter(e) {
+    console.log("1234", e.target);
+    console.log("1234", e.target.value);
+
+    let room_props = {
+      target: {
+        0: { value: "" },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: e.target.value },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    let group_props = {
+      target: {
+        0: { value: "" },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: e.target.value },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    console.log("1234pp", room_props);
+
     searchRooms_filter_basebranch(room_props);
     searchGroups_filter_basebranch(group_props);
   }
@@ -388,34 +438,35 @@ const AcademyList = (props) => {
   }
   function searchRooms_filter_basebranch(props) {
     let var_status = "";
-    if(props.target[3].value!=""){
-    if (props == undefined) {
-      var_status = "";
-    } else {
-      var_status = props.target[6].value;
-    }
-    const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches/"+props.target[3].value+"/rooms";
-    axios
-      .get(url_set, {
-        params: {
-          status: var_status,
-        },
-      })
-      .then(function (response) {
-        //setdata(response.data);
-        setrooms2(response.data);
-
-        console.log("rooms:", response.data);
-        console.log("성공");
-      })
-      .catch(function (error) {
-        console.log("실패");
-      });}else{
-        searchRooms_filter(event2)
+    if (props.target[3].value != "") {
+      if (props == undefined) {
+        var_status = "";
+      } else {
+        var_status = props.target[6].value;
       }
+      const url = "https://farm01.bitlworks.co.kr/api/v1/";
+      let url_set = url + "branches/" + props.target[3].value + "/rooms";
+      axios
+        .get(url_set, {
+          params: {
+            status: var_status,
+          },
+        })
+        .then(function (response) {
+          //setdata(response.data);
+          setrooms2(response.data);
+
+          console.log("rooms:", response.data);
+          console.log("성공");
+        })
+        .catch(function (error) {
+          console.log("실패");
+        });
+    } else {
+      searchRooms_filter(event2);
+    }
   }
-  
+
   function searchGroups(props) {
     let var_status = "";
 
@@ -472,15 +523,15 @@ const AcademyList = (props) => {
   }
   function searchGroups_filter_basebranch(props) {
     let var_status = "";
-    
-    if(props.target[3].value!=""){
+
+    if (props.target[3].value != "") {
       if (props == undefined) {
         var_status = "";
       } else {
         var_status = props.target[6].value;
       }
       const url = "https://farm01.bitlworks.co.kr/api/v1/";
-      let url_set = url + "branches/"+props.target[3].value+"/groups";
+      let url_set = url + "branches/" + props.target[3].value + "/groups";
       axios
         .get(url_set, {
           params: {
@@ -490,17 +541,16 @@ const AcademyList = (props) => {
         .then(function (response) {
           //setdata(response.data);
           setgroups2(response.data);
-  
+
           console.log("group:", response.data);
           console.log("성공");
         })
         .catch(function (error) {
           console.log("실패");
         });
-    }else{
-      searchGroups_filter(event2)
+    } else {
+      searchGroups_filter(event2);
     }
-    
   }
   function searchStudent(props) {
     // 나중에 branch 맞춰줘야함
@@ -522,8 +572,7 @@ const AcademyList = (props) => {
       var_roomid = props.target[4].value;
       var_groupid = props.target[5].value;
       var_status = props.target[6].value;
-    
-    }else{
+    } else {
       console.log("nonononoppp");
     }
     console.log("var_brandidppp", var_brandid);
@@ -557,7 +606,7 @@ const AcademyList = (props) => {
   function searchStudent_filter(props) {
     // 나중에 branch 맞춰줘야함
     console.log("ppp", props);
-    console.log("ppp4",props.target[4].value)
+    console.log("ppp4", props.target[4].value);
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users/students";
     let var_status = "";
@@ -632,15 +681,15 @@ const AcademyList = (props) => {
       });
   }
   function searchowner_filter(props) {
-    console.log("1234props",props);
+    console.log("1234props", props);
     let var_status = "";
     let var_brandid = "";
     if (props != undefined) {
-      console.log("1234propsif",props);
+      console.log("1234propsif", props);
       var_status = props.target[6].value;
       var_brandid = props.target[0].value;
     }
-    console.log(var_brandid)
+    console.log(var_brandid);
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users/" + "owners";
     axios
@@ -1080,13 +1129,11 @@ const AcademyList = (props) => {
                                     data-kt-select2="true"
                                     data-dropdown-parent="#kt_menu_631f0553006ad"
                                     data-allow-clear="true"
-                                    
                                     disabled
                                   >
                                     <option
                                       value={cookies.cookie.data.brand.id}
                                       selected="selected"
-                                      
                                     >
                                       {cookies.cookie.data.brand.name}
                                     </option>
@@ -1376,7 +1423,7 @@ const AcademyList = (props) => {
                               </div>
                             </div>
                           </div>
-                        ) :props.flag == "Study_weekly_plan" ? (
+                        ) : props.flag == "Study_weekly_plan" ? (
                           <div>
                             <div className="mb-10">
                               <label>지점</label>
@@ -1726,9 +1773,19 @@ const AcademyList = (props) => {
                         </td>
                         <td className="n_empty"></td>
                         <td className="text-end">
-                          <span className="badge badge-light-success fw-bold px-4 py-3">
-                            {data.status}
-                          </span>
+                          {data.status == "사용" ? (
+                            <span className="badge badge-light-success fw-bold px-4 py-3">
+                              {data.status}
+                            </span>
+                          ) : data.status == "대기" ? (
+                            <span className="badge badge-light-warning fw-bold px-4 py-3">
+                              {data.status}
+                            </span>
+                          ) : (
+                            <span className="badge badge-light-danger fw-bold px-4 py-3">
+                              {data.status}
+                            </span>
+                          )}
                         </td>
                       </tr>
                     ))}

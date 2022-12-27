@@ -820,7 +820,7 @@ const Manage_student = (props) => {
                           </label>
 
                           <input
-                            type="password"
+                            type="text"
                             id="password"
                             className="form-control"
                             defaultValue=""
@@ -833,7 +833,7 @@ const Manage_student = (props) => {
                           </label>
 
                           <input
-                            type="password"
+                            type="text"
                             className="form-control"
                             placeholder=""
                             name=""
@@ -926,7 +926,7 @@ const Manage_student = (props) => {
                             <option value="고2">고2</option>
 
                             <option value="고3">고3</option>
-                            <option value="대학생">대학생</option>
+                            {/* <option value="대학생">대학생</option> */}
                             <option value="재수">재수</option>
                             <option value="삼수">삼수</option>
                             <option value="사수">사수</option>

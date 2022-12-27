@@ -332,7 +332,7 @@ const Detail = (props) => {
                 </label>
 
                 <input
-                  type="password"
+                  type="text"
                   id="password"
                   className="form-control"
                   defaultValue=""
@@ -345,7 +345,7 @@ const Detail = (props) => {
                 </label>
 
                 <input
-                  type="password"
+                  type="text"
                   className="form-control"
                   placeholder=""
                   name=""

@@ -638,7 +638,7 @@ const Manager_detail = (props) => {
                   </label>
 
                   <input
-                    type="password"
+                    type="text"
                     id="password"
                     className="form-control"
                     placeholer=""
@@ -651,7 +651,7 @@ const Manager_detail = (props) => {
                   </label>
 
                   <input
-                    type="password"
+                    type="text"
                     className="form-control"
                     placeholder=""
                     name=""
