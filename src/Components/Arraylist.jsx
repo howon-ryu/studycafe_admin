@@ -30,7 +30,9 @@ const AcademyList = (props) => {
     }
   }, [location]);
   const [ttext, setttext] = useState("모든학원본사");
+  const [tttext, settttext] = useState("모든");
   let [data, setdata] = useState([]);
+
   // const [event2, setevent2] = useState({
   //   target: {
   //     0: { value: cookies.cookie.data.brand.id },
@@ -218,6 +220,7 @@ const AcademyList = (props) => {
         }
       }
       setdata(students);
+      console.log("data!!!!!!!!!", students);
     }
   }, [students]);
   useEffect(() => {
@@ -264,25 +267,81 @@ const AcademyList = (props) => {
       setdata(students);
     }
   }, [students]);
-  // useEffect(() => {
-  //   searchBrands();
-  //   searchowner();
-  //   searchStudent();
-  //   searchBranches();
-  // }, [data]);
+  useEffect(() => {
+    setfiltertext(data);
+    console.log("filtertext", filtertext);
+  }, [data]);
+  const [filtertext, setfiltertext] = useState([
+    {
+      brand: {
+        name: "1",
+      },
+      branch: {
+        name: "",
+      },
+      owner: {
+        name: "",
+      },
+      groupList: {
+        name: "",
+      },
+      room: {
+        name: "",
+      },
+    },
+    {
+      brand: {
+        name: "",
+      },
+      branch: {
+        name: "",
+      },
+      owner: {
+        name: "",
+      },
+      groupList: {
+        name: "",
+      },
+      room: {
+        name: "",
+      },
+    },
+  ]);
   function setText(props) {
     if (props == "") {
       setttext("모든학원본사");
+      settttext("모든");
     } else if (props == "사용") {
       setttext("사용중인학원본사");
+      settttext("사용");
     } else if (props == "대기") {
       setttext("대기중인학원본사");
+      settttext("대기");
     } else if (props == "삭제") {
       setttext("삭제된학원본사");
+      setttext("삭제");
     }
   }
+  const [on_brandid, set_on_brandid] = useState([""]);
+  const [on_ownerid, set_on_ownerid] = useState([""]);
+  const [on_branchid, set_on_branchid] = useState([""]);
+  const [on_roomid, set_on_roomid] = useState([""]);
+  const [on_groupid, set_on_groupid] = useState([""]);
+
+  function set_ownerid_onfilter(e) {
+    set_on_ownerid(e.target.value);
+  }
+  function set_roomid_onfilter(e) {
+    set_on_roomid(e.target.value);
+  }
+  function set_groupid_onfilter(e) {
+    set_on_groupid(e.target.value);
+  }
+
   function set_brandid_onfilter(e) {
     console.log("1234", e.target.value);
+    set_on_brandid(e.target.value);
+    console.log("1234 tt", on_brandid);
     let owner_props = {
       target: {
         0: { value: e.target.value },
@@ -313,7 +372,7 @@ const AcademyList = (props) => {
   function set_branch_onfilter(e) {
     console.log("1234", e.target);
     console.log("1234", e.target.value);
-
+    set_on_branchid(e.target.value);
     let room_props = {
       target: {
         0: { value: "" },
@@ -1081,10 +1140,9 @@ const AcademyList = (props) => {
                                     data-dropdown-parent="#kt_menu_631f0553006ad"
                                     data-allow-clear="true"
                                     onChange={set_brandid_onfilter}
+                                    defaultValue={on_brandid}
                                   >
-                                    <option value="" selected="selected">
-                                      ALL
-                                    </option>
+                                    <option value="">ALL</option>
                                     {brands2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.name}
@@ -1150,17 +1208,17 @@ const AcademyList = (props) => {
                           <div>
                             {props.flag == "office__branch_info" ? (
                               <div className="mb-10">
-                                <label>원장명</label>
+                                <label>원장명11</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
                                     data-kt-select2="true"
                                     data-dropdown-parent="#kt_menu_631f0553006ad"
                                     data-allow-clear="true"
+                                    onChange={set_ownerid_onfilter}
+                                    defaultValue={on_ownerid}
                                   >
-                                    <option value="" selected="selected">
-                                      ALL
-                                    </option>
+                                    <option value="">ALL</option>
                                     {owners2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.realName}
@@ -1178,10 +1236,10 @@ const AcademyList = (props) => {
                                     data-kt-select2="true"
                                     data-dropdown-parent="#kt_menu_631f0553006ad"
                                     data-allow-clear="true"
+                                    onChange={set_ownerid_onfilter}
+                                    defaultValue={on_ownerid}
                                   >
-                                    <option value="" selected="selected">
-                                      ALL
-                                    </option>
+                                    <option value="">ALL</option>
                                     {owners2.map((item, idx) => (
                                       <option key={idx} value={item.id}>
                                         {item.realName}
@@ -1224,6 +1282,8 @@ const AcademyList = (props) => {
                                     data-kt-select2="true"
                                     data-dropdown-parent="#kt_menu_631f0553006ad"
                                     data-allow-clear="true"
+                                    onChange={set_ownerid_onfilter}
+                                    defaultValue={on_ownerid}
                                   >
                                     <option value="" selected="selected">
                                       ALL
@@ -1368,10 +1428,9 @@ const AcademyList = (props) => {
                                   data-dropdown-parent="#kt_menu_631f0553006ad"
                                   data-allow-clear="true"
                                   onChange={set_branch_onfilter}
+                                  defaultValue={on_branchid}
                                 >
-                                  <option value="" selected="selected">
-                                    ALL
-                                  </option>
+                                  <option value="">ALL</option>
                                   {branches2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
@@ -1381,17 +1440,17 @@ const AcademyList = (props) => {
                               </div>
                             </div>
                             <div className="mb-10">
-                              <label>학습실</label>
+                              <label>학습관</label>
                               <div>
                                 <select
                                   className="form-select form-select-solid"
                                   data-kt-select2="true"
                                   data-dropdown-parent="#kt_menu_631f0553006ad"
                                   data-allow-clear="true"
+                                  onChange={set_roomid_onfilter}
+                                  defaultValue={on_roomid}
                                 >
-                                  <option value="" selected="selected">
-                                    ALL
-                                  </option>
+                                  <option value="">ALL</option>
                                   {rooms2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
@@ -1408,6 +1467,8 @@ const AcademyList = (props) => {
                                   data-kt-select2="true"
                                   data-dropdown-parent="#kt_menu_631f0553006ad"
                                   data-allow-clear="true"
+                                  onChange={set_groupid_onfilter}
+                                  defaultValue={on_groupid}
                                 >
                                   <option value="" selected="selected">
                                     ALL
@@ -1432,10 +1493,9 @@ const AcademyList = (props) => {
                                   data-dropdown-parent="#kt_menu_631f0553006ad"
                                   data-allow-clear="true"
                                   onChange={set_branch_onfilter}
+                                  defaultValue={on_branchid}
                                 >
-                                  <option value="" selected="selected">
-                                    ALL
-                                  </option>
+                                  <option value="">ALL</option>
                                   {branches2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
@@ -1452,10 +1512,10 @@ const AcademyList = (props) => {
                                   data-kt-select2="true"
                                   data-dropdown-parent="#kt_menu_631f0553006ad"
                                   data-allow-clear="true"
+                                  onChange={set_roomid_onfilter}
+                                  defaultValue={on_roomid}
                                 >
-                                  <option value="" selected="selected">
-                                    ALL
-                                  </option>
+                                  <option value="">ALL</option>
                                   {rooms2.map((item, idx) => (
                                     <option key={idx} value={item.id}>
                                       {item.name}
@@ -1472,6 +1532,8 @@ const AcademyList = (props) => {
                                   data-kt-select2="true"
                                   data-dropdown-parent="#kt_menu_631f0553006ad"
                                   data-allow-clear="true"
+                                  onChange={set_groupid_onfilter}
+                                  defaultValue={on_groupid}
                                 >
                                   <option value="" selected="selected">
                                     ALL
@@ -1551,17 +1613,16 @@ const AcademyList = (props) => {
                         )}
 
                         <div className="mb-10">
-                          <label>상태</label>
+                          <label>상태 </label>
                           <div>
                             <select
                               className="form-select form-select-solid"
                               data-kt-select2="true"
                               data-dropdown-parent="#kt_menu_631f0553006ad"
                               data-allow-clear="true"
+                              defaultValue={tttext}
                             >
-                              <option value="" selected="selected">
-                                ALL
-                              </option>
+                              <option value="">ALL</option>
                               <option value="사용">사용중인 학원본사</option>
                               <option value="대기">대기중인 학원본사</option>
                               <option value="삭제">삭제된 학원본사</option>
@@ -1613,7 +1674,9 @@ const AcademyList = (props) => {
                     ></path>
                   </svg>
                 </span>
-                {ttext}
+                {/* {data[0] != undefined ?  : null} */}
+
+                <div>{ttext}</div>
               </span>
               <ul
                 className="nav mb-2 mb-sm-0 card__left_tab"

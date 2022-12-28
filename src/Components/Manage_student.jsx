@@ -778,7 +778,7 @@ const Manage_student = (props) => {
                         </div>
 
                         <div className="col-md-6 fv-row">
-                          <label className="fs-5 fw-semibold mb-2">
+                          <label className="required fs-5 fw-semibold mb-2">
                             아이디
                           </label>
 
@@ -905,7 +905,7 @@ const Manage_student = (props) => {
                       <div className="row mb-5 ">
                         <div className="col-md-6 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
-                            학습관
+                            학습실
                           </label>
                           {props.detail_num == "0" ? (
                             <div>
@@ -916,7 +916,7 @@ const Manage_student = (props) => {
                                 data-allow-clear="true"
                                 defaultValue={rooms.name}
                               >
-                                <option value="">학습관을 선택해주세요 </option>
+                                <option value="">학습실을 선택해주세요 </option>
 
                                 {rooms2.map((item, idx) => (
                                   <option key={idx} value={item.id}>
@@ -947,7 +947,9 @@ const Manage_student = (props) => {
                           )}
                         </div>
                         <div className="col-md-6 fv-row">
-                          <label className="fs-5 fw-semibold mb-2">좌석</label>
+                          <label className="fs-5 fw-semibold mb-2">
+                            좌석번호
+                          </label>
 
                           <input
                             type="text"

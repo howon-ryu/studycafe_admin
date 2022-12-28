@@ -61,7 +61,7 @@ const Branch_info = (props) => {
   const [specroom, setspecroom] = useState("none");
   const [rooms, setrooms] = useState([]);
   const handleSubmit_addGroup = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     console.log(event);
     // let calenderApi = selectInfo;
     // // calenderApi.unselect()
@@ -209,7 +209,7 @@ const Branch_info = (props) => {
       });
   }
   const handleSubmit_addRoom = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     console.log(event);
     // let calenderApi = selectInfo;
     // // calenderApi.unselect()
@@ -1197,7 +1197,7 @@ const Branch_info = (props) => {
                 <div className="modal-content">
                   <form
                     onSubmit={function (event) {
-                      event.preventDefault();
+                      //event.preventDefault();
                       handleSubmit_forgroup(event);
                     }}
                     className="w-100"
@@ -1558,7 +1558,7 @@ const Branch_info = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
               <form
                 onSubmit={function (event) {
-                  event.preventDefault();
+                  //event.preventDefault();
                   handleSubmit(event);
                 }}
               >
