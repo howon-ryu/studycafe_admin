@@ -219,7 +219,7 @@ const Day_report = (props) => {
                         <th className="min-w-80px">현재학습</th>
                         <th className="min-w-50px">계획</th>
                         <th className="min-w-50px">실행</th>
-                        <th className="min-w-50px">진행률</th>
+                        <th className="min-w-50px">실행률</th>
                       </tr>
                     </thead>
 

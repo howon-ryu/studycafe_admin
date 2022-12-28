@@ -1674,9 +1674,7 @@ const AcademyList = (props) => {
                     ></path>
                   </svg>
                 </span>
-                {/* {data[0] != undefined ?  : null} */}
-
-                <div>{ttext}</div>
+                {ttext}
               </span>
               <ul
                 className="nav mb-2 mb-sm-0 card__left_tab"
