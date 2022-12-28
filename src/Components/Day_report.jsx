@@ -15,7 +15,8 @@ const Day_report = (props) => {
     searchplan(props.detail_num);
   }, [props]);
   useEffect(() => {
-    searchplan(branch_num);
+    // searchplan(branch_num);
+    console.log(branch_num);
   }, [dayday]);
   // useEffect(() => {
   //   console.log(props.detail_num);
@@ -147,6 +148,16 @@ const Day_report = (props) => {
                       onChange={set_day}
                     />
                   </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                      searchplan(props.detail_num);
+                    }}
+                    style={{ "margin-left": "20px" }}
+                  >
+                    검색
+                  </button>
 
                   <button
                     type="submit"

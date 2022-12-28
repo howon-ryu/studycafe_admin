@@ -2,9 +2,19 @@ import { React, useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 const Weekly_report = (props) => {
+  // const today = format(new Date(), "yyyy-MM-dd");
+  const weekago = new Date();
+  console.log(weekago);
+
+  const START_DATE = format(
+    new Date(weekago.setDate(weekago.getDate() - 7)),
+    "yyyy-MM-dd"
+  );
+  console.log(START_DATE);
   const today = format(new Date(), "yyyy-MM-dd");
-  const START_DATE = "1970-01-01";
-  const END_DATE = format(new Date("2030-12-31"), "yyyy-MM-dd");
+  console.log("today", today);
+  const END_DATE = today;
+  console.log("end:", END_DATE);
   const [start_date, setstart] = useState(START_DATE);
   const [end_date, setend] = useState(END_DATE);
   function setsstart(e) {
@@ -12,7 +22,7 @@ const Weekly_report = (props) => {
     setstart(e.target.value);
   }
   function seteend(e) {
-    console.log(e);
+    console.log("e::", e);
     setend(e.target.value);
   }
   let detail_num = 1;
@@ -39,9 +49,9 @@ const Weekly_report = (props) => {
     if (props.detail_num == "" || props.detail_num == undefined) {
       detail_num = 10;
     }
-    if (start_date != undefined && end_date != undefined) {
-      searchreport(detail_num);
-    }
+    // if (start_date != undefined && end_date != undefined) {
+    //   searchreport(detail_num);
+    // }
     // setdetailnum(props.detail_num);
     console.log("sd:", start_date);
     console.log("se:", end_date);
@@ -80,6 +90,8 @@ const Weekly_report = (props) => {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users/students/" + detail_num + "/daily-reports";
     console.log("url:", url_set);
+    console.log(start_date);
+    console.log(end_date);
     const data_t = {
       studentId: detail_num,
       startDate: "2022-01-01",
@@ -233,7 +245,7 @@ const Weekly_report = (props) => {
                     className="col-form-label date_label me-4"
                     htmlFor="example-date"
                   >
-                    시작일{weekreport.id}
+                    시작일
                   </label>
                   <div className="date_div me-6">
                     <input
@@ -241,7 +253,7 @@ const Weekly_report = (props) => {
                       type="date"
                       name="date"
                       id="example-date"
-                      defaultValue="2022-11-14"
+                      defaultValue={start_date}
                       onChange={setsstart}
                     />
                   </div>
@@ -257,11 +269,21 @@ const Weekly_report = (props) => {
                       type="date"
                       name="date"
                       id="example-date"
-                      defaultValue="2022-11-20"
+                      defaultValue={end_date}
                       placeholder="w"
                       onChange={seteend}
                     />
                   </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                      searchreport(props.detail_num);
+                    }}
+                    style={{ "margin-left": "20px" }}
+                  >
+                    검색
+                  </button>
                 </div>
               </div>
 

@@ -61,15 +61,15 @@ const Branch_info = (props) => {
   const [specroom, setspecroom] = useState("none");
   const [rooms, setrooms] = useState([]);
   const handleSubmit_addGroup = (event) => {
-    //event.preventDefault();
+    event.preventDefault();
     console.log(event);
     // let calenderApi = selectInfo;
     // // calenderApi.unselect()
     let modal_group_name = document.getElementById("modal_group_name").value;
     let cu = "사용";
-    let cu1 = event.target[2].checked;
-    let cu2 = event.target[3].checked;
-    let cu3 = event.target[4].checked;
+    let cu1 = event.target[1].checked;
+    let cu2 = event.target[2].checked;
+    let cu3 = event.target[3].checked;
     if (cu1 == true) {
       cu = "사용";
     } else if (cu2 == true) {
@@ -78,7 +78,7 @@ const Branch_info = (props) => {
       cu = "삭제";
     }
     console.log(modal_group_name);
-    console.log(cu);
+
     postGroup({
       name: modal_group_name,
       status: cu,
@@ -209,7 +209,7 @@ const Branch_info = (props) => {
       });
   }
   const handleSubmit_addRoom = (event) => {
-    //event.preventDefault();
+    event.preventDefault();
     console.log(event);
     // let calenderApi = selectInfo;
     // // calenderApi.unselect()
@@ -1197,7 +1197,7 @@ const Branch_info = (props) => {
                 <div className="modal-content">
                   <form
                     onSubmit={function (event) {
-                      //event.preventDefault();
+                      event.preventDefault();
                       handleSubmit_forgroup(event);
                     }}
                     className="w-100"
@@ -1558,7 +1558,7 @@ const Branch_info = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
               <form
                 onSubmit={function (event) {
-                  //event.preventDefault();
+                  event.preventDefault();
                   handleSubmit(event);
                 }}
               >

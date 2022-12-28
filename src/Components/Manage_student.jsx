@@ -626,7 +626,9 @@ const Manage_student = (props) => {
                     <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
                       <div className="row mb-5">
                         <div className="col-md-6 fv-row">
-                          <label>본사명</label>
+                          <label className="required fs-5 fw-semibold mb-2">
+                            본사명
+                          </label>
                           {cookies.cookie.data.role.id == 1 ? (
                             <div>
                               {props.detail_num != "0" ? (
@@ -720,7 +722,9 @@ const Manage_student = (props) => {
                           )}
                         </div>
                         <div className="col-md-6 fv-row">
-                          <label>지점명</label>
+                          <label className="required fs-5 fw-semibold mb-2">
+                            지점명
+                          </label>
                           {props.detail_num != "0" ? (
                             <div>
                               <select
