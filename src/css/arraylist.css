@@ -19,7 +19,16 @@
     }
 .ttext {
     /* border:solid; */
-    float:left;
-    margin-right:55%; 
+    /* margin-top: 3.5%; */
+    margin-left:13%;
+    margin-top: 13px;
+    position: absolute;
+    /* margin-right:55%;  */
     
+}
+.add_btnn{
+    /* border:solid; */
+    margin-top: 6.5px;
+    position: relative;
+    float: right !important;;
 }

@@ -12,7 +12,7 @@ const Manager_detail = (props) => {
   const reset = useRef();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [brands, setbrands] = useState([]);
-  const [owners2, setowners2] = useState([{ id: "1" }]);
+  const [owners2, setowners2] = useState([{ id: "" }]);
   const [owners, setowners] = useState([]);
   const [data, setdata] = useState({
     id: "",
@@ -44,7 +44,7 @@ const Manager_detail = (props) => {
     } else if (props.detail_num == "0") {
       let owner_props = {
         target: {
-          0: { value: 1 },
+          0: { value: "" },
           1: { value: "" },
           2: { value: "" },
           3: { value: "" },
@@ -53,7 +53,7 @@ const Manager_detail = (props) => {
           6: { value: "" },
         },
       };
-      searchowner_filter(owner_props);
+      // searchowner_filter(owner_props);
       console.log("0");
       setdata({
         id: "",
@@ -339,9 +339,9 @@ const Manager_detail = (props) => {
                           data-control="select2"
                           data-placeholder="Select a position..."
                           className="form-select form-select-solid"
-                          defaultValue="1"
                           onChange={set_brandid_onfilter}
                         >
+                          <option value=""> 본사를 선택해주세요</option>
                           {brands.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.name}
@@ -427,6 +427,7 @@ const Manager_detail = (props) => {
                           className="form-select form-select-solid"
                           // defaultValue={owners2[0].id}
                         >
+                          <option value=""> 원장을 선택해주세요</option>
                           {owners2.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.realName}
@@ -465,6 +466,7 @@ const Manager_detail = (props) => {
                           className="form-select form-select-solid"
                           defaultValue=""
                         >
+                          <option value=""> 원장을 선택해주세요</option>
                           {owners2.map((item, idx) => (
                             <option key={idx} value={item.id}>
                               {item.realName}

@@ -209,17 +209,18 @@ const Day_report = (props) => {
                             />
                           </div>
                         </th>
-                        <th className="min-w-80px">구분</th>
+                        <th className="min-w-60px">구분</th>
+                        <th className="min-w-60px">이름</th>
+                        <th className="min-w-100px">학습실</th>
+                        <th className="min-w-80px">좌석번호</th>
+                        <th className="min-w-80px">관리그룹</th>
                         <th className="min-w-50px">학습시작</th>
-                        <th className="min-w-25px">관리그룹</th>
-                        <th className="min-w-80px">학습실</th>
-                        <th className="min-w-50px">좌석번호</th>
-                        <th className="min-w-50px">이름</th>
+
                         <th className="min-w-50px">일일누적</th>
                         <th className="min-w-80px">현재학습</th>
                         <th className="min-w-50px">계획</th>
                         <th className="min-w-50px">실행</th>
-                        <th className="min-w-50px">실행률</th>
+                        <th className="min-w-60px">실행률</th>
                       </tr>
                     </thead>
 
@@ -239,21 +240,22 @@ const Day_report = (props) => {
                           <td className="text-gray-800 fw-bold">
                             {data.nowStatus}
                           </td>
+                          <td>{data.user.realName}</td>
                           <td className="text-gray-800 fw-bold">
-                            {data.studyStartTime}
+                            {data.user.room.name}
                           </td>
-                          {/* <td>{data.user.groupList[0].name}</td> */}
+                          <td>{data.user.seatNumber}</td>
                           {data.user.groupList[0] == undefined ? (
                             <td></td>
                           ) : (
                             <td>{data.user.groupList[0].name}</td>
                           )}
-
                           <td className="text-gray-800 fw-bold">
-                            {data.user.room.name}
+                            {data.studyStartTime}
                           </td>
-                          <td>{data.user.seatNumber}</td>
-                          <td>{data.user.realName}</td>
+
+                          {/* <td>{data.user.groupList[0].name}</td> */}
+
                           <td>{data.totalStudyTime}</td>
                           <td>{data.nowStudyTime}</td>
                           <td>{data.toDoCount}</td>

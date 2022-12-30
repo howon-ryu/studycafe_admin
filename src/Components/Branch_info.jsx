@@ -2020,7 +2020,8 @@ const Branch_info = (props) => {
                         <td>
                           <div className="form-check form-check-sm form-check-custom form-check-solid">
                             <span className="text-gray-600 text-hover-primary ms-4">
-                              {v.id}
+                              {/* {v.id} */}
+                              <td>{idx + 1}</td>
                             </span>
                           </div>
                         </td>

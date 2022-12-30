@@ -10,6 +10,7 @@ import {
   compareByFieldSpec,
 } from "@fullcalendar/core";
 import "../css/arraylist.css";
+import "../css/style.bundle.css";
 import { createSearchParams, useNavigate, useLocation } from "react-router-dom";
 
 const AcademyList = (props) => {
@@ -1676,58 +1677,57 @@ const AcademyList = (props) => {
                 </span>
                 {ttext}
               </span>
-              <ul
-                className="nav mb-2 mb-sm-0 card__left_tab"
-                style={{ border: "solid;" }}
-              >
-                {addflag == "1" ? (
-                  <li className="nav-item m-0">
-                    <a
-                      className="btn btn-sm btn-icon btn-bg-light btn-primary me-4"
-                      data-bs-toggle="tab"
-                      onClick={addarray}
-                    >
-                      <span className="svg-icon svg-icon-2">
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect
-                            opacity="0.5"
-                            x="11.364"
-                            y="20.364"
-                            width="16"
-                            height="2"
-                            rx="1"
-                            transform="rotate(-90 11.364 20.364)"
-                            fill="currentColor"
-                          ></rect>
-                          <rect
-                            x="4.36396"
-                            y="11.364"
-                            width="16"
-                            height="2"
-                            rx="1"
-                            fill="currentColor"
-                          ></rect>
-                        </svg>
-                      </span>
-                    </a>
-                  </li>
-                ) : null}
+              <div className="add_btnn">
+                <ul className="nav mb-2 mb-sm-0 card__left_tab ">
+                  {addflag == "1" ? (
+                    <li className="nav-item m-0">
+                      <a
+                        className="btn btn-sm btn-icon btn-bg-light btn-primary me-4"
+                        data-bs-toggle="tab"
+                        onClick={addarray}
+                      >
+                        <span className="svg-icon svg-icon-2">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              opacity="0.5"
+                              x="11.364"
+                              y="20.364"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(-90 11.364 20.364)"
+                              fill="currentColor"
+                            ></rect>
+                            <rect
+                              x="4.36396"
+                              y="11.364"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              fill="currentColor"
+                            ></rect>
+                          </svg>
+                        </span>
+                      </a>
+                    </li>
+                  ) : null}
 
-                <li className="nav-item m-0" hidden>
-                  <button
-                    className="btn btn-sm btn-icon btn-light-primary btn__wight_sq"
-                    type="button"
-                  >
-                    <i className="bi bi-download fs-3"></i>
-                  </button>
-                </li>
-              </ul>
+                  <li className="nav-item m-0" hidden>
+                    <button
+                      className="btn btn-sm btn-icon btn-light-primary btn__wight_sq"
+                      type="button"
+                    >
+                      <i className="bi bi-download fs-3"></i>
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
 
             <div className="selected__txt_wrap" hidden>
