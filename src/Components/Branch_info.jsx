@@ -234,13 +234,14 @@ const Branch_info = (props) => {
       branchId: props.detail_num,
     });
   };
-  const grouopsList = groups.map((v) => (
+  const grouopsList = groups.map((v, idx) => (
     <tr>
-      <td>
+      {/* <td>
         <div className="form-check form-check-sm form-check-custom form-check-solid">
           <span className="text-gray-600 text-hover-primary ms-4">{v.id}</span>
         </div>
-      </td>
+      </td> */}
+      <td>{idx + 1}</td>
       <td data-order="Invalid date">{v.name}</td>
       <td data-order="Invalid date">{v.createdAt.substr(0, 10)}</td>
       <td className="n_empty"></td>
@@ -278,11 +279,14 @@ const Branch_info = (props) => {
       </td>
     </tr>
   ));
-  const roomsList = rooms.map((v) => (
+  const roomsList = rooms.map((v, idx) => (
     <tr>
       <td>
         <div className="form-check form-check-sm form-check-custom form-check-solid">
-          <span className="text-gray-600 text-hover-primary ms-4">{v.id}</span>
+          <span className="text-gray-600 text-hover-primary ms-4">
+            {/* {v.id} */}
+            <td>{idx + 1}</td>
+          </span>
         </div>
       </td>
       <td data-order="Invalid date">{v.name}</td>

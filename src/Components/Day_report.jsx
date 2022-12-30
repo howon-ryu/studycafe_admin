@@ -214,9 +214,9 @@ const Day_report = (props) => {
                         <th className="min-w-100px">학습실</th>
                         <th className="min-w-80px">좌석번호</th>
                         <th className="min-w-80px">관리그룹</th>
-                        <th className="min-w-50px">학습시작</th>
+                        <th className="min-w-60px">학습시작</th>
 
-                        <th className="min-w-50px">일일누적</th>
+                        <th className="min-w-60px">일일누적</th>
                         <th className="min-w-80px">현재학습</th>
                         <th className="min-w-50px">계획</th>
                         <th className="min-w-50px">실행</th>
