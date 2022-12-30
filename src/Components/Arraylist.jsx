@@ -31,7 +31,12 @@ const AcademyList = (props) => {
     }
   }, [location]);
   const [ttext, setttext] = useState("모든학원본사");
-  const [tttext, settttext] = useState("모든");
+  const [ttext_brand, setttext_brand] = useState("");
+  const [ttext_branch, setttext_branch] = useState("");
+  const [ttext_owner, setttext_owner] = useState("");
+  const [ttext_room, setttext_room] = useState("");
+  const [ttext_group, setttext_group] = useState("");
+  const [tttext, settttext] = useState("ALL");
   let [data, setdata] = useState([]);
 
   // const [event2, setevent2] = useState({
@@ -309,9 +314,10 @@ const AcademyList = (props) => {
     },
   ]);
   function setText(props) {
+    //const temp_arr = [];
     if (props == "") {
       setttext("모든학원본사");
-      settttext("모든");
+      settttext("ALL");
     } else if (props == "사용") {
       setttext("사용중인학원본사");
       settttext("사용");
@@ -322,6 +328,30 @@ const AcademyList = (props) => {
       setttext("삭제된학원본사");
       setttext("삭제");
     }
+    // if (props == "") {
+    //   setttext("모든학원본사");
+    //   settttext("모든");
+    // }
+    // if (props.target[0].value != "") {
+    //   temp_arr.push(props.target[0].value);
+    //   // console.log("ta1:", data.brand.name);
+    // }
+    // if (props.target[1].value != "") {
+    //   temp_arr.push(props.target[1].value);
+    // }
+    // if (props.target[3].value != "") {
+    //   temp_arr.push(props.target[0].value);
+    // }
+    // if (props.target[4].value != "") {
+    //   temp_arr.push(props.target[1].value);
+    // }
+    // if (props.target[5].value != "") {
+    //   temp_arr.push(props.target[0].value);
+    // }
+    // if (props.target[6].value != "") {
+    //   temp_arr.push(props.target[1].value);
+    // }
+    // console.log("ta:", temp_arr);
   }
   const [on_brandid, set_on_brandid] = useState([""]);
   const [on_ownerid, set_on_ownerid] = useState([""]);
@@ -627,6 +657,22 @@ const AcademyList = (props) => {
   }
   function searchStudent(props) {
     // 나중에 branch 맞춰줘야함
+    setttext_brand("");
+    setttext_branch("");
+    setttext_room("");
+    setttext_group("");
+
+    let temp_arr = [
+      {
+        brand: "",
+        owner: "",
+        manager: "",
+        branch: "",
+        room: "",
+        group: "",
+        status: "",
+      },
+    ];
     console.log("ppp", props);
     console.log("ppp4", props.target[4].value);
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
@@ -641,10 +687,15 @@ const AcademyList = (props) => {
       console.log("asdfasdfasdfppp:", props);
 
       var_brandid = props.target[0].value;
+      temp_arr.brand = var_brandid;
       var_branchid = props.target[3].value;
+      temp_arr.branch = var_branchid;
       var_roomid = props.target[4].value;
+      temp_arr.room = var_roomid;
       var_groupid = props.target[5].value;
+      temp_arr.group = var_groupid;
       var_status = props.target[6].value;
+      temp_arr.status = var_status;
     } else {
       console.log("nonononoppp");
     }
@@ -654,6 +705,7 @@ const AcademyList = (props) => {
     console.log("var_groupidppp", var_groupid);
     console.log("var_statusppp", var_status);
     console.log(url_set);
+    console.log("ta:", temp_arr);
     axios
       .get(url_set, {
         params: {
@@ -671,6 +723,36 @@ const AcademyList = (props) => {
 
         console.log("studens:", response.data);
         console.log("성공");
+        console.log(temp_arr[0]);
+        if (temp_arr.brand != "") {
+          console.log(temp_arr[0]);
+          setttext_brand(response.data[0].brand.name);
+        } else {
+          setttext_brand("");
+        }
+        // if (temp_arr[1] != undefined) {
+        //   setttext_owner(response.data[0].brand.name);
+
+        // }
+
+        if (temp_arr.branch != "") {
+          console.log(temp_arr[3]);
+          setttext_branch(response.data[3].branch.name);
+        } else {
+          setttext_branch("");
+        }
+        if (temp_arr.room != "") {
+          console.log(temp_arr[4]);
+          setttext_room(response.data[4].room.name);
+        } else {
+          setttext_room("");
+        }
+        if (temp_arr.group != "") {
+          console.log(temp_arr[5]);
+          setttext_group(response.data[5].groupList.name);
+        } else {
+          setttext_group("");
+        }
       })
       .catch(function (error) {
         console.log("실패");
@@ -979,15 +1061,17 @@ const AcademyList = (props) => {
     console.log("event:", event);
     if (event != "1") {
       event.preventDefault();
-      console.log("tat:", event);
+      console.log("tat:", event.target[4].title);
       console.log("filter_brandId:", event.target[0].value);
-      console.log(event.target[1].value);
-      console.log(event.target[2].value);
-      console.log(event.target[3].value);
-      console.log(event.target[4].value);
-      console.log(event.target[5].value);
+      console.log("filter_ownerId:", event.target[1].value);
+
+      console.log("filter_???Id:", event.target[2].value);
+      console.log("filter_branchId:", event.target[3].value);
+      console.log("filter_roomId:", event.target[4].value);
+      console.log("filter_groupId:", event.target[5].value);
       console.log("filter_status:", event.target[6].value);
       setText(event.target[6].value);
+      // setText(event);
       searchBrands(event);
       searchowner(event);
       searchmanager(event);
@@ -1209,7 +1293,7 @@ const AcademyList = (props) => {
                           <div>
                             {props.flag == "office__branch_info" ? (
                               <div className="mb-10">
-                                <label>원장명11</label>
+                                <label>원장명</label>
                                 <div>
                                   <select
                                     className="form-select form-select-solid"
@@ -1518,7 +1602,11 @@ const AcademyList = (props) => {
                                 >
                                   <option value="">ALL</option>
                                   {rooms2.map((item, idx) => (
-                                    <option key={idx} value={item.id}>
+                                    <option
+                                      key={idx}
+                                      value={item.id}
+                                      name={item.name}
+                                    >
                                       {item.name}
                                     </option>
                                   ))}
@@ -1583,7 +1671,11 @@ const AcademyList = (props) => {
                                     ALL
                                   </option>
                                   {rooms2.map((item, idx) => (
-                                    <option key={idx} value={item.id}>
+                                    <option
+                                      key={idx}
+                                      value={item.id}
+                                      name={item.name}
+                                    >
                                       {item.name}
                                     </option>
                                   ))}
@@ -1624,9 +1716,11 @@ const AcademyList = (props) => {
                               defaultValue={tttext}
                             >
                               <option value="">ALL</option>
-                              <option value="사용">사용중인 학원본사</option>
-                              <option value="대기">대기중인 학원본사</option>
-                              <option value="삭제">삭제된 학원본사</option>
+                              <option value="사용">사용</option>
+                              <option value="대기">대기</option>
+                              {cookies.cookie.data.role.id == 1 ? (
+                                <option value="삭제">삭제</option>
+                              ) : null}
                             </select>
                           </div>
                         </div>
@@ -1651,8 +1745,14 @@ const AcademyList = (props) => {
                   </form>
                 ) : null}
               </div>
-              <span className="d-flex align-items-center fs-7 fw-bold text-gray-600 mb-2 selected__txt ttext">
-                <span className="svg-icon svg-icon-6 svg-icon-gray-600 me-2">
+              <span
+                className="d-flex align-items-center fs-7 fw-bold text-gray-600 mb-2 selected__txt ttext"
+                hidden
+              >
+                <span
+                  className="svg-icon svg-icon-6 svg-icon-gray-600 me-2"
+                  hidden
+                >
                   <svg
                     width="24"
                     height="24"
@@ -1675,7 +1775,147 @@ const AcademyList = (props) => {
                     ></path>
                   </svg>
                 </span>
-                {ttext}
+                {/* {ttext_brand != "" ? (
+                  <div>
+                    {ttext_brand}{" "}
+                    <span className="svg-icon svg-icon-6 svg-icon-gray-600 me-2">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          opacity="0.3"
+                          x="2"
+                          y="2"
+                          width="20"
+                          height="20"
+                          rx="5"
+                          fill="currentColor"
+                        ></rect>
+                        <path
+                          d="M11.9343 12.5657L9.53696 14.963C9.22669 15.2733 9.18488 15.7619 9.43792 16.1204C9.7616 16.5789 10.4211 16.6334 10.8156 16.2342L14.3054 12.7029C14.6903 12.3134 14.6903 11.6866 14.3054 11.2971L10.8156 7.76582C10.4211 7.3666 9.7616 7.42107 9.43792 7.87962C9.18488 8.23809 9.22669 8.72669 9.53696 9.03696L11.9343 11.4343C12.2467 11.7467 12.2467 12.2533 11.9343 12.5657Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </span>
+                  </div>
+                ) : null}
+                {ttext_owner != "" ? (
+                  <div>
+                    {ttext_owner}{" "}
+                    <span className="svg-icon svg-icon-6 svg-icon-gray-600 me-2">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          opacity="0.3"
+                          x="2"
+                          y="2"
+                          width="20"
+                          height="20"
+                          rx="5"
+                          fill="currentColor"
+                        ></rect>
+                        <path
+                          d="M11.9343 12.5657L9.53696 14.963C9.22669 15.2733 9.18488 15.7619 9.43792 16.1204C9.7616 16.5789 10.4211 16.6334 10.8156 16.2342L14.3054 12.7029C14.6903 12.3134 14.6903 11.6866 14.3054 11.2971L10.8156 7.76582C10.4211 7.3666 9.7616 7.42107 9.43792 7.87962C9.18488 8.23809 9.22669 8.72669 9.53696 9.03696L11.9343 11.4343C12.2467 11.7467 12.2467 12.2533 11.9343 12.5657Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </span>
+                  </div>
+                ) : null}
+                {ttext_branch != "" ? (
+                  <div>
+                    {ttext_branch}{" "}
+                    <span className="svg-icon svg-icon-6 svg-icon-gray-600 me-2">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          opacity="0.3"
+                          x="2"
+                          y="2"
+                          width="20"
+                          height="20"
+                          rx="5"
+                          fill="currentColor"
+                        ></rect>
+                        <path
+                          d="M11.9343 12.5657L9.53696 14.963C9.22669 15.2733 9.18488 15.7619 9.43792 16.1204C9.7616 16.5789 10.4211 16.6334 10.8156 16.2342L14.3054 12.7029C14.6903 12.3134 14.6903 11.6866 14.3054 11.2971L10.8156 7.76582C10.4211 7.3666 9.7616 7.42107 9.43792 7.87962C9.18488 8.23809 9.22669 8.72669 9.53696 9.03696L11.9343 11.4343C12.2467 11.7467 12.2467 12.2533 11.9343 12.5657Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </span>
+                  </div>
+                ) : null}
+                {ttext_room != "" ? (
+                  <div>
+                    {ttext_room}{" "}
+                    <span className="svg-icon svg-icon-6 svg-icon-gray-600 me-2">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          opacity="0.3"
+                          x="2"
+                          y="2"
+                          width="20"
+                          height="20"
+                          rx="5"
+                          fill="currentColor"
+                        ></rect>
+                        <path
+                          d="M11.9343 12.5657L9.53696 14.963C9.22669 15.2733 9.18488 15.7619 9.43792 16.1204C9.7616 16.5789 10.4211 16.6334 10.8156 16.2342L14.3054 12.7029C14.6903 12.3134 14.6903 11.6866 14.3054 11.2971L10.8156 7.76582C10.4211 7.3666 9.7616 7.42107 9.43792 7.87962C9.18488 8.23809 9.22669 8.72669 9.53696 9.03696L11.9343 11.4343C12.2467 11.7467 12.2467 12.2533 11.9343 12.5657Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </span>
+                  </div>
+                ) : null}
+                {ttext_group != "" ? (
+                  <div>
+                    {ttext_group}{" "}
+                    <span className="svg-icon svg-icon-6 svg-icon-gray-600 me-2">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          opacity="0.3"
+                          x="2"
+                          y="2"
+                          width="20"
+                          height="20"
+                          rx="5"
+                          fill="currentColor"
+                        ></rect>
+                        <path
+                          d="M11.9343 12.5657L9.53696 14.963C9.22669 15.2733 9.18488 15.7619 9.43792 16.1204C9.7616 16.5789 10.4211 16.6334 10.8156 16.2342L14.3054 12.7029C14.6903 12.3134 14.6903 11.6866 14.3054 11.2971L10.8156 7.76582C10.4211 7.3666 9.7616 7.42107 9.43792 7.87962C9.18488 8.23809 9.22669 8.72669 9.53696 9.03696L11.9343 11.4343C12.2467 11.7467 12.2467 12.2533 11.9343 12.5657Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </span>
+                  </div>
+                ) : null}
+                {tttext} */}
               </span>
               <div className="add_btnn">
                 <ul className="nav mb-2 mb-sm-0 card__left_tab ">
@@ -1759,7 +1999,10 @@ const AcademyList = (props) => {
               </span>
             </div>
             <div className="d-flex align-items-center position-relative my-1 card_l_h_sch">
-              <span className="svg-icon svg-icon-3 position-absolute ms-3">
+              <span
+                className="svg-icon svg-icon-3 position-absolute ms-3"
+                hidden
+              >
                 <svg
                   width="24"
                   height="24"
@@ -1789,6 +2032,7 @@ const AcademyList = (props) => {
                 data-kt-ecommerce-edit-order-filter="search"
                 className="form-control form-control-solid w-100 w-lg-50 ps-14"
                 placeholder="Search"
+                hidden
               />
             </div>
             <div className="card-body py-3">
@@ -1828,103 +2072,229 @@ const AcademyList = (props) => {
                           console.log("ads:", data);
                         }}
                       >
-                        {/* <td>{data.id}</td> */}
-                        {props.flag === "office__head_office" ? (
-                          <td>{idx + 1}</td>
-                        ) : props.flag === "office__branch_office" ? (
-                          <td>{idx + 1}</td>
-                        ) : props.flag === "student__manage_info" ? (
-                          <td>{idx + 1}</td>
-                        ) : props.flag === "office__branch_info" ? (
-                          <td>{idx + 1}</td>
-                        ) : props.flag === "Study_weekly_plan" ? (
-                          <td>{idx + 1}</td>
-                        ) : props.flag === "office__manager_office" ? (
-                          <td>{idx + 1}</td>
-                        ) : null}
-
-                        <td className="n_empty"></td>
-                        <td className="text-muted fw-semibold ">
-                          <div className="d-flex flex-stack">
-                            <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                              <div className="flex-grow-1 me-2">
-                                {props.flag === "office__head_office" ? (
-                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
-                                    {data.name}
-                                  </a>
-                                ) : props.flag === "office__branch_office" ? (
-                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
-                                    {data.realName}
-                                  </a>
-                                ) : props.flag === "student__manage_info" ? (
-                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
-                                    {data.realName}
-                                  </a>
-                                ) : props.flag === "office__branch_info" ? (
-                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
-                                    {data.name}
-                                  </a>
-                                ) : props.flag === "Study_weekly_plan" ? (
-                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
-                                    {data.realName}
-                                  </a>
-                                ) : props.flag === "office__manager_office" ? (
-                                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
-                                    {data.realName}
-                                  </a>
-                                ) : null}
-                                {/* <a
+                        {/* {cookies.cookie.data.role.id == 1 (<></>):(<></>)} */}
+                        {cookies.cookie.data.role.id == 1 ? (
+                          <>
+                            {" "}
+                            {props.flag === "office__head_office" ? (
+                              <td>{idx + 1}</td>
+                            ) : props.flag === "office__branch_office" ? (
+                              <td>{idx + 1}</td>
+                            ) : props.flag === "student__manage_info" ? (
+                              <td>{idx + 1}</td>
+                            ) : props.flag === "office__branch_info" ? (
+                              <td>{idx + 1}</td>
+                            ) : props.flag === "Study_weekly_plan" ? (
+                              <td>{idx + 1}</td>
+                            ) : props.flag === "office__manager_office" ? (
+                              <td>{idx + 1}</td>
+                            ) : null}
+                            <td className="n_empty"></td>
+                            <td className="text-muted fw-semibold ">
+                              <div className="d-flex flex-stack">
+                                <div className="d-flex align-items-center flex-row-fluid flex-wrap">
+                                  <div className="flex-grow-1 me-2">
+                                    {props.flag === "office__head_office" ? (
+                                      <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                        {data.name}
+                                      </a>
+                                    ) : props.flag ===
+                                      "office__branch_office" ? (
+                                      <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                        {data.realName}
+                                      </a>
+                                    ) : props.flag ===
+                                      "student__manage_info" ? (
+                                      <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                        {data.realName}
+                                      </a>
+                                    ) : props.flag === "office__branch_info" ? (
+                                      <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                        {data.name}
+                                      </a>
+                                    ) : props.flag === "Study_weekly_plan" ? (
+                                      <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                        {data.realName}
+                                      </a>
+                                    ) : props.flag ===
+                                      "office__manager_office" ? (
+                                      <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                        {data.realName}
+                                      </a>
+                                    ) : null}
+                                    {/* <a
                                   href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
                                   className="text-gray-800 text-hover-primary fs-6 fw-bold"
                                 >
                                   
                                   {data.brand.name}
                                 </a> */}
-                                {props.flag === "office__head_office" ? (
-                                  <span className="text-muted fw-semibold d-block fs-7">
-                                    {data.head.realName}
-                                  </span>
-                                ) : props.flag === "office__branch_office" ? (
-                                  <span className="text-muted fw-semibold d-block fs-7">
-                                    {data.name}
-                                  </span>
-                                ) : props.flag === "student__manage_info" ? (
-                                  <span className="text-muted fw-semibold d-block fs-7">
-                                    {data.school}
-                                  </span>
-                                ) : props.flag === "office__branch_info" ? (
-                                  <span className="text-muted fw-semibold d-block fs-7">
-                                    {data.brand.name}
-                                  </span>
-                                ) : props.flag === "Study_weekly_plan" ? (
-                                  <span className="text-muted fw-semibold d-block fs-7">
-                                    {data.school}
-                                  </span>
-                                ) : props.flag === "office__manager_office" ? (
-                                  <span className="text-muted fw-semibold d-block fs-7">
-                                    {data.name}
-                                  </span>
-                                ) : null}
+                                    {props.flag === "office__head_office" ? (
+                                      <span className="text-muted fw-semibold d-block fs-7">
+                                        {data.head.realName}
+                                      </span>
+                                    ) : props.flag ===
+                                      "office__branch_office" ? (
+                                      <span className="text-muted fw-semibold d-block fs-7">
+                                        {data.name}
+                                      </span>
+                                    ) : props.flag ===
+                                      "student__manage_info" ? (
+                                      <span className="text-muted fw-semibold d-block fs-7">
+                                        {data.school}
+                                      </span>
+                                    ) : props.flag === "office__branch_info" ? (
+                                      <span className="text-muted fw-semibold d-block fs-7">
+                                        {data.brand.name}
+                                      </span>
+                                    ) : props.flag === "Study_weekly_plan" ? (
+                                      <span className="text-muted fw-semibold d-block fs-7">
+                                        {data.school}
+                                      </span>
+                                    ) : props.flag ===
+                                      "office__manager_office" ? (
+                                      <span className="text-muted fw-semibold d-block fs-7">
+                                        {data.name}
+                                      </span>
+                                    ) : null}
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="n_empty"></td>
-                        <td className="text-end">
-                          {data.status == "사용" ? (
-                            <span className="badge badge-light-success fw-bold px-4 py-3">
-                              {data.status}
-                            </span>
-                          ) : data.status == "대기" ? (
-                            <span className="badge badge-light-warning fw-bold px-4 py-3">
-                              {data.status}
-                            </span>
-                          ) : (
-                            <span className="badge badge-light-danger fw-bold px-4 py-3">
-                              {data.status}
-                            </span>
-                          )}
-                        </td>
+                            </td>
+                            <td className="n_empty"></td>
+                            <td className="text-end">
+                              {data.status == "사용" ? (
+                                <span className="badge badge-light-success fw-bold px-4 py-3">
+                                  {data.status}
+                                </span>
+                              ) : data.status == "대기" ? (
+                                <span className="badge badge-light-warning fw-bold px-4 py-3">
+                                  {data.status}
+                                </span>
+                              ) : (
+                                <span className="badge badge-light-danger fw-bold px-4 py-3">
+                                  {data.status}
+                                </span>
+                              )}
+                            </td>
+                          </>
+                        ) : (
+                          <>
+                            {data.status != "삭제" ? (
+                              <>
+                                {" "}
+                                {/* <td>{data.id}</td> */}
+                                {props.flag === "office__head_office" ? (
+                                  <td>{idx + 1}</td>
+                                ) : props.flag === "office__branch_office" ? (
+                                  <td>{idx + 1}</td>
+                                ) : props.flag === "student__manage_info" ? (
+                                  <td>{idx + 1}</td>
+                                ) : props.flag === "office__branch_info" ? (
+                                  <td>{idx + 1}</td>
+                                ) : props.flag === "Study_weekly_plan" ? (
+                                  <td>{idx + 1}</td>
+                                ) : props.flag === "office__manager_office" ? (
+                                  <td>{idx + 1}</td>
+                                ) : null}
+                                <td className="n_empty"></td>
+                                <td className="text-muted fw-semibold ">
+                                  <div className="d-flex flex-stack">
+                                    <div className="d-flex align-items-center flex-row-fluid flex-wrap">
+                                      <div className="flex-grow-1 me-2">
+                                        {props.flag ===
+                                        "office__head_office" ? (
+                                          <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                            {data.name}
+                                          </a>
+                                        ) : props.flag ===
+                                          "office__branch_office" ? (
+                                          <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                            {data.realName}
+                                          </a>
+                                        ) : props.flag ===
+                                          "student__manage_info" ? (
+                                          <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                            {data.realName}
+                                          </a>
+                                        ) : props.flag ===
+                                          "office__branch_info" ? (
+                                          <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                            {data.name}
+                                          </a>
+                                        ) : props.flag ===
+                                          "Study_weekly_plan" ? (
+                                          <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                            {data.realName}
+                                          </a>
+                                        ) : props.flag ===
+                                          "office__manager_office" ? (
+                                          <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                                            {data.realName}
+                                          </a>
+                                        ) : null}
+                                        {/* <a
+                                  href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
+                                  className="text-gray-800 text-hover-primary fs-6 fw-bold"
+                                >
+                                  
+                                  {data.brand.name}
+                                </a> */}
+                                        {props.flag ===
+                                        "office__head_office" ? (
+                                          <span className="text-muted fw-semibold d-block fs-7">
+                                            {data.head.realName}
+                                          </span>
+                                        ) : props.flag ===
+                                          "office__branch_office" ? (
+                                          <span className="text-muted fw-semibold d-block fs-7">
+                                            {data.name}
+                                          </span>
+                                        ) : props.flag ===
+                                          "student__manage_info" ? (
+                                          <span className="text-muted fw-semibold d-block fs-7">
+                                            {data.school}
+                                          </span>
+                                        ) : props.flag ===
+                                          "office__branch_info" ? (
+                                          <span className="text-muted fw-semibold d-block fs-7">
+                                            {data.brand.name}
+                                          </span>
+                                        ) : props.flag ===
+                                          "Study_weekly_plan" ? (
+                                          <span className="text-muted fw-semibold d-block fs-7">
+                                            {data.school}
+                                          </span>
+                                        ) : props.flag ===
+                                          "office__manager_office" ? (
+                                          <span className="text-muted fw-semibold d-block fs-7">
+                                            {data.name}
+                                          </span>
+                                        ) : null}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="n_empty"></td>
+                                <td className="text-end">
+                                  {data.status == "사용" ? (
+                                    <span className="badge badge-light-success fw-bold px-4 py-3">
+                                      {data.status}
+                                    </span>
+                                  ) : data.status == "대기" ? (
+                                    <span className="badge badge-light-warning fw-bold px-4 py-3">
+                                      {data.status}
+                                    </span>
+                                  ) : (
+                                    <span className="badge badge-light-danger fw-bold px-4 py-3">
+                                      {data.status}
+                                    </span>
+                                  )}
+                                </td>
+                              </>
+                            ) : null}
+                          </>
+                        )}
                       </tr>
                     ))}
                   </tbody>
