@@ -205,7 +205,7 @@ const Calendar_plan = (props) => {
   };
 
   const handleSubmit = (selectInfo) => {
-    selectInfo.preventDefault();
+    //selectInfo.preventDefault();
     console.log(selectInfo);
     let calenderApi = selectInfo;
     // calenderApi.unselect()
@@ -230,8 +230,8 @@ const Calendar_plan = (props) => {
     console.log("ggg", studentId);
     postStudyPlanList({
       studentId,
-      fromTime: event_start_date,
-      toTime: event_end_date,
+      startTime: event_start_date,
+      endTime: event_end_date,
       title: event_name,
       description: event_descripton,
       place: event_location,

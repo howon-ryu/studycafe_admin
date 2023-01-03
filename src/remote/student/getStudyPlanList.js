@@ -11,8 +11,8 @@ const defaultpostStudentForm = {
   place: null,
   title: null,
   description: null,
-  fromTime: null,
-  toTime: null,
+  startTime: null,
+  endTime: null,
 };
 
 export const getStudyPlanList = async (studentForm = defaultStudentForm) => {
@@ -48,8 +48,8 @@ export const postStudyPlanList = async (
       place: studentForm.place,
       title: studentForm.title,
       description: studentForm.description,
-      fromTime: studentForm.startTime + "T10:10:10.491Z",
-      toTime: studentForm.endTime + "T10:10:13.491Z",
+      startTime: studentForm.startTime + "T10:10:10.491Z",
+      endTime: studentForm.endTime + "T10:10:13.491Z",
       // startTime: "2022-11-27T10:37:26.491Z",
       // endTime: "2022-11-27T10:37:26.491Z"
     });
