@@ -307,7 +307,7 @@ const Detail = (props) => {
                 </label>
 
                 <input
-                  type="text"
+                  type="passward"
                   className="form-control"
                   defaultValue={data.head.realName || ""}
                   name=""
@@ -316,7 +316,7 @@ const Detail = (props) => {
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">아이디</label>
                 <input
-                  type="text"
+                  type="passward"
                   className="form-control"
                   defaultValue={data.head.username || ""}
                   name=""
@@ -329,12 +329,21 @@ const Detail = (props) => {
                   비밀번호
                 </label>
 
-                <input
-                  type="text"
-                  id="password"
-                  className="form-control"
-                  defaultValue=""
-                />
+                {data.head.password != "" ? (
+                  <input
+                    type="passward"
+                    id="password"
+                    className="form-control"
+                    defaultValue={data.head.password}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    id="password"
+                    className="form-control"
+                    defaultValue=""
+                  />
+                )}
               </div>
 
               <div className="col-md-6 fv-row">
@@ -342,13 +351,21 @@ const Detail = (props) => {
                   비밀번호 확인
                 </label>
 
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder=""
-                  name=""
-                  defaultValue=""
-                />
+                {data.head.password != "" ? (
+                  <input
+                    type="passward"
+                    id="password"
+                    className="form-control"
+                    defaultValue={data.head.password}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    id="password"
+                    className="form-control"
+                    defaultValue=""
+                  />
+                )}
               </div>
             </div>
 

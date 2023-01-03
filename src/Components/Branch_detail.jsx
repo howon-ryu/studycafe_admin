@@ -375,12 +375,21 @@ const Branch_detail = (props) => {
                     비밀번호
                   </label>
 
-                  <input
-                    type="text"
-                    id="password"
-                    className="form-control"
-                    placeholer=""
-                  />
+                  {data.password != "" ? (
+                    <input
+                      type="text"
+                      id="password"
+                      className="form-control"
+                      defaultValue={data.password}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      id="password"
+                      className="form-control"
+                      defaultValue=""
+                    />
+                  )}
                 </div>
 
                 <div className="col-md-6 fv-row">
@@ -388,12 +397,21 @@ const Branch_detail = (props) => {
                     비밀번호 확인
                   </label>
 
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                    name=""
-                  />
+                  {data.password != "" ? (
+                    <input
+                      type="text"
+                      id="password"
+                      className="form-control"
+                      defaultValue={data.password}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      id="password"
+                      className="form-control"
+                      defaultValue=""
+                    />
+                  )}
                 </div>
               </div>
               <div className="row mb-5">
