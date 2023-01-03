@@ -13,7 +13,7 @@ import Manager_detail from "./Manager_detail";
 import "../css/layout.css";
 // import { Container } from "react-bootstrap";
 const Office__manager_office = (props) => {
-  const [detail_num, setDetailNum] = useState("");
+  const [detail_num, setDetailNum] = useState("0");
   let widthh = props.width;
   return (
     <Container>

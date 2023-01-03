@@ -12,12 +12,16 @@ import styled from "styled-components";
 import Modal_view from "./Modal_view";
 import "../css/branch_info.css";
 import { postGroup, postRoom } from "../remote/student/branch_info_group_room";
+import { useCookies } from "react-cookie";
 const Branch_info = (props) => {
   const reset = useRef();
+  const [cookies, setCookie, removeCookie] = useCookies();
   let flag = 1;
   const [flag_act, setact] = useState("추가");
   const [flag_one, setflagone] = useState("1");
   const one_click = (props) => setflagone(props);
+  const [owners2, setowners2] = useState([{ id: "1" }]);
+  const [managers2, setmanagers2] = useState([{ id: "1" }]);
   const [flag_two, setflagtwo] = useState("2");
   const two_click = (props) => setflagtwo(props);
   const [flag_three, setflagthree] = useState("2");
@@ -32,14 +36,15 @@ const Branch_info = (props) => {
 
     console.log(flag);
   }, [isOpenModal]);
-  const [brands, setbrands] = useState([]);
-  const [owners, setowners] = useState([]);
+  const [brands, setbrands] = useState([{ id: "1" }]);
+  const [owners, setowners] = useState([{ id: "1", brand: { id: "119" } }]);
   const [managers, setmanagers] = useState([]);
   // const moment = require("moment");
   // const brandsList = brands.map((v) => (
   //   <option>{v.name}</option>
 
   // ))
+  console.log("owners2!!!!!", owners2);
   useEffect(() => {
     if (props.detail_num != "0") {
       console.log("fff");
@@ -62,9 +67,9 @@ const Branch_info = (props) => {
     // // calenderApi.unselect()
     let modal_group_name = document.getElementById("modal_group_name").value;
     let cu = "사용";
-    let cu1 = event.target[2].checked;
-    let cu2 = event.target[3].checked;
-    let cu3 = event.target[4].checked;
+    let cu1 = event.target[1].checked;
+    let cu2 = event.target[2].checked;
+    let cu3 = event.target[3].checked;
     if (cu1 == true) {
       cu = "사용";
     } else if (cu2 == true) {
@@ -73,13 +78,136 @@ const Branch_info = (props) => {
       cu = "삭제";
     }
     console.log(modal_group_name);
-    console.log(cu);
+
     postGroup({
       name: modal_group_name,
       status: cu,
       branchId: props.detail_num,
     });
   };
+  function set_brandid_onfilter(e) {
+    console.log("1234", e.target.value);
+    let owner_props = {
+      target: {
+        0: { value: e.target.value },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: "" },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    let branch_props = {
+      target: {
+        0: { value: e.target.value },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: "" },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    let manager_props = {
+      target: {
+        0: { value: e.target.value },
+        1: { value: "" },
+        2: { value: "" },
+        3: { value: "" },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    console.log("1234pp", owner_props);
+    searchowner_filter(owner_props);
+    // searchBranches_filter(branch_props);
+    // searchRooms_filter(branch_props);
+    //searchmanager_filter(manager_props)
+  }
+  function set_owner_onfilter(e) {
+    console.log("1234", e.target.value);
+
+    let manager_props = {
+      target: {
+        0: { value: "" },
+        1: { value: e.target.value },
+        2: { value: "" },
+        3: { value: "" },
+        4: { value: "" },
+        5: { value: "" },
+        6: { value: "" },
+      },
+    };
+    console.log("1234pp", manager_props);
+    searchmanager_filter(manager_props);
+    // searchBranches_filter(branch_props);
+    // searchRooms_filter(branch_props);
+  }
+  function searchmanager_filter(props) {
+    console.log("1234props", props);
+    let var_status = "";
+    let var_brandid = "";
+    let var_ownerid = "";
+    if (props != undefined) {
+      console.log("1234propsif", props);
+      var_status = props.target[6].value;
+      var_brandid = props.target[0].value;
+      var_ownerid = props.target[1].value;
+    }
+    console.log(var_brandid);
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + "manager";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+          ownerId: var_ownerid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setmanagers2(response.data);
+
+        console.log("owners:", response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchowner_filter(props) {
+    console.log("1234props", props);
+    let var_status = "";
+    let var_brandid = "";
+    if (props != undefined) {
+      console.log("1234propsif", props);
+      var_status = props.target[6].value;
+      var_brandid = props.target[0].value;
+    }
+    console.log(var_brandid);
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + "owners";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+        console.log("!!!!!", response.data);
+        setowners2(response.data);
+
+        console.log("owners:", response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   const handleSubmit_addRoom = (event) => {
     event.preventDefault();
     console.log(event);
@@ -106,13 +234,14 @@ const Branch_info = (props) => {
       branchId: props.detail_num,
     });
   };
-  const grouopsList = groups.map((v) => (
+  const grouopsList = groups.map((v, idx) => (
     <tr>
-      <td>
+      {/* <td>
         <div className="form-check form-check-sm form-check-custom form-check-solid">
           <span className="text-gray-600 text-hover-primary ms-4">{v.id}</span>
         </div>
-      </td>
+      </td> */}
+      <td>{idx + 1}</td>
       <td data-order="Invalid date">{v.name}</td>
       <td data-order="Invalid date">{v.createdAt.substr(0, 10)}</td>
       <td className="n_empty"></td>
@@ -130,29 +259,53 @@ const Branch_info = (props) => {
         <button
           type="button"
           className="btn btn-primary"
+          // onClick={() => {
+          //   setact("수정");
+          //   spec_group_api(v.id);
+          //   spec_group_api(v.id);
+          //   setOpenModal(!isOpenModal);
+          //   setOpenModal(!isOpenModal);
+          //   setOpenModal(!isOpenModal);
+          // }}
           onClick={() => {
             setact("수정");
             spec_group_api(v.id);
+
             setOpenModal(!isOpenModal);
           }}
         >
-          수정
+          수정{specgroup.name}
         </button>
       </td>
     </tr>
   ));
-  const roomsList = rooms.map((v) => (
+  const roomsList = rooms.map((v, idx) => (
     <tr>
       <td>
         <div className="form-check form-check-sm form-check-custom form-check-solid">
-          <span className="text-gray-600 text-hover-primary ms-4">{v.id}</span>
+          <span className="text-gray-600 text-hover-primary ms-4">
+            {/* {v.id} */}
+            <td>{idx + 1}</td>
+          </span>
         </div>
       </td>
       <td data-order="Invalid date">{v.name}</td>
       <td data-order="text-muted">{v.availableSeat}</td>
       <td className="n_empty"></td>
       <td className="text-muted fw-semibold ">
-        <span className="badge badge-light-success me-2">{v.status}</span>
+        {v.status == "사용" ? (
+          <span className="badge badge-light-success fw-bold px-4 py-3">
+            {v.status}
+          </span>
+        ) : v.status == "대기" ? (
+          <span className="badge badge-light-warning fw-bold px-4 py-3">
+            {v.status}
+          </span>
+        ) : (
+          <span className="badge badge-light-danger fw-bold px-4 py-3">
+            {v.status}
+          </span>
+        )}
       </td>
       <td data-order="Invalid date text-end">
         <button
@@ -161,7 +314,8 @@ const Branch_info = (props) => {
           onClick={() => {
             setact("수정");
             spec_room_api(v.id);
-            setOpenModal(!isOpenModal);
+            console.log("btn:", v.id);
+            //setOpenModal(!isOpenModal);
           }}
         >
           수정
@@ -268,9 +422,27 @@ const Branch_info = (props) => {
     console.log("props", props);
     // setdetailnum(props.detail_num);
     detail_num = props.detail_num;
+    console.log("!!!!!!:dn", props.detail_num);
     if (props.detail_num == "" || props.detail_num == undefined) {
       console.log("공백");
     } else if (props.detail_num == "0") {
+      // if(cookies.cookie.data.brand!=null){
+      //   let owner_props = {target:{0:{value:cookies.cookie.data.brand.id},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+      //   searchowner_filter(owner_props)
+      //   let manager_props = {target:{0:{value:cookies.cookie.data.brand.id},1:{value:cookies.cookie.data.brand.id},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+      //   searchmanager_filter(manager_props)
+      // }
+      // else{
+      //   console.log("1234ppinit",brands[0].id);
+      //   console.log("1234ppinit",owners[0]);
+      //   let owner_props = {target:{0:{value:owners[0].brand.id},1:{value:""},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+      //   searchowner_filter(owner_props)
+      //   let manager_props = {target:{0:{value:owners[0].brand.id},1:{value:owners[0].id},2:{value:""},3:{value:""},4:{value:""},5:{value:""},6:{value:""}}}
+
+      //   searchmanager_filter(manager_props)
+      // }
+      console.log("!!!!!!:dn", props.detail_num);
+      console.log("!!!!!!:flag_one", flag_one);
       console.log("0");
       one_click("1");
       two_click("2");
@@ -325,9 +497,14 @@ const Branch_info = (props) => {
         status: "",
       });
       if (flag_one == "1") {
+        console.log("!!!!:dho durlsms dksemfdjkdhk!!!!");
         reset.current.click();
+        console.log(reset.current);
+        console.log("!!!!:dho durlsms dksemfdjkdhk!!!!");
       }
     } else {
+      console.log("detail_num_else", props.detail_num);
+      console.log("flag_one_else", flag_one);
       detail_num = props.detail_num;
       if (flag_one == "1") {
         reset.current.click();
@@ -360,10 +537,16 @@ const Branch_info = (props) => {
   function searchManager() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users/manager";
+    let temp;
+    if (props.detail_num == "0") {
+      temp = "";
+    } else {
+      temp = props.detail_num;
+    }
     axios
       .get(url_set, {
         params: {
-          brandId: props.detail_num,
+          brandId: temp,
           status: data.status,
         },
       })
@@ -403,8 +586,9 @@ const Branch_info = (props) => {
   }
   function spec_branch_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "branches" + "/" + detail_num;
+    let url_set = url + "branches" + "/" + props.detail_num;
     console.log("url:", url_set);
+    console.log("spec", detail_num);
     axios
       .get(url_set)
       .then(function (response) {
@@ -436,6 +620,7 @@ const Branch_info = (props) => {
         console.log("실패");
       });
   }
+  let temp_group = "";
   function spec_group_api(groupid) {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "users" + "/groups/" + groupid;
@@ -454,6 +639,7 @@ const Branch_info = (props) => {
         console.log("실패");
       });
   }
+  let temp_room = { name: "1" };
   function spec_room_api(roomid) {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "branches" + "/rooms/" + roomid;
@@ -462,6 +648,10 @@ const Branch_info = (props) => {
       .get(url_set)
       .then(function (response) {
         setspecroom(response.data);
+        temp_room = response.data;
+        console.log("tr", temp_room);
+        console.log(specroom.name);
+        console.log(temp_room.name);
         // console.log("data:", data);
         // console.log("head:", data.head);
         console.log(response.data);
@@ -474,12 +664,27 @@ const Branch_info = (props) => {
   }
   const handles = (e) => {
     alert("kkl");
-    e.preventDefalut();
+    //e.preventDefalut();
   };
+  useEffect(() => {
+    console.log("groupddd:", specgroup);
+    if (flag_act == "수정") {
+      setOpenModal(!isOpenModal);
+    }
+  }, [specgroup]);
+  useEffect(() => {
+    console.log("groupddd:", specroom);
+    if (flag_act == "수정") {
+      setOpenModal(!isOpenModal);
+    }
+  }, [specroom]);
+  function clicktwo(props) {
+    console.log(props);
+    //setOpenModal(!isOpenModal);
+  }
   const handleSubmit_forgroup = (e) => {
-    // event.preventDefalut();
-
     console.log(e);
+    console.log("수정 그룹콘솔 찌겅바");
     let cu = "사용";
     let cu1 = e.target[1].checked;
     let cu2 = e.target[2].checked;
@@ -509,6 +714,7 @@ const Branch_info = (props) => {
       .then((response) => {
         console.log(response.status);
         console.log(response.data);
+        alert("저장되었습니다");
       })
       // .catch((e) => console.log('something went wrong :(', e));
       .catch((error) => {
@@ -520,8 +726,6 @@ const Branch_info = (props) => {
       });
   };
   const handleSubmit_forroom = (e) => {
-    // event.preventDefalut();
-
     console.log(e);
     let cu = "사용";
     let cu1 = e.target[2].checked;
@@ -553,6 +757,7 @@ const Branch_info = (props) => {
       .then((response) => {
         console.log(response.status);
         console.log(response.data);
+        alert("저장되었습니다");
       })
       // .catch((e) => console.log('something went wrong :(', e));
       .catch((error) => {
@@ -566,17 +771,27 @@ const Branch_info = (props) => {
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
       //alert(e.target[2].value);
-      //e.preventDefalut();
+      e.preventDefalut();
 
       console.log("e", e);
-
+      let cu = "사용";
+      let cu1 = e.target[6].checked;
+      let cu2 = e.target[7].checked;
+      let cu3 = e.target[8].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         brandId: e.target[0].value,
         name: e.target[2].value,
         homePageUrl: "new.branch.study",
         isManagement: false,
         businessRegistrationNumber: e.target[3].value,
-        status: e.target[6].value,
+        status: cu,
         managerId: e.target[5].value,
         address: e.target[4].value,
         ownerId: e.target[1].value,
@@ -610,14 +825,24 @@ const Branch_info = (props) => {
       // event.preventDefalut();
 
       console.log("e", e);
-
+      let cu = "사용";
+      let cu1 = e.target[6].checked;
+      let cu2 = e.target[7].checked;
+      let cu3 = e.target[8].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         brandId: e.target[0].value,
         name: e.target[2].value,
         homePageUrl: "",
         isManagement: false,
         businessRegistrationNumber: e.target[3].value,
-        status: data.status,
+        status: cu,
         address: e.target[4].value,
         managerId: e.target[5].value,
         ownerId: e.target[1].value,
@@ -637,6 +862,7 @@ const Branch_info = (props) => {
         .then((response) => {
           console.log(response.status);
           console.log(response.data);
+          alert("저장되었습니다");
         })
         // .catch((e) => console.log('something went wrong :(', e));
         .catch((error) => {
@@ -652,7 +878,614 @@ const Branch_info = (props) => {
     <div className="branch_info">
       <div className="col-xl-12  mb-5 mb-xl-10 card__right_wrap">
         <div className="card card-flush h-xl-100 card__right">
-          <div className="card-header py-7">
+          <Main>
+            {isOpenModal && flag_two == "1" && flag_act == "추가" && (
+              <Modal
+                onClickToggleModal={onClickToggleModal}
+                flag="office_branch_info_group"
+              >
+                <div className="modal-content">
+                  <form onSubmit={handleSubmit_addGroup} className="w-100">
+                    <div className="modal-header">
+                      <h2 className="fw-bold" data-kt-calendar="title">
+                        관리그룹 관리
+                      </h2>
+
+                      <div
+                        className="btn btn-icon btn-sm btn-active-icon-primary"
+                        id="kt_modal_add_event_close"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
+                      >
+                        <span className="svg-icon svg-icon-1">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              opacity="0.5"
+                              x="6"
+                              y="17.3137"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(-45 6 17.3137)"
+                              fill="currentColor"
+                            />
+                            <rect
+                              x="7.41422"
+                              y="6"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(45 7.41422 6)"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="fv-row mb-9">
+                      <label className="fs-6 fw-semibold required mb-2">
+                        관리그룹 이름
+                      </label>
+
+                      <input
+                        type="text"
+                        id="modal_group_name"
+                        className="form-control form-control-solid"
+                        placeholder=""
+                        name="modal_group_name"
+                      />
+                    </div>
+                    <div className="d-flex check__use_wrap">
+                      <div className="form-check form-check-custom form-check-solid me-5 check__use">
+                        <input
+                          className="form-check-input check__use_input"
+                          type="radio"
+                          value="사용"
+                          name="choice_use"
+                          id="product_tax_yes"
+                          defaultChecked={specgroup.status == "사용"}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="product_tax_yes"
+                        >
+                          사용
+                        </label>
+                      </div>
+                      <div className="form-check form-check-custom form-check-solid me-5 check__hold">
+                        <input
+                          className="form-check-input check__hold_input"
+                          type="radio"
+                          value="대기"
+                          name="choice_use"
+                          defaultChecked={specgroup.status == "대기"}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="product_tax_no"
+                        >
+                          대기
+                        </label>
+                      </div>
+                      <div className="form-check form-check-custom form-check-solid check__delet use">
+                        <input
+                          className="form-check-input check__delet_input"
+                          type="radio"
+                          defaultValue=""
+                          name="choice_use"
+                          defaultChecked={specgroup.status == "삭제"}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="product_tax_no"
+                        >
+                          삭제
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="modal-footer flex-center">
+                      <button
+                        type="reset"
+                        id="kt_modal_add_event_cancel"
+                        className="btn btn-light me-3"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
+                      >
+                        취소
+                      </button>
+
+                      <button
+                        type="submit"
+                        id="kt_modal_add_event_submit"
+                        className="btn btn-primary"
+                      >
+                        <span
+                          className="indicator-label"
+                          onClick={(e) => {
+                            console.log("!!!!!!!!!!!");
+                            e.preventDefault();
+                          }}
+                        >
+                          제출
+                        </span>
+                        <span className="indicator-progress">
+                          Please wait...
+                          <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                {/* //////////////////// */}
+              </Modal>
+            )}
+            {isOpenModal && flag_three == "1" && flag_act == "추가" && (
+              <Modal
+                onClickToggleModal={onClickToggleModal}
+                flag="office_branch_info_room"
+              >
+                <div className="modal-content">
+                  <form onSubmit={handleSubmit_addRoom} className="w-100">
+                    <div className="modal-header">
+                      <h2 className="fw-bold" data-kt-calendar="title">
+                        학습실 관리
+                      </h2>
+
+                      <div
+                        className="btn btn-icon btn-sm btn-active-icon-primary"
+                        id="kt_modal_add_event_close"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
+                      >
+                        <span className="svg-icon svg-icon-1">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              opacity="0.5"
+                              x="6"
+                              y="17.3137"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(-45 6 17.3137)"
+                              fill="currentColor"
+                            />
+                            <rect
+                              x="7.41422"
+                              y="6"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(45 7.41422 6)"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="fv-row mb-9">
+                      <label className="fs-6 fw-semibold required mb-2">
+                        학습실 이름
+                      </label>
+
+                      <input
+                        type="text"
+                        id="modal_room_name"
+                        className="form-control form-control-solid"
+                        placeholder=""
+                        name="modal_room_name"
+                      />
+                    </div>
+                    <div className="fv-row mb-9">
+                      <label className="fs-6 fw-semibold required mb-2">
+                        좌석수
+                      </label>
+
+                      <input
+                        type="text"
+                        id="modal_room_seat"
+                        className="form-control form-control-solid"
+                        placeholder=""
+                        name="modal_room_seat"
+                      />
+                    </div>
+                    <div className="d-flex check__use_wrap">
+                      <div className="form-check form-check-custom form-check-solid me-5 check__use">
+                        <input
+                          className="form-check-input check__use_input"
+                          type="radio"
+                          value="사용"
+                          name="choice_use"
+                          defaultChecked={specroom.status == "사용"}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="product_tax_yes"
+                        >
+                          사용
+                        </label>
+                      </div>
+                      <div className="form-check form-check-custom form-check-solid me-5 check__hold">
+                        <input
+                          className="form-check-input check__hold_input"
+                          type="radio"
+                          value="대기"
+                          name="choice_use"
+                          defaultChecked={specroom.status == "대기"}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="product_tax_no"
+                        >
+                          대기
+                        </label>
+                      </div>
+                      <div className="form-check form-check-custom form-check-solid check__delet use">
+                        <input
+                          className="form-check-input check__delet_input"
+                          type="radio"
+                          defaultValue=""
+                          name="choice_use"
+                          defaultChecked={specroom.status == "삭제"}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="product_tax_no"
+                        >
+                          삭제
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="modal-footer flex-center">
+                      <button
+                        type="reset"
+                        id="kt_modal_add_event_cancel"
+                        className="btn btn-light me-3"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
+                      >
+                        취소
+                      </button>
+
+                      <button
+                        type="submit"
+                        id="kt_modal_add_event_submit"
+                        className="btn btn-primary"
+                      >
+                        <span
+                          className="indicator-label"
+                          onClick={(e) => {
+                            console.log("!!!!!!!!!!!");
+                            e.preventDefault();
+                          }}
+                        >
+                          제출
+                        </span>
+                        <span className="indicator-progress">
+                          Please wait...
+                          <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                {/* //////////////////// */}
+              </Modal>
+            )}
+
+            {isOpenModal && flag_two == "1" && flag_act == "수정" && (
+              <Modal
+                onClickToggleModal={onClickToggleModal}
+                flag="office_branch_info_group"
+              >
+                <div className="modal-content">
+                  <form
+                    onSubmit={function (event) {
+                      event.preventDefault();
+                      handleSubmit_forgroup(event);
+                    }}
+                    className="w-100"
+                  >
+                    <div className="modal-header">
+                      <h2 className="fw-bold" data-kt-calendar="title">
+                        관리그룹 수정
+                      </h2>
+
+                      <div
+                        className="btn btn-icon btn-sm btn-active-icon-primary"
+                        id="kt_modal_add_event_close"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
+                      >
+                        <span className="svg-icon svg-icon-1">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              opacity="0.5"
+                              x="6"
+                              y="17.3137"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(-45 6 17.3137)"
+                              fill="currentColor"
+                            />
+                            <rect
+                              x="7.41422"
+                              y="6"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(45 7.41422 6)"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="fv-row mb-9">
+                      <label className="fs-6 fw-semibold required mb-2">
+                        관리그룹 이름
+                      </label>
+
+                      <input
+                        type="text"
+                        id="modal_group_name"
+                        className="form-control form-control-solid"
+                        defaultValue={specgroup.name}
+                        name="modal_group_name"
+                      />
+                    </div>
+                    <div className="d-flex check__use_wrap">
+                      <div className="form-check form-check-custom form-check-solid me-5 check__use">
+                        <input
+                          className="form-check-input check__use_input"
+                          type="radio"
+                          value="사용"
+                          name="choice_use"
+                          defaultChecked={specgroup.status == "사용"}
+                        />
+                        <label className="form-check-label">사용</label>
+                      </div>
+                      <div className="form-check form-check-custom form-check-solid me-5 check__hold">
+                        <input
+                          className="form-check-input check__hold_input"
+                          type="radio"
+                          value="대기"
+                          name="choice_use"
+                          defaultChecked={specgroup.status == "대기"}
+                        />
+                        <label className="form-check-label">대기</label>
+                      </div>
+                      <div className="form-check form-check-custom form-check-solid check__delet use">
+                        <input
+                          className="form-check-input check__delet_input"
+                          type="radio"
+                          defaultValue=""
+                          name="choice_use"
+                          defaultChecked={specgroup.status == "삭제"}
+                        />
+                        <label className="form-check-label">삭제</label>
+                      </div>
+                    </div>
+
+                    <div className="modal-footer flex-center">
+                      <button
+                        type="reset"
+                        id="kt_modal_add_event_cancel"
+                        className="btn btn-light me-3"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
+                      >
+                        취소
+                      </button>
+
+                      <button
+                        type="submit"
+                        id="kt_modal_add_event_submit"
+                        className="btn btn-primary"
+                      >
+                        <span
+                          className="indicator-label"
+                          onClick={(e) => {
+                            console.log("!!!!!!!!!!!");
+                            e.preventDefault();
+                          }}
+                        >
+                          제출
+                        </span>
+                        <span className="indicator-progress">
+                          Please wait...
+                          <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                {/* //////////////////// */}
+              </Modal>
+            )}
+            {isOpenModal && flag_three == "1" && flag_act == "수정" && (
+              <Modal
+                onClickToggleModal={onClickToggleModal}
+                flag="office_branch_info_room"
+              >
+                <div className="modal-content">
+                  <form onSubmit={handleSubmit_forroom} className="w-100">
+                    <div className="modal-header">
+                      <h2 className="fw-bold" data-kt-calendar="title">
+                        학습실 수정
+                      </h2>
+
+                      <div
+                        className="btn btn-icon btn-sm btn-active-icon-primary"
+                        id="kt_modal_add_event_close"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
+                      >
+                        <span className="svg-icon svg-icon-1">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              opacity="0.5"
+                              x="6"
+                              y="17.3137"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(-45 6 17.3137)"
+                              fill="currentColor"
+                            />
+                            <rect
+                              x="7.41422"
+                              y="6"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              transform="rotate(45 7.41422 6)"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="fv-row mb-9">
+                      <label className="fs-6 fw-semibold required mb-2">
+                        학습실 이름
+                      </label>
+
+                      <input
+                        type="text"
+                        id="modal_room_name"
+                        className="form-control form-control-solid"
+                        defaultValue={specroom.name}
+                        name="modal_room_name"
+                      />
+                    </div>
+                    <div className="fv-row mb-9">
+                      <label className="fs-6 fw-semibold required mb-2">
+                        좌석수
+                      </label>
+
+                      <input
+                        type="text"
+                        id="modal_room_seat"
+                        className="form-control form-control-solid"
+                        defaultValue={specroom.availableSeat}
+                        name="modal_room_seat"
+                      />
+                    </div>
+                    <div className="d-flex check__use_wrap">
+                      <div className="form-check form-check-custom form-check-solid me-5 check__use">
+                        <input
+                          className="form-check-input check__use_input"
+                          type="radio"
+                          value="사용"
+                          name="choice_use"
+                          defaultChecked={specroom.status == "사용"}
+                        />
+                        <label className="form-check-label">사용</label>
+                      </div>
+                      <div className="form-check form-check-custom form-check-solid me-5 check__hold">
+                        <input
+                          className="form-check-input check__hold_input"
+                          type="radio"
+                          value="대기"
+                          name="choice_use"
+                          defaultChecked={specroom.status == "대기"}
+                        />
+                        <label className="form-check-label">대기</label>
+                      </div>
+                      <div className="form-check form-check-custom form-check-solid check__delet use">
+                        <input
+                          className="form-check-input check__delet_input"
+                          type="radio"
+                          defaultValue="삭제"
+                          name="choice_use"
+                          defaultChecked={specroom.status == "삭제"}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="product_tax_no"
+                        >
+                          삭제
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="modal-footer flex-center">
+                      <button
+                        type="reset"
+                        id="kt_modal_add_event_cancel"
+                        className="btn btn-light me-3"
+                        onClick={() => {
+                          setOpenModal(!isOpenModal);
+                        }}
+                      >
+                        취소
+                      </button>
+
+                      <button
+                        type="submit"
+                        id="kt_modal_add_event_submit"
+                        className="btn btn-primary"
+                      >
+                        <span
+                          className="indicator-label"
+                          onClick={(e) => {
+                            console.log("!!!!!!!!!!!");
+                            e.preventDefault();
+                          }}
+                        >
+                          제출
+                        </span>
+                        <span className="indicator-progress">
+                          Please wait...
+                          <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                {/* //////////////////// */}
+              </Modal>
+            )}
+          </Main>
+          <div className="card-header py-7" style={{ position: "absolute" }}>
             <div
               className="card-title mb-0 gap-4 gap-lg-8 gap-xl-10 nav nav-tabs border-bottom-0"
               data-kt-table-widget-3="tabs_nav"
@@ -737,80 +1570,218 @@ const Branch_info = (props) => {
                     <div className="row mb-5">
                       <div className="col-md-6 fv-row input_50">
                         <label className="required fs-5 fw-semibold mb-2">
-                          본사선택
+                          본사명
                         </label>
-                        {props.detail_num == 0 ? (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.brand.name}
-                          >
-                            {brands.map((item, idx) => (
-                              <option key={idx} value={item.id}>
-                                {item.name}
-                              </option>
-                            ))}
-                          </select>
+                        {cookies.cookie.data.role.id == 1 ? (
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.id}
+                                onChange={set_brandid_onfilter}
+                              >
+                                <option value="">본사를 선택해주세요</option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.name}
+                                disabled
+                              >
+                                <option value={data.brand.id}>
+                                  {data.brand.name}
+                                </option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
                         ) : (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.brand.name}
-                          >
-                            <option value={data.brand.id}>
-                              {data.brand.name}
-                            </option>
-                            {brands.map((item, idx) => (
-                              <option key={idx} value={item.id}>
-                                {item.name}
-                              </option>
-                            ))}
-                          </select>
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={cookies.cookie.data.brand.id}
+                                onChange={set_brandid_onfilter}
+                              >
+                                <option value="">본사를 선택해주세요</option>
+                                <option value={cookies.cookie.data.brand.id}>
+                                  {cookies.cookie.data.brand.name}
+                                </option>
+                                {/* {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))} */}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.brand.name}
+                                disabled
+                              >
+                                <option value={data.brand.id}>
+                                  {data.brand.name}
+                                </option>
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
                         )}
                       </div>
                       <div className="col-md-6 fv-row">
-                        <label className="fs-5 fw-semibold mb-2">
-                          원장선택
-                        </label>
-
-                        {props.detail_num == 0 ? (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.owner.id}
-                          >
-                            {owners.map((item, idx) => (
-                              <option key={idx} value={item.id}>
-                                {item.realName}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                            defaultValue={data.owner.id}
-                          >
-                            <option value={data.owner.id}>
-                              {data.owner.realName}({data.owner.username})
-                            </option>
-                            {owners.map((item, idx) =>
-                              item.realName != data.owner.realName ? (
-                                <option key={idx} value={item.id}>
-                                  {item.realName}({item.username} )
-                                  {/* {item.id} */}
+                        <label className="fs-5 fw-semibold mb-2">원장명</label>
+                        {cookies.cookie.data.role.id == 1 ? (
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                // defaultValue={owners2[0].id}
+                                onChange={set_owner_onfilter}
+                              >
+                                <option value="">원장을 선택해 주세요</option>
+                                {owners2.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                                disabled
+                              >
+                                <option value={data.owner.id}>
+                                  {data.owner.realName}({data.owner.username})
                                 </option>
-                              ) : null
+                                {owners2.map((item, idx) =>
+                                  item.realName != data.owner.realName ? (
+                                    <option key={idx} value={item.id}>
+                                      {item.realName}({item.username} )
+                                      {/* {item.id} */}
+                                    </option>
+                                  ) : null
+                                )}
+                              </select>
                             )}
-                          </select>
+                          </div>
+                        ) : cookies.cookie.data.role.id == 2 ? (
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                onChange={set_owner_onfilter}
+                                // defaultValue={owners2[0].id}
+                              >
+                                <option value="">원장을 선택해 주세요</option>
+                                {owners2.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                                disabled
+                              >
+                                <option value={data.owner.id}>
+                                  {data.owner.realName}({data.owner.username})
+                                </option>
+                                {owners.map((item, idx) =>
+                                  item.realName != data.owner.realName ? (
+                                    <option key={idx} value={item.id}>
+                                      {item.realName}({item.username} )
+                                      {/* {item.id} */}
+                                    </option>
+                                  ) : null
+                                )}
+                              </select>
+                            )}
+                          </div>
+                        ) : (
+                          <div>
+                            {props.detail_num == "0" ? (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                onChange={set_owner_onfilter}
+                                // disabled
+                              >
+                                <option value="">원장을 선택해 주세요</option>
+                                <option value={cookies.cookie.data.id}>
+                                  {cookies.cookie.data.realName}(
+                                  {cookies.cookie.data.username})
+                                </option>
+                                {/* {owners.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.realName}
+                                  </option>
+                                ))} */}
+                              </select>
+                            ) : (
+                              <select
+                                name="position"
+                                data-control="select2"
+                                data-placeholder="Select a position..."
+                                className="form-select form-select-solid"
+                                defaultValue={data.owner.id}
+                                disabled
+                              >
+                                <option value={data.owner.id}>
+                                  {data.owner.realName}({data.owner.username})
+                                </option>
+                                {owners.map((item, idx) =>
+                                  item.realName != data.owner.realName ? (
+                                    <option key={idx} value={item.id}>
+                                      {item.realName}({item.username} )
+                                      {/* {item.id} */}
+                                    </option>
+                                  ) : null
+                                )}
+                              </select>
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>
@@ -818,7 +1789,7 @@ const Branch_info = (props) => {
                     <div className="row mb-5">
                       <div className="col-md-6 fv-row">
                         <label className="required fs-5 fw-semibold mb-2">
-                          지점 이름
+                          지점명
                         </label>
 
                         <input
@@ -857,8 +1828,8 @@ const Branch_info = (props) => {
                       </div>
                     </div>
 
-                    <div className="row mb-5">
-                      {/* <div className="col-md-4 fv-row">
+                    <div className="row mb-5 row__line">
+                      {/* <div className="c ol-md-4 fv-row">
                         <label className="fs-5 fw-semibold mb-2">
                           최종 수정자 ID
                         </label>
@@ -887,10 +1858,10 @@ const Branch_info = (props) => {
                       </div> */}
                       <div className="col-md-6 fv-row">
                         <label className="fs-5 fw-semibold mb-2">
-                          매니저선택
+                          매니저명
                         </label>
 
-                        {props.detail_num == 0 ? (
+                        {props.detail_num == "0" ? (
                           <select
                             name="position"
                             data-control="select2"
@@ -898,7 +1869,8 @@ const Branch_info = (props) => {
                             className="form-select form-select-solid"
                             defaultValue={data.manager.id}
                           >
-                            {managers.map((item, idx) => (
+                            <option value="">매니저를 선택해 주세요</option>
+                            {managers2.map((item, idx) => (
                               <option key={idx} value={item.id}>
                                 {item.realName}
                               </option>
@@ -911,6 +1883,7 @@ const Branch_info = (props) => {
                             data-placeholder="Select a position..."
                             className="form-select form-select-solid"
                             defaultValue={data.owner.id}
+                            disabled
                           >
                             <option value={data.manager.id}>
                               {data.manager.realName}({data.manager.username})
@@ -925,7 +1898,8 @@ const Branch_info = (props) => {
                           </select>
                         )}
                       </div>
-
+                    </div>
+                    <div className="row mb-5 ">
                       <div className="col-md-4 fv-row">
                         <label className="fs-5 fw-semibold mb-2">상태</label>
 
@@ -936,15 +1910,9 @@ const Branch_info = (props) => {
                               type="radio"
                               defaultValue="사용"
                               name="choice_use"
-                              id="product_tax_yes"
-                              checked={true}
+                              defaultChecked={data.status == "사용"}
                             />
-                            <label
-                              className="form-check-label"
-                              htmlFor="product_tax_yes"
-                            >
-                              사용
-                            </label>
+                            <label className="form-check-label">사용</label>
                           </div>
                           <div className="form-check form-check-custom form-check-solid me-5 check__hold">
                             <input
@@ -952,13 +1920,9 @@ const Branch_info = (props) => {
                               type="radio"
                               defaultValue="대기"
                               name="choice_use"
+                              defaultChecked={data.status == "대기"}
                             />
-                            <label
-                              className="form-check-label"
-                              htmlFor="product_tax_no"
-                            >
-                              대기
-                            </label>
+                            <label className="form-check-label">대기</label>
                           </div>
                           <div className="form-check form-check-custom form-check-solid check__delet use">
                             <input
@@ -966,13 +1930,9 @@ const Branch_info = (props) => {
                               type="radio"
                               defaultValue="삭제"
                               name="choice_use"
+                              defaultChecked={data.status == "식제"}
                             />
-                            <label
-                              className="form-check-label"
-                              htmlFor="product_tax_no"
-                            >
-                              삭제
-                            </label>
+                            <label className="form-check-label">삭제</label>
                           </div>
                         </div>
                       </div>
@@ -1020,7 +1980,8 @@ const Branch_info = (props) => {
                     data-control="select2"
                     data-hide-search="true"
                     data-placeholder="Filter"
-                    className="form-select form-select-solid form-select-sm fw-bold w-100px"
+                    className="form-select form-select-solid form-select-sm fw-bold w-200px"
+                    hidden
                   >
                     <option value="1" selected="selected">
                       사용중인 관리그룹
@@ -1055,7 +2016,71 @@ const Branch_info = (props) => {
                   </thead>
 
                   <tbody className="fw-semibold text-gray-600">
-                    {grouopsList}
+                    {/* {grouopsList} */}
+
+                    {groups.map((v, idx) => (
+                      <tr>
+                        <td>
+                          <div className="form-check form-check-sm form-check-custom form-check-solid">
+                            <span className="text-gray-600 text-hover-primary ms-4">
+                              {/* {v.id} */}
+                              <td>{idx + 1}</td>
+                            </span>
+                          </div>
+                        </td>
+                        <td data-order="Invalid date">{v.name}</td>
+                        <td data-order="Invalid date">
+                          {v.createdAt.substr(0, 10)}
+                        </td>
+                        <td className="n_empty"></td>
+                        <td className="text-muted fw-semibold ">
+                          {v.status == "사용" ? (
+                            <span className="badge badge-light-success fw-bold px-4 py-3">
+                              {v.status}
+                            </span>
+                          ) : v.status == "대기" ? (
+                            <span className="badge badge-light-warning fw-bold px-4 py-3">
+                              {v.status}
+                            </span>
+                          ) : (
+                            <span className="badge badge-light-danger fw-bold px-4 py-3">
+                              {v.status}
+                            </span>
+                          )}
+                        </td>
+                        <td data-order="Invalid date text-end">
+                          {/* <button
+                          onClick={() => {
+                            one_click(() => spec_group_api(v.id));
+                          }}
+                        >
+                          수정
+                        </button> */}
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            // onClick={() => {
+                            //   setact("수정");
+                            //   spec_group_api(v.id);
+                            //   spec_group_api(v.id);
+                            //   setOpenModal(!isOpenModal);
+                            //   setOpenModal(!isOpenModal);
+                            //   setOpenModal(!isOpenModal);
+                            // }}
+                            onClick={() => {
+                              setact("수정");
+                              spec_group_api(v.id);
+
+                              //clicktwo(v.id);
+                              //setOpenModal(!isOpenModal);
+                            }}
+                          >
+                            수정
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+
                     {/* {groups&&groups.product.map((data)=>{
                     <tr>
                       <td>
@@ -1245,7 +2270,8 @@ const Branch_info = (props) => {
                     data-control="select2"
                     data-hide-search="true"
                     data-placeholder="Filter"
-                    className="form-select form-select-solid form-select-sm fw-bold w-100px"
+                    className="form-select form-select-solid form-select-sm fw-bold w-200px"
+                    hidden
                   >
                     <option value="1" selected="selected">
                       사용중인 학습실
@@ -1285,603 +2311,6 @@ const Branch_info = (props) => {
               </div>
             </div>
           ) : null}
-
-          <Main>
-            {isOpenModal && flag_two == "1" && flag_act == "추가" && (
-              <Modal
-                onClickToggleModal={onClickToggleModal}
-                flag="office_branch_info_group"
-              >
-                <div className="modal-content">
-                  <form onSubmit={handleSubmit_addGroup} className="w-100">
-                    <div className="modal-header">
-                      <h2 className="fw-bold" data-kt-calendar="title">
-                        관리그룹 관리
-                      </h2>
-
-                      <div
-                        className="btn btn-icon btn-sm btn-active-icon-primary"
-                        id="kt_modal_add_event_close"
-                      >
-                        <span className="svg-icon svg-icon-1">
-                          <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <rect
-                              opacity="0.5"
-                              x="6"
-                              y="17.3137"
-                              width="16"
-                              height="2"
-                              rx="1"
-                              transform="rotate(-45 6 17.3137)"
-                              fill="currentColor"
-                            />
-                            <rect
-                              x="7.41422"
-                              y="6"
-                              width="16"
-                              height="2"
-                              rx="1"
-                              transform="rotate(45 7.41422 6)"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="fv-row mb-9">
-                      <label className="fs-6 fw-semibold required mb-2">
-                        관리그룹 이름
-                      </label>
-
-                      <input
-                        type="text"
-                        id="modal_group_name"
-                        className="form-control form-control-solid"
-                        placeholder=""
-                        name="modal_group_name"
-                      />
-                    </div>
-                    <div className="d-flex check__use_wrap">
-                      <div className="form-check form-check-custom form-check-solid me-5 check__use">
-                        <input
-                          className="form-check-input check__use_input"
-                          type="radio"
-                          value="사용"
-                          name="choice_use"
-                          id="product_tax_yes"
-                          checked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_yes"
-                        >
-                          사용
-                        </label>
-                      </div>
-                      <div className="form-check form-check-custom form-check-solid me-5 check__hold">
-                        <input
-                          className="form-check-input check__hold_input"
-                          type="radio"
-                          value="대기"
-                          name="choice_use"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_no"
-                        >
-                          대기
-                        </label>
-                      </div>
-                      <div className="form-check form-check-custom form-check-solid check__delet use">
-                        <input
-                          className="form-check-input check__delet_input"
-                          type="radio"
-                          defaultValue=""
-                          name="choice_use"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_no"
-                        >
-                          삭제
-                        </label>
-                      </div>
-                    </div>
-
-                    <div className="modal-footer flex-center">
-                      <button
-                        type="reset"
-                        id="kt_modal_add_event_cancel"
-                        className="btn btn-light me-3"
-                      >
-                        취소
-                      </button>
-
-                      <button
-                        type="submit"
-                        id="kt_modal_add_event_submit"
-                        className="btn btn-primary"
-                      >
-                        <span
-                          className="indicator-label"
-                          onClick={(e) => {
-                            console.log("!!!!!!!!!!!");
-                            // e.preventDefault();
-                          }}
-                        >
-                          제출
-                        </span>
-                        <span className="indicator-progress">
-                          Please wait...
-                          <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
-                        </span>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                {/* //////////////////// */}
-              </Modal>
-            )}
-            {isOpenModal && flag_three == "1" && flag_act == "추가" && (
-              <Modal
-                onClickToggleModal={onClickToggleModal}
-                flag="office_branch_info_room"
-              >
-                <div className="modal-content">
-                  <form onSubmit={handleSubmit_addRoom} className="w-100">
-                    <div className="modal-header">
-                      <h2 className="fw-bold" data-kt-calendar="title">
-                        학습실 관리
-                      </h2>
-
-                      <div
-                        className="btn btn-icon btn-sm btn-active-icon-primary"
-                        id="kt_modal_add_event_close"
-                      >
-                        <span className="svg-icon svg-icon-1">
-                          <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <rect
-                              opacity="0.5"
-                              x="6"
-                              y="17.3137"
-                              width="16"
-                              height="2"
-                              rx="1"
-                              transform="rotate(-45 6 17.3137)"
-                              fill="currentColor"
-                            />
-                            <rect
-                              x="7.41422"
-                              y="6"
-                              width="16"
-                              height="2"
-                              rx="1"
-                              transform="rotate(45 7.41422 6)"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="fv-row mb-9">
-                      <label className="fs-6 fw-semibold required mb-2">
-                        학습실 이름
-                      </label>
-
-                      <input
-                        type="text"
-                        id="modal_room_name"
-                        className="form-control form-control-solid"
-                        placeholder=""
-                        name="modal_room_name"
-                      />
-                    </div>
-                    <div className="fv-row mb-9">
-                      <label className="fs-6 fw-semibold required mb-2">
-                        좌석수
-                      </label>
-
-                      <input
-                        type="text"
-                        id="modal_room_seat"
-                        className="form-control form-control-solid"
-                        placeholder=""
-                        name="modal_room_seat"
-                      />
-                    </div>
-                    <div className="d-flex check__use_wrap">
-                      <div className="form-check form-check-custom form-check-solid me-5 check__use">
-                        <input
-                          className="form-check-input check__use_input"
-                          type="radio"
-                          value="사용"
-                          name="choice_use"
-                          id="product_tax_yes"
-                          checked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_yes"
-                        >
-                          사용
-                        </label>
-                      </div>
-                      <div className="form-check form-check-custom form-check-solid me-5 check__hold">
-                        <input
-                          className="form-check-input check__hold_input"
-                          type="radio"
-                          value="대기"
-                          name="choice_use"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_no"
-                        >
-                          대기
-                        </label>
-                      </div>
-                      <div className="form-check form-check-custom form-check-solid check__delet use">
-                        <input
-                          className="form-check-input check__delet_input"
-                          type="radio"
-                          defaultValue=""
-                          name="choice_use"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_no"
-                        >
-                          삭제
-                        </label>
-                      </div>
-                    </div>
-
-                    <div className="modal-footer flex-center">
-                      <button
-                        type="reset"
-                        id="kt_modal_add_event_cancel"
-                        className="btn btn-light me-3"
-                      >
-                        취소
-                      </button>
-
-                      <button
-                        type="submit"
-                        id="kt_modal_add_event_submit"
-                        className="btn btn-primary"
-                      >
-                        <span
-                          className="indicator-label"
-                          onClick={(e) => {
-                            console.log("!!!!!!!!!!!");
-                            // e.preventDefault();
-                          }}
-                        >
-                          제출
-                        </span>
-                        <span className="indicator-progress">
-                          Please wait...
-                          <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
-                        </span>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                {/* //////////////////// */}
-              </Modal>
-            )}
-            {isOpenModal && flag_two == "1" && flag_act == "수정" && (
-              <Modal
-                onClickToggleModal={onClickToggleModal}
-                flag="office_branch_info_group"
-              >
-                <div className="modal-content">
-                  <form onSubmit={handleSubmit_forgroup} className="w-100">
-                    <div className="modal-header">
-                      <h2 className="fw-bold" data-kt-calendar="title">
-                        관리그룹 수정
-                      </h2>
-
-                      <div
-                        className="btn btn-icon btn-sm btn-active-icon-primary"
-                        id="kt_modal_add_event_close"
-                      >
-                        <span className="svg-icon svg-icon-1">
-                          <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <rect
-                              opacity="0.5"
-                              x="6"
-                              y="17.3137"
-                              width="16"
-                              height="2"
-                              rx="1"
-                              transform="rotate(-45 6 17.3137)"
-                              fill="currentColor"
-                            />
-                            <rect
-                              x="7.41422"
-                              y="6"
-                              width="16"
-                              height="2"
-                              rx="1"
-                              transform="rotate(45 7.41422 6)"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="fv-row mb-9">
-                      <label className="fs-6 fw-semibold required mb-2">
-                        관리그룹 이름
-                      </label>
-
-                      <input
-                        type="text"
-                        id="modal_group_name"
-                        className="form-control form-control-solid"
-                        defaultValue={specgroup.name}
-                        name="modal_group_name"
-                      />
-                    </div>
-                    <div className="d-flex check__use_wrap">
-                      <div className="form-check form-check-custom form-check-solid me-5 check__use">
-                        <input
-                          className="form-check-input check__use_input"
-                          type="radio"
-                          value="사용"
-                          name="choice_use"
-                          id="product_tax_yes"
-                          checked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_yes"
-                        >
-                          사용
-                        </label>
-                      </div>
-                      <div className="form-check form-check-custom form-check-solid me-5 check__hold">
-                        <input
-                          className="form-check-input check__hold_input"
-                          type="radio"
-                          value="대기"
-                          name="choice_use"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_no"
-                        >
-                          대기
-                        </label>
-                      </div>
-                      <div className="form-check form-check-custom form-check-solid check__delet use">
-                        <input
-                          className="form-check-input check__delet_input"
-                          type="radio"
-                          defaultValue=""
-                          name="choice_use"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_no"
-                        >
-                          삭제
-                        </label>
-                      </div>
-                    </div>
-
-                    <div className="modal-footer flex-center">
-                      <button
-                        type="reset"
-                        id="kt_modal_add_event_cancel"
-                        className="btn btn-light me-3"
-                      >
-                        취소
-                      </button>
-
-                      <button
-                        type="submit"
-                        id="kt_modal_add_event_submit"
-                        className="btn btn-primary"
-                      >
-                        <span
-                          className="indicator-label"
-                          onClick={(e) => {
-                            console.log("!!!!!!!!!!!");
-                            // e.preventDefault();
-                          }}
-                        >
-                          제출
-                        </span>
-                        <span className="indicator-progress">
-                          Please wait...
-                          <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
-                        </span>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                {/* //////////////////// */}
-              </Modal>
-            )}
-            {isOpenModal && flag_three == "1" && flag_act == "수정" && (
-              <Modal
-                onClickToggleModal={onClickToggleModal}
-                flag="office_branch_info_room"
-              >
-                <div className="modal-content">
-                  <form onSubmit={handleSubmit_forroom} className="w-100">
-                    <div className="modal-header">
-                      <h2 className="fw-bold" data-kt-calendar="title">
-                        학습실 수정
-                      </h2>
-
-                      <div
-                        className="btn btn-icon btn-sm btn-active-icon-primary"
-                        id="kt_modal_add_event_close"
-                      >
-                        <span className="svg-icon svg-icon-1">
-                          <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <rect
-                              opacity="0.5"
-                              x="6"
-                              y="17.3137"
-                              width="16"
-                              height="2"
-                              rx="1"
-                              transform="rotate(-45 6 17.3137)"
-                              fill="currentColor"
-                            />
-                            <rect
-                              x="7.41422"
-                              y="6"
-                              width="16"
-                              height="2"
-                              rx="1"
-                              transform="rotate(45 7.41422 6)"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="fv-row mb-9">
-                      <label className="fs-6 fw-semibold required mb-2">
-                        학습실 이름
-                      </label>
-
-                      <input
-                        type="text"
-                        id="modal_room_name"
-                        className="form-control form-control-solid"
-                        defaultValue={specroom.name}
-                        name="modal_room_name"
-                      />
-                    </div>
-                    <div className="fv-row mb-9">
-                      <label className="fs-6 fw-semibold required mb-2">
-                        좌석수
-                      </label>
-
-                      <input
-                        type="text"
-                        id="modal_room_seat"
-                        className="form-control form-control-solid"
-                        defaultValue={specroom.availableSeat}
-                        name="modal_room_seat"
-                      />
-                    </div>
-                    <div className="d-flex check__use_wrap">
-                      <div className="form-check form-check-custom form-check-solid me-5 check__use">
-                        <input
-                          className="form-check-input check__use_input"
-                          type="radio"
-                          value="사용"
-                          name="choice_use"
-                          id="product_tax_yes"
-                          checked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_yes"
-                        >
-                          사용
-                        </label>
-                      </div>
-                      <div className="form-check form-check-custom form-check-solid me-5 check__hold">
-                        <input
-                          className="form-check-input check__hold_input"
-                          type="radio"
-                          value="대기"
-                          name="choice_use"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_no"
-                        >
-                          대기
-                        </label>
-                      </div>
-                      <div className="form-check form-check-custom form-check-solid check__delet use">
-                        <input
-                          className="form-check-input check__delet_input"
-                          type="radio"
-                          defaultValue=""
-                          name="choice_use"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="product_tax_no"
-                        >
-                          삭제
-                        </label>
-                      </div>
-                    </div>
-
-                    <div className="modal-footer flex-center">
-                      <button
-                        type="reset"
-                        id="kt_modal_add_event_cancel"
-                        className="btn btn-light me-3"
-                      >
-                        취소
-                      </button>
-
-                      <button
-                        type="submit"
-                        id="kt_modal_add_event_submit"
-                        className="btn btn-primary"
-                      >
-                        <span
-                          className="indicator-label"
-                          onClick={(e) => {
-                            console.log("!!!!!!!!!!!");
-                            // e.preventDefault();
-                          }}
-                        >
-                          제출
-                        </span>
-                        <span className="indicator-progress">
-                          Please wait...
-                          <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
-                        </span>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                {/* //////////////////// */}
-              </Modal>
-            )}
-          </Main>
         </div>
       </div>
     </div>
@@ -1889,9 +2318,11 @@ const Branch_info = (props) => {
 };
 export default Branch_info;
 const Main = styled.main`
-  width: 10%;
+  width: 5%;
   height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  vertical-align: top;
 `;

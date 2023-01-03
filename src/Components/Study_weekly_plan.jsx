@@ -13,7 +13,7 @@ import Calendar_plan from "./Calendar_plan";
 // import { Container } from "react-bootstrap";
 const Study_weekly_plan = (props) => {
   let widthh = props.width;
-  const [detail_num, setDetailNum] = useState("");
+  const [detail_num, setDetailNum] = useState("1");
 
   return (
     <Container>
@@ -30,7 +30,7 @@ const Study_weekly_plan = (props) => {
           // `}
         >
           <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0">
-            학습계획
+            학생학습계획
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li className="breadcrumb-item text-muted">
@@ -41,7 +41,7 @@ const Study_weekly_plan = (props) => {
             <li className="breadcrumb-item">
               <span className="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <li className="breadcrumb-item text-muted">학습계획</li>
+            <li className="breadcrumb-item text-muted">학생학습계획</li>
           </ul>
         </div>
         <div

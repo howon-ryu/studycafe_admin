@@ -44,7 +44,8 @@ const Login = (props) => {
         console.log(response.status);
         console.log(response.data);
         setCookie("cookie", response.data);
-        window.location.replace("/Office__head_office");
+
+        window.location.replace("/Main");
       })
       // .catch((e) => console.log('something went wrong :(', e));
       .catch((error) => {

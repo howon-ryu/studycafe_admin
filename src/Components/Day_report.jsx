@@ -15,7 +15,8 @@ const Day_report = (props) => {
     searchplan(props.detail_num);
   }, [props]);
   useEffect(() => {
-    searchplan(branch_num);
+    // searchplan(branch_num);
+    console.log(branch_num);
   }, [dayday]);
   // useEffect(() => {
   //   console.log(props.detail_num);
@@ -147,12 +148,23 @@ const Day_report = (props) => {
                       onChange={set_day}
                     />
                   </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                      searchplan(props.detail_num);
+                    }}
+                    style={{ "margin-left": "20px" }}
+                  >
+                    검색
+                  </button>
 
                   <button
                     type="submit"
                     href="#"
                     className="btn btn-primary btn__slim btn_css"
                     id="kt_invoice_submit_button"
+                    hidden
                   >
                     <span className="svg-icon svg-icon-3">
                       <svg
@@ -197,17 +209,18 @@ const Day_report = (props) => {
                             />
                           </div>
                         </th>
-                        <th className="min-w-80px">구분</th>
-                        <th className="min-w-50px">학습시작</th>
-                        <th className="min-w-25px">관리그룹</th>
-                        <th className="min-w-80px">학습실</th>
-                        <th className="min-w-50px">좌석번호</th>
-                        <th className="min-w-50px">이름</th>
-                        <th className="min-w-50px">일일누적</th>
+                        <th className="min-w-60px">구분</th>
+                        <th className="min-w-60px">이름</th>
+                        <th className="min-w-100px">학습실</th>
+                        <th className="min-w-80px">좌석번호</th>
+                        <th className="min-w-80px">관리그룹</th>
+                        <th className="min-w-60px">학습시작</th>
+
+                        <th className="min-w-60px">일일누적</th>
                         <th className="min-w-80px">현재학습</th>
                         <th className="min-w-50px">계획</th>
                         <th className="min-w-50px">실행</th>
-                        <th className="min-w-50px">진행률</th>
+                        <th className="min-w-60px">실행률</th>
                       </tr>
                     </thead>
 
@@ -227,15 +240,22 @@ const Day_report = (props) => {
                           <td className="text-gray-800 fw-bold">
                             {data.nowStatus}
                           </td>
-                          <td className="text-gray-800 fw-bold">
-                            {data.studyStartTime}
-                          </td>
-                          <td>{data.user.groupList[0].name}</td>
+                          <td>{data.user.realName}</td>
                           <td className="text-gray-800 fw-bold">
                             {data.user.room.name}
                           </td>
                           <td>{data.user.seatNumber}</td>
-                          <td>{data.user.username}</td>
+                          {data.user.groupList[0] == undefined ? (
+                            <td></td>
+                          ) : (
+                            <td>{data.user.groupList[0].name}</td>
+                          )}
+                          <td className="text-gray-800 fw-bold">
+                            {data.studyStartTime}
+                          </td>
+
+                          {/* <td>{data.user.groupList[0].name}</td> */}
+
                           <td>{data.totalStudyTime}</td>
                           <td>{data.nowStudyTime}</td>
                           <td>{data.toDoCount}</td>

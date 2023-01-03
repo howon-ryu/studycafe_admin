@@ -6,9 +6,11 @@ import axios from "axios";
 import { click } from "@testing-library/user-event/dist/click";
 import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
+import { useCookies } from "react-cookie";
+
 const Branch_detail = (props) => {
   const reset = useRef();
-
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [data, setdata] = useState({
     id: "",
     name: "",
@@ -43,6 +45,7 @@ const Branch_detail = (props) => {
           status: "",
         },
       });
+
       reset.current.click();
     } else {
       detail_num = props.detail_num;
@@ -84,25 +87,39 @@ const Branch_detail = (props) => {
   const handles = (e) => {
     e.preventDefalut();
   };
-
+  const [radio, setradio] = useState("사용");
+  const handleClickRadioButton = (e) => {
+    console.log(e.target.value);
+  };
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
       // alert(e.target[2].value);
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[8].checked;
+      let cu2 = e.target[9].checked;
+      let cu3 = e.target[10].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         brandId: e.target[0].value,
-        username: e.target[1].value,
-        password: e.target[5].value,
-        password2: e.target[6].value,
-        realName: e.target[2].value,
-        phone: e.target[3].value,
-        email: e.target[4].value,
-        birthDate: e.target[7].value,
+        username: e.target[2].value,
+        password: e.target[3].value,
+        password2: e.target[4].value,
+        realName: e.target[1].value,
+        phone: e.target[5].value,
+        email: e.target[6].value,
+        birthDate: "1999-01-01",
         gender: "남자",
         address: "abc",
+        status: cu,
       };
 
       const headers = { "header-name": "value" };
@@ -136,17 +153,28 @@ const Branch_detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[8].checked;
+      let cu2 = e.target[9].checked;
+      let cu3 = e.target[10].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       const data_t = {
         brandId: e.target[0].value,
-        password: e.target[5].value,
-        password2: e.target[6].value,
-        realName: e.target[2].value,
-        phone: e.target[3].value,
-        email: e.target[4].value,
+        password: e.target[3].value,
+        password2: e.target[4].value,
+        realName: e.target[1].value,
+        phone: e.target[5].value,
+        email: e.target[6].value,
         address: "abc",
-        birthDate: e.target[7].value,
-        username: e.target[1].value,
+        birthDate: "1999-01-01",
+        username: e.target[2].value,
+        status: cu,
       };
 
       const headers = { "header-name": "value" };
@@ -163,6 +191,7 @@ const Branch_detail = (props) => {
         .then((response) => {
           console.log(response.status);
           console.log(response.data);
+          alert("저장되었습니다");
         })
         // .catch((e) => console.log('something went wrong :(', e));
         .catch((error) => {
@@ -180,7 +209,7 @@ const Branch_detail = (props) => {
       <div className="col-xl-12 mb-5 mb-xl-10 card__right_wrap ">
         <form
           onSubmit={function (event) {
-            event.preventDefault();
+            //event.preventDefault();
             handleSubmit(event);
           }}
         >
@@ -204,60 +233,106 @@ const Branch_detail = (props) => {
               <div className="row mb-5">
                 <div className="col-md-6 fv-row input_50">
                   <label className="required fs-5 fw-semibold mb-2">
-                    본사선택
+                    본사명
                   </label>
-                  {props.detail_num == 0 ? (
-                    <select
-                      name="position"
-                      data-control="select2"
-                      data-placeholder="Select a position..."
-                      className="form-select form-select-solid"
-                      defaultValue={data.brand.name}
-                    >
-                      {brands.map((item, idx) => (
-                        <option key={idx} value={item.id}>
-                          {item.name}
-                        </option>
-                      ))}
-                    </select>
+                  {cookies.cookie.data.role.id == 1 ? (
+                    <div>
+                      {props.detail_num == "0" ? (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue={data.brand.name}
+                        >
+                          {brands.map((item, idx) => (
+                            <option key={idx} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue={data.brand.name}
+                          disabled
+                        >
+                          <option value={data.brand.id}>
+                            {data.brand.name}
+                          </option>
+                          {brands.map((item, idx) => (
+                            <option key={idx} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                    </div>
                   ) : (
-                    <select
-                      name="position"
-                      data-control="select2"
-                      data-placeholder="Select a position..."
-                      className="form-select form-select-solid"
-                      defaultValue={data.brand.name}
-                    >
-                      <option value={data.brand.id}>{data.brand.name}</option>
-                      {brands.map((item, idx) => (
-                        <option key={idx} value={item.id}>
-                          {item.name}
-                        </option>
-                      ))}
-                    </select>
+                    <div>
+                      {props.detail_num == "0" ? (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue={cookies.cookie.data.brand.id}
+                          disabled
+                        >
+                          <option value={cookies.cookie.data.brand.id}>
+                            {cookies.cookie.data.brand.name}
+                          </option>
+                          {/* {brands.map((item, idx) => (
+                            <option key={idx} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))} */}
+                        </select>
+                      ) : (
+                        <select
+                          name="position"
+                          data-control="select2"
+                          data-placeholder="Select a position..."
+                          className="form-select form-select-solid"
+                          defaultValue={data.brand.name}
+                          disabled
+                        >
+                          <option value={data.brand.id}>
+                            {data.brand.name}
+                          </option>
+                          {brands.map((item, idx) => (
+                            <option key={idx} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
               <div className="row mb-5">
+                <div className="col-md-6 fv-row">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    원장명
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    defaultValue={data.realName}
+                    name=""
+                  />
+                </div>
                 {props.detail_num == "0" ? (
                   <div className="col-md-6 fv-row">
                     <label className="required fs-5 fw-semibold mb-2">
-                      원장 ID
+                      아이디
                     </label>
 
-                    {/* <select
-                    name="position"
-                    data-control="select2"
-                    data-placeholder="Select a position..."
-                    className="form-select form-select-solid"
-                  >
-                    <option value="Web Developer">겨울신록</option>
-                    <option value="Web Designer">봄신록</option>
-                    <option value="Art Director">여름신록</option>
-                    <option value="Finance Manager">가을신록</option>
-                    <option value="Project Manager">어나더레벨</option>
-                    <option value="System Administrator">최고최고최고</option>
-                  </select> */}
                     <input
                       type="text"
                       className="form-control"
@@ -268,7 +343,7 @@ const Branch_detail = (props) => {
                 ) : (
                   <div className="col-md-6 fv-row">
                     <label className="required fs-5 fw-semibold mb-2">
-                      원장 ID
+                      아이디
                     </label>
 
                     {/* <select
@@ -293,29 +368,60 @@ const Branch_detail = (props) => {
                     />
                   </div>
                 )}
+              </div>
+              <div className="row mb-5">
+                <div className="col-md-6 fv-row">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    비밀번호
+                  </label>
+
+                  {data.password != "" ? (
+                    <input
+                      type="password"
+                      id="password"
+                      className="form-control"
+                      defaultValue={data.password}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      id="password"
+                      className="form-control"
+                      defaultValue=""
+                    />
+                  )}
+                </div>
 
                 <div className="col-md-6 fv-row">
                   <label className="required fs-5 fw-semibold mb-2">
-                    원장명
+                    비밀번호 확인
+                  </label>
+
+                  {data.password != "" ? (
+                    <input
+                      type="password"
+                      id="password"
+                      className="form-control"
+                      defaultValue={data.password}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      id="password"
+                      className="form-control"
+                      defaultValue=""
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="row mb-5">
+                <div className="col-md-6 fv-row">
+                  <label className="required fs-5 fw-semibold mb-2">
+                    전화번호
                   </label>
 
                   <input
                     type="text"
-                    className="form-control"
-                    defaultValue={data.realName}
-                    name=""
-                  />
-                </div>
-              </div>
-
-              <div className="row mb-5">
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    연락처
-                  </label>
-
-                  <input
-                    type="tel"
                     className="form-control"
                     defaultValue={data.phone}
                   />
@@ -335,35 +441,8 @@ const Branch_detail = (props) => {
                 </div>
               </div>
 
-              <div className="row mb-5">
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    비밀번호
-                  </label>
-
-                  <input
-                    type="password"
-                    id="password"
-                    className="form-control"
-                    placeholer=""
-                  />
-                </div>
-
-                <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    비밀번호 확인
-                  </label>
-
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder=""
-                    name=""
-                  />
-                </div>
-              </div>
               <div className="row mb-5 row__line">
-                <div className="col-md-6 fv-row">
+                <div className="col-md-6 fv-row" hidden>
                   <label className="fs-5 fw-semibold mb-2">생년월일</label>
 
                   <input
@@ -414,7 +493,7 @@ const Branch_detail = (props) => {
                         value="사용"
                         name="choice_use"
                         id="product_tax_yes"
-                        defaultChecked="checked"
+                        defaultChecked={data.status == "사용"}
                       />
                       <label className="form-check-label" for="product_tax_yes">
                         사용
@@ -426,6 +505,7 @@ const Branch_detail = (props) => {
                         type="radio"
                         value="대기"
                         name="choice_use"
+                        defaultChecked={data.status == "대기"}
                       />
                       <label className="form-check-label" for="product_tax_no">
                         대기
@@ -437,6 +517,7 @@ const Branch_detail = (props) => {
                         type="radio"
                         defaultValue=""
                         name="choice_use"
+                        defaultChecked={data.status == "삭제"}
                       />
                       <label className="form-check-label" for="product_tax_no">
                         삭제
@@ -455,6 +536,7 @@ const Branch_detail = (props) => {
                   data-hide-search="true"
                   data-placeholder="Filter"
                   className="form-select form-select-solid form-select-sm fw-bold w-100px"
+                  disabled
                 >
                   <option value="1" selected="selected">
                     사용

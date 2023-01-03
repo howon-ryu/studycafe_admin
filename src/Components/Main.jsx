@@ -26,15 +26,15 @@ const Main = (props) => {
         align-items: center;
       `}
     >
-      main
       <div
         css={css`
-          margin-left: ${widthh}px;
+          margin-left: 45%;
           justify-content: center;
           align-items: center;
+          margin-top: 23%;
         `}
       >
-        메인페이지 입니다
+        공통페이지 입니다
       </div>
     </div>
   );

@@ -118,23 +118,35 @@ const Detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
+      let cu = "사용";
+      let cu1 = e.target[13].checked;
+      let cu2 = e.target[14].checked;
+      let cu3 = e.target[15].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
       // alert(e.target[1].value);
       const data_t = {
-        name: e.target[1].value,
-        serviceDomian: e.target[11].value,
-        homePageUrl: e.target[10].value,
+        name: e.target[0].value,
+        serviceDomain: e.target[10].value,
+        homePageUrl: e.target[9].value,
         isManagement: false,
-        businessRegistrationNumber: e.target[2].value,
-        status: e.target[13].value,
-        address: e.target[9].value,
+        businessRegistrationNumber: e.target[1].value,
+        status: cu,
+        address: e.target[8].value,
         head: {
-          password: e.target[5].value,
-          password2: e.target[6].value,
+          password: e.target[4].value,
+          password2: e.target[5].value,
           realName: e.target[2].value,
-          phone: e.target[7].value,
-          email: e.target[8].value,
+          phone: e.target[6].value,
+          email: e.target[7].value,
           username: e.target[3].value,
-          address: e.target[9].value,
+          address: e.target[8].value,
+          status: cu,
           birthDate: "1999-05-01",
         },
       };
@@ -175,9 +187,9 @@ const Detail = (props) => {
 
       console.log(e);
       let cu = "사용";
-      let cu1 = e.target[12].checked;
-      let cu2 = e.target[13].checked;
-      let cu3 = e.target[14].checked;
+      let cu1 = e.target[13].checked;
+      let cu2 = e.target[14].checked;
+      let cu3 = e.target[15].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -188,12 +200,13 @@ const Detail = (props) => {
       console.log(cu);
       const data_t = {
         name: e.target[0].value,
-        serviceDomian: e.target[10].value,
+        serviceDomain: e.target[10].value,
+
         homePageUrl: e.target[9].value,
         isManagement: false,
         businessRegistrationNumber: e.target[1].value,
         status: cu,
-        address: e.target[9].value,
+        address: e.target[8].value,
         head: {
           password: e.target[4].value,
           password2: e.target[5].value,
@@ -203,6 +216,7 @@ const Detail = (props) => {
           username: e.target[3].value,
           address: e.target[8].value,
           birthDate: "1999-05-01",
+          status: cu,
         },
       };
 
@@ -220,6 +234,7 @@ const Detail = (props) => {
         .then((response) => {
           console.log(response.status);
           console.log(response.data);
+          alert("저장되었습니다");
         })
         // .catch((e) => console.log('something went wrong :(', e));
         .catch((error) => {
@@ -242,7 +257,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          event.preventDefault();
+          // event.preventDefault();
           handleSubmit(event);
         }}
       >
@@ -265,9 +280,7 @@ const Detail = (props) => {
           <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
             <div className="row mb-5">
               <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">
-                  본사 이름
-                </label>
+                <label className="required fs-5 fw-semibold mb-2">본사명</label>
 
                 <input
                   type="text"
@@ -289,21 +302,21 @@ const Detail = (props) => {
             </div>
             <div className="row mb-5">
               <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">대표자</label>
+                <label className="required fs-5 fw-semibold mb-2">
+                  대표자명
+                </label>
 
                 <input
-                  type="text"
+                  type="passward"
                   className="form-control"
                   defaultValue={data.head.realName || ""}
                   name=""
                 />
               </div>
               <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">
-                  대표자 ID
-                </label>
+                <label className="required fs-5 fw-semibold mb-2">아이디</label>
                 <input
-                  type="text"
+                  type="passward"
                   className="form-control"
                   defaultValue={data.head.username || ""}
                   name=""
@@ -316,12 +329,21 @@ const Detail = (props) => {
                   비밀번호
                 </label>
 
-                <input
-                  type="password"
-                  id="password"
-                  className="form-control"
-                  defaultValue=""
-                />
+                {data.head.password != "" ? (
+                  <input
+                    type="password"
+                    id="password"
+                    className="form-control"
+                    defaultValue={data.head.password}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    id="password"
+                    className="form-control"
+                    defaultValue=""
+                  />
+                )}
               </div>
 
               <div className="col-md-6 fv-row">
@@ -329,20 +351,28 @@ const Detail = (props) => {
                   비밀번호 확인
                 </label>
 
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder=""
-                  name=""
-                  defaultValue=""
-                />
+                {data.head.password != "" ? (
+                  <input
+                    type="password"
+                    id="password"
+                    className="form-control"
+                    defaultValue={data.head.password}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    id="password"
+                    className="form-control"
+                    defaultValue=""
+                  />
+                )}
               </div>
             </div>
 
             <div className="row mb-5">
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">
-                  대표 연락처
+                  전화번호
                 </label>
 
                 <input
@@ -353,7 +383,7 @@ const Detail = (props) => {
                 />
               </div>
               <div className="col-md-6 fv-row">
-                <label className="fs-5 fw-semibold mb-2">대표 이메일</label>
+                <label className="fs-5 fw-semibold mb-2">이메일</label>
 
                 <input
                   type="text"
@@ -412,7 +442,7 @@ const Detail = (props) => {
             </div>
 
             <div className="row mb-5 row__line">
-              <div className="col-md-6 fv-row check__use_wrap">
+              <div className="col-md-6 fv-row check__use_wrap" hidden>
                 <label className="fs-5 fw-semibold mb-2">학습관리</label>
 
                 <div className="form-check form-check-custom form-check-solid">
@@ -465,15 +495,9 @@ const Detail = (props) => {
                       type="radio"
                       defaultValue="사용"
                       name="choice_use"
-                      id="product_tax_yes"
-                      checked={true}
+                      defaultChecked={data.status == "사용"}
                     />
-                    <label
-                      className="form-check-label"
-                      htmlFor="product_tax_yes"
-                    >
-                      사용
-                    </label>
+                    <label className="form-check-label">사용</label>
                   </div>
                   <div className="form-check form-check-custom form-check-solid me-5 check__hold">
                     <input
@@ -481,13 +505,9 @@ const Detail = (props) => {
                       type="radio"
                       defaultValue="대기"
                       name="choice_use"
+                      defaultChecked={data.status == "대기"}
                     />
-                    <label
-                      className="form-check-label"
-                      htmlFor="product_tax_no"
-                    >
-                      대기
-                    </label>
+                    <label className="form-check-label">대기</label>
                   </div>
                   <div className="form-check form-check-custom form-check-solid check__delet use">
                     <input
@@ -495,13 +515,9 @@ const Detail = (props) => {
                       type="radio"
                       defaultValue="삭제"
                       name="choice_use"
+                      defaultChecked={data.status == "삭제"}
                     />
-                    <label
-                      className="form-check-label"
-                      htmlFor="product_tax_no"
-                    >
-                      삭제
-                    </label>
+                    <label className="form-check-label">삭제</label>
                   </div>
                 </div>
               </div>

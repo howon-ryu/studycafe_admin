@@ -18,12 +18,13 @@ const Header = (props) => {
   console.log(props);
   const [login_check, setlogin] = useState(true);
   const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [header_realName, sethearname] = useState("시스템 관리자");
   let varrrrrr = 1;
   useEffect(() => {
     console.log(window.location.pathname);
-    // if (window.location.pathname == "/") {
-    //   setlogin(false);
-    // }
+    if (window.location.pathname == "/") {
+      setlogin(false);
+    }
     if (window.location.pathname == "/login") {
       setlogin(false);
     }
@@ -31,6 +32,11 @@ const Header = (props) => {
       setlogin(false);
     }
   }, [props]);
+  useEffect(() => {
+    if (cookies.cookie != undefined) {
+      sethearname(cookies.cookie.data.realName);
+    }
+  }, []);
   let widthh = props.width;
 
   if (login_check) {
@@ -68,7 +74,7 @@ const Header = (props) => {
             id="kt_app_header_wrapper"
           >
             <div className="app-navbar flex-shrink-0">
-              <div className="app-navbar-item ms-1">
+              <div className="app-navbar-item ms-1" hidden>
                 <div className="d-flex align-items-center">
                   <select
                     className="form-select form-select-sm form-select-solid w-100px w-xxl-125px"
@@ -286,7 +292,9 @@ const Header = (props) => {
                 >
                   <img src={user_empty} alt="user" />
                   <span className="fw-bold d-flex align-items-center fs-5">
-                    시스템관리자
+                    {/* 시스템관리자 */}
+
+                    {header_realName}
                   </span>
                 </div>
                 <div

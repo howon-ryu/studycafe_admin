@@ -11,9 +11,25 @@
 
 .menu-sub_arr {
    
-        z-index: 107;
+        z-index: 10700;
         position: fixed;
         inset: 50px 1000px auto auto;
         margin: 0px;
         transform: translate(-59px, 214px);
     }
+.ttext {
+    /* border:solid; */
+    /* margin-top: 3.5%; */
+    margin-left:10%;
+    margin-top: 13px;
+    margin-right : 10%;
+    position: absolute;
+    /* margin-right:55%;  */
+    
+}
+.add_btnn{
+    /* border:solid; */
+    margin-top: 6.5px;
+    position: relative;
+    float: right !important;;
+}
