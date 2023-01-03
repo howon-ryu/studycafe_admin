@@ -331,7 +331,7 @@ const Detail = (props) => {
 
                 {data.head.password != "" ? (
                   <input
-                    type="passward"
+                    type="password"
                     id="password"
                     className="form-control"
                     defaultValue={data.head.password}
@@ -353,7 +353,7 @@ const Detail = (props) => {
 
                 {data.head.password != "" ? (
                   <input
-                    type="passward"
+                    type="password"
                     id="password"
                     className="form-control"
                     defaultValue={data.head.password}

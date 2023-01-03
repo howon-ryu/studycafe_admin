@@ -797,7 +797,7 @@ const Manage_student = (props) => {
 
                           {data.password != "" ? (
                             <input
-                              type="passward"
+                              type="password"
                               id="password"
                               className="form-control"
                               defaultValue={data.password}
@@ -819,7 +819,7 @@ const Manage_student = (props) => {
 
                           {data.password != "" ? (
                             <input
-                              type="passward"
+                              type="password"
                               id="password"
                               className="form-control"
                               defaultValue={data.password}
