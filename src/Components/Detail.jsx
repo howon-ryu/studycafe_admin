@@ -17,8 +17,7 @@ const Detail = (props) => {
     head: {
       email: "",
       phone: "",
-      location: "",
-      nickname: "",
+      address: "",
     },
   });
   // let [detail_num, setdetailnum] = useState([1]);
@@ -49,13 +48,14 @@ const Detail = (props) => {
         head: {
           email: "",
           phone: "",
-          location: "",
-          nickname: "",
+          address: "",
         },
       });
       reset.current.click();
     } else {
       detail_num = props.detail_num;
+      console.log("변경", detail_num);
+      reset.current.click();
       spec_brand_Api();
       console.log(detail_num);
     }
@@ -108,7 +108,7 @@ const Detail = (props) => {
   }
 
   const handles = (e) => {
-    alert("kkl");
+    // alert("kkl");
     e.preventDefalut();
   };
 
@@ -118,23 +118,28 @@ const Detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-      alert(e.target[1].value);
+      // alert(e.target[1].value);
       const data_t = {
-        name: e.target[2].value,
-        homePageUrl: "wintergreen.study",
+        name: e.target[1].value,
+        serviceDomian: e.target[11].value,
+        homePageUrl: e.target[10].value,
         isManagement: false,
-        businessRegistrationNumber: "123-123-123",
-        status: "ACTIVE",
+        businessRegistrationNumber: e.target[2].value,
+        status: e.target[13].value,
+        address: e.target[9].value,
         head: {
-          username: double,
-          password: e.target[3].value,
-          password2: e.target[4].value,
-          realName: e.target[5].value,
-          phone: e.target[6].value,
-          email: e.target[7].value,
+          password: e.target[5].value,
+          password2: e.target[6].value,
+          realName: e.target[2].value,
+          phone: e.target[7].value,
+          email: e.target[8].value,
+          username: e.target[3].value,
+          address: e.target[9].value,
+          birthDate: "1999-05-01",
         },
       };
 
+      console.log(data_t);
       const headers = { "header-name": "value" };
       const config = { headers };
       console.log("data_t", data_t);
@@ -149,10 +154,11 @@ const Detail = (props) => {
           .then((response) => {
             console.log(response.status);
             console.log(response.data);
+            alert("추가가 완료 되었습니다");
           })
           // .catch((e) => console.log('something went wrong :(', e));
           .catch((error) => {
-            alert("유효성 을 다시 확인하세요");
+            alert(JSON.stringify(error.response.data.data));
             console.log("re:", error.message);
             console.log("re:", error.body);
             console.log("re:", error.config);
@@ -168,21 +174,35 @@ const Detail = (props) => {
       // event.preventDefalut();
 
       console.log(e);
-
+      let cu = "사용";
+      let cu1 = e.target[12].checked;
+      let cu2 = e.target[13].checked;
+      let cu3 = e.target[14].checked;
+      if (cu1 == true) {
+        cu = "사용";
+      } else if (cu2 == true) {
+        cu = "대기";
+      } else if (cu3 == true) {
+        cu = "삭제";
+      }
+      console.log(cu);
       const data_t = {
-        name: e.target[2].value,
-        homePageUrl: e.target[1].value + "here.study",
+        name: e.target[0].value,
+        serviceDomian: e.target[10].value,
+        homePageUrl: e.target[9].value,
         isManagement: false,
-        businessRegistrationNumber: "123-123-123",
-        status: "ACTIVE",
+        businessRegistrationNumber: e.target[1].value,
+        status: cu,
+        address: e.target[9].value,
         head: {
-          id: data.head.id,
-          password: e.target[3].value,
-          password2: e.target[4].value,
-          realName: e.target[5].value,
-          nickname: e.target[5].value,
+          password: e.target[4].value,
+          password2: e.target[5].value,
+          realName: e.target[2].value,
           phone: e.target[6].value,
           email: e.target[7].value,
+          username: e.target[3].value,
+          address: e.target[8].value,
+          birthDate: "1999-05-01",
         },
       };
 
@@ -244,32 +264,9 @@ const Detail = (props) => {
 
           <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
             <div className="row mb-5">
-              <div className="col-md-6 fv-row input_50">
-                <label className="required fs-5 fw-semibold mb-2">
-                  학원본사 ID
-                </label>
-
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={data.head.username}
-                  name="first_name"
-                  onChange={onchange_fuc}
-                />
-                <span className="me-3">.here.study</span>
-                <button
-                  data-kt-ecommerce-settings-type="cancel"
-                  className="btn btn-primary"
-                  onClick={doublecheck}
-                  type="button"
-                >
-                  중복확인
-                </button>
-              </div>
-
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">
-                  학원본사 이름
+                  본사 이름
                 </label>
 
                 <input
@@ -279,8 +276,40 @@ const Detail = (props) => {
                   name=""
                 />
               </div>
-            </div>
+              <div className="col-md-6 fv-row">
+                <label className="fs-5 fw-semibold mb-2">사업자등록증</label>
 
+                <input
+                  type="text"
+                  className="form-control "
+                  name="last_name"
+                  defaultValue={data.businessRegistrationNumber || ""}
+                />
+              </div>
+            </div>
+            <div className="row mb-5">
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">대표자</label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={data.head.realName || ""}
+                  name=""
+                />
+              </div>
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">
+                  대표자 ID
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={data.head.username || ""}
+                  name=""
+                />
+              </div>
+            </div>
             <div className="row mb-5">
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">
@@ -305,22 +334,12 @@ const Detail = (props) => {
                   className="form-control"
                   placeholder=""
                   name=""
+                  defaultValue=""
                 />
               </div>
             </div>
 
             <div className="row mb-5">
-              <div className="col-md-6 fv-row">
-                <label className="required fs-5 fw-semibold mb-2">대표자</label>
-
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={data.head.nickname || ""}
-                  name=""
-                />
-              </div>
-
               <div className="col-md-6 fv-row">
                 <label className="required fs-5 fw-semibold mb-2">
                   대표 연락처
@@ -333,9 +352,6 @@ const Detail = (props) => {
                   name=""
                 />
               </div>
-            </div>
-
-            <div className="row mb-5">
               <div className="col-md-6 fv-row">
                 <label className="fs-5 fw-semibold mb-2">대표 이메일</label>
 
@@ -346,12 +362,6 @@ const Detail = (props) => {
                   name="first_name"
                 />
               </div>
-
-              <div className="col-md-6 fv-row">
-                <label className="fs-5 fw-semibold mb-2">사업자등록증</label>
-
-                <input type="text" className="form-control " name="last_name" />
-              </div>
             </div>
 
             <div className="row mb-5">
@@ -361,24 +371,47 @@ const Detail = (props) => {
                 <input
                   type="text"
                   className="form-control "
-                  defaultValue={data.head.location || ""}
+                  defaultValue={data.head.address || ""}
                   name="first_name"
                 />
               </div>
             </div>
-
-            <div className="row mb-5 row__line">
+            <div className="row mb-5">
               <div className="col-md-6 fv-row">
                 <label className="fs-5 fw-semibold mb-2">홈페이지</label>
 
                 <input
                   type="text"
                   className="form-control "
-                  defaultValue=""
+                  defaultValue={data.homePageUrl || ""}
                   name="wintergreen.study"
                 />
               </div>
+              <div className="col-md-6 fv-row input_50">
+                <label className="required fs-5 fw-semibold mb-2">도메인</label>
 
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={data.serviceDomain}
+                  name="first_name"
+                  onChange={onchange_fuc}
+                />
+                <span className="me-3">.here.study</span>
+                {props.detail_num == "0" ? (
+                  <button
+                    data-kt-ecommerce-settings-type="cancel"
+                    className="btn btn-primary"
+                    onClick={doublecheck}
+                    type="button"
+                  >
+                    중복확인
+                  </button>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="row mb-5 row__line">
               <div className="col-md-6 fv-row check__use_wrap">
                 <label className="fs-5 fw-semibold mb-2">학습관리</label>
 
@@ -398,7 +431,7 @@ const Detail = (props) => {
             </div>
 
             <div className="row mb-5">
-              <div className="col-md-4 fv-row">
+              {/* <div className="col-md-4 fv-row">
                 <label className="fs-5 fw-semibold mb-2">최종 수정자 ID</label>
 
                 <input
@@ -420,17 +453,17 @@ const Detail = (props) => {
                   name=""
                   readOnly
                 />
-              </div>
+              </div> */}
 
               <div className="col-md-4 fv-row">
-                <label className="fs-5 fw-semibold mb-2">사용</label>
+                <label className="fs-5 fw-semibold mb-2">상태</label>
 
                 <div className="d-flex check__use_wrap">
                   <div className="form-check form-check-custom form-check-solid me-5 check__use">
                     <input
                       className="form-check-input check__use_input"
                       type="radio"
-                      defaultValue=""
+                      defaultValue="사용"
                       name="choice_use"
                       id="product_tax_yes"
                       checked={true}
@@ -446,7 +479,7 @@ const Detail = (props) => {
                     <input
                       className="form-check-input check__hold_input"
                       type="radio"
-                      defaultValue=""
+                      defaultValue="대기"
                       name="choice_use"
                     />
                     <label
@@ -456,11 +489,11 @@ const Detail = (props) => {
                       대기
                     </label>
                   </div>
-                  <div className="form-check form-check-custom form-check-solid check__delet">
+                  <div className="form-check form-check-custom form-check-solid check__delet use">
                     <input
                       className="form-check-input check__delet_input"
                       type="radio"
-                      defaultValue=""
+                      defaultValue="삭제"
                       name="choice_use"
                     />
                     <label

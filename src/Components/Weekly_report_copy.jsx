@@ -1,52 +1,10 @@
 import { React, useEffect, useState } from "react";
 import axios from "axios";
-import { format } from "date-fns";
-const Weekly_report = (props) => {
-  const today = format(new Date(), "yyyy-MM-dd");
-  const START_DATE = "1970-01-01";
-  const END_DATE = format(new Date("2030-12-31"), "yyyy-MM-dd");
-  const [start_date, setstart] = useState(START_DATE);
-  const [end_date, setend] = useState(END_DATE);
-  function setsstart(e) {
-    console.log(e);
-    setstart(e.target.value);
-  }
-  function seteend(e) {
-    console.log(e);
-    setend(e.target.value);
-  }
-  let detail_num = 1;
-  // useEffect(() => {
-  //   searchreport(1);
-  // }, []);
+const Weekly_report = () => {
   useEffect(() => {
-    console.log("props!!!!", props);
-    // setdetailnum(props.detail_num);
-    detail_num = props.detail_num;
-
-    if (props.detail_num == "" || props.detail_num == undefined) {
-      detail_num = 10;
-    }
-    //setstudent(props.detail_num);
-    console.log("변경", detail_num);
-
-    searchreport(detail_num);
-    console.log(detail_num);
-  }, [props]);
-  useEffect(() => {
-    console.log("props", props);
-    detail_num = props.detail_num;
-    if (props.detail_num == "" || props.detail_num == undefined) {
-      detail_num = 10;
-    }
-    if (start_date != undefined && end_date != undefined) {
-      searchreport(detail_num);
-    }
-    // setdetailnum(props.detail_num);
-    console.log("sd:", start_date);
-    console.log("se:", end_date);
-  }, [start_date, end_date]);
-  const [studentid, setstudent] = useState(1);
+    searchreport();
+  }, []);
+  const [branchid, setbranch] = useState([]);
   const handlesubmit_week = (e) => {
     const data_t = {
       branchId: 1,
@@ -64,6 +22,7 @@ const Weekly_report = (props) => {
     axios
       .get(posturl_set, data_t, config)
       .then((response) => {
+        setbranch(response.data);
         console.log(response.status);
         console.log(response.data);
       })
@@ -76,22 +35,21 @@ const Weekly_report = (props) => {
         console.log("re:", error.response.data);
       });
   };
-  function searchreport(detail_num) {
+  function searchreport() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users/students/" + detail_num + "/daily-reports";
+    let url_set = url + "branches/1" + "/weekly-report";
     console.log("url:", url_set);
     const data_t = {
-      studentId: detail_num,
+      branchId: 1,
       startDate: "2022-01-01",
       endDate: "2022-12-31",
     };
-
     axios
       .get(url_set, {
         params: {
-          studentId: detail_num,
-          startDate: start_date,
-          endDate: end_date,
+          branchId: 1,
+          startDate: "2022-01-01",
+          endDate: "2022-12-31",
         },
       })
       .then(function (response) {
@@ -165,16 +123,10 @@ const Weekly_report = (props) => {
         </div>
       </td>
 
-      <td className="text-gray-800 fw-bold">
-        {("" + v.createdAt).substr(0, 10)}
-        {/* {"" + JSON.stringify(v.createdAt).substr(1, 11)} */}
-      </td>
-      <td className="text-gray-800 fw-bold">
-        {("" + v.totalTime).substr(0, 10)}
-        {/* {"" + JSON.stringify(v.totalTime).substr(1, 8)} */}
-      </td>
-      {/* <td>{v.user.room.availableSeat}</td>
-      <td className="text-gray-800 fw-bold">{v.user.realName}</td> */}
+      <td className="text-gray-800 fw-bold">{v.user.room.name}</td>
+      <td className="text-gray-800 fw-bold">{v.user.groupList[0].name}</td>
+      <td>{v.user.room.availableSeat}</td>
+      <td className="text-gray-800 fw-bold">{v.user.realName}</td>
       <td>{v.todoCount}</td>
       <td>{v.doneCount}</td>
       <td>{v.completedRate}</td>
@@ -235,7 +187,7 @@ const Weekly_report = (props) => {
                 <div className="stdy_w_rpt_date d-flex align-items-center">
                   <label
                     className="col-form-label date_label me-4"
-                    htmlFor="example-date"
+                    for="example-date"
                   >
                     시작일{weekreport.id}
                   </label>
@@ -245,13 +197,11 @@ const Weekly_report = (props) => {
                       type="date"
                       name="date"
                       id="example-date"
-                      defaultValue=""
-                      onChange={setsstart}
                     />
                   </div>
                   <label
                     className="col-form-label date_label me-4"
-                    htmlFor="example-date"
+                    for="example-date"
                   >
                     종료일
                   </label>
@@ -261,11 +211,43 @@ const Weekly_report = (props) => {
                       type="date"
                       name="date"
                       id="example-date"
-                      defaultValue=""
                       placeholder="w"
-                      onChange={seteend}
                     />
                   </div>
+                </div>
+
+                <div className="d-flex align-items-center position-relative stdy_w_rpt_sch_w">
+                  <span className="svg-icon svg-icon-3 position-absolute ms-3">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        opacity="0.5"
+                        x="17.0365"
+                        y="15.1223"
+                        width="8.15546"
+                        height="2"
+                        rx="1"
+                        transform="rotate(45 17.0365 15.1223)"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </span>
+
+                  <input
+                    type="text"
+                    id="kt_filter_search"
+                    className="form-control form-control-solid border-body ps-14 input__slim"
+                    placeholder="Search"
+                  />
                 </div>
               </div>
 
@@ -432,9 +414,10 @@ const Weekly_report = (props) => {
                             />
                           </div>
                         </th>
-                        <th className="min-w-80px">학습일</th>
-                        <th className="min-w-50px">학습시간</th>
-
+                        <th className="min-w-80px">학습관</th>
+                        <th className="min-w-50px">관리그룹</th>
+                        <th className="min-w-25px">좌석</th>
+                        <th className="min-w-80px">이름</th>
                         <th className="min-w-50px">계획</th>
                         <th className="min-w-50px">실천</th>
                         <th className="min-w-50px">실천률</th>

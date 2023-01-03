@@ -25,23 +25,23 @@ const Office__branch_info = (props) => {
       >
         <div
           className="page-title d-flex flex-column justify-content-center flex-wrap me-3 "
-          css={css`
-            margin: 30px 0;
-          `}
+          // css={css`
+          //   margin: 30px 0;
+          // `}
         >
           <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column my-0 name_left">
-            지점정보 관리
+            지점관리
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li className="breadcrumb-item text-muted">
               <a href="#" className="text-muted text-hover-primary">
-                지점 관리
+                학원관리
               </a>
             </li>
             <li className="breadcrumb-item">
               <span className="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <li className="breadcrumb-item text-muted">지점정보 관리</li>
+            <li className="breadcrumb-item text-muted">지점관리</li>
           </ul>
         </div>
         <div
@@ -60,7 +60,7 @@ const Office__branch_info = (props) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
+  margin-left: 30px;
 
   padding-top: 20px;
 `;

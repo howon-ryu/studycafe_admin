@@ -7,9 +7,9 @@ const Sidebar = (props) => {
   const [login_check, setlogin] = useState(true);
   useEffect(() => {
     console.log(window.location.pathname);
-    if (window.location.pathname == "/") {
-      setlogin(false);
-    }
+    // if (window.location.pathname == "/") {
+    //   setlogin(false);
+    // }
     if (window.location.pathname == "/login") {
       setlogin(false);
     }
@@ -76,8 +76,8 @@ const Sidebar = (props) => {
           }}
         >
           <div className="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
-            <a href="../main">
-              <img src={main_logo} />
+            <a href="../studylab/Office__head_office">
+              <img src={main_logo} width="120" />
             </a>
             <button onClick={() => toggleMenu()} className={styles.button}>
               {isOpen ? (

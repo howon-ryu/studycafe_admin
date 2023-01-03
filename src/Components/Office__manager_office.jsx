@@ -1,24 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
-import { React, useEffect, useState } from "react";
-import "../css/study__weekly_plan.css";
-import { useSearchParams } from "react-router-dom";
+
+import { React, useState } from "react";
+import "../css/office__branch_office.css";
 
 import styled from "@emotion/styled";
-import "../css/layout.css";
+import "../css/style.bundle.css";
 // import "./main.css";
 // import { Link } from "react-router-dom";
 import Arraylist from "./Arraylist";
-import Calendar_plan from "./Calendar_plan";
+import Manager_detail from "./Manager_detail";
+import "../css/layout.css";
 // import { Container } from "react-bootstrap";
-const Study_weekly_plan = (props) => {
-  let widthh = props.width;
+const Office__manager_office = (props) => {
   const [detail_num, setDetailNum] = useState("");
-
+  let widthh = props.width;
   return (
     <Container>
       <div
-        className="study_weekly_plan"
+        className="office_branch_office"
         css={css`
           margin-left: ${widthh}px;
         `}
@@ -29,19 +29,19 @@ const Study_weekly_plan = (props) => {
           //   margin: 30px 0;
           // `}
         >
-          <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0">
-            학습계획
+          <h1 className="page-heading d-flex text-dark fw-bold fs-2 flex-column my-0 name_left">
+            매니저관리
           </h1>
           <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li className="breadcrumb-item text-muted">
               <a href="#" className="text-muted text-hover-primary">
-                학습관리
+                학원관리
               </a>
             </li>
             <li className="breadcrumb-item">
               <span className="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <li className="breadcrumb-item text-muted">학습계획</li>
+            <li className="breadcrumb-item text-muted">매니저관리</li>
           </ul>
         </div>
         <div
@@ -49,8 +49,11 @@ const Study_weekly_plan = (props) => {
             display: flex;
           `}
         >
-          <Arraylist setDetailNum={setDetailNum} flag="Study_weekly_plan" />
-          <Calendar_plan detail_num={detail_num} />
+          <Arraylist
+            setDetailNum={setDetailNum}
+            flag="office__manager_office"
+          />
+          <Manager_detail detail_num={detail_num} />
         </div>
       </div>
     </Container>
@@ -65,4 +68,4 @@ const Container = styled.div`
   padding-top: 20px;
 `;
 
-export default Study_weekly_plan;
+export default Office__manager_office;

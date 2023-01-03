@@ -75,7 +75,7 @@ function SidebarMenu({ title, children, icon_num }) {
           data-kt-menu-trigger="click"
           className="menu-item here show menu-accordion"
         >
-          <div className="menu-link">
+          <div className="menu-link  menu_border">
             <span className="menu-icon">
               {icon_one && (
                 <span className="svg-icon svg-icon-2" id="one">
@@ -162,16 +162,18 @@ function SidebarMenu({ title, children, icon_num }) {
                 </span>
               )}
             </span>
-            <span className="menu-title"> {title}</span>
-            <button
+
+            <span
+              className={"menu-title" + (isCheck == true ? "_active" : "")}
               onClick={() => {
                 // setCheck로 state값을 변경해주자.
                 // e로 상태값을 받아왔다. 클릭시 상태값은 !상태값이므로 값이 반전된다 false -> true
                 setCheck((e) => !e);
               }}
             >
-              {isCheck ? "-" : "+"}
-            </button>
+              {title}
+              <button className="blank">{isCheck ? "△" : "▽"}</button>
+            </span>
           </div>
           {isCheck && (
             //true

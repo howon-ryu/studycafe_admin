@@ -7,11 +7,95 @@ const Manage_student = (props) => {
   const one_click = (props) => setflagone(props);
   const [flag_two, setflagtwo] = useState("2");
   const two_click = (props) => setflagtwo(props);
+  const [brands, setbrands] = useState([]);
+  const [rooms, setrooms] = useState([]);
+  const [branches, setbranches] = useState([]);
   let student_num;
+  function searchBrands(props) {
+    let var_status = "";
+
+    if (props == undefined) {
+      var_status = "";
+    } else {
+      var_status = props.target[5].value;
+    }
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "brands";
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+        setbrands(response.data);
+        console.log("pa:", var_status);
+        console.log("bra:", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchBranches(props) {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "branches";
+    let var_status = "";
+    let var_brandid = "";
+    let var_ownerid = "";
+    if (props != undefined) {
+      console.log("props!!!!!!!!!!:", props);
+      console.log("propsbranch!!!!!!!!!!:", props.target[5].value);
+      var_status = props.target[5].value;
+      var_brandid = props.target[0].value;
+      var_ownerid = props.target[1].value;
+    }
+    axios
+      .get(url_set, {
+        params: {
+          status: var_status,
+          brandId: var_brandid,
+          ownerId: var_ownerid,
+        },
+      })
+      .then(function (response) {
+        //setdata(response.data);
+
+        setbranches(response.data);
+
+        console.log("branches", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function searchRooms(props) {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "branches/rooms";
+
+    axios
+      .get(url_set)
+      .then(function (response) {
+        //setdata(response.data);
+
+        setrooms(response.data);
+
+        console.log("branches", response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   useEffect(() => {
     console.log("props", props);
     // setdetailnum(props.detail_num);
     student_num = props.detail_num;
+    searchBrands();
+    searchBranches();
+    searchRooms();
     if (props.detail_num == "" || props.detail_num == undefined) {
       console.log("공백");
     } else if (props.detail_num == "0") {
@@ -24,9 +108,9 @@ const Manage_student = (props) => {
         email: "",
         birthDate: "",
         gender: "",
-        nickname: "",
+        
         profileImgUrl: "",
-        location: null,
+        address: null,
         status: "",
         lastLoginAt: "",
         school: "",
@@ -36,7 +120,13 @@ const Manage_student = (props) => {
       reset.current.click();
     } else {
       student_num = props.detail_num;
-      spec_student_Api();
+      if (flag_one == "1") {
+        spec_student_Api();
+      } else if (flag_two == "1") {
+        console.log("22222");
+        spec_parent_Api();
+      }
+
       console.log(student_num);
     }
   }, [props]);
@@ -48,19 +138,55 @@ const Manage_student = (props) => {
     email: "",
     birthDate: "",
     gender: "",
-    nickname: "",
+    
     profileImgUrl: "",
-    location: null,
+    address: null,
     status: "",
     lastLoginAt: "",
     school: "",
     grade: "",
     darkMode: false,
   });
+  const [parent, setparent] = useState([
+    {
+      id: 1,
+      realName: "김엄마",
+      relation: "엄마",
+      phone: "010-1234-5432",
+      isPrimary: true,
+      createdAt: "2022-11-22T22:39:41.131Z",
+      status: "ACTIVE",
+    },
+  ]);
+  const parentsList = parent.map((v) => (
+    <tr>
+      <td>
+        <div className="form-check form-check-sm form-check-custom form-check-solid">
+          <span className="text-gray-600 text-hover-primary ms-4">1</span>
+        </div>
+      </td>
+      <td data-order="Invalid date">{v.realName}</td>
+      <td data-order="Invalid date">{v.relation}</td>
+      <td data-order="Invalid date">{v.phone}</td>
+      <td data-order="Invalid date t__center">
+        <input
+          className="form-check-input widget-13-check"
+          type="checkbox"
+          value="1"
+          checked
+          disabled
+        />
+      </td>
+      <td data-order="Invalid date">{v.createdAt}</td>
+      <td className="text-muted fw-semibold text-end">
+        <span className="badge badge-light-success">{v.status}</span>
+      </td>
+    </tr>
+  ));
   function spec_student_Api() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users" + "/students/" + student_num;
-    console.log("url:", url_set);
+    let url_set = url + "users/" + student_num;
+    console.log("url!!!!!!!!:", url_set);
     axios
       .get(url_set)
       .then(function (response) {
@@ -74,22 +200,45 @@ const Manage_student = (props) => {
         console.log("실패");
       });
   }
+  function spec_parent_Api() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users" + "/students/" + student_num + "/parents";
+    console.log("url:", url_set);
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setparent(response.data);
+        console.log("data:", data);
+        console.log("head:", data.head);
+        console.log(response.data);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
-      alert(e.target[2].value);
+      // alert(e.target[2].value);
       // event.preventDefalut();
 
       console.log(e);
 
       const data_t = {
-        password: e.target[7].value,
-        password2: e.target[8].value,
-        realName: e.target[3].value,
-        nickname: e.target[3].value,
-        phone: e.target[4].value,
-        email: e.target[5].value,
+        username: e.target[13].value,
+        password: e.target[6].value,
+        password2: e.target[7].value,
+        realName: e.target[2].value,
+        gender: "남자",
+        phone: e.target[3].value,
+        email: e.target[4].value,
+        birthDate: e.target[12].value,
         school: e.target[10].value,
         grade: e.target[11].value,
+        brandId: e.target[0].value,
+        branchId: e.target[1].value,
+        roomId: e.target[8].value,
+        seatNumber: e.target[9].value,
       };
 
       const headers = { "header-name": "value" };
@@ -104,6 +253,7 @@ const Manage_student = (props) => {
       axios
         .post(posturl_set, data_t, config)
         .then((response) => {
+          alert("추가가 완료 되었습니다");
           console.log(response.status);
           console.log(response.data);
         })
@@ -117,20 +267,23 @@ const Manage_student = (props) => {
         });
     } else {
       // alert(event.target[1].value);
-      alert(e.target[2].value);
+      //alert(e.target[2].value);
       // event.preventDefalut();
 
       console.log(e);
 
       const data_t = {
-        password: e.target[5].value,
-        password2: e.target[6].value,
+        password: e.target[6].value,
+        password2: e.target[7].value,
         realName: e.target[2].value,
 
         phone: e.target[3].value,
         email: e.target[4].value,
-        school: e.target[7].value,
-        grade: e.target[8].value,
+        birthDate: e.target[12].value,
+        school: e.target[10].value,
+        grade: e.target[11].value,
+        roomId: e.target[8].value,
+        seatNumber: e.target[9].value,
       };
 
       const headers = { "header-name": "value" };
@@ -195,6 +348,7 @@ const Manage_student = (props) => {
                   one_click("2");
                   two_click("1");
                 }}
+                hidden
               >
                 학부모정보
               </div>
@@ -212,46 +366,80 @@ const Manage_student = (props) => {
                   <div className="card card-flush h-xl-100 card__right">
                     <div className="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
                       <div className="row mb-5">
-                        <div className="col-md-6 fv-row">
-                          <label className="required fs-5 fw-semibold mb-2">
-                            본사
-                          </label>
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                          >
-                            <option value="Web Developer">겨울신록</option>
-                            <option value="Web Designer">봄신록</option>
-                            <option value="Art Director">여름신록</option>
-                            <option value="Finance Manager">가을신록</option>
-                            <option value="Project Manager">어나더레벨</option>
-                            <option value="System Administrator">
-                              최고최고최고
-                            </option>
-                          </select>
-                        </div>
-                        <div className="col-md-6 fv-row">
-                          <label className="required fs-5 fw-semibold mb-2">
-                            지점
-                          </label>
-                          <select
-                            name="position"
-                            data-control="select2"
-                            data-placeholder="Select a position..."
-                            className="form-select form-select-solid"
-                          >
-                            <option value="Web Developer">겨울신록</option>
-                            <option value="Web Designer">봄신록</option>
-                            <option value="Art Director">여름신록</option>
-                            <option value="Finance Manager">가을신록</option>
-                            <option value="Project Manager">어나더레벨</option>
-                            <option value="System Administrator">
-                              최고최고최고
-                            </option>
-                          </select>
-                        </div>
+                        {props.detail_num != "0" ? (
+                          <div className="col-md-6 fv-row" hidden>
+                            <label>브랜드</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="col-md-6 fv-row">
+                            <label>브랜드</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                {brands.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        )}
+                        {props.detail_num != "0" ? (
+                          <div className="col-md-6 fv-row" hidden>
+                            <label>지점</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                {branches.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="col-md-6 fv-row">
+                            <label>지점</label>
+                            <div>
+                              <select
+                                className="form-select form-select-solid"
+                                data-kt-select2="true"
+                                data-dropdown-parent="#kt_menu_631f0553006ad"
+                                data-allow-clear="true"
+                              >
+                                {branches.map((item, idx) => (
+                                  <option key={idx} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        )}
                         <div className="col-md-6 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
                             이름
@@ -299,7 +487,7 @@ const Manage_student = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue={data.location}
+                            defaultValue={data.address}
                             name=""
                           />
                         </div>
@@ -332,52 +520,101 @@ const Manage_student = (props) => {
                         </div>
                       </div>
 
-                      <div className="row mb-5 row__line">
+                      <div className="row mb-5 ">
                         <div className="col-md-6 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
-                            학습관/좌석
+                            학습관
                           </label>
 
+                          <select
+                            className="form-select "
+                            data-kt-select2="true"
+                            data-dropdown-parent="#kt_menu_631f0553006ad"
+                            data-allow-clear="true"
+                            key={rooms.id}
+                            defaultValue={rooms.name}
+                          >
+                            {rooms.map((item, idx) => (
+                              <option key={idx} value={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-md-6 fv-row">
+                          <label className="fs-5 fw-semibold mb-2">좌석</label>
+
                           <input
-                            type="password"
-                            id="password"
-                            className="form-control"
-                            placeholer=""
-                            disabled
+                            type="text"
+                            className="form-control "
+                            defaultValue={data.seatNumber}
                           />
                         </div>
-
+                      </div>
+                      <div className="row mb-5 ">
                         <div className="col-md-6 fv-row">
                           <label className="required fs-5 fw-semibold mb-2">
                             학교
                           </label>
 
                           <input
-                            type="password"
+                            type="text"
                             className="form-control"
-                            placeholder={data.school}
+                            defaultValue={data.school}
                             name=""
                           />
                         </div>
                         <div className="col-md-6 fv-row">
                           <label className="fs-5 fw-semibold mb-2">학년</label>
 
-                          <input
-                            type="text"
-                            className="form-control form-control-solid"
+                          <select
+                            className="form-select "
+                            data-kt-select2="true"
+                            data-dropdown-parent="#kt_menu_631f0553006ad"
+                            data-allow-clear="true"
+                            key={data.id}
                             defaultValue={data.grade}
-                          />
+                          >
+                            <option value="중1">중1</option>
+                            <option value="중2">중2</option>
+                            <option value="중3">중3</option>
+                            <option value="고1">고1</option>
+                            <option value="고2">고2</option>
+
+                            <option value="고3">고3</option>
+                            <option value="재수">재수</option>
+                            <option value="삼수">삼수</option>
+                            <option value="사수">사수</option>
+                            <option value="n수">n수</option>
+                            <option value="공시">공시</option>
+                            <option value="기타">기타</option>
+                          </select>
+                          {/* <input
+                            type="text"
+                            className="form-control "
+                            defaultValue={data.grade}
+                          /> */}
                         </div>
+                      </div>
+                      <div className="row mb-5 row__line">
                         <div className="col-md-6 fv-row">
                           <label className="fs-5 fw-semibold mb-2">
                             생년월일
                           </label>
 
                           <input
-                            type="text"
-                            className="form-control form-control-solid"
+                            type="date"
+                            className="form-control "
                             defaultValue={data.birthDate}
-                            readOnly
+                          />
+                        </div>
+                        <div className="col-md-6 fv-row">
+                          <label className="fs-5 fw-semibold mb-2">ID</label>
+
+                          <input
+                            type="text"
+                            className="form-control "
+                            defaultValue={data.username}
                           />
                         </div>
                       </div>
@@ -450,57 +687,7 @@ const Manage_student = (props) => {
                   </thead>
 
                   <tbody className="fw-semibold text-gray-600">
-                    <tr>
-                      <td>
-                        <div className="form-check form-check-sm form-check-custom form-check-solid">
-                          <span className="text-gray-600 text-hover-primary ms-4">
-                            1
-                          </span>
-                        </div>
-                      </td>
-                      <td data-order="Invalid date">김엄마</td>
-                      <td data-order="Invalid date">엄마</td>
-                      <td data-order="Invalid date">010-1234-4567</td>
-                      <td data-order="Invalid date t__center">
-                        <input
-                          className="form-check-input widget-13-check"
-                          type="checkbox"
-                          value="1"
-                          checked
-                          disabled
-                        />
-                      </td>
-                      <td data-order="Invalid date">2022-08-14</td>
-                      <td className="text-muted fw-semibold text-end">
-                        <span className="badge badge-light-success">사용</span>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <div className="form-check form-check-sm form-check-custom form-check-solid">
-                          <span className="text-gray-600 text-hover-primary ms-4">
-                            2
-                          </span>
-                        </div>
-                      </td>
-                      <td data-order="Invalid date">홍아빠</td>
-                      <td data-order="Invalid date">아빠</td>
-                      <td data-order="Invalid date">010-1234-4567</td>
-                      <td data-order="Invalid date t__center">
-                        <input
-                          className="form-check-input widget-13-check"
-                          type="checkbox"
-                          value="1"
-                          checked
-                          disabled
-                        />
-                      </td>
-                      <td data-order="Invalid date">2022-08-14</td>
-                      <td className="text-muted fw-semibold text-end">
-                        <span className="badge badge-light-warning">대기</span>
-                      </td>
-                    </tr>
+                    {parentsList}
                   </tbody>
                 </table>
               </div>
@@ -566,7 +753,7 @@ const Manage_student = (props) => {
               </div>
 
               <div className="row mb-5">
-                <div className="col-md-4 fv-row">
+                {/* <div className="col-md-4 fv-row">
                   <label className="fs-5 fw-semibold mb-2">
                     최종 수정자 ID
                   </label>
@@ -592,10 +779,10 @@ const Manage_student = (props) => {
                     name=""
                     readonly
                   />
-                </div>
+                </div> */}
 
                 <div className="col-md-4 fv-row">
-                  <label className="fs-5 fw-semibold mb-2">사용</label>
+                  <label className="fs-5 fw-semibold mb-2">상태</label>
 
                   <div className="d-flex check__use_wrap">
                     <div className="form-check form-check-custom form-check-solid me-5 check__use">

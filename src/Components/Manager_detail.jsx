@@ -6,23 +6,26 @@ import axios from "axios";
 import { click } from "@testing-library/user-event/dist/click";
 import { waitForElementToBeRemoved } from "@testing-library/react";
 import { compareByFieldSpec } from "@fullcalendar/core";
-const Branch_detail = (props) => {
+const Manager_detail = (props) => {
   const reset = useRef();
-
+  const [brands, setbrands] = useState([]);
+  const [owners, setowners] = useState([]);
   const [data, setdata] = useState({
     id: "",
     name: "",
     status: "",
-    brand: {
+
+    targetUser: {
       id: "",
-      name: "",
-      status: "",
+      realName: "",
     },
   });
   let detail_num;
-  const [brands, setbrands] = useState([]);
   useEffect(() => {
+    detail_num = props.detail_num;
+    console.log("dn:", detail_num);
     searchBrands();
+    searchOwners();
   }, []);
   useEffect(() => {
     console.log("props", props);
@@ -37,10 +40,14 @@ const Branch_detail = (props) => {
         id: "",
         name: "",
         status: "",
-        brand: {
+        head: {
+          email: "",
+          phone: "",
+          address: "",
+        },
+        targetUser: {
           id: "",
-          name: "",
-          status: "",
+          realName: "",
         },
       });
       reset.current.click();
@@ -50,24 +57,6 @@ const Branch_detail = (props) => {
       console.log(detail_num);
     }
   }, [props]);
-  function spec_branch_Api() {
-    const url = "https://farm01.bitlworks.co.kr/api/v1/";
-    let url_set = url + "users/" + detail_num;
-    console.log("url@@@@@@@@@@@@:", url_set);
-    axios
-      .get(url_set)
-      .then(function (response) {
-        setdata(response.data);
-        console.log("data:", data);
-        console.log("head:", data.head);
-        console.log(response.data);
-        console.log("성공");
-      })
-      .catch(function (error) {
-        console.log("실패");
-        alert("유효성 검사 확인 필요", error.message);
-      });
-  }
   function searchBrands() {
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "brands";
@@ -79,6 +68,38 @@ const Branch_detail = (props) => {
       })
       .catch(function (error) {
         console.log("실패");
+      });
+  }
+  function searchOwners() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/owners";
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setowners(response.data);
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log("실패");
+      });
+  }
+  function spec_branch_Api() {
+    const url = "https://farm01.bitlworks.co.kr/api/v1/";
+    let url_set = url + "users/" + detail_num;
+    console.log("url@@@@@@@@@@@@:", url_set);
+    axios
+      .get(url_set)
+      .then(function (response) {
+        setdata(response.data);
+        console.log("data:", data);
+        console.log("head:", data.head);
+        console.log(response.data);
+        console.log(data.targetUser.id);
+        console.log("성공");
+      })
+      .catch(function (error) {
+        console.log("실패");
+        alert("유효성 검사 확인 필요", error.message);
       });
   }
   const handles = (e) => {
@@ -93,16 +114,16 @@ const Branch_detail = (props) => {
       console.log(e);
 
       const data_t = {
+        ownerId: e.target[1].value,
         brandId: e.target[0].value,
-        username: e.target[1].value,
-        password: e.target[5].value,
-        password2: e.target[6].value,
-        realName: e.target[2].value,
-        phone: e.target[3].value,
-        email: e.target[4].value,
-        birthDate: e.target[7].value,
+        username: e.target[2].value,
+        password: e.target[6].value,
+        password2: e.target[7].value,
+        realName: e.target[3].value,
+        phone: e.target[4].value,
+        email: e.target[5].value,
+        birthDate: e.target[8].value,
         gender: "남자",
-        address: "abc",
       };
 
       const headers = { "header-name": "value" };
@@ -110,7 +131,7 @@ const Branch_detail = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "users" + "/owners";
+      let posturl_set = posturl + "users" + "/manager";
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
@@ -138,15 +159,15 @@ const Branch_detail = (props) => {
       console.log(e);
 
       const data_t = {
+        ownerId: e.target[1].value,
+        username: e.target[2].value,
         brandId: e.target[0].value,
-        password: e.target[5].value,
-        password2: e.target[6].value,
-        realName: e.target[2].value,
-        phone: e.target[3].value,
-        email: e.target[4].value,
-        address: "abc",
-        birthDate: e.target[7].value,
-        username: e.target[1].value,
+        password: e.target[6].value,
+        password2: e.target[7].value,
+        realName: e.target[3].value,
+        phone: e.target[4].value,
+        email: e.target[5].value,
+        birthDate: "1999-01-01",
       };
 
       const headers = { "header-name": "value" };
@@ -154,7 +175,7 @@ const Branch_detail = (props) => {
       console.log("data_t", data_t);
 
       let posturl = "https://farm01.bitlworks.co.kr/api/v1/";
-      let posturl_set = posturl + "users" + "/owners/" + data.id;
+      let posturl_set = posturl + "users" + "/manager/" + data.id;
       console.log("puturl:", posturl_set);
       // setTimeout(console.log("puturl:", posturl_set), 30000);
 
@@ -195,7 +216,7 @@ const Branch_detail = (props) => {
                   data-kt-table-widget-3="tab"
                   data-kt-table-widget-3-value="Show All"
                 >
-                  원장
+                  상세정보
                 </div>
               </div>
             </div>
@@ -212,7 +233,7 @@ const Branch_detail = (props) => {
                       data-control="select2"
                       data-placeholder="Select a position..."
                       className="form-select form-select-solid"
-                      defaultValue={data.brand.name}
+                      defaultValue=""
                     >
                       {brands.map((item, idx) => (
                         <option key={idx} value={item.id}>
@@ -226,9 +247,8 @@ const Branch_detail = (props) => {
                       data-control="select2"
                       data-placeholder="Select a position..."
                       className="form-select form-select-solid"
-                      defaultValue={data.brand.name}
+                      defaultValue=""
                     >
-                      <option value={data.brand.id}>{data.brand.name}</option>
                       {brands.map((item, idx) => (
                         <option key={idx} value={item.id}>
                           {item.name}
@@ -237,13 +257,49 @@ const Branch_detail = (props) => {
                     </select>
                   )}
                 </div>
+                <div className="col-md-6 fv-row">
+                  <label className="fs-5 fw-semibold mb-2">원장선택</label>
+
+                  {props.detail_num == 0 ? (
+                    <select
+                      name="position"
+                      data-control="select2"
+                      data-placeholder="Select a position..."
+                      className="form-select form-select-solid"
+                      defaultValue=""
+                    >
+                      {owners.map((item, idx) => (
+                        <option key={idx} value={item.id}>
+                          {item.realName}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <select
+                      name="position"
+                      data-control="select2"
+                      data-placeholder="Select a position..."
+                      className="form-select form-select-solid"
+                      defaultValue=""
+                    >
+                      <option value={data.targetUser.id || data.id}>
+                        {data.targetUser.realName || data.realName}
+                      </option>
+                      {owners.map((item, idx) =>
+                        item.realName != data.targetUser.realName ? (
+                          <option key={idx} value={item.id}>
+                            {item.realName}
+                          </option>
+                        ) : null
+                      )}
+                    </select>
+                  )}
+                </div>
               </div>
               <div className="row mb-5">
                 {props.detail_num == "0" ? (
                   <div className="col-md-6 fv-row">
-                    <label className="required fs-5 fw-semibold mb-2">
-                      원장 ID
-                    </label>
+                    <label className="required fs-5 fw-semibold mb-2">ID</label>
 
                     {/* <select
                     name="position"
@@ -267,9 +323,7 @@ const Branch_detail = (props) => {
                   </div>
                 ) : (
                   <div className="col-md-6 fv-row">
-                    <label className="required fs-5 fw-semibold mb-2">
-                      원장 ID
-                    </label>
+                    <label className="required fs-5 fw-semibold mb-2">ID</label>
 
                     {/* <select
                     name="position"
@@ -295,9 +349,7 @@ const Branch_detail = (props) => {
                 )}
 
                 <div className="col-md-6 fv-row">
-                  <label className="required fs-5 fw-semibold mb-2">
-                    원장명
-                  </label>
+                  <label className="required fs-5 fw-semibold mb-2">이름</label>
 
                   <input
                     type="text"
@@ -649,4 +701,4 @@ const Branch_detail = (props) => {
     </div>
   );
 };
-export default Branch_detail;
+export default Manager_detail;
