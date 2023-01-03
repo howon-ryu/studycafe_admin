@@ -90,10 +90,13 @@ const Calendar_plan = (props) => {
       console.log("data:", data);
       const calendarFormatPlanList = data.map((item) => {
         const parsedDate = (ISOString) => ISOString.substring(0, 10);
-
+        let temp_start = "" + item.startTime;
+        let temp_end = "" + item.endTime;
         return {
-          start: parsedDate(item.startTime),
-          end: parsedDate(item.endTime),
+          // start: parsedDate(item.startTime),
+          // end: parsedDate(item.endTime),
+          start: temp_start.substring(0, 10),
+          end: temp_end.substring(0, 10),
           title: item.title,
           description: item.description,
           id: item.id,

@@ -257,7 +257,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          event.preventDefault();
+          // event.preventDefault();
           handleSubmit(event);
         }}
       >
