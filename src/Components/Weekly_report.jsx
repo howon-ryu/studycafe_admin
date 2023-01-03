@@ -60,8 +60,8 @@ const Weekly_report = (props) => {
   const handlesubmit_week = (e) => {
     const data_t = {
       branchId: 1,
-      startDate: "2022-01-01",
-      endDate: "2022-12-31",
+      fromDate: "2022-01-01",
+      toDate: "2022-12-31",
     };
     const headers = { "header-name": "value" };
     const config = { headers };
@@ -94,16 +94,16 @@ const Weekly_report = (props) => {
     console.log(end_date);
     const data_t = {
       studentId: detail_num,
-      startDate: "2022-01-01",
-      endDate: "2022-12-31",
+      fromDate: "2022-01-01",
+      toDate: "2022-12-31",
     };
 
     axios
       .get(url_set, {
         params: {
           studentId: detail_num,
-          startDate: start_date,
-          endDate: end_date,
+          fromDate: start_date,
+          toDate: end_date,
         },
       })
       .then(function (response) {

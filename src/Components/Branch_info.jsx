@@ -61,7 +61,7 @@ const Branch_info = (props) => {
   const [specroom, setspecroom] = useState("none");
   const [rooms, setrooms] = useState([]);
   const handleSubmit_addGroup = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     console.log(event);
     // let calenderApi = selectInfo;
     // // calenderApi.unselect()
@@ -209,7 +209,7 @@ const Branch_info = (props) => {
       });
   }
   const handleSubmit_addRoom = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     console.log(event);
     // let calenderApi = selectInfo;
     // // calenderApi.unselect()
@@ -684,7 +684,7 @@ const Branch_info = (props) => {
   }
   const handleSubmit_forgroup = (e) => {
     console.log(e);
-    console.log("수정 그룹콘솔 찌겅바");
+
     let cu = "사용";
     let cu1 = e.target[1].checked;
     let cu2 = e.target[2].checked;
@@ -714,7 +714,8 @@ const Branch_info = (props) => {
       .then((response) => {
         console.log(response.status);
         console.log(response.data);
-        alert("저장되었습니다");
+
+        // alert("저장되었습니다");
       })
       // .catch((e) => console.log('something went wrong :(', e));
       .catch((error) => {
@@ -771,7 +772,7 @@ const Branch_info = (props) => {
   const handleSubmit = (e) => {
     if (props.detail_num == "0") {
       //alert(e.target[2].value);
-      e.preventDefalut();
+      //e.preventDefalut();
 
       console.log("e", e);
       let cu = "사용";
@@ -1013,7 +1014,7 @@ const Branch_info = (props) => {
                           className="indicator-label"
                           onClick={(e) => {
                             console.log("!!!!!!!!!!!");
-                            e.preventDefault();
+                            // e.preventDefault();
                           }}
                         >
                           제출
@@ -1175,7 +1176,7 @@ const Branch_info = (props) => {
                           className="indicator-label"
                           onClick={(e) => {
                             console.log("!!!!!!!!!!!");
-                            e.preventDefault();
+                            //e.preventDefault();
                           }}
                         >
                           제출
@@ -1200,8 +1201,10 @@ const Branch_info = (props) => {
                 <div className="modal-content">
                   <form
                     onSubmit={function (event) {
-                      event.preventDefault();
+                      alert("저장되었습니다");
+
                       handleSubmit_forgroup(event);
+                      //event.preventDefault();
                     }}
                     className="w-100"
                   >
@@ -1316,7 +1319,7 @@ const Branch_info = (props) => {
                           className="indicator-label"
                           onClick={(e) => {
                             console.log("!!!!!!!!!!!");
-                            e.preventDefault();
+                            //e.preventDefault();
                           }}
                         >
                           제출
@@ -1468,7 +1471,7 @@ const Branch_info = (props) => {
                           className="indicator-label"
                           onClick={(e) => {
                             console.log("!!!!!!!!!!!");
-                            e.preventDefault();
+                            //e.preventDefault();
                           }}
                         >
                           제출
@@ -1561,7 +1564,7 @@ const Branch_info = (props) => {
             <div className="card-body pt-1 card_right_body right__tab_con right__tab02_con on">
               <form
                 onSubmit={function (event) {
-                  event.preventDefault();
+                  //event.preventDefault();
                   handleSubmit(event);
                 }}
               >
