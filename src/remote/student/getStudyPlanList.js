@@ -2,18 +2,17 @@ import axios from "axios";
 
 const defaultStudentForm = {
   studentId: null,
-  startDate: null,
-  endDate: null,
+  fromDate: null,
+  toDate: null,
   itemStatus: null,
 };
 const defaultpostStudentForm = {
   studentId: null,
-  place:null,
-  title:null,
-  description:null,
-  startTime: null,
-  endTime: null,
-  
+  place: null,
+  title: null,
+  description: null,
+  fromTime: null,
+  toTime: null,
 };
 
 export const getStudyPlanList = async (studentForm = defaultStudentForm) => {
@@ -21,18 +20,20 @@ export const getStudyPlanList = async (studentForm = defaultStudentForm) => {
   try {
     const { data } = await axios.get(endpoint, {
       params: {
-        startDate: studentForm.startDate,
-        endDate: studentForm.endDate,
+        fromDate: studentForm.fromDate,
+        toDate: studentForm.toDate,
       },
     });
-    console.log("endpoint:",endpoint);
-    console.log("dataaaa:",data);
+    console.log("endpoint:", endpoint);
+    console.log("dataaaa:", data);
     return data;
   } catch (error) {
     return error;
   }
 };
-export const postStudyPlanList = async (studentForm = defaultpostStudentForm) => {
+export const postStudyPlanList = async (
+  studentForm = defaultpostStudentForm
+) => {
   const endpoint = `https://farm01.bitlworks.co.kr/api/v1/items/study-plans`;
 
   console.log(studentForm.studentId);
@@ -43,17 +44,14 @@ export const postStudyPlanList = async (studentForm = defaultpostStudentForm) =>
   console.log(studentForm.endTime);
   try {
     const { data } = await axios.post(endpoint, {
-      
-        studentId: studentForm.studentId,
-        place:studentForm.place,
-        title:studentForm.title,
-        description:studentForm.description,
-        startTime: studentForm.startTime+"T10:10:10.491Z",
-        endTime: studentForm.endTime+"T10:10:13.491Z",
-        // startTime: "2022-11-27T10:37:26.491Z",
-        // endTime: "2022-11-27T10:37:26.491Z"
-
-      
+      studentId: studentForm.studentId,
+      place: studentForm.place,
+      title: studentForm.title,
+      description: studentForm.description,
+      fromTime: studentForm.startTime + "T10:10:10.491Z",
+      toTime: studentForm.endTime + "T10:10:13.491Z",
+      // startTime: "2022-11-27T10:37:26.491Z",
+      // endTime: "2022-11-27T10:37:26.491Z"
     });
     return data;
   } catch (error) {

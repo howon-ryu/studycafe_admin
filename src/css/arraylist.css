@@ -33,3 +33,14 @@
     position: relative;
     float: right !important;;
 }
+
+.close_btn{
+    
+    float:right;
+}
+
+.close_btn:hover{
+    color : #009ef7;
+    
+    float:right;
+}

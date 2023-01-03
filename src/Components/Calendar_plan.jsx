@@ -2,7 +2,7 @@
 import moment from "moment";
 import { css } from "@emotion/react";
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { BrowserRouter, useSearchParams, useLocation } from "react-router-dom";
+import { BrowserRouter, useSearchParams } from "react-router-dom";
 
 import FullCalendar, {
   DateSelectArg,
@@ -84,9 +84,10 @@ const Calendar_plan = (props) => {
     if (studentId) {
       const data = await getStudyPlanList({
         studentId,
-        startDate: START_DATE,
-        endDate: END_DATE,
+        fromDate: START_DATE,
+        toDate: END_DATE,
       });
+      console.log("data:", data);
       const calendarFormatPlanList = data.map((item) => {
         const parsedDate = (ISOString) => ISOString.substring(0, 10);
 
@@ -229,8 +230,8 @@ const Calendar_plan = (props) => {
     console.log("ggg", studentId);
     postStudyPlanList({
       studentId,
-      startTime: event_start_date,
-      endTime: event_end_date,
+      fromTime: event_start_date,
+      toTime: event_end_date,
       title: event_name,
       description: event_descripton,
       place: event_location,
