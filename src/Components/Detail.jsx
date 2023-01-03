@@ -119,9 +119,9 @@ const Detail = (props) => {
 
       console.log(e);
       let cu = "사용";
-      let cu1 = e.target[13].checked;
-      let cu2 = e.target[14].checked;
-      let cu3 = e.target[15].checked;
+      let cu1 = e.target[12].checked;
+      let cu2 = e.target[13].checked;
+      let cu3 = e.target[14].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -187,9 +187,9 @@ const Detail = (props) => {
 
       console.log(e);
       let cu = "사용";
-      let cu1 = e.target[13].checked;
-      let cu2 = e.target[14].checked;
-      let cu3 = e.target[15].checked;
+      let cu1 = e.target[12].checked;
+      let cu2 = e.target[13].checked;
+      let cu3 = e.target[14].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -257,7 +257,7 @@ const Detail = (props) => {
     >
       <form
         onSubmit={function (event) {
-          // event.preventDefault();
+          event.preventDefault();
           handleSubmit(event);
         }}
       >

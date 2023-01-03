@@ -1019,7 +1019,7 @@ const Manage_student = (props) => {
                               type="radio"
                               defaultValue="삭제"
                               name="choice_use"
-                              defaultChecked={data.status == "식제"}
+                              defaultChecked={data.status == "삭제"}
                             />
                             <label className="form-check-label">삭제</label>
                           </div>
