@@ -238,6 +238,7 @@ const Calendar_plan = (props) => {
     deleteStudyPlanList({
       itemId: publicId,
     });
+    window.location.reload();
   }
   const handleEventDrag = (event) => {
     console.log("드래그 이벤트", event.event);
@@ -273,6 +274,7 @@ const Calendar_plan = (props) => {
     console.log("ggg", studentId);
 
     if (mode == "add") {
+      console.log("add");
       postStudyPlanList({
         studentId,
         startTime: event_start_date + "T" + event_start_time + ":00",
@@ -281,7 +283,9 @@ const Calendar_plan = (props) => {
         description: event_descripton,
         place: event_location,
       });
+      window.location.reload();
     } else if (mode == "modify") {
+      console.log("modify");
       putStudyPlanList({
         studentId,
         startTime: event_start_date + "T" + event_start_time + ":00",
@@ -291,6 +295,7 @@ const Calendar_plan = (props) => {
         place: event_location,
         itemId: publicId,
       });
+      window.location.reload();
     }
 
     setOpenModal(!isOpenModal);
