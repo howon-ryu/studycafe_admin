@@ -175,6 +175,8 @@ const AcademyList = (props) => {
         if (props.flag == "office__head_office") {
           if (brands[0] != undefined) {
             props.setDetailNum(brands[0].id);
+            console.log("요기ㅣ?", brands[0].id);
+            //listclick(brands[0].id);
           } else {
             console.log("0");
             props.setDetailNum("0");
@@ -219,6 +221,7 @@ const AcademyList = (props) => {
         if (props.flag == "student__manage_info") {
           if (students[0] != undefined) {
             props.setDetailNum(students[0].id);
+            console.log("요기ㅣ?", students[0].id);
           } else {
             console.log("ppp!!!!!!!!!!");
             props.setDetailNum("0");
@@ -236,6 +239,7 @@ const AcademyList = (props) => {
         if (props.flag == "Study_weekly_plan") {
           if (students[0] != undefined) {
             console.log("!!!!!!!");
+            console.log(students[0].id);
             props.setDetailNum(students[0].id);
           } else {
             props.setDetailNum("0");
@@ -276,6 +280,12 @@ const AcademyList = (props) => {
   useEffect(() => {
     setfiltertext(data);
     console.log("filtertext", filtertext);
+    console.log("data[0]", data[0]);
+    if (data[0] != undefined) {
+      listclick(data[0].id);
+    } else {
+      props.setDetailNum("0");
+    }
   }, [data]);
   const [filtertext, setfiltertext] = useState([
     {
@@ -1019,6 +1029,7 @@ const AcademyList = (props) => {
     setclickflag("1");
 
     const tempbtn = document.getElementsByClassName(`list_` + value);
+    console.log(tempbtn);
     tempbtn[0].classList.add("on");
     console.log("tempbtn", tempbtn[0].classList);
     listunclick(value);

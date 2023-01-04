@@ -50,13 +50,14 @@ const Calendar_plan = (props) => {
   let [nname, setnname] = useState("");
 
   const [searchParams] = useSearchParams();
-  let studentId = searchParams.get("student");
-  // const studentId = props.detail_num;
+  // let studentId = searchParams.get("student");
+  let studentId = props.detail_num;
   useEffect(() => {
     if (studentId == null) {
-      console.log("student ID", studentId);
+      console.log("student ID1", studentId);
       console.log("props.detail_num", props.detail_num);
       studentId = props.detail_num;
+      console.log("student ID2", studentId);
     }
   }, []);
   console.log("student ID", studentId);
@@ -81,6 +82,7 @@ const Calendar_plan = (props) => {
 
   const fetchStudentPlanList = useCallback(async () => {
     console.log("click");
+    console.log(studentId);
     if (studentId) {
       const data = await getStudyPlanList({
         studentId,
@@ -130,9 +132,15 @@ const Calendar_plan = (props) => {
   React.useEffect(() => {
     console.log("eventler", events);
   }, [events]);
+  React.useEffect(() => {
+    console.log("!!!!", props);
+    studentId = props;
+    fetchStudentPlanList();
+  }, [props]);
   console.log("props", props);
   // setdetailnum(props.detail_num);
   detail_num = props.detail_num;
+
   const handleEvents = (events) => {
     setEvents(events);
   };
