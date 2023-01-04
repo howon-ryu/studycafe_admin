@@ -136,10 +136,21 @@ input[type="date"]:valid::before {
 .card__left tbody tr.on td {
   color: #fff !important;
 }
-.card__left tbody tr:hover,
+.card__left tbody tr:hover{
+  cursor: pointer;
+  border: none;
+  background-color:#cbe6f5 !important;
+}
+
+
+
+
+
+
 .card__left tbody tr.on {
   cursor: pointer;
-  background-color: var(--kt-primary);
+  background-color: var(--kt-primary) !important;
+  /* background-color:red !import; */
   border: none;
 }
 .stdy_w_rpt_table tbody tr.on,

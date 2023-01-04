@@ -139,7 +139,15 @@ input[type="date"]:valid::before {
 .card__left tbody tr:hover,
 .card__left tbody tr.on {
   cursor: pointer;
-  background-color: var(--kt-primary);
+  /* background-color: var(--kt-primary); */
+  background-color:red;
+  border: none;
+}
+.card__left tbody tr:hover
+{
+  cursor: pointer;
+  border:solid 5px red;
+  background-color: #dcf1fc;
   border: none;
 }
 .stdy_w_rpt_table tbody tr.on,

@@ -31,6 +31,8 @@ import momentPlugin from "@fullcalendar/moment";
 import {
   getStudyPlanList,
   postStudyPlanList,
+  deleteStudyPlanList,
+  putStudyPlanList,
 } from "../remote/student/getStudyPlanList";
 import { format } from "date-fns";
 //import './main.css';
@@ -38,17 +40,25 @@ import { format } from "date-fns";
 let id = 0;
 const START_DATE = "1970-01-01";
 const END_DATE = format(new Date("2030-12-31"), "yyyy-MM-dd");
+const today = format(new Date(), "yyyy-MM-dd");
+console.log(today);
 console.log("END_DATE", END_DATE);
 
 const Calendar_plan = (props) => {
   console.log("props!!");
+  const [studyday, setstudyday] = useState(today);
+  let clickstudyday = "";
+  const [mode, setmode] = useState("add");
   const [isOpenModal, setOpenModal] = React.useState(false);
   const [isOpenModal_view, setOpenModal_view] = React.useState(false);
   const [studentPlanList, setStudentPlanList] = React.useState([]);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   let [nname, setnname] = useState("");
-
+  useEffect(() => {
+    clickstudyday = studyday;
+    console.log(clickstudyday);
+  }, [studyday]);
   const [searchParams] = useSearchParams();
   // let studentId = searchParams.get("student");
   let studentId = props.detail_num;
@@ -94,14 +104,18 @@ const Calendar_plan = (props) => {
         const parsedDate = (ISOString) => ISOString.substring(0, 10);
         let temp_start = "" + item.startTime;
         let temp_end = "" + item.endTime;
+        // console.log(temp_start)
         return {
           // start: parsedDate(item.startTime),
           // end: parsedDate(item.endTime),
-          start: temp_start.substring(0, 10),
-          end: temp_end.substring(0, 10),
+          // start: temp_start.substring(0, 10),
+          // end: temp_end.substring(0, 10),
+          start: temp_start,
+          end: temp_end,
           title: item.title,
           description: item.description,
           id: item.id,
+          allDay: false,
         };
       });
       setStudentPlanList([...calendarFormatPlanList]);
@@ -161,12 +175,17 @@ const Calendar_plan = (props) => {
     let end_time_text_prev = clickInfo.event.end;
     let location_text = clickInfo.event._def.extendedProps.location;
     let start_time_text = moment(start_time_text_prev).format("YYYY-MM-DD");
+    let st = moment(start_time_text_prev).format("hh:mm");
+    let et = moment(end_time_text_prev).format("hh:mm");
     let end_time_text = moment(end_time_text_prev).format("YYYY-MM-DD");
     settitle(title_textt);
     setdescription(description_text);
     setstart(start_time_text);
     setend(end_time_text);
+    setpublicId(clickInfo.event._def.publicId);
     setlocation(location_text);
+    sets_time(st);
+    sete_time(et);
     console.log("이벤트: ", clickInfo.event);
     console.log(clickInfo.event._def.extendedProps.location);
     console.log(clickInfo.event.start);
@@ -179,12 +198,16 @@ const Calendar_plan = (props) => {
   let [start_time_text, setstart] = useState(Date);
   let [end_time_text, setend] = useState(Date);
   let [locaion_text, setlocation] = useState("");
-
+  let [s_time, sets_time] = useState("00:00");
+  let [e_time, sete_time] = useState("00:00");
+  let [publicId, setpublicId] = useState(0);
   let flag = 1;
   const handleDateSelect = (selectInfo) => {
-    console.log("tt");
+    console.log("tt", selectInfo);
+    setmode("add");
     let calenderApi = selectInfo.view.calendar;
     calenderApi.unselect();
+    setstudyday(selectInfo.startStr.substring(0, 10));
     console.log("abd:", calenderApi);
     console.log(nname);
     // if(title){
@@ -210,7 +233,12 @@ const Calendar_plan = (props) => {
       console.log("nname", nname);
     }
   };
-
+  function deleteplan(e) {
+    console.log("dep:", publicId);
+    deleteStudyPlanList({
+      itemId: publicId,
+    });
+  }
   const handleEventDrag = (event) => {
     console.log("드래그 이벤트", event.event);
   };
@@ -228,25 +256,43 @@ const Calendar_plan = (props) => {
     let event_start_date = document.getElementById(
       "kt_calendar_datepicker_start_date"
     ).value;
+    let event_start_time = document.getElementById(
+      "kt_calendar_datepicker_start_time"
+    ).value;
     // console.log("event_start_date:",event_start_date);
     // let event_start_time =(document.getElementById("kt_calendar_datepicker_start_time") as HTMLInputElement).value;
-    let event_end_date = document.getElementById(
-      "kt_calendar_datepicker_end_date"
+    let event_end_time = document.getElementById(
+      "kt_calendar_datepicker_end_time"
     ).value;
+    console.log("end!!!!!!!", event_end_time);
     // let event_end_time =(document.getElementById("kt_calendar_datepicker_end_time") as HTMLInputElement).value;
     // let event_allday =(document.getElementById("kt_calendar_datepicker_allday") as HTMLInputElement).value;
     setnname(event_name);
 
     console.log("gg", nname);
     console.log("ggg", studentId);
-    postStudyPlanList({
-      studentId,
-      startTime: event_start_date,
-      endTime: event_end_date,
-      title: event_name,
-      description: event_descripton,
-      place: event_location,
-    });
+
+    if (mode == "add") {
+      postStudyPlanList({
+        studentId,
+        startTime: event_start_date + "T" + event_start_time + ":00",
+        endTime: event_start_date + "T" + event_end_time + ":00",
+        title: event_name,
+        description: event_descripton,
+        place: event_location,
+      });
+    } else if (mode == "modify") {
+      putStudyPlanList({
+        studentId,
+        startTime: event_start_date + "T" + event_start_time + ":00",
+        endTime: event_start_date + "T" + event_end_time + ":00",
+        title: event_name,
+        description: event_descripton,
+        place: event_location,
+        itemId: publicId,
+      });
+    }
+
     setOpenModal(!isOpenModal);
     //return(handleDateSelect);
 
@@ -299,12 +345,13 @@ const Calendar_plan = (props) => {
                 headerToolbar={{
                   left: "prev,next,today",
                   center: "title",
-                  right: "dayGridMonth, timeGridWeek,timeGridDay",
+                  right: "dayGridMonth,timeGridWeek",
                 }}
                 locale="ko"
                 // 날짜 클릭
                 dateClick={(e) => {
                   console.log("dateclick", e);
+                  //setstudyday(e.dateStr);
                 }}
                 events={studentPlanList}
                 eventDragStop={handleEventDrag}
@@ -320,7 +367,7 @@ const Calendar_plan = (props) => {
                 }}
                 initialView="dayGridMonth"
                 selectable={true}
-                editable={true}
+                editable={false}
                 eventDragStart={(e) => {
                   console.log("eventdragstart");
                 }}
@@ -332,6 +379,7 @@ const Calendar_plan = (props) => {
                 eventRemove={(e) => {
                   console.log("evebt remove");
                 }}
+                allDaySlot={false}
                 select={handleDateSelect}
                 buttonText={{
                   day: "일",
@@ -402,6 +450,7 @@ const Calendar_plan = (props) => {
                         id="event_name"
                         className="form-control form-control-solid"
                         placeholder=""
+                        defaultValue={title_text}
                         name="calendar_event_name"
                       />
                     </div>
@@ -434,8 +483,65 @@ const Calendar_plan = (props) => {
                         name="calendar_event_location"
                       />
                     </div>
+                    <div class="row row-cols-lg-2 g-10">
+                      <div class="col">
+                        <div class="fv-row mb-9">
+                          <label class="fs-6 fw-semibold mb-2 required">
+                            학습일자
+                          </label>
 
-                    <div className="fv-row mb-9">
+                          <input
+                            class="form-control form-control-solid"
+                            name="calendar_event_start_date"
+                            id="kt_calendar_datepicker_start_date"
+                            defaultValue={studyday}
+                          />
+                        </div>
+                      </div>
+                      <div class="col" data-kt-calendar="datepicker">
+                        <div class="fv-row mb-9">
+                          <label class="fs-6 fw-semibold mb-2">시작시간</label>
+
+                          <input
+                            class="form-control form-control-solid"
+                            name="calendar_event_start_time"
+                            placeholder="00:00"
+                            defaultValue={s_time}
+                            id="kt_calendar_datepicker_start_time"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row row-cols-lg-2 g-10">
+                      <div class="col">
+                        <div class="fv-row mb-9" hidden>
+                          <label class="fs-6 fw-semibold mb-2 required">
+                            종료일
+                          </label>
+
+                          <input
+                            class="form-control form-control-solid"
+                            name="calendar_event_end_date"
+                            placeholder="시작 시간을 선택해주세요"
+                            id="kt_calendar_datepicker_end_date"
+                          />
+                        </div>
+                      </div>
+                      <div class="col" data-kt-calendar="datepicker">
+                        <div class="fv-row mb-9">
+                          <label class="fs-6 fw-semibold mb-2">종료시간</label>
+
+                          <input
+                            class="form-control form-control-solid"
+                            name="calendar_event_end_time"
+                            placeholder="00:00"
+                            defaultValue={e_time}
+                            id="kt_calendar_datepicker_end_time"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    {/* <div className="fv-row mb-9">
                       <div className="col">
                         <div className="fv-row mb-9">
                           <label className="fs-6 fw-semibold mb-2 required">
@@ -466,7 +572,7 @@ const Calendar_plan = (props) => {
                         </div>
                       </div>
                       <div className="col" data-kt-calendar="datepicker"></div>
-                    </div>
+                    </div> */}
                     <div className="modal-footer flex-center">
                       <button
                         type="reset"
@@ -515,14 +621,17 @@ const Calendar_plan = (props) => {
                   >
                     <div className="modal-header border-0 justify-content-end">
                       <div
-                        className="btn btn-icon btn-sm btn-color-gray-400 btn-active-icon-primary me-2"
+                        className="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary"
                         data-bs-toggle="tooltip"
-                        data-bs-dismiss="click"
-                        title="Edit Event"
-                        id="kt_modal_view_event_edit"
-                        hidden
+                        title="항목 수정"
+                        data-bs-dismiss="modal"
+                        onClick={() => {
+                          setmode("modify");
+                          setOpenModal_view(!isOpenModal_view);
+                          setOpenModal(!isOpenModal);
+                        }}
                       >
-                        <span className="svg-icon svg-icon-2">
+                        <span class="svg-icon svg-icon-2">
                           <svg
                             width="24"
                             height="24"
@@ -543,14 +652,16 @@ const Calendar_plan = (props) => {
                         </span>
                       </div>
                       <div
-                        className="btn btn-icon btn-sm btn-color-gray-400 btn-active-icon-danger me-2"
+                        className="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary"
                         data-bs-toggle="tooltip"
-                        data-bs-dismiss="click"
-                        title="Delete Event"
-                        id="kt_modal_view_event_delete"
-                        hidden
+                        title="항목 삭제"
+                        data-bs-dismiss="modal"
+                        onClick={(e) => {
+                          setOpenModal_view(!isOpenModal_view);
+                          deleteplan(e);
+                        }}
                       >
-                        <span className="svg-icon svg-icon-2">
+                        <span class="svg-icon svg-icon-2">
                           <svg
                             width="24"
                             height="24"

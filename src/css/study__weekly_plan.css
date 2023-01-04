@@ -15,3 +15,29 @@
     width:31%;
    
 }
+
+/* .fc-event-time{
+    display: none  !important;
+} */
+
+/* .fc-daygrid-event-dot{
+    display: none  !important;
+} */
+
+.fc-daygrid-event .fc-daygrid-dot-event .fc-event .fc-event-start .fc-event-end .fc-event-today:hover{
+    background-color: none !important;
+    color :#009ef7!important;
+}
+
+
+.fc-timegrid-event .fc-v-event .fc-event .fc-event-start .fc-event-end .fc-event-past .fc-event-time{
+    display:none !important;
+}
+
+
+.fc-v-event .fc-event-time{
+    display: none;
+    
+    
+
+}

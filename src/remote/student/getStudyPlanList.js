@@ -14,6 +14,18 @@ const defaultpostStudentForm = {
   startTime: null,
   endTime: null,
 };
+const defaultputStudentForm = {
+  studentId: null,
+  place: null,
+  title: null,
+  description: null,
+  startTime: null,
+  endTime: null,
+  isAllDay: false,
+};
+const defaultdeleteStudentForm = {
+  itemId: null,
+};
 
 export const getStudyPlanList = async (studentForm = defaultStudentForm) => {
   const endpoint = `https://farm01.bitlworks.co.kr/api/v1/users/students/${studentForm.studentId}/study-plans`;
@@ -48,8 +60,51 @@ export const postStudyPlanList = async (
       place: studentForm.place,
       title: studentForm.title,
       description: studentForm.description,
-      startTime: studentForm.startTime + "T10:10:10.491Z",
-      endTime: studentForm.endTime + "T10:10:13.491Z",
+      startTime: studentForm.startTime,
+      endTime: studentForm.endTime,
+      // startTime: "2022-11-27T10:37:26.491Z",
+      // endTime: "2022-11-27T10:37:26.491Z"
+    });
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+export const putStudyPlanList = async (studentForm = defaultputStudentForm) => {
+  const endpoint = `https://farm01.bitlworks.co.kr/api/v1/items/study-plans/${studentForm.itemId}`;
+
+  console.log(studentForm.itemId);
+
+  try {
+    const { data } = await axios.put(endpoint, {
+      studentId: studentForm.studentId,
+      place: studentForm.place,
+      title: studentForm.title,
+      description: studentForm.description,
+      startTime: studentForm.startTime,
+      endTime: studentForm.endTime,
+      isAllDay: false,
+
+      // startTime: "2022-11-27T10:37:26.491Z",
+      // endTime: "2022-11-27T10:37:26.491Z"
+    });
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteStudyPlanList = async (
+  studentForm = defaultdeleteStudentForm
+) => {
+  const endpoint = `https://farm01.bitlworks.co.kr/api/v1/items/study-plans/${studentForm.itemId}`;
+
+  console.log(studentForm.itemId);
+
+  try {
+    const { data } = await axios.delete(endpoint, {
+      itemId: studentForm.itemId,
+
       // startTime: "2022-11-27T10:37:26.491Z",
       // endTime: "2022-11-27T10:37:26.491Z"
     });
