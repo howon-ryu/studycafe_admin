@@ -116,8 +116,8 @@ const AcademyList = (props) => {
       event2 = {
         target: {
           0: { value: cookies.cookie.data.brand.id }, //brand
-          1: { value: cookies.cookie.data.id }, //owner
-          2: "", //manager
+          1: { value: cookies.cookie.data.targetUser.id }, //owner
+          2: { value: cookies.cookie.data.id }, //manager
           3: "", // branch
           4: "", //room
           5: "", //group
@@ -784,9 +784,9 @@ const AcademyList = (props) => {
       console.log("asdfasdfasdfppp:", props);
 
       var_brandid = props.target[0].value;
-      var_branchid = props.target[2].value;
-      var_roomid = props.target[3].value;
-      var_groupid = props.target[4].value;
+      var_branchid = props.target[3].value;
+      var_roomid = props.target[4].value;
+      var_groupid = props.target[5].value;
       var_status = props.target[6].value;
     }
     console.log("var_brandid", var_brandid);
@@ -946,27 +946,32 @@ const AcademyList = (props) => {
       });
   }
   function searchBranches(props) {
-    console.log("b_props", props);
+    console.log("branch_search", props);
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "branches";
     let var_status = "";
     let var_brandid = "";
     let var_ownerid = "";
+    let var_managerid = "";
     if (props != undefined) {
       var_status = props.target[6].value;
       var_brandid = props.target[0].value;
       var_ownerid = props.target[1].value;
+      var_managerid = props.target[2].value;
     }
-    console.log(url_set);
+
+    console.log("branch_urlset", url_set);
     console.log(var_status);
-    console.log(var_brandid);
-    console.log(var_ownerid);
+    console.log("branch_bi_pram", var_brandid);
+    console.log("branch_oi_pram", var_ownerid);
+    console.log("branch_mi_pram", var_managerid);
     axios
       .get(url_set, {
         params: {
           status: var_status,
           brandId: var_brandid,
           ownerId: var_ownerid,
+          managerId: var_managerid,
         },
       })
       .then(function (response) {
