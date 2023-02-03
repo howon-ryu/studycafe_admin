@@ -592,7 +592,32 @@ const Branch_info = (props) => {
     axios
       .get(url_set)
       .then(function (response) {
-        setdata(response.data);
+        if (response.data.manager == null) {
+          let temp_data = {};
+          console.log("@@@@@@@@@manager.null@@@@");
+          temp_data = response.data;
+          temp_data.manager = {
+            id: "",
+            username: "",
+            realName: "",
+            phone: "",
+            email: "",
+            birthDate: "",
+            gender: "",
+
+            profileImgUrl: "",
+            address: null,
+            status: "",
+            lastLoginAt: "",
+            darkMode: false,
+          };
+          setdata(temp_data);
+          console.log("@@@@@@@@@manager", temp_data);
+          console.log("@@@@@@@@@manager.null@@@@");
+        } else {
+          setdata(response.data);
+        }
+
         // console.log("data:", data);
         // console.log("head:", data.head);
         console.log(response.data);
@@ -776,9 +801,9 @@ const Branch_info = (props) => {
 
       console.log("e", e);
       let cu = "사용";
-      let cu1 = e.target[6].checked;
-      let cu2 = e.target[7].checked;
-      let cu3 = e.target[8].checked;
+      let cu1 = e.target[8].checked;
+      let cu2 = e.target[9].checked;
+      let cu3 = e.target[10].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -793,9 +818,11 @@ const Branch_info = (props) => {
         isManagement: false,
         businessRegistrationNumber: e.target[3].value,
         status: cu,
-        managerId: e.target[5].value,
-        address: e.target[4].value,
+        managerId: e.target[7].value,
+        address: e.target[6].value,
         ownerId: e.target[1].value,
+        phone: e.target[4].value,
+        email: e.target[5].value,
       };
 
       const headers = { "header-name": "value" };
@@ -826,10 +853,11 @@ const Branch_info = (props) => {
       // event.preventDefalut();
 
       console.log("e", e);
+      console.log("mana", e.target[7].value);
       let cu = "사용";
-      let cu1 = e.target[6].checked;
-      let cu2 = e.target[7].checked;
-      let cu3 = e.target[8].checked;
+      let cu1 = e.target[8].checked;
+      let cu2 = e.target[9].checked;
+      let cu3 = e.target[10].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -844,9 +872,11 @@ const Branch_info = (props) => {
         isManagement: false,
         businessRegistrationNumber: e.target[3].value,
         status: cu,
-        address: e.target[4].value,
-        managerId: e.target[5].value,
+        address: e.target[6].value,
+        managerId: e.target[7].value,
         ownerId: e.target[1].value,
+        phone: e.target[4].value,
+        email: e.target[5].value,
       };
 
       const headers = { "header-name": "value" };
@@ -1818,6 +1848,32 @@ const Branch_info = (props) => {
                     </div>
 
                     <div className="row mb-5">
+                      <div className="col-md-6 fv-row">
+                        <label className="required fs-5 fw-semibold mb-2">
+                          전화번호
+                        </label>
+
+                        <input
+                          type="text"
+                          className="form-control"
+                          defaultValue={data.phone}
+                          name=""
+                        />
+                      </div>
+
+                      <div className="col-md-6 fv-row">
+                        <label className="fs-5 fw-semibold mb-2">이메일</label>
+
+                        <input
+                          type="text"
+                          className="form-control "
+                          defaultValue={data.email}
+                          name="last_name"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row mb-5">
                       <div className="col-md-12 fv-row">
                         <label className="fs-5 fw-semibold mb-2">주소</label>
 
@@ -1888,9 +1944,14 @@ const Branch_info = (props) => {
                             defaultValue={data.owner.id}
                             disabled
                           >
-                            <option value={data.manager.id}>
-                              {data.manager.realName}({data.manager.username})
-                            </option>
+                            {data.manager.id != "" ? (
+                              <option value={data.manager.id}>
+                                {data.manager.realName}({data.manager.username})
+                              </option>
+                            ) : (
+                              <option value=""></option>
+                            )}
+
                             {managers.map((item, idx) =>
                               item.realName != data.manager.realName ? (
                                 <option key={idx} value={item.id}>

@@ -119,9 +119,9 @@ const Detail = (props) => {
 
       console.log(e);
       let cu = "사용";
-      let cu1 = e.target[12].checked;
-      let cu2 = e.target[13].checked;
-      let cu3 = e.target[14].checked;
+      let cu1 = e.target[14].checked;
+      let cu2 = e.target[15].checked;
+      let cu3 = e.target[16].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -132,20 +132,22 @@ const Detail = (props) => {
       // alert(e.target[1].value);
       const data_t = {
         name: e.target[0].value,
-        serviceDomain: e.target[10].value,
-        homePageUrl: e.target[9].value,
+        serviceDomain: e.target[12].value,
+        homePageUrl: e.target[11].value,
+        phone: e.target[2].value,
+        email: e.target[3].value,
         isManagement: false,
         businessRegistrationNumber: e.target[1].value,
         status: cu,
         address: e.target[8].value,
         head: {
-          password: e.target[4].value,
-          password2: e.target[5].value,
-          realName: e.target[2].value,
-          phone: e.target[6].value,
-          email: e.target[7].value,
-          username: e.target[3].value,
-          address: e.target[8].value,
+          password: e.target[6].value,
+          password2: e.target[7].value,
+          realName: e.target[4].value,
+          phone: e.target[8].value,
+          email: e.target[9].value,
+          username: e.target[5].value,
+          address: e.target[10].value,
           status: cu,
           birthDate: "1999-05-01",
         },
@@ -187,9 +189,9 @@ const Detail = (props) => {
 
       console.log(e);
       let cu = "사용";
-      let cu1 = e.target[12].checked;
-      let cu2 = e.target[13].checked;
-      let cu3 = e.target[14].checked;
+      let cu1 = e.target[14].checked;
+      let cu2 = e.target[15].checked;
+      let cu3 = e.target[16].checked;
       if (cu1 == true) {
         cu = "사용";
       } else if (cu2 == true) {
@@ -200,21 +202,22 @@ const Detail = (props) => {
       console.log(cu);
       const data_t = {
         name: e.target[0].value,
-        serviceDomain: e.target[10].value,
-
-        homePageUrl: e.target[9].value,
+        serviceDomain: e.target[12].value,
+        phone: e.target[2].value,
+        email: e.target[3].value,
+        homePageUrl: e.target[11].value,
         isManagement: false,
         businessRegistrationNumber: e.target[1].value,
         status: cu,
         address: e.target[8].value,
         head: {
-          password: e.target[4].value,
-          password2: e.target[5].value,
-          realName: e.target[2].value,
-          phone: e.target[6].value,
-          email: e.target[7].value,
-          username: e.target[3].value,
-          address: e.target[8].value,
+          password: e.target[6].value,
+          password2: e.target[7].value,
+          realName: e.target[4].value,
+          phone: e.target[8].value,
+          email: e.target[9].value,
+          username: e.target[5].value,
+          address: e.target[10].value,
           birthDate: "1999-05-01",
           status: cu,
         },
@@ -297,6 +300,30 @@ const Detail = (props) => {
                   className="form-control "
                   name="last_name"
                   defaultValue={data.businessRegistrationNumber || ""}
+                />
+              </div>
+            </div>
+            <div className="row mb-5">
+              <div className="col-md-6 fv-row">
+                <label className="required fs-5 fw-semibold mb-2">
+                  본사전화번호
+                </label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={data.phone || ""}
+                  name=""
+                />
+              </div>
+              <div className="col-md-6 fv-row">
+                <label className="fs-5 fw-semibold mb-2">본사이메일</label>
+
+                <input
+                  type="text"
+                  className="form-control "
+                  name="last_name"
+                  defaultValue={data.email || ""}
                 />
               </div>
             </div>

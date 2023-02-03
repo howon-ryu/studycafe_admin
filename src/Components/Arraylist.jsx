@@ -36,7 +36,7 @@ const AcademyList = (props) => {
   const [ttext_owner, setttext_owner] = useState("");
   const [ttext_room, setttext_room] = useState("");
   const [ttext_group, setttext_group] = useState("");
-  const [tttext, settttext] = useState("ALL");
+  const [tttext, settttext] = useState("사용");
   let [data, setdata] = useState([]);
 
   // const [event2, setevent2] = useState({
@@ -67,7 +67,7 @@ const AcademyList = (props) => {
       3: "", // branch
       4: "", //room
       5: "", //group
-      6: "", //status
+      6: { value: "사용" }, //status
     },
   };
   const [brands, setbrands] = useState([]);
@@ -97,7 +97,7 @@ const AcademyList = (props) => {
           3: "", // branch
           4: "", //room
           5: "", //group
-          6: "", //status
+          6: { value: "사용" }, //status
         },
       };
     } else if (cookies.cookie.data.role.id == 3) {
@@ -109,7 +109,7 @@ const AcademyList = (props) => {
           3: "", // branch
           4: "", //room
           5: "", //group
-          6: "", //status
+          6: { value: "사용" }, //status
         },
       };
     } else if (cookies.cookie.data.role.id == 4) {
@@ -121,7 +121,7 @@ const AcademyList = (props) => {
           3: "", // branch
           4: "", //room
           5: "", //group
-          6: "", //status
+          6: { value: "사용" }, //status
         },
       };
     }
@@ -443,12 +443,13 @@ const AcademyList = (props) => {
   }
   function searchBrands(props) {
     let var_status = "";
-    console.log("props:", props);
+
     if (props == undefined) {
       var_status = "";
     } else {
       var_status = props.target[6].value;
     }
+
     const url = "https://farm01.bitlworks.co.kr/api/v1/";
     let url_set = url + "brands";
     axios
@@ -459,6 +460,7 @@ const AcademyList = (props) => {
       })
       .then(function (response) {
         //setdata(response.data);
+        console.log("initstatus:", var_status);
         setbrands(response.data);
 
         console.log("brands:", response.data);
